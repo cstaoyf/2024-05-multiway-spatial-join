@@ -130,7 +130,7 @@ In \cite{kcko22}, Khamis et al.\ investigated a type of joins that extend the co
 
 It is worth noting that $\Omega(n \log n)$ is a lower bound on the runtime of any comparison-based algorithm solving the $k$-SJ problem, even for $k = 2$. This can be established via a simple reduction (presented in Appendix~\ref{app:lb} for self-containment) from the {\em element distinctness} (ED) problem, where we are given $n$ real values $e_1, e_2, ..., e_n$ and need to decide whether there are distinct $i, j \in [n]$ satisfying $e_i = e_j$. The ED problem demands $\Omega(n \log n)$ comparisons to solve \cite{dl79}.  
 
-\todo{Rahul's result?}
+\todo{Rahul's result? No. Do it in later sections}
 
 \subsection{Our Results} \label{sec:intro:ours} 
 
@@ -158,6 +158,9 @@ The theorem implies the existence of a recursive nature of $k$-SJ. Indeed, we wi
 
 When $k = O(1)$, the time and space complexities become $O(n \log n + \out)$ and $O(n)$, as promised.
 
+\vgap 
+
+Now that Theorem~\ref{thm:main-alg} offers a satisfactory $k$-SJ result in 2D space, it is natural to wonder whether the constraint on dimensionality 2 is necessary. The answer, interestingly, is --- to a great extent --- yes as far as $k \ge 3$ is concerned. Specifically, if the 3D version of the 3-SJ problem could be solved in $O(n \polylog n + \out)$ time, we would obtain an algorithm that detects the presence of a triangle (i.e., 3-clique) in a graph of $m$ edges in $O(m \polylog m)$ time (which would make a truly surprising breakthrough because the state of the art needs $O(m^{1.41})$ time \cite{ayz97}). This can be shown using an argument in \cite{kcko22}, which is included in Appendix~\ref{app:lb-cond} for self-containment.
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
@@ -166,7 +169,9 @@ When $k = O(1)$, the time and space complexities become $O(n \log n + \out)$ and
 
 \appendix 
 
-\section{An $\bm{\Omega(n \log n)}$ Lower Bound} \label{app:lb}
+\section{An $\bm{\Omega(n \log n)}$ Lower Bound for 2-SJ} \label{app:lb}
+
+\section{Hardness of 3-SJ in 3D Space} \label{app:lb-cond}
 
 %\end{sloppy}
 \end{document}
