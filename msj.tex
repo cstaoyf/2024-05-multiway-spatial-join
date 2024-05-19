@@ -97,20 +97,20 @@ SJs have been extensively studied in the database-system community, leading to t
 
 \vgap
 
-From the perspective of theory, SJs are best understood when $k = 2$, i.e., the {\em pairwise} scenario, where it is folklore that the problem can be solved in $O(n \log n + \out)$ time using $O(n)$ space (see, e.g., \cite{bcko08}). However, the problem becomes significantly more challenging for $k \ge 3$, i.e., the {\em multiway} scenario. All the solutions developed (see \cite{gcn+13,mp98,mp01,pmt99} and the references therein) before 2022 suffer from a worst-case time complexity of $O(n^k)$, offering essentially no improvement over the naive method that simply enumerates the entire cartesian product $R_1 \times R_2 \times ... \times R_k$.
+From the perspective of theory, SJs are best understood when $k = 2$, i.e., the {\em pairwise} scenario, where it is folklore that the problem can be solved in $O(n \log n + \out)$ time using $O(n)$ space (see, e.g., \cite{bcko08}). However, the problem becomes significantly more challenging for $k \ge 3$, i.e., the {\em multiway} scenario. All the solutions developed  before 2022 (see \cite{gcn+13,mp98,mp01,pmt99} and the references therein) suffer from a worst-case time complexity of $O(n^k)$, offering essentially no improvement over the naive method that enumerates the entire cartesian product $R_1 \times R_2 \times ... \times R_k$.
 
 
 \begin{table*} 
     \begin{tabular}{c|c|c|c|c} 
-        $\bm{k}$ & {\bf method} & {\bf runtime} (big-O) & {\bf space} (big-O) & {\bf remark} \\
+        $\bm{k}$ & {\bf method} & {\bf runtime} & {\bf space} & {\bf remark} \\
         \hline\hline 
-        2 & folklore & $n \log n + \out$ & $n$ & comparison-based optimal \\ 
+        2 & folklore & $O(n \log n + \out)$ & $O(n)$ & comparison-based optimal \\ 
         \hline
-        $\ge 3$ & before 2022 & $n^k$ & - & \\ 
-        $\ge 3$ & \cite{ty22} & $(n + \out) \cdot \polylog n$ & $n \polylog n$ & \\ 
-        $\ge 3$ & \cite{kcko22} & $n \log^{2k} n + \out$ & $n \log n$ & \\ 
+        $\ge 3$ & before 2022 & $O(n^k)$ & - & \\ 
+        $\ge 3$ & \cite{ty22} & $O((n + \out) \cdot \polylog n)$ & $O(n \polylog n)$ & \\ 
+        $\ge 3$ & \cite{kcko22} & $O(n \log^{2k} n + \out)$ & $O(n \log n)$ & \\ 
         \hline
-        $\ge 3$ & ours & $n \log n + \out$ & $n$ & comparison-based optimal
+        $\ge 3$ & ours & $O(n \log n + \out)$ & $O(n)$ & comparison-based optimal
     \end{tabular}
     
     \vspace{3mm}
@@ -124,8 +124,9 @@ Year 2022 witnessed two independent works \cite{ty22,kcko22} that, although not 
 
 \vgap
 
-In \cite{kcko22}, Khamis et al.\ investigated a type of joins that extend equi-joins in two ways. First, each attribute value in a relation is an interval (rather than a real value); second, each equality predicate in equi-joins is replaced with an ``non-empty intersection'' predicate on the attributes involved. The $k$-SJ problem can be converted to solving a join defined next under the framework of \cite{kcko22}. For each $i \in [k]$, define $R_i$ as a relation over two attributes $X$ and $Y$. For each tuple $\bm{u} \in R_i$, its values $\bm{u}(X)$ and $\bm{u}(Y)$ on the two attributes are both intervals (effectively defining a rectangle). The objective is to output all $k$-tuples $(\bm{u}_1, \bm{u}_2, ..., \bm{u}_k) \in R_1 \times R_2 \times ... \times R_k$ satisfying $\bigcap_{i=1}^k \bm{u}_i(X) \ne \emptyset$ and $\bigcap_{i=1}^k \bm{u}_i(Y) \ne \emptyset$. Khamis et al.\ \cite{kcko22} developed an algorithm that can process this join in $O(n \log^{2k} n + \out)$ time, where $n = \sum_{i=1}^k |R_i|$. Their algorithm requires $O(n \log n)$ space.
+In \cite{kcko22}, Khamis et al.\ investigated a type of joins that extend the conventional equi-join in two ways. First, each attribute value in a relation is an interval (rather than a real value); second, each equality predicate in equi-join is replaced with an ``non-empty intersection'' predicate on the attributes involved. The $k$-SJ problem can be converted to solving a join defined next under the framework of \cite{kcko22}. For each $i \in [k]$, define $R_i$ as a relation over two attributes $X$ and $Y$. For each tuple $\bm{u} \in R_i$, its values $\bm{u}(X)$ and $\bm{u}(Y)$ on the two attributes are both intervals (effectively defining a rectangle). The objective is to output all $k$-tuples $(\bm{u}_1, \bm{u}_2, ..., \bm{u}_k) \in R_1 \times R_2 \times ... \times R_k$ satisfying $\bigcap_{i=1}^k \bm{u}_i(X) \ne \emptyset$ and $\bigcap_{i=1}^k \bm{u}_i(Y) \ne \emptyset$. It is clear that there is one-one correspondence between the result of this join and that of k-SJ. Khamis et al.\ \cite{kcko22} developed an algorithm that can process the join  in $O(n \log^{2k} n + \out)$ time. Their algorithm requires $O(n \log n)$ space.
 
+\subsection{Our Results} \label{sec:intro:ours}
 
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
