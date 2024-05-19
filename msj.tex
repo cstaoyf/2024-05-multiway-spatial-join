@@ -138,10 +138,14 @@ In this paper, we show that the $k$-SJ problem can be settled by a comparison-ba
 
 \vgap 
 
-In terms of techniques, our primary contribution is a result on the mathematical structure of the $k$-SJ problem. Specifically, for any $n \ge 1$ and $k \ge 2$, define function $F(n, k)$ to be the lowest value such that any instance of the $k$-SJ problem with input size $n$ and output size $\out$ can be solved in $F(n, k) + O(\out)$ time. Specificaly, define $F(n, 1) = n$ for any $n \ge 1$. Our main technical contribution can now be stated as: 
+In terms of techniques, our primary contribution is a result on the mathematical structure of $k$-SJ. Specifically, for any $n \ge 1$ and $k \ge 2$, define function $F(n, k)$ to return the lowest positive integer such that our $k$-SJ algorithm can solve any instance of the $k$-SJ problem with input size $n$ and output size $\out$ in $F(n, k) + O(\out)$ time. Our main technical contribution can now be stated as: 
 
 \begin{theorem} \label{thm:main}
-    d
+    For any $n \ge 1$ and $k \ge 3$, it holds that 
+    \myeqn{
+        F(n, k) = O(k^3) \cdot ( F(n, k-1) + n \log n).
+        \label{eqn:main:reccurrence}
+    }
 \end{theorem}
 
 
