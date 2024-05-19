@@ -85,15 +85,15 @@ We represent the set of these $k$-tuples as $\J_k(R_1, R_2, ..., R_k)$, referred
 
 \vgap
 
-SJ is a fundamental operation in spatial databases, which manage geometric entities such as land parcels, service areas, habitat zones, commercial districts, administrative boundaries, etc. It plays a crucial role in implementing the {\em filter-refinement mechanism}, the dominant approach in spatial databases for computing the overlays of different entities. Specifically, a geometric entity, at the lowest level, is usually modeled as a polygon. Determining whether two entities overlap amounts to deciding if two polygons intersect, which can be very expensive when the polygons have complex boundaries. For better efficiency, a spatial database stores the {\em minimum bounding rectangle} (MBR) of each polygon $\P$, which is the smallest axis-parallel rectangle enclosing $\P$. Two polygons $\P_1$ and $\P_2$ can overlap with each other only if their MBRs $r_1$ and $r_2$ have a non-empty intersection. To overlay $k$ different sets of entities, filter-refinement first performs ``filtering'' by using an SJ to fetch all $k$-tuples $(r_1, r_2, ..., r_k)$ where each $r_i$ ($1 \le i \le k$) is the MBR of a polygon $\P_i$ and a ``refines'' every such $k$-tuple by checking if $\P_1, \P_2, ..., \P_k$ indeed have a non-empty intersection.
+SJ is a fundamental operation in spatial databases, which manage geometric entities such as land parcels, service areas, habitat zones, commercial districts, administrative boundaries, etc. It plays a crucial role in implementing the {\em filter-refinement mechanism}, the dominant approach in spatial databases for computing the overlays of different entities. Specifically, a geometric entity, at the lowest level, is usually modeled as a polygon. Determining whether two entities overlap amounts to deciding if two polygons intersect, which can be very expensive when the polygons have complex boundaries. For better efficiency, a spatial database stores the {\em minimum bounding rectangle} (MBR) of each polygon $P$, which is the smallest axis-parallel rectangle enclosing $P$. Two polygons $P_1$ and $P_2$ can overlap with each other only if their MBRs $r_1$ and $r_2$ have a non-empty intersection. To overlay $k$ different sets of entities, filter-refinement first performs ``filtering'' by using an SJ to fetch all $k$-tuples $(r_1, r_2, ..., r_k)$ where each $r_i$ ($1 \le i \le k$) is the MBR of a polygon $P_i$ and a ``refines'' every such $k$-tuple by checking if $P_1, P_2, ..., P_k$ indeed have a non-empty intersection.
 
 \subsection{Previous Results} \label{sec:intro:prev}
 
-SJs have been extensively studied in the database system , which has led to the development of numerous interesting methods that, although lacking strong theoretical guarantees, demonstrate excellent empirical performance on real-world applications. We refer the interested readers to \cite{mp01,???} as entry points into the literature.
+SJs have been extensively studied in the database system , which has led to the development of numerous interesting methods that, although lacking strong theoretical guarantees, demonstrate excellent empirical performance on real-world applications. We refer the interested readers to \cite{apr+00,mp01,???} as entry points into the literature.
 
 \vgap
 
-
+From the theory perspective, SJs are best understood when $k = 2$, i.e., the {\em pairwise} scenario, where the problem can be solvable in $O(n \log n + \out)$ time by the standard planesweep technique \cite{bcko08}.
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
