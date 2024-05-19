@@ -128,11 +128,11 @@ In \cite{kcko22}, Khamis et al.\ investigated a type of joins that extend the co
 
 \vgap 
 
-Finally, it is worth mentioning that $\Omega(n \log n)$ is a lower bound on the runtime of any comparison-based algorithm solving the $k$-SJ problem, even for $k = 2$. This can be established via a simple reduction (presented in Appendix~\ref{app:lb} for self-containment) from the {\em element distinctness} (ED) problem, where we are given $n$ real values $e_1, e_2, ..., e_n$ and need to decide whether there are distinct $i, j \in [n]$ satisfying $e_i = e_j$. The ED problem demands $\Omega(n \log n)$ comparisons to solve \cite{dl79}.  
+It is worth noting that $\Omega(n \log n)$ is a lower bound on the runtime of any comparison-based algorithm solving the $k$-SJ problem, even for $k = 2$. This can be established via a simple reduction (presented in Appendix~\ref{app:lb} for self-containment) from the {\em element distinctness} (ED) problem, where we are given $n$ real values $e_1, e_2, ..., e_n$ and need to decide whether there are distinct $i, j \in [n]$ satisfying $e_i = e_j$. The ED problem demands $\Omega(n \log n)$ comparisons to solve \cite{dl79}.  
 
 \subsection{Our Results} \label{sec:intro:ours} 
 
-In this paper, we show that the $k$-SJ problem can be settled by a comparison-based algorithm 
+In this paper, we show that the $k$-SJ problem can be settled by a comparison-based algorithm that runs in $O(n \log n + \out)$ time and uses  $O(n)$ space, regardless of the value of the constant $k$. The time complexity is asymptotically optimal and significantly improves the current state of the art \cite{kcko22}.
 
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
