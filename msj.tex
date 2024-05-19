@@ -24,6 +24,7 @@
 \def\J{\mathcal{J}}
 \def\II{\mathscr{I}}
 \def\L{\mathcal{L}}
+\def\P{\mathcal{P}}
 \def\Q{\mathcal{Q}}
 \def\R{\mathcal{R}}
 \def\T{\mathcal{T}}
@@ -68,19 +69,23 @@
 
 
 \begin{abstract}
-    In a {\em multiway spatial join}, we are given a constant number $k \geq 2$ of sets containing axis-parallel rectangles in a 2D space, denoted as $R_1, R_2, ..., R_k$. The objective is to identify and report all $k$-tuples $(r_1, r_2, ..., r_k) \in R_1 \times R_2 \times ... \times R_k$ where the rectangles $r_1, r_2, ..., r_k$ have a non-empty intersection, i.e., $r_1 \cap r_2 \cap ... \cap r_k \neq \emptyset$. This problem holds significant importance in spatial databases and has been extensively studied for over two decades. We explain how to settle the problem in $O(n \log n + \out)$ time using $O(n)$ space --- regardless of the constant $k$ --- where $n = \sum_{i=1}^k |R_i|$ and $\out$ is the result size (i.e., the total number of $k$-tuples reported). The time complexity is asymptotically optimal in the class of comparison-based algorithms, to which our solution belongs. Our result significantly improves the state of the art, which is an algorithm with running time $O(n \log^{\Theta(k)} n + \out)$.
+    In a {\em multiway spatial join}, we are given a constant number $k \geq 3$ of sets containing axis-parallel rectangles in a 2D space, denoted as $R_1, R_2, ..., R_k$. The objective is to identify and report all $k$-tuples $(r_1, r_2, ..., r_k) \in R_1 \times R_2 \times ... \times R_k$ where the rectangles $r_1, r_2, ..., r_k$ have a non-empty intersection, i.e., $r_1 \cap r_2 \cap ... \cap r_k \neq \emptyset$. This problem holds significant importance in spatial databases and has been extensively studied for over two decades. We explain how to settle the problem in $O(n \log n + \out)$ time using $O(n)$ space --- regardless of the constant $k$ --- where $n = \sum_{i=1}^k |R_i|$ and $\out$ is the result size (i.e., the total number of $k$-tuples reported). The time complexity is asymptotically optimal in the class of comparison-based algorithms, to which our solution belongs. Our result significantly improves the state of the art, which is an algorithm with running time $O(n \log^{\Theta(k)} n + \out)$.
 \end{abstract}
 
 \maketitle 
 
 \section{Introduction} \label{sec:intro}
 
-This paper revisits the {\em multiway spatial join} (MSJ) problem defined as follows. Let $k$ be a constant integer at least 2. The input of the {\em $k$-MSJ problem} comprises $k$ sets --- denoted as $R_1, R_2, ..., R_k$ --- of axis-parallel rectangles\footnote{A rectangle $r$ in 2D space is said to be {\em axis-parallel} if it has the form $r = [x_1, x_2] \times [y_1, y_2]$.} in $\real^2$. The objective is to find all the $k$-tuples $(r_1, r_2, ..., r_k)$ such that
+This paper revisits the {\em multiway spatial join} (MSJ) problem defined as follows. Let $k$ be a constant integer at least 3. The input of {\em $k$-MSJ} comprises $k$ sets --- denoted as $R_1, R_2, ..., R_k$ --- of axis-parallel rectangles\footnote{A rectangle $r$ in 2D space is {\em axis-parallel} if it has the form $r = [x_1, x_2] \times [y_1, y_2]$.} in $\real^2$. The objective is to find all the $k$-tuples $(r_1, r_2, ..., r_k)$ such that
 \myitems{
     \item $r_i \in R_i$ for each $1 \le i \le k$; and
     \item $r_1 \cap r_2 \cap ... \cap r_k \neq \emptyset$, namely, the $k$ rectangles $r_1, r_2, ..., r_k$ have a non-empty intersection.
 }
 We represent the set of these $k$-tuples as $\J_k(R_1, R_2, ..., R_k)$ and refer to it as the {\em join result}. Set $n = \sum_{i=1}^k |R_i|$, i.e., the input size, and $\out = |\J_k(R_1, R_2, ..., R_k)|$, i.e., the output size.
+
+\vgap
+
+MSJ is a fundamental operation in spatial databases, which manage geometric entities such as land parcels, service areas, habitat zones, commercial districts, administrative boundaries, etc. It plays a crucial role in implementing the {\em filter-refinement mechanism} \cite{???}, the dominant approach in spatial databases for computing the overlay information of different entities. Specifically, a geometric entity, at the lowest level, is typically modeled as a polygon. Determining whether two entities overlap amounts to deciding if two polygons intersect, which can be very time consuming when the two polygons have complex boundaries. To alleviate the computation burden, a spatial database stores the {\em minimum bounding rectangle} (MBR) of each polygon $\P$, which is the smallest axis-parallel rectangle containing $\P$. Two polygons $\P_1$ and $\P_2$ can overlap with each other only if their MBRs $r_1$ and $r_2$ have a non-empty intersection.
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
