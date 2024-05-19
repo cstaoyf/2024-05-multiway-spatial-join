@@ -99,7 +99,7 @@ From the theory perspective, SJs are best understood when $k = 2$, i.e., the {\e
 
 \vgap
 
-Year 2022 witnessed two independent works \cite{ty22,???} that reduce the time complexity of the $k$-SJ problem to $O((n + \out) \cdot \polylog n)$. Interestingly, neither \cite{ty22} nor \cite{???} studied $k$-SJ explicitly. In \cite{ty22}, Tao and Yi studied multiple variants of interval intersection joins under updates. The variant most relevant to our context is the following. For each $i \in [k]$, let $\I_i$ be a set of (one-dimensional) intervals in $\real$.
+Year 2022 witnessed two independent works \cite{ty22,???} that, although not addressing the problem $k$-SJ directly, imply algorithms capable of solving the $k$-SJ problem in $O((n + \out) \cdot \polylog n)$ time.  Specifically, in \cite{ty22}, Tao and Yi studied multiple variants of interval intersection joins under updates. Most relevant to our context is the variant where the input contains, for each $i \in [k]$, a set $\I_i$ of (one-dimensional) intervals in $\real$, and the join result comprises all $k$-tuples $(I_1, I_2, ..., I_k) \in \I_1 \times \I_2 \times ... \times \I_k$ such that $\bigcap_{i=1}^k I_i \neq \emptyset$. Set $n = \sum_{i=1}^k |\I_i|$. Given the insertion (resp., deletion) of an interval in one of the $k$ sets, the objective is to list the new (resp., disappearing) $k$-tuples in the join result in $O((1+\Delta) \cdot \polylog n)$ time, where $\Delta$ is the number of such $k$-tuples (i.e., change in the result size).
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
