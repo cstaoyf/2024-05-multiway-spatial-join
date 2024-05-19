@@ -107,10 +107,10 @@ From the perspective of theory, SJs are best understood when $k = 2$, i.e., the 
         2 & folklore & $O(n \log n + \out)$ & $O(n)$ & comparison-based optimal \\ 
         \hline
         $\ge 3$ & before 2022 & $O(n^k)$ & - & \\ 
-        $\ge 3$ & \cite{ty22} & $O((n + \out) \cdot \polylog n)$ & $O(n \polylog n)$ & \\ 
-        $\ge 3$ & \cite{kcko22} & $O(n \log^{2k} n + \out)$ & $O(n \log n)$ & \\ 
+        $\ge 3$ & \cite{ty22} & $O((n + \out) \cdot \polylog n)$ & $O(n \polylog n)$ & $k = O(1)$ \\ 
+        $\ge 3$ & \cite{kcko22} & $O(n \log^{2k} n + \out)$ & $O(n \log n)$ & $k = O(1)$ \\ 
         \hline
-        $\ge 3$ & ours & $O(n \log n + \out)$ & $O(n)$ & comparison-based optimal
+        $\ge 3$ & ours & $O(n \log n + \out)$ & $O(n)$ & $k = O(1)$, comparison-based optimal
     \end{tabular}
     
     \vspace{3mm}
