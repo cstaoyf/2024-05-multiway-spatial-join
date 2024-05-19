@@ -75,12 +75,12 @@
 
 \section{Introduction} \label{sec:intro}
 
-This paper revisits the {\em multiway spatial join} (MSJ) problem defined as follows. A rectangle $r$ in 2D space $\real^2$ is said to be {\em axis-parallel} if it has the form $r = [x_1, x_2] \times [y_1, y_2]$. Let $k$ be a constant integer at least 2. The input of MSJ comprises $k$ sets --- denoted as $R_1, R_2, ..., R_k$ --- of axis-parallel rectangles in $\real^2$. The objective is to report all the $k$-tuples $(r_1, r_2, ..., r_k)$ such that
+This paper revisits the {\em multiway spatial join} (MSJ) problem defined as follows. Let $k$ be a constant integer at least 2. The input of MSJ comprises $k$ sets --- denoted as $R_1, R_2, ..., R_k$ --- of axis-parallel rectangles\footnote{A rectangle $r$ in 2D space is said to be {\em axis-parallel} if it has the form $r = [x_1, x_2] \times [y_1, y_2]$.} in $\real^2$. The objective is to find all the $k$-tuples $(r_1, r_2, ..., r_k)$ such that
 \myitems{
     \item $r_i \in R_i$ for each $1 \le i \le k$; and
     \item $r_1 \cap r_2 \cap ... \cap r_k \neq \emptyset$, namely, the $k$ rectangles $r_1, r_2, ..., r_k$ have a non-empty intersection.
 }
-We represent the set of such $k$-tuples as $\J_k(R_1, R_2, ..., R_k)$ and refer to it as the {\em join result}. Let $n = \sum_{i=1}^k |R_i|$, i.e., the input size, and $\out = |\J_k(R_1, R_2, ..., R_k)|$, i.e., the output size.
+We represent the set of these $k$-tuples as $\J_k(R_1, R_2, ..., R_k)$, which will be referred to as the {\em join result}. Set $n = \sum_{i=1}^k |R_i|$, i.e., the input size, and $\out = |\J_k(R_1, R_2, ..., R_k)|$, i.e., the output size.
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
