@@ -34,6 +34,8 @@
 \def\YY{\mathscr{Y}}
 \def\Z{\mathcal{Z}}
 
+\def\out{\mathrm{OUT}}
+
 \allowdisplaybreaks
 %=================================
 
@@ -65,7 +67,7 @@
 
 
 \begin{abstract}
-    Later.
+    In the {\em multiway spatial join} problem, we have a constant number $k \ge 2$ sets of axis-parallel rectangles $R_1, R_2, ..., R_k$ in 2D space and need to report all $(r_1, r_2, ..., r_k) \in R_1 \times R_2 \times ... \times R_k$ such that the $k$ rectangles $r_1, r_2, ..., r_k$ have a non-empty intersection, i.e., $r_1 \cap r_2 \cap ... \cap r_k \neq \emptyset$. The problem, which plays a fundamental role in spatial databases, has been extensively studied for over two decades. In this paper, we show how to settle the problem --- regardless of the constant $k$ --- in $O(n \log n + \out)$ time, where $n = \sum_{i=1}^k |R_i|$ and $\out$ is the total number of $k$-tuples in the result. This significantly improves the state of the art, which is an algorithm with running time $n \log^{\Theta(k)} n + O(\out)$. Our algorithm is comparison-based
 \end{abstract}
 
 \maketitle 
