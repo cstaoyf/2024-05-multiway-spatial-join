@@ -130,17 +130,26 @@ In \cite{kcko22}, Khamis et al.\ investigated a type of joins that extend the co
 
 It is worth noting that $\Omega(n \log n)$ is a lower bound on the runtime of any comparison-based algorithm solving the $k$-SJ problem, even for $k = 2$. This can be established via a simple reduction (presented in Appendix~\ref{app:lb} for self-containment) from the {\em element distinctness} (ED) problem, where we are given $n$ real values $e_1, e_2, ..., e_n$ and need to decide whether there are distinct $i, j \in [n]$ satisfying $e_i = e_j$. The ED problem demands $\Omega(n \log n)$ comparisons to solve \cite{dl79}.  
 
+\todo{Rahul's result?}
+
 \subsection{Our Results} \label{sec:intro:ours} 
 
 In this paper, we show that the $k$-SJ problem can be settled by a comparison-based algorithm that runs in $O(n \log n + \out)$ time and uses  $O(n)$ space, regardless of the value of the constant $k$. The time complexity is asymptotically optimal and significantly improves the current state of the art \cite{kcko22}.
 
 \vgap 
 
-In terms of techniques, our primary contribution is a result on the mathematical structure of the $k$-SJ problem. To facilitate the description of our finding, let us ``define'' the $k$-SJ problem at $k = 1$ as follows: the input is a set $R$ of $n$ rectangles in $\real^2$, and the objective is to list all the rectangles in $R$. Clearly, this 1-SJ problem can be trivially solved in $O(n)$ time. Our main technical contribution can now be stated as: 
+In terms of techniques, our primary contribution is a result on the mathematical structure of the $k$-SJ problem. Specifically, for any $n \ge 1$ and $k \ge 2$, define function $F(n, k)$ to be the lowest value such that any instance of the $k$-SJ problem with input size $n$ and output size $\out$ can be solved in $F(n, k) + O(\out)$ time. Specificaly, define $F(n, 1) = n$ for any $n \ge 1$. Our main technical contribution can now be stated as: 
 
-\boxminipg{0.9\linewidth}{
-    {\bf Main Discovery:} For $k \ge 3$, the $k$-SJ problem can be converted, in $O(n \log n)$ time, to 
-}
+\begin{theorem} \label{thm:main}
+    d
+\end{theorem}
+
+
+% To facilitate the description of our finding, let us ``define'' the $k$-SJ problem at $k = 1$ as follows: the input is a set $R$ of $n$ rectangles in $\real^2$, and the objective is to list all the rectangles in $R$. Clearly, this 1-SJ problem can be trivially solved in $O(n)$ time. Our main technical contribution can now be stated as: 
+% 
+% \boxminipg{0.9\linewidth}{
+%     {\bf Main Discovery:} For $k \ge 3$, the $k$-SJ problem can be converted, in $O(n \log n)$ time, to $F_1(k)$ instances of the $(k-1)$-SJ problem and 
+% }
 
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
