@@ -126,13 +126,23 @@ Year 2022 witnessed two independent works \cite{ty22,kcko22} that, although not 
 
 In \cite{kcko22}, Khamis et al.\ investigated a type of joins that extend the conventional equi-join in two ways. First, each attribute value in a relation is an interval (rather than a real value); second, each equality predicate in equi-join is replaced with an ``non-empty intersection'' predicate on the attributes involved. The $k$-SJ problem can be converted to solving a join defined next under the framework of \cite{kcko22}. For each $i \in [k]$, define $R_i$ as a relation over two attributes $X$ and $Y$. For each tuple $\bm{u} \in R_i$, its values $\bm{u}(X)$ and $\bm{u}(Y)$ on the two attributes are both intervals (effectively defining a rectangle). The objective is to output all $k$-tuples $(\bm{u}_1, \bm{u}_2, ..., \bm{u}_k) \in R_1 \times R_2 \times ... \times R_k$ satisfying $\bigcap_{i=1}^k \bm{u}_i(X) \ne \emptyset$ and $\bigcap_{i=1}^k \bm{u}_i(Y) \ne \emptyset$. It is clear that there is one-one correspondence between the result of this join and that of k-SJ. Khamis et al.\ \cite{kcko22} developed an algorithm that can process the join  in $O(n \log^{2k} n + \out)$ time. Their algorithm requires $O(n \log n)$ space.
 
-\subsection{Our Results} \label{sec:intro:ours}
+\vgap 
+
+Finally, it is worth mentioning that $\Omega(n \log n)$ is a lower bound on the runtime of any comparison-based algorithm solving the $k$-SJ problem, even for $k = 2$. This can be established via a simple reduction (presented in Appendix~\ref{app:lb} for self-containment) from the {\em element distinctness} (ED) problem, where we are given $n$ real values $e_1, e_2, ..., e_n$ and need to decide whether there are distinct $i, j \in [n]$ satisfying $e_i = e_j$. The ED problem demands $\Omega(n \log n)$ comparisons to solve \cite{dl79}.  
+
+\subsection{Our Results} \label{sec:intro:ours} 
+
+In this paper, we show that the $k$-SJ problem can be settled by a comparison-based algorithm 
 
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
 
 \balance
+
+\appendix 
+
+\section{An $\bm{\Omega(n \log n)}$ Lower Bound} \label{app:lb}
 
 %\end{sloppy}
 \end{document}
