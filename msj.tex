@@ -138,17 +138,25 @@ In this paper, we show that the $k$-SJ problem can be settled by a comparison-ba
 
 \vgap 
 
-In terms of techniques, our primary contribution is a result on the problem's mathematical structure. Fix any $k \ge 3$ and an arbitrary algorithm $\A$ for the $(k-1)$-SJ problem. For any $n \ge 1$, define function $F_{k-1}(n, \out)$ to return the worst-case running time of $\A$ on any instance of the $(k-1)$-SJ problem having input size $n$ and output size $\out$. Our main technical contribution is to establish: 
+In terms of techniques, our primary contribution is the revelation of a new property on the problem's mathematical structure. Fix any $k \ge 3$ and an {\em arbitrary} algorithm $\A$ for the $(k-1)$-SJ problem. For any $n \ge 1$, define function $F_{k-1}(n, \out)$ to return the worst-case running time of $\A$ on any instance of the $(k-1)$-SJ problem having input size $n$ and output size $\out$. Our main technical contribution is to establish: 
 
-\begin{theorem} \label{thm:main}
-    For any $n \ge 1$ and $k \ge 3$, it holds that 
+\begin{theorem} \label{thm:main-recur}
+    For any $n \ge 1$, the $k$-SJ problem can be solved in
     \myeqn{
-        F(n, k, \out) = O(k^3) \cdot \big( F(n, k-1, \out) + n \log n + \out \big).
+        O(k^3) \cdot \big( F_{k-1}(n, \out) + n \log n + \out \big)
         \label{eqn:main:reccurrence}
     }
+    time.
+    The space usage is asymptotically the same as that of $\A$.
 \end{theorem}
 
-The theorem implies the existence of a recursive nature of $k$-SJ. 
+The theorem, together with the fact that $\A$ can be any solution to $(k-1)$-SJ, implies the existence of a recursive nature of $k$-SJ. Indeed, we will see that the $k$-SJ problem can be converted to $O(k^3)$ instances of $(k-1)$-SJ problem, all of which have input size at most $n$ and output size at most $\out$, plus an additional processing cost of $O(n \log n + \out)$. For 2-SJ, we can set $\A$ simply to the ``folklore algorithm'' mentioned in Section~\ref{sec:intro:prev}, which ensures $F_2(n, \out) = O(n \log n + \out)$ and uses linear space. Combining this with \eqref{eqn:main:reccurrence} yields a recurrence that relates the time complexity of $k$-SJ to that of $(k-1)$-SJ. Solving the recurrence yields: 
+
+\begin{theorem} \label{thm:main-alg}
+    For $k \ge 3$, we can settle the $k$-SJ problem in $O( (k!)^3 \cdot (n \log n + \out))$ time and $O(k \cdot n)$ space.
+\end{theorem}
+
+When $k$ is a constant, the time and space complexities become $O(n \log n + \out)$ and $O(n)$, as promised.
 
 % To facilitate the description of our finding, let us ``define'' the $k$-SJ problem at $k = 1$ as follows: the input is a set $R$ of $n$ rectangles in $\real^2$, and the objective is to list all the rectangles in $R$. Clearly, this 1-SJ problem can be trivially solved in $O(n)$ time. Our main technical contribution can now be stated as: 
 % 
