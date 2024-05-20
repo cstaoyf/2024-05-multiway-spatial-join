@@ -69,7 +69,7 @@
 
 
 \begin{abstract}
-    In a {\em spatial join}, we are given a constant number $k \geq 2$ of sets containing axis-parallel rectangles in a 2D space, denoted as $R_1, R_2, ..., R_k$. The objective is to report all $k$-tuples $(r_1, r_2, ..., r_k) \in R_1 \times R_2 \times ... \times R_k$ where the rectangles $r_1, r_2, ..., r_k$ have a non-empty intersection, i.e., $r_1 \cap r_2 \cap ... \cap r_k \neq \emptyset$. This problem holds significant importance in spatial databases and has been extensively studied for over two decades. We explain how to settle the problem in $O(n \log n + \out)$ time using $O(n)$ space --- regardless of the constant $k$ --- where $n = \sum_{i=1}^k |R_i|$ and $\out$ is the result size (i.e., the total number of $k$-tuples reported). The time complexity is asymptotically optimal in the class of comparison-based algorithms, to which our solution belongs. Our result significantly improves the state of the art, which is an algorithm with running time $O(n \log^{2k} n + \out)$.
+    In a {\em spatial join}, we are given a constant number $k \geq 2$ of sets containing axis-parallel rectangles in a 2D space, denoted as $R_1, R_2, ..., R_k$. The objective is to report all $k$-tuples $(r_1, r_2, ..., r_k) \in R_1 \times R_2 \times ... \times R_k$ where the rectangles $r_1, r_2, ..., r_k$ have a non-empty intersection, i.e., $r_1 \cap r_2 \cap ... \cap r_k \neq \emptyset$. This problem holds significant importance in spatial databases and has been extensively studied for over two decades. We explain how to settle the problem in $O(n \log n + \out)$ time using $O(n + \out)$ space --- regardless of the constant $k$ --- where $n = \sum_{i=1}^k |R_i|$ and $\out$ is the result size (i.e., the total number of $k$-tuples reported). The time complexity is asymptotically optimal in the class of comparison-based algorithms, to which our solution belongs. Our result significantly improves the state of the art, which is an algorithm with running time $O(n \log^{2k} n + \out)$.
 \end{abstract}
 
 \maketitle 
@@ -107,10 +107,10 @@ From the perspective of theory, SJs are best understood when $k = 2$, i.e., the 
         2 & folklore & $O(n \log n + \out)$ & $O(n)$ & comparison-based optimal \\ 
         \hline
         $\ge 3$ & before 2022 & $O(n^k)$ & - & \\
-        $\ge 3$ & \cite{ty22} & $O((n + \out) \cdot \polylog n)$ & $O(n \polylog n)$ & \\
-        $\ge 3$ & \cite{kcko22} & $O(n \log^{2k} n + \out)$ & $O(n \log n)$ & \\
+        $\ge 3$ & \cite{ty22} & $O((n + \out) \cdot \polylog n)$ & $O(n \polylog n + \out)$ & \\
+        $\ge 3$ & \cite{kcko22} & $O(n \log^{2k} n + \out)$ & $O(n \log n + \out)$ & \\
         \hline
-        $\ge 3$ & ours & $O(n \log n + \out)$ & $O(n)$ & comparison-based optimal
+        $\ge 3$ & ours & $O(n \log n + \out)$ & $O(n + \out)$ & comparison-based optimal
     \end{tabular}
     
     \vspace{3mm}
@@ -120,11 +120,11 @@ From the perspective of theory, SJs are best understood when $k = 2$, i.e., the 
 
 \vgap
 
-Year 2022 witnessed two independent works \cite{ty22,kcko22} that, although not tackling $k$-SJ directly, imply provably fast $k$-SJ algorithms. Specifically, in \cite{ty22}, Tao and Yi studied several variants of ``interval intersection joins'' under updates. Most relevant to our context is the variant where the input includes, for each $i \in [k]$, a set $\I_i$ of 1D intervals in $\real$, and the join result comprises all $k$-tuples $(I_1,$ $I_2,$ $..., I_k) \in \I_1 \times \I_2 \times ... \times \I_k$ with $\bigcap_{i=1}^k I_i \neq \emptyset$. The objective is to design a data structure, which, given the insertion (resp., deletion) of an interval in one of the $k$ sets, can identify all the newly-appearing (resp., disappearing) $k$-tuples in the join result in $O((1+\Delta) \cdot \polylog n)$ time, where $n = \sum_{i=1}^k |\I_i|$ and $\Delta$ is the number of such $k$-tuples. Tao and Yi \cite{ty22} presented a structure of $O(n \polylog n)$ space achieving the purpose. Combining their structure with planesweep, one can obtain an algorithm for solving the $k$-SJ problem in $O((n + \out) \cdot \polylog n)$ time.
+Year 2022 witnessed two independent works \cite{ty22,kcko22} that, although not tackling $k$-SJ directly, imply provably fast $k$-SJ algorithms. Specifically, in \cite{ty22}, Tao and Yi studied several variants of ``interval intersection joins'' under updates. Most relevant to our context is the variant where the input includes, for each $i \in [k]$, a set $\I_i$ of 1D intervals in $\real$, and the join result comprises all $k$-tuples $(I_1,$ $I_2,$ $..., I_k) \in \I_1 \times \I_2 \times ... \times \I_k$ with $\bigcap_{i=1}^k I_i \neq \emptyset$. The objective is to design a data structure, which, given the insertion (resp., deletion) of an interval in one of the $k$ sets, can identify all the newly-appearing (resp., disappearing) $k$-tuples in the join result in $O((1+\Delta) \cdot \polylog n)$ time, where $n = \sum_{i=1}^k |\I_i|$ and $\Delta$ is the number of such $k$-tuples. Tao and Yi \cite{ty22} presented a structure of $O(n \polylog n)$ space achieving the purpose. Combining their structure with planesweep, one can obtain an algorithm for solving the $k$-SJ problem in $O((n + \out) \cdot \polylog n)$ time using $O(n \polylog n + \out)$ space.
 
 \vgap
 
-In \cite{kcko22}, Khamis et al.\ investigated a type of joins that extends the conventional equi-join in two ways. First, each attribute value in a relation is an interval (rather than a real value); second, each equality predicate in equi-join is replaced with a ``non-empty intersection'' predicate on the attributes involved. The $k$-SJ problem can be converted to solving a join defined next under the framework of \cite{kcko22}. For each $i \in [k]$, define $R_i$ as a relation over two attributes $X$ and $Y$. For each tuple $\bm{u} \in R_i$, its values $\bm{u}(X)$ and $\bm{u}(Y)$ on the two attributes are both intervals (effectively defining a rectangle). The objective is to output all $k$-tuples $(\bm{u}_1, \bm{u}_2, ..., \bm{u}_k) \in R_1 \times R_2 \times ... \times R_k$ satisfying $\bigcap_{i=1}^k \bm{u}_i(X) \ne \emptyset$ and $\bigcap_{i=1}^k \bm{u}_i(Y) \ne \emptyset$. It is clear that there is one-one correspondence between the result of this join and that of k-SJ. Khamis et al.\ \cite{kcko22} developed an algorithm that can process the join  in $O(n \log^{2k} n + \out)$ time. Their algorithm requires $O(n \log n)$ space.
+In \cite{kcko22}, Khamis et al.\ investigated a type of joins that extends the conventional equi-join in two ways. First, each attribute value in a relation is an interval (rather than a real value); second, each equality predicate in equi-join is replaced with a ``non-empty intersection'' predicate on the attributes involved. The $k$-SJ problem can be converted to solving a join defined next under the framework of \cite{kcko22}. For each $i \in [k]$, define $R_i$ as a relation over two attributes $X$ and $Y$. For each tuple $\bm{u} \in R_i$, its values $\bm{u}(X)$ and $\bm{u}(Y)$ on the two attributes are both intervals (effectively defining a rectangle). The objective is to output all $k$-tuples $(\bm{u}_1, \bm{u}_2, ..., \bm{u}_k) \in R_1 \times R_2 \times ... \times R_k$ satisfying $\bigcap_{i=1}^k \bm{u}_i(X) \ne \emptyset$ and $\bigcap_{i=1}^k \bm{u}_i(Y) \ne \emptyset$. It is clear that there is one-one correspondence between the result of this join and that of k-SJ. Khamis et al.\ \cite{kcko22} developed an algorithm that can process the join  in $O(n \log^{2k} n + \out)$ time. Their algorithm requires $O(n \log n + \out)$ space.
 
 \vgap 
 
@@ -134,7 +134,7 @@ It is worth noting that $\Omega(n \log n)$ is a lower bound on the runtime of an
 
 \subsection{Our Results} \label{sec:intro:ours} 
 
-In this paper, we show that the $k$-SJ problem can be settled by a comparison-based algorithm that runs in $O(n \log n + \out)$ time and uses  $O(n)$ space, regardless of the constant $k$. The time complexity is asymptotically optimal and significantly improves the current state of the art \cite{kcko22}.
+In this paper, we show that the $k$-SJ problem can be settled by a comparison-based algorithm that runs in $O(n \log n + \out)$ time and uses  $O(n + \out)$ space, regardless of the constant $k$. The time complexity is asymptotically optimal.
 
 \vgap 
 
@@ -146,16 +146,16 @@ In terms of techniques, our primary contribution is the revelation of a new prop
         O(k^3) \cdot \big( F_{k-1}(n, \out) + n \log n + \out \big)
         \label{eqn:main:reccurrence}
     }
-    time using asymptotically the same space as $\A$.
+    time using $O(n + \out)$ space, plus the space cost of $\A$.
 \end{theorem}
 
 The theorem implies the existence of a recursive nature of $k$-SJ. Indeed, we will see that the $k$-SJ can be converted to $O(k^3)$ instances of the $(k-1)$-SJ problem --- all of which have input size at most $n$ and output size at most $\out$ --- plus an additional processing cost of $O(n \log n + \out)$. Furthermore, if $\A$ is comparison-based, so is the $k$-SJ algorithm that ensues. For 2-SJ, we can set $\A$ simply to the ``folklore algorithm'' mentioned in Section~\ref{sec:intro:prev}, which ensures $F_2(n, \out) = O(n \log n + \out)$ and uses linear space. Combining this with \eqref{eqn:main:reccurrence} yields a recurrence that relates the time complexity of $k$-SJ to that of $(k-1)$-SJ. Solving the recurrence yields:
 
 \begin{theorem} \label{thm:main-alg}
-    For $k \ge 3$, we can settle $k$-SJ with a comparison-based algorithm in $O( c^k (k!)^3 \cdot (n \log n + \out))$ time and $O(k \cdot n)$ space, where $c > 1$ is a positive constant.
+    For $k \ge 3$, we can settle $k$-SJ with a comparison-based algorithm in $O( c^k (k!)^3 \cdot (n \log n + \out))$ time and $O(k \cdot n + \out)$ space, where $c > 1$ is a positive constant.
 \end{theorem}
 
-When $k = O(1)$, the time and space complexities become $O(n \log n + \out)$ and $O(n)$, as promised.
+When $k = O(1)$, the time and space complexities become $O(n \log n$ $+ \out)$ and $O(n + \out)$, as promised.
 
 \vgap 
 
