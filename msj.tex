@@ -252,16 +252,24 @@ Let us represent the result of the H-V $k$-SJ problem as $\J_k(R_1, ..., R_{k-2}
 Let us now focus on any $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in  \J_k(R_1, ..., R_{k-2},$ $H, V)$. We classify the tuple into one of the two categories below: 
 
 \myitems{
-    \item {{\bf Cat.\ 1:}} $h$ crosses all of $r_1, ..., r_{k-2}$, and $v$  crosses all of $r_1, ..., r_{k-2}$; 
+    \item {{\bf Type 1:}} $h$ crosses all of $r_1, ..., r_{k-2}$, and $v$  crosses all of $r_1, ..., r_{k-2}$; 
     
-    \item {{\bf Cat.\ 2:}} $h$ or $v$ fails to cross some rectangle in $\set{r_1, r_2, ..., r_{k-2}}$. This means the existence of at least one rectangle $r_i$, for some $i \in [k-2]$, covers either an endpoint of $h$, or an endpoint of $v$, or both.
+    \item {{\bf Type 2:}} $h$ or $v$ fails to cross some rectangle in $\set{r_1, r_2, ..., r_{k-2}}$. This means the existence of at least one rectangle $r_i$, for some $i \in [k-2]$, covers either an endpoint of $h$, or an endpoint of $v$, or both.
 }
+Figure~\ref{fig:hv:cats} illustrates a result tuple of each type, assuming $k = 4$.
 
 \begin{figure} 
     \begin{tabular}{cc} 
         \includegraphics[height=27mm]{./artwork/cat1} & 
-        \includegraphics[height=27mm]{./artwork/cat2}
+        \hspace{5mm} \includegraphics[height=27mm]{./artwork/cat2} \\
+        (a) Cat.\ 1 result tuple & 
+        (b) Cat.\ 2 result tuple
     \end{tabular}
+    
+    \figcapup 
+    \caption{Two categories of H-V $k$-SJ result tuples ($k$ = 4)} 
+    \label{fig:hv:types}
+    \figcapdown
 \end{figure}
 
 
