@@ -171,13 +171,19 @@ This section will define some notions useful for our discussion. Then, we will i
 
 \begin{figure*}
     \begin{tabular}{cccc}
-        \includegraphics[height=30mm]{./artwork/prob-a} &
+        \includegraphics[height=30mm]{./artwork/prob-a} & 
+        \hspace{3mm}
         \includegraphics[height=30mm]{./artwork/prob-b} &
+        \hspace{3mm}
         \includegraphics[height=30mm]{./artwork/prob-c} &
-        \includegraphics[height=30mm]{./artwork/prob-a} \\
+        \hspace{3mm}
+        \includegraphics[height=30mm]{./artwork/prob-d} \\
         (a) Problem $\EuScript{A}$ &
+        \hspace{3mm}
         (b) Problem $\EuScript{B}$ &
+        \hspace{3mm}
         (c) Problem $\EuScript{C}$ &
+        \hspace{3mm}
         (d) Problem $\EuScript{D}$
     \end{tabular}
 
@@ -206,7 +212,11 @@ In Appendix~\ref{app:prob-b}, we explain how to solve the problem in $O(n \log n
 
 In Appendix~\ref{app:prob-c}, we explain how to solve the problem in $O(n \log n + \out)$ time where $n = |H| + |R|$ and $\out$ is the number of pairs $(h, r) \in H \times R$ such that $r$ contains $h$.
 
+\extraspacing {\bf Problem $\bm{\EuScript{D}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each rectangle $r \in R$, all the segments $h \in H$ crossing $r$. Furthermore, those segments need to be sorted by their y-coordinates. Formally, if $h_1, h_2, ..., h_t$ (for some $t \ge 1$) are all the segments in $H$ crossing $r$, we output $(r: h_1, h_2, ..., h_t)$, provided that $y_i > y_{i-1}$ for each $i \in [2, t]$ where $y_i$ (resp., $y_{i-1}$) is the y-projection of $h_i$ (resp., $h_{i-1}$). Figure~\ref{fig:probs}d gives an example where $H = \set{h_1, h_2, h_3}$ and $R = \set{r_1, r_2}$; the output is $\set{(r_1: h_3, h_2), (r_2: h_2, h_1)}$.
 
+\vgap
+
+In Appendix~\ref{app:prob-d}, we explain how to solve the problem in $O(n \log n + \out)$ time where $n = |H| + |R|$ and $\out$ is the number of pairs $(h, r) \in H \times R$ such that $h$ crosses $r$.
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
@@ -220,6 +230,8 @@ In Appendix~\ref{app:prob-c}, we explain how to solve the problem in $O(n \log n
 \section{Algorithm for Problem $\bm{\EuScript{B}}$} \label{app:prob-b}
 
 \section{Algorithm for Problem $\bm{\EuScript{C}}$} \label{app:prob-c}
+
+\section{Algorithm for Problem $\bm{\EuScript{D}}$} \label{app:prob-d}
 
 \section{An $\bm{\Omega(n \log n)}$ Lower Bound for 2-SJ} \label{app:lb}
 
