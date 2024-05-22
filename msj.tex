@@ -220,7 +220,7 @@ In Appendix~\ref{app:prob-d}, we explain how to solve the problem in $O(n \log n
 
 \section{H-V Multiway Spatial Joins} \label{sec:hv}
 
-This section deals with a special version of the $k$-SJ problem. Recall that the input of $k$-SJ comprises $k$ sets of rectangles: $R_1, R_2, ..., R_k$. In the special version --- which we name the {\em H-V $k$-SJ} problem ---  we impose the constraints that (i) $k \ge 3$, (ii) $R_{k-1}$ should be a set of horizontal segments, and (iii) $R_k$ should be a set of vertical segments. For better clarity, we will represent the input sets as $R_1, R_2, ..., R_{k-2}, H$ ($=R_{k-1}$), and $V$ ($=R_k$). Remember that each $R_i$ ($i \in [k-2]$) is a set of rectangles. As we will see in the next section, solving the H-V $k$-SJ problem is an imperative step for settling the original $k$-SJ problem. 
+This section deals with a special version of the $k$-SJ problem. Recall that the input of $k$-SJ comprises $k$ sets of rectangles: $R_1, R_2, ..., R_k$. In the special version --- which we name the {\em H-V $k$-SJ} problem ---  we impose the constraints that (i) $k \ge 3$, (ii) $R_{k-1}$ should be a set of horizontal segments, and (iii) $R_k$ should be a set of vertical segments. For better clarity, we will represent the input sets as $R_1, R_2, ..., R_{k-2}, H$ ($=R_{k-1}$), and $V$ ($=R_k$). Remember that each $R_i$ ($i \in [k-2]$) is a set of rectangles. As shown in the next section, solving the H-V $k$-SJ problem is an imperative step for settling the original $k$-SJ problem. 
 
 \vgap 
 
@@ -240,8 +240,10 @@ The rest of the section serves as a proof for:
     \myeqn{
         O(k) \cdot \big( F_{k-1}(n, \out) + n\log n + \out \big) \nn 
     }
-    time using $O(n + \out + G_{k-1}(n, \out))$ space.
+    time using $O(n + \out) + G_{k-1}(n, \out)$ space.
 \end{lemma}
+
+\subsection{Categorizing the Result Tuples} \label{sec:hv:result-part}
 
 
 \todo{Remark on Rahul's result}
