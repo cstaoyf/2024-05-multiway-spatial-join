@@ -142,8 +142,9 @@ In terms of techniques, our primary contribution is the revelation of a new prop
 \begin{theorem} \label{thm:main-recur}
     For any $n \ge 1$, equipped with the algorithm $\A$ as described above, the $k$-SJ problem can be solved in time
     \myeqn{
-        O(k^3) \cdot \big( F_{k-1}(n, \out) + n \log n + \out \big).
-        \label{eqn:main:reccurrence}
+        O(k^3) \cdot \big( F_{k-1}(n, \out) + n \log n + k \cdot \out \big).
+        \nn
+        %\label{eqn:main:reccurrence}
     }
 %     time using $O(n + \out)$ space, plus the worst-case space of $\A$ on any $(k-1)$-SJ instance with input size $n$ and output size $\out$.
 \end{theorem}
@@ -151,12 +152,12 @@ In terms of techniques, our primary contribution is the revelation of a new prop
 The theorem implies the existence of a recursive nature of $k$-SJ. Indeed, we will see that the $k$-SJ can be converted to $O(k^3)$ instances of the $(k-1)$-SJ problem --- all of which have input size at most $n$ and output size at most $\out$ --- plus an additional processing cost of $O(n \log n + \out)$. Furthermore, if $\A$ is comparison-based, so is the $k$-SJ algorithm that ensues. For 2-SJ, we can set $\A$ simply to the ``folklore algorithm'' mentioned in Section~\ref{sec:intro:prev}, which ensures $F_2(n, \out) = O(n \log n + \out)$. Combining this with \eqref{eqn:main:reccurrence} yields a recurrence that relates the time complexity of $k$-SJ to that of $(k-1)$-SJ. Solving the recurrence yields:
 
 \begin{theorem} \label{thm:main-alg}
-    For $k \ge 3$, we can settle $k$-SJ with a comparison-based algorithm in $O( c^k (k!)^3 \cdot (n \log n + \out))$ time.
+    For $k \ge 3$, we can settle $k$-SJ with a comparison-based algorithm in $O( c^k (k!)^3 \cdot (n \log n + k \cdot \out))$ time.
     %and $O(k \cdot n + \out)$ space, where $c > 1$ is a positive constant.
 \end{theorem}
 
 
-We will also prove that the space of our algorithm is $O(k \cdot n)$. When $k = O(1)$, the time and space complexities become $O(n \log n$ $+ \out)$ and $O(n + \out)$, as promised.
+We will also prove that the space of our algorithm is $O(k \cdot n + k \cdot \out)$. When $k = O(1)$, the time and space complexities become $O(n \log n$ $+ \out)$ and $O(n + \out)$, as promised.
 
 \vgap 
 
