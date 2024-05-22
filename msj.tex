@@ -85,7 +85,7 @@ We represent the set of $k$-tuples described above as $\J_k(R_1, R_2, ..., R_k)$
 
 \vgap
 
-SJ is a fundamental operation in spatial databases (SDB), which manage {\em geometric entities} such as land parcels, service areas, habitat zones, commercial districts, administrative boundaries, etc. It plays a crucial role in implementing the {\em filter-refinement mechanism}, which is the dominant approach for computing overlay information in an SDB. To explain this mechanism, first note that a geometric entity is typically modeled as a polygon. Determining whether two entities overlap amounts to deciding if two polygons intersect, which can be exceedingly expensive when the polygons have complex boundaries. To mitigate the issue, an SDB stores, for each polygon $g$, its {\em minimum bounding rectangle} (MBR) defined as the smallest axis-parallel rectangle enclosing $g$; this way, each set $G$ of geometric entities spawns a set $R$ of MBRs. Consider $k$ sets of geometric entities $G_1, G_2, ..., G_k$, and the corresponding sets of MBRs $R_1, R_2, ..., R_k$. To compute overlays from $G_1, G_2, ..., G_k$, filter-refinement first executes (i) ``a filter step'', which performs an SJ to obtain $\J_k(R_1, R_2, ..., R_k)$, and (ii) a ``refinement step'', which, for each $(r_1, r_2, ..., r_k) \in \J_k(R_1, R_2, ..., R_k)$, examines if $P_1, P_2, ..., P_k$ indeed have a non-empty intersection, where $P_i$ ($i \in [1, k]$) is the entity in $G_i$ whose MBR is $r_i$.
+SJ is a fundamental operation in spatial databases (SDB), which manage {\em geometric entities} such as land parcels, service areas, habitat zones, commercial districts, administrative boundaries, etc. It plays a crucial role in implementing the {\em filter-refinement mechanism}, which is the dominant approach for computing overlay information in an SDB. To explain this mechanism, first note that a geometric entity is typically modeled as a polygon. Determining whether two entities overlap amounts to deciding if two polygons intersect, which can be exceedingly expensive when the polygons have complex boundaries. To mitigate the issue, an SDB stores, for each polygon $g$, its {\em minimum bounding rectangle} (MBR) defined as the smallest axis-parallel rectangle enclosing $g$; this way, each set $\Gamma$ of geometric entities spawns a set $R$ of MBRs. Consider $k$ sets of geometric entities $\Gamma_1, \Gamma_2, ..., \Gamma_k$, and the corresponding sets of MBRs $R_1, R_2, ..., R_k$. To compute overlays from $\Gamma_1, \Gamma_2, ..., \Gamma_k$, filter-refinement first executes (i) ``a filter step'', which performs an SJ to obtain $\J_k(R_1, R_2, ..., R_k)$, and (ii) a ``refinement step'', which, for each $(r_1, r_2, ..., r_k) \in \J_k(R_1, R_2, ..., R_k)$, examines if $P_1, P_2, ..., P_k$ indeed have a non-empty intersection, where $P_i$ ($i \in [1, k]$) is the entity in $\Gamma_i$ whose MBR is $r_i$.
 
 %Two polygons $P_1$ and $P_2$ can overlap with each other only if their MBRs $r_1$ and $r_2$ intersect.
 
@@ -145,7 +145,7 @@ In terms of techniques, our primary contribution is the revelation of a new prop
         O(k^3) \cdot \big( F_{k-1}(n, \out) + n \log n + \out \big)
         \label{eqn:main:reccurrence}
     }
-    time using $O(n + \out)$ space, plus the space cost of $\A$.
+    time using $O(n + \out)$ space, plus the worst-case space of $\A$ on any $(k-1)$-SJ instance with input size $n$ and output size $\out$.
 \end{theorem}
 
 The theorem implies the existence of a recursive nature of $k$-SJ. Indeed, we will see that the $k$-SJ can be converted to $O(k^3)$ instances of the $(k-1)$-SJ problem --- all of which have input size at most $n$ and output size at most $\out$ --- plus an additional processing cost of $O(n \log n + \out)$. Furthermore, if $\A$ is comparison-based, so is the $k$-SJ algorithm that ensues. For 2-SJ, we can set $\A$ simply to the ``folklore algorithm'' mentioned in Section~\ref{sec:intro:prev}, which ensures $F_2(n, \out) = O(n \log n + \out)$ and uses linear space. Combining this with \eqref{eqn:main:reccurrence} yields a recurrence that relates the time complexity of $k$-SJ to that of $(k-1)$-SJ. Solving the recurrence yields:
@@ -222,9 +222,25 @@ This section deals with a special version of the $k$-SJ problem. Recall that the
 
 \vgap 
 
-Our objective is to prove that the H-V $k$-SJ problem can be reduced to the $(k-1)$-SJ problem --- note: it is $(k-1)$-SJ here, rather than H-V $(k-1)$-SJ. For this purpose, we assume the existence of an algorithm $\A$ that can solve $\kappa$-SJ problems for all $\kappa \in [2, k-1]$. Denote by $F_\kappa(n, \out)$ the worst-case runtime of $\A$ when it is executed on any instance of $\kappa$-SJ that has input size $n$ and output size $\out$. We consider that $F_\kappa(n, \out) \le F_{\kappa + 1}(n, \out)$ for any $\kappa \in [2, k-2]$, that is, its efficiency on $\kappa$-SJ should not be worse than that on $(\kappa+1)$-SJ.
+Our objective is to prove that the H-V $k$-SJ problem can be reduced to the $(k-1)$-SJ problem --- note: it is $(k-1)$-SJ here, rather than H-V $(k-1)$-SJ. For this purpose, we assume the existence of an algorithm $\A$ that can solve $\kappa$-SJ problems for all $\kappa \in [2, k-1]$. Denote by 
+\myitems{
+    \item $F_\kappa(n, \out)$ the worst-case runtime of $\A$ on any instance of $\kappa$-SJ that has input size $n$ and output size $\out$;
+    \item $G_\kappa(n, \out)$ the worst-case space consumed by $\A$ on any instance mentioned above.
+}
+We consider that $F_\kappa(n, \out) \le F_{\kappa + 1}(n, \out)$ and $G_\kappa(n, \out) \le G_{\kappa + 1}(n, \out)$ for any $\kappa \in [2, k-2]$, that is, its overhead on $\kappa$-SJ should not be larger than that on $(\kappa+1)$-SJ.
 
 \vgap
+
+The rest of the section serves as a proof for: 
+
+\begin{lemma} \label{lmm:hv}
+    The H-V $k$-SJ problem can be solved in 
+    \myeqn{
+        O(k) \cdot \big( F_{k-1}(n, \out) + n\log n + \out \big) \nn 
+    }
+    time using $O(n + \out + G_{k-1}(n, \out))$ space.
+\end{lemma}
+
 
 \todo{Remark on Rahul's result}
 
