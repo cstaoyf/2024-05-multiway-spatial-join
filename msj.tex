@@ -161,6 +161,30 @@ When $k = O(1)$, the time and space complexities become $O(n \log n$ $+ \out)$ a
 
 Now that Theorem~\ref{thm:main-alg} offers a satisfactory $k$-SJ result for $k = O(1)$ in 2D space, it is natural to wonder whether the constraint on dimensionality 2 is necessary. The answer, interestingly, is ``yes'' as far as $k \ge 3$ is concerned, subject to the absence of breakthroughs on a classical problem in graph theory. Specifically, if the 3D version of the 3-SJ problem (which we will formally define in Appendix~\ref{app:lb-cond}) could be solved in $O(n \polylog n + \out)$ time, we would obtain an algorithm that detects the presence of a triangle (i.e., 3-clique) in a graph of $m$ edges in $O(m \polylog m)$ time, which would make a truly surprising breakthrough because the state of the art needs $O(m^{1.41})$ time \cite{ayz97}. This reduction can be inferred from an argument in \cite{kcko22} used to prove a more generic result. We simplify the argument for 3D 3-SJ and present the full reduction in Appendix~\ref{app:lb-cond}.
 
+\section{Geometric Building Bricks} \label{sec:bricks}
+
+This section will introduce four computational geometry problems, whose solutions will serve as building bricks for our $k$-SJ algorithm. Let us start with some terminology:
+\myitems{
+    \item For a horizontal segment $h = [x_1, x_2] \times y$ and a rectangle $r$, we call $r$ a {\em left-end covering rectangle} of $h$, if $r$ contains the left end point of $h$ (i.e., $(x_1, y) \in r$).
+}
+
+\begin{figure*}
+    \begin{tabular}{cccc}
+        \includegraphics[height=30mm]{./artwork/prob-a} &
+        \includegraphics[height=30mm]{./artwork/prob-a} &
+        \includegraphics[height=30mm]{./artwork/prob-a} &
+        \includegraphics[height=30mm]{./artwork/prob-a}
+    \end{tabular}
+
+    \figcapup
+    \caption{Four geometric building brick problems}
+    \label{fig:probs}
+    \figcapdown
+\end{figure*}
+
+
+\extraspacing {\bf Problem $\bm{\EuScript{A}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each segment $h \in H$, the rightmost point $p$ on $h$ satisfying the condition that $p$ is covered by at least one left-end covering rectangle of $h$ in $R$ --- formally, for $h = [x_1, x_2] \times y$, we aim to find the maximum $x \in [x_1, x_2]$ such that some rectangle $r \in R$, which covers the left end point of $h$, contains the point $(x, y)$. If the point $p$ exists (equivalently, $h$ has at least one left-end covering rectangle in $R$), then we should output a tuple $(h, p)$; otherwise, we output nothing for $h$. In Figure~\ref{fig:probs}a
+
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
 
