@@ -148,7 +148,7 @@ In terms of techniques, our primary contribution is the revelation of a new prop
 %     time using $O(n + \out)$ space, plus the worst-case space of $\A$ on any $(k-1)$-SJ instance with input size $n$ and output size $\out$.
 \end{theorem}
 
-The theorem implies the existence of a recursive nature of $k$-SJ. Indeed, we will see that the $k$-SJ can be converted to $O(k^3)$ instances of the $(k-1)$-SJ problem --- all of which have input size at most $n$ and output size at most $\out$ --- plus an additional processing cost of $O(n \log n + \out)$. Furthermore, if $\A$ is comparison-based, so is the $k$-SJ algorithm that ensues. For 2-SJ, we can set $\A$ simply to the ``folklore algorithm'' mentioned in Section~\ref{sec:intro:prev}, which ensures $F_2(n, \out) = O(n \log n + \out)$ and uses linear space. Combining this with \eqref{eqn:main:reccurrence} yields a recurrence that relates the time complexity of $k$-SJ to that of $(k-1)$-SJ. Solving the recurrence yields:
+The theorem implies the existence of a recursive nature of $k$-SJ. Indeed, we will see that the $k$-SJ can be converted to $O(k^3)$ instances of the $(k-1)$-SJ problem --- all of which have input size at most $n$ and output size at most $\out$ --- plus an additional processing cost of $O(n \log n + \out)$. Furthermore, if $\A$ is comparison-based, so is the $k$-SJ algorithm that ensues. For 2-SJ, we can set $\A$ simply to the ``folklore algorithm'' mentioned in Section~\ref{sec:intro:prev}, which ensures $F_2(n, \out) = O(n \log n + \out)$. Combining this with \eqref{eqn:main:reccurrence} yields a recurrence that relates the time complexity of $k$-SJ to that of $(k-1)$-SJ. Solving the recurrence yields:
 
 \begin{theorem} \label{thm:main-alg}
     For $k \ge 3$, we can settle $k$-SJ with a comparison-based algorithm in $O( c^k (k!)^3 \cdot (n \log n + \out))$ time.
@@ -249,12 +249,12 @@ Let us represent the result of the H-V $k$-SJ problem as $\J_k(R_1, ..., R_{k-2}
 
 \vgap
 
-Let us now focus on any $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in  \J_k(R_1, ..., R_{k-2},$ $H, V)$. We classify the tuple into one of the two categories below: 
+Let us focus on any $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in  \J_k(R_1, ..., R_{k-2},$ $H, V)$. We classify the tuple into one of the two categories below: 
 
 \myitems{
     \item {{\bf Type 1:}} $h$ crosses all of $r_1, ..., r_{k-2}$, and $v$  crosses all of $r_1, ..., r_{k-2}$; 
     
-    \item {{\bf Type 2:}} $h$ or $v$ fails to cross some rectangle in $\set{r_1, r_2, ..., r_{k-2}}$. This means the existence of at least one rectangle $r_i$, for some $i \in [k-2]$, covers an endpoint of either $h$ or $v$ or both.
+    \item {{\bf Type 2:}} $h$ or $v$ fails to cross some rectangle in $\set{r_1, r_2, ..., r_{k-2}}$. This means the existence of at least one rectangle $r_i$ (for some $i \in [k-2]$) that covers an endpoint of either $h$ or $v$ or both.
 }
 Figure~\ref{fig:hv:types} illustrates a result tuple of each type, assuming $k = 4$.
 
@@ -274,7 +274,7 @@ Figure~\ref{fig:hv:types} illustrates a result tuple of each type, assuming $k =
 
 \vgap 
 
-We will find result tuples of each type separately. Before proceeding, however, let us observe a sense of symmetry for Type 2. As mentioned, for a result tuple $(r_1, ..., r_{k-2}, h, v)$ of this type, a rectangle $r_i$, for some $i \in [k-2]$, covers an endpoint of $h$ or $v$ or both. As (i) there are $k-2$ choices for $i$ and (ii) $h$ and $v$ together have four endpoints, we can divide Type 2 further into $4(k-2)$ ``sub-types'': e.g., in subtype 1 (resp., 2), $r_1$ covers the left (resp., right) endpoint of $h$, in subtype 3 (resp., 4), $r_1$ covers the bottom (resp., top) endpoint of $v$, etc. It is possible for the result tuple to belong to multiple sub-types simultaneously.
+We will find result tuples of each type separately. Before proceeding, however, let us observe a sense of symmetry for Type 2. As mentioned, for a result tuple $(r_1, ..., r_{k-2}, h, v)$ of this type, a rectangle $r_i$, for some $i \in [k-2]$, covers an endpoint of $h$ or $v$ or both. As (i) there are $k-2$ choices for $i$ and (ii) $h$ and $v$ together have four endpoints, we can divide Type 2 further into $4(k-2)$ ``sub-types'': e.g., in subtype 1 (resp., 2), $r_1$ covers the left (resp., right) endpoint of $h$, in subtype 3 (resp., 4), $r_1$ covers the bottom (resp., top) endpoint of $v$, in subtype 5 (resp., 6), $r_2$ covers the left (resp., right) endpoint of $h$, etc. It is possible for the result tuple to belong to multiple sub-types simultaneously.
 
 \vgap 
 
