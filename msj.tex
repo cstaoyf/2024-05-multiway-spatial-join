@@ -194,13 +194,13 @@ This section will first define some notions useful for our discussion and then i
 \end{figure*}
 
 
-\extraspacing {\bf Problem $\bm{\EuScript{A}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each segment $h \in H$, the rightmost point $p$ on $h$ satisfying the condition that $p$ is covered by at least one left-end covering rectangle of $h$ in $R$ --- formally, for $h = [x_1, x_2] \times y$, we aim to find the maximum $x \in [x_1, x_2]$ such that there exists at least one rectangle $r \in R$ covering the left end point of $h$ and the point $(x, y)$. If the point $p$ exists (equivalently, $h$ has at least one left-end covering rectangle in $R$), then we should output a tuple $(h, p)$; otherwise, we output nothing for $h$. Figure~\ref{fig:probs}a gives an example where $H = \set{h_1, h_2}$ and $R$ includes the three rectangles shown; the output is $\set{(h_1, p_1), (h_2, p_2)}$.
+\extraspacing {\bf Problem $\bm{\EuScript{A}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each segment $h \in H$, the rightmost point $p$ on $h$ satisfying the condition that $p$ is covered by at least one left-end covering rectangle of $h$ in $R$ --- formally, for $h = [x_1, x_2] \times y$, we aim to find the maximum $x \in [x_1, x_2]$ such that there exists at least one rectangle $r \in R$ covering both the left end point of $h$ and the point $(x, y)$. If the point $p$ exists (equivalently, $h$ has at least one left-end covering rectangle in $R$), then we should output a tuple $(h, p)$; otherwise, we output nothing for $h$. Figure~\ref{fig:probs}a gives an example where $H = \set{h_1, h_2}$ and $R$ includes the three rectangles shown; the output is $\set{(h_1, p_1), (h_2, p_2)}$.
 
 \vgap
 
 In Appendix~\ref{app:prob-a}, we explain how to solve the problem in $O(n \log n)$ time where $n = |H| + |R|$.
 
-\extraspacing {\bf Problem $\bm{\EuScript{B}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each rectangle $r \in R$, its lowest crossing segment $h \in H$ --- formally, $h = [x_1, x_2] \times y$ has the smallest $y$ coordinate among all the segments in $H$ crossing $r$. If such an $h$ does not exist, output nothing for $r$.  Figure~\ref{fig:probs}b gives an example where $H = \set{h_1, h_2, h_3}$ and $R = \set{r}$; the output is $\set{(r, h_2)}$.
+\extraspacing {\bf Problem $\bm{\EuScript{B}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each rectangle $r \in R$, its lowest crossing segment $h \in H$ --- formally, $h = [x_1, x_2] \times y$ has the smallest $y$ coordinate among all the segments in $H$ crossing $r$. If such an $h$ does not exist, output nothing for $r$.  Figure~\ref{fig:probs}b gives an example where $H = \set{h_1, h_2, h_3}$ and $R = \set{r_1, r_2}$; the output is $\set{(r_1, h_3), (r_2, h_2)}$.
 
 \vgap
 
