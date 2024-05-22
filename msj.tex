@@ -164,7 +164,7 @@ Now that Theorem~\ref{thm:main-alg} offers a satisfactory $k$-SJ result for $k =
 
 \section{Geometric Building Bricks} \label{sec:bricks}
 
-This section will define some notions useful for our discussion. Then, we will introduce four computational geometry problems, whose solutions will serve as building bricks for our $k$-SJ algorithm.
+This section will first define some notions useful for our discussion and then introduce four computational geometry problems, whose solutions will serve as building bricks for our $k$-SJ algorithm.
 
 \extraspacing {\bf Terminology.} A {\em horizontal} segment is a segment of the form $[x_1, x_2] \times y$, and a {\em vertical} segment is a segment of the form $x \times [y_1, y_2]$. Given a horizontal segment $h = [x_1, x_2] \times y$, we call a rectangle $r$ a {\em left-end covering rectangle} of $h$, if $r$ contains the left endpoint of $h$ (i.e., $(x_1, y) \in r$). Similarly, given a vertical segment $v$, we call a rectangle $r$ a {\em bottom-end covering rectangle} of $v$, if $r$ contains the bottom endpoint of $v$. We say that a horizontal/vertical segment $s$ {\em crosses} a rectangle $r$, if $s$ overlaps with $r$, but $r$ covers neither of the two endpoints of $s$. We say that a rectangle $r$ {\em contains} a horizontal/vertical segment $s$, if $r$ covers both endpoints of $s$.
 
