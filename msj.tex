@@ -12,8 +12,8 @@
 
 \def\vgap{\vspace{1mm}}
 \def\extraspacing{\vspace{2mm} \noindent}
-\def\figcapup{\vspace{-2mm}}
-\def\figcapdown{\vspace{-4mm}}
+\def\figcapup{\vspace{-0mm}}
+\def\figcapdown{\vspace{-0mm}}
 
 \def\A{\mathcal{A}}
 \def\B{\mathcal{B}}
@@ -131,8 +131,6 @@ In \cite{kcko22}, Khamis et al.\ investigated a type of joins that extends the c
 
 It is worth noting that $\Omega(n \log n)$ is a lower bound on the runtime of any comparison-based algorithm solving the $k$-SJ problem, even for $k = 2$. This can be established via a reduction (presented in Appendix~\ref{app:lb} for self-containment) from the {\em element distinctness} (ED) problem, where we are given $n$ real values $e_1, e_2, ..., e_n$ and need to decide whether there are distinct $i, j \in [n]$ satisfying $e_i = e_j$. The ED problem demands $\Omega(n \log n)$ comparisons to solve \cite{dl79}.
 
-\todo{Rahul's result? No. Do it in later sections}
-
 \subsection{Our Results} \label{sec:intro:ours} 
 
 In this paper, we show that the $k$-SJ problem can be settled by a comparison-based algorithm that runs in $O(n \log n + \out)$ time and uses  $O(n + \out)$ space, regardless of the constant $k$. The time complexity is asymptotically optimal.
@@ -217,6 +215,18 @@ In Appendix~\ref{app:prob-c}, we explain how to solve the problem in $O(n \log n
 \vgap
 
 In Appendix~\ref{app:prob-d}, we explain how to solve the problem in $O(n \log n + \out)$ time where $n = |H| + |R|$ and $\out$ is the number of pairs $(h, r) \in H \times R$ such that $h$ crosses $r$.
+
+\section{H-V Multiway Spatial Joins} \label{sec:hv}
+
+This section deals with a special version of the $k$-SJ problem. Recall that the input of $k$-SJ comprises $k$ sets of rectangles: $R_1, R_2, ..., R_k$. In the special version --- which we name the {\em H-V $k$-SJ} problem ---  we impose the constraints that (i) $k \ge 3$, (ii) $R_{k-1}$ should be a set of horizontal segments, and (iii) $R_k$ should be a set of vertical segments. For better clarity, we will represent the input sets as $R_1, R_2, ..., R_{k-2}, H$ ($=R_{k-1}$), and $V$ ($=R_k$). Remember that each $R_i$ ($i \in [k-2]$) is a set of rectangles. As we will see in the next section, solving the H-V $k$-SJ problem is an imperative step for settling the original $k$-SJ problem. 
+
+\vgap 
+
+Our objective is to prove that the H-V $k$-SJ problem can be reduced to the $(k-1)$-SJ problem --- note: it is $(k-1)$-SJ here, rather than H-V $(k-1)$-SJ. For this purpose, we assume the existence of an algorithm $\A$ that can solve $\kappa$-SJ problems for all $\kappa \in [2, k-1]$. Denote by $F_\kappa(n, \out)$ the worst-case runtime of $\A$ when it is executed on any instance of $\kappa$-SJ that has input size $n$ and output size $\out$. We consider that $F_\kappa(n, \out) \le F_{\kappa + 1}(n, \out)$ for any $\kappa \in [2, k-2]$, that is, its efficiency on $\kappa$-SJ should not be worse than that on $(\kappa+1)$-SJ.
+
+\vgap
+
+\todo{Remark on Rahul's result}
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
