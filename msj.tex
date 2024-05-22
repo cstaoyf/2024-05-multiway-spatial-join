@@ -183,7 +183,7 @@ This section will introduce four computational geometry problems, whose solution
 \end{figure*}
 
 
-\extraspacing {\bf Problem $\bm{\EuScript{A}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each segment $h \in H$, the rightmost point $p$ on $h$ satisfying the condition that $p$ is covered by at least one left-end covering rectangle of $h$ in $R$ --- formally, for $h = [x_1, x_2] \times y$, we aim to find the maximum $x \in [x_1, x_2]$ such that some rectangle $r \in R$, which covers the left end point of $h$, contains the point $(x, y)$. If the point $p$ exists (equivalently, $h$ has at least one left-end covering rectangle in $R$), then we should output a tuple $(h, p)$; otherwise, we output nothing for $h$. In Figure~\ref{fig:probs}a
+\extraspacing {\bf Problem $\bm{\EuScript{A}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each segment $h \in H$, the rightmost point $p$ on $h$ satisfying the condition that $p$ is covered by at least one left-end covering rectangle of $h$ in $R$ --- formally, for $h = [x_1, x_2] \times y$, we aim to find the maximum $x \in [x_1, x_2]$ such that some rectangle $r \in R$, which covers the left end point of $h$, contains the point $(x, y)$. If the point $p$ exists (equivalently, $h$ has at least one left-end covering rectangle in $R$), then we should output a tuple $(h, p)$; otherwise, we output nothing for $h$. In Figure~\ref{fig:probs}a, suppose $H = \set{h_1, h_2}$ and $R$ includes the three rectangles shown; the output is $\set{(h_1, p_1), (h_2, p_2)}$.
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
