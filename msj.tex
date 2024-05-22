@@ -254,14 +254,14 @@ Let us now focus on any $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in  \J_k(R_1, ...,
 \myitems{
     \item {{\bf Type 1:}} $h$ crosses all of $r_1, ..., r_{k-2}$, and $v$  crosses all of $r_1, ..., r_{k-2}$; 
     
-    \item {{\bf Type 2:}} $h$ or $v$ fails to cross some rectangle in $\set{r_1, r_2, ..., r_{k-2}}$. This means the existence of at least one rectangle $r_i$, for some $i \in [k-2]$, covers either an endpoint of $h$, or an endpoint of $v$, or both.
+    \item {{\bf Type 2:}} $h$ or $v$ fails to cross some rectangle in $\set{r_1, r_2, ..., r_{k-2}}$. This means the existence of at least one rectangle $r_i$, for some $i \in [k-2]$, covers an endpoint of either $h$ or $v$ or both.
 }
-Figure~\ref{fig:hv:cats} illustrates a result tuple of each type, assuming $k = 4$.
+Figure~\ref{fig:hv:types} illustrates a result tuple of each type, assuming $k = 4$.
 
 \begin{figure} 
     \begin{tabular}{cc} 
-        \includegraphics[height=27mm]{./artwork/cat1} & 
-        \hspace{5mm} \includegraphics[height=27mm]{./artwork/cat2} \\
+        \includegraphics[height=27mm]{./artwork/type1} & 
+        \hspace{5mm} \includegraphics[height=27mm]{./artwork/type2} \\
         (a) Cat.\ 1 result tuple & 
         (b) Cat.\ 2 result tuple
     \end{tabular}
@@ -272,6 +272,17 @@ Figure~\ref{fig:hv:cats} illustrates a result tuple of each type, assuming $k = 
     \figcapdown
 \end{figure}
 
+\vgap 
+
+We will find result tuples of each type separately. Before proceeding, however, let us observe a sense of symmetry for Type 2. As mentioned, for a result tuple $(r_1, ..., r_{k-2}, h, v)$ of this type, a rectangle $r_i$, for some $i \in [k-2]$, covers an endpoint of $h$ or $v$ or both. As (i) there are $k-2$ choices for $i$ and (ii) $h$ and $v$ together have four endpoints, we can divide Type 2 further into $4(k-2)$ ``sub-types'': e.g., in subtype 1 (resp., 2), $r_1$ covers the left (resp., right) endpoint of $h$, in subtype 3 (resp., 4), $r_1$ covers the bottom (resp., top) endpoint of $v$, etc. It is possible for the result tuple to belong to multiple sub-types simultaneously.
+
+\vgap 
+
+Our subsequent discussion will proceed as follows. In Section~\ref{sec:hv:type1}, we 
+
+\subsection{Finding Result Tuples of Type 1} \label{sec:hv:type1}
+
+\subsection{Finding Result Tuples of Type 2} \label{sec:hv:type2}
 
 \todo{Remark on Rahul's result}
 
