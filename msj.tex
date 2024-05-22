@@ -163,10 +163,10 @@ Now that Theorem~\ref{thm:main-alg} offers a satisfactory $k$-SJ result for $k =
 
 \section{Geometric Building Bricks} \label{sec:bricks}
 
-This section will introduce four computational geometry problems, whose solutions will serve as building bricks for our $k$-SJ algorithm. Let us start with some terminology:
-\myitems{
-    \item For a horizontal segment $h = [x_1, x_2] \times y$ and a rectangle $r$, we call $r$ a {\em left-end covering rectangle} of $h$, if $r$ contains the left end point of $h$ (i.e., $(x_1, y) \in r$).
-}
+This section will define some notions useful for our discussion. Then, we will introduce four computational geometry problems, whose solutions will serve as building bricks for our $k$-SJ algorithm.
+
+\extraspacing {\bf Terminology.} A {\em horizontal} segment is a segment of the form $[x_1, x_2] \times y$, and a {\em vertical} segment is a segment of the form $x \times [y_1, y_2]$. Given a horizontal segment $h = [x_1, x_2] \times y$, we call a rectangle $r$ a {\em left-end covering rectangle} of $h$, if $r$ contains the left endpoint of $h$ (i.e., $(x_1, y) \in r$). Similarly, given a vertical segment $v$, we call a rectangle $r$ a {\em bottom-end covering rectangle} of $v$, if $r$ contains the bottom endpoint of $v$. We say that a horizontal/vertical segment $s$ {\em crosses} $r$, if $s$ overlaps with $r$, but $r$ covers neither of the two endpoints of $s$.
+
 
 \begin{figure*}
     \begin{tabular}{cccc}
@@ -183,7 +183,11 @@ This section will introduce four computational geometry problems, whose solution
 \end{figure*}
 
 
-\extraspacing {\bf Problem $\bm{\EuScript{A}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each segment $h \in H$, the rightmost point $p$ on $h$ satisfying the condition that $p$ is covered by at least one left-end covering rectangle of $h$ in $R$ --- formally, for $h = [x_1, x_2] \times y$, we aim to find the maximum $x \in [x_1, x_2]$ such that some rectangle $r \in R$, which covers the left end point of $h$, contains the point $(x, y)$. If the point $p$ exists (equivalently, $h$ has at least one left-end covering rectangle in $R$), then we should output a tuple $(h, p)$; otherwise, we output nothing for $h$. In Figure~\ref{fig:probs}a, suppose $H = \set{h_1, h_2}$ and $R$ includes the three rectangles shown; the output is $\set{(h_1, p_1), (h_2, p_2)}$.
+\extraspacing {\bf Problem $\bm{\EuScript{A}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each segment $h \in H$, the rightmost point $p$ on $h$ satisfying the condition that $p$ is covered by at least one left-end covering rectangle of $h$ in $R$ --- formally, for $h = [x_1, x_2] \times y$, we aim to find the maximum $x \in [x_1, x_2]$ such that there exists at least one rectangle $r \in R$ covering the left end point of $h$ and the point $(x, y)$. If the point $p$ exists (equivalently, $h$ has at least one left-end covering rectangle in $R$), then we should output a tuple $(h, p)$; otherwise, we output nothing for $h$. In Figure~\ref{fig:probs}a, suppose $H = \set{h_1, h_2}$ and $R$ includes the three rectangles shown; the output is $\set{(h_1, p_1), (h_2, p_2)}$.
+
+\vgap
+
+In Appendix~\ref{app:prob-a}, we explain how the problem can be solved in $O(n \log n)$ time where $n = |H| + |R|$.
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
@@ -195,6 +199,8 @@ This section will introduce four computational geometry problems, whose solution
 \section{An $\bm{\Omega(n \log n)}$ Lower Bound for 2-SJ} \label{app:lb}
 
 \section{Hardness of 3-SJ in 3D Space} \label{app:lb-cond}
+
+\section{Algorithm for Problem $\bm{\EuScript{A}}$} \label{app:prob-a}
 
 %\end{sloppy}
 \end{document}
