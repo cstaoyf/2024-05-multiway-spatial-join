@@ -311,7 +311,7 @@ We will compute $\J_1(R_1, ..., R_{k-2}, H, V)$ in two steps:
     
     \item $v_1$ (resp., $v_2$): the leftmost (resp., rightmost) segment --- i.e., with the smallest (resp., largest) x-coordinate --- among all the segments in $V$ that cross $r$.
 }
-Define $r_1'$ as the rectangle defined by the above four segments in the way shown in Figure~\ref{fig:type1}(a) ($r_1'$ is the shaded area). Note that $r_1'$ exists if and only if $r_1$ is crossed by at least one horizontal segment in $H$ and by at least one vertical segment in $V$. Moreover, it is possible for $h_1$ and $h_2$ to be the same segment; same for $v_1$ and $v_2$. Define
+Define $r_1'$ as the rectangle defined by the above four segments in the way shown in Figure~\ref{fig:hv:type1}(a) ($r_1'$ is the shaded area). Note that $r_1'$ exists if and only if $r_1$ is crossed by at least one horizontal segment in $H$ and by at least one vertical segment in $V$. Moreover, it is possible for $h_1$ and $h_2$ to be the same segment; same for $v_1$ and $v_2$. Define
 \myeqn{
     R_1' &=& \set{r_1' \mid r_1 \in R_1 \text{ and its $r_1'$ defined as above exists}}. \nn
 }
@@ -349,7 +349,7 @@ Note that $B$ is a rectangle itself. We say that $B$ is
     
     \item {\em left-bounded} by $r_b$, if the left edge of $B$ is a part of the left boundary of $r_b$ for some $b \in [k-2]$.
 }
-Figure~\ref{fig:type1}(b) shows an example with rectangles $r_1, r_2$, and $r_3$ (here $k = 5$). Their intersection is the gray rectangle $B$, which is bottom-bounded by $r_2$ and left-bounded by $r_3$. 
+Figure~\ref{fig:hv:type1}(b) shows an example with rectangles $r_1, r_2$, and $r_3$ (here $k = 5$). Their intersection is the gray rectangle $B$, which is bottom-bounded by $r_2$ and left-bounded by $r_3$. 
 
 \vgap
 
@@ -358,7 +358,7 @@ We aim to compute
     \item $\cross(r_a, B; H)$, the set of segments in $H$ that cross $r_a$ and $B$; 
     \item $\cross(r_b, B; V)$, the set of segments in $V$ that cross $r_b$ and $B$.
 }
-In Figure~\ref{fig:type1}(b), $H = \set{h_1, h_2, h_3}$ and $V = \set{v_1, v_2, v_3}$. As mentioned before, $r_a = r_2$ and $r_b = r_3$. We have $\cross(r_a, B; H) = \set{h_1, h_2}$ and $\cross(r_b, B; V) = \set{v_1, v_3}$. Note that $h_3$ is not in $\cross(r_a, B; H)$ because $h_3$ does not cross $B$, and $v_2$ is not in $\cross(r_b, B; V)$ because $v_2$ does not cross $r_3$.
+In Figure~\ref{fig:hv:type1}(b), $H = \set{h_1, h_2, h_3}$ and $V = \set{v_1, v_2, v_3}$. As mentioned before, $r_a = r_2$ and $r_b = r_3$. We have $\cross(r_a, B; H) = \set{h_1, h_2}$ and $\cross(r_b, B; V) = \set{v_1, v_3}$. Note that $h_3$ is not in $\cross(r_a, B; H)$ because $h_3$ does not cross $B$, and $v_2$ is not in $\cross(r_b, B; V)$ because $v_2$ does not cross $r_3$.
 
 \vgap 
 
@@ -372,6 +372,8 @@ Equipped with the above, we can generate the target $S$ as follows:
     \> 4.\>\> {\bf for} each $(h, v) \in \cross(r_a, B; H) \times \cross(r_b, B; V)$ {\bf do} \\
     \> 5.\>\>\> add $(r_1, ..., r_{k-2}, h, v)$ to $S$
 }
+
+\noindent In Appendix~\ref{app:hv:type1:gen-S}, we prove that the set $S$ computed satisfies \eqref{eqn:hv:type1:S}, as desired.
 
 
 \vgap 
@@ -387,7 +389,7 @@ Equipped with the above, we can generate the target $S$ as follows:
     \end{tabular}
     \figcapup
     \caption{Illustrations for Section~\ref{sec:hv:type1}}
-    \label{fig:type1}
+    \label{fig:hv:type1}
     \figcapdown
 \end{figure}
 
@@ -416,7 +418,9 @@ Equipped with the above, we can generate the target $S$ as follows:
 
 \section{Algorithm for Problem $\bm{\EuScript{D}}$} \label{app:prob-d}
 
-\section{Proof of Lemma~\ref{lmm:hv:type1:proj}} \label{app:lmm:hv:type1:proj}
+\section{Proof of Lemma~\ref{lmm:hv:type1:proj}} \label{app:lmm:hv:type1:proj} 
+
+\section{Correctness of Algorithm generate-S} \label{app:hv:type1:gen-S}
 
 \section{An $\bm{\Omega(n \log n)}$ Lower Bound for 2-SJ} \label{app:lb}
 
