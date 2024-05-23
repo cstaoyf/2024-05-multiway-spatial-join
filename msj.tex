@@ -321,7 +321,7 @@ We now solve the $(k-2)$-SJ problem on $R_1', R_2, ..., R_{k-2}$ using the algor
     A $(k-2)$-tuple $(r_1', r_2, ..., r_{k-2})$ exists in $\J(R_1', R_2, ...,$ $R_{k-2})$ if and only if the $(k-2)$-tuple $(r_1, r_2, ..., r_{k-2})$ is in $\Pi_{1:k-2}(\J_1(R_1,$ $...,$ $R_{k-2}, H, V))$, where $r_1$ is the rectangle in $R_1$ defining $r_1'$.
 \end{lemma}
 
-The proof is presented in Appendix~\ref{app:lmm:hv:type1:proj}. Note that the size of $\Pi_{1:k-2}(\J_1(R_1, ...,$ $R_{k-2}, H, V))$ is bounded by that of $\J_1(R_1, ..., R_{k-2},$ $H, V)$, which in turn is bounded by $\out$. Thus, as a corollary of Lemma~\ref{lmm:hv:type1:proj}, the $(k-2)$-SJ instance $R_1', R_2, ..., R_{k-2}$  can be settled in $F_{k-2}(n, \out)$ time.
+The proof can be found in Appendix~\ref{app:hv}. Note that the size of $\Pi_{1:k-2}(\J_1(R_1, ...,$ $R_{k-2}, H, V))$ is bounded by that of $\J_1(R_1, ..., R_{k-2},$ $H, V)$, which in turn is bounded by $\out$. Thus, as a corollary of Lemma~\ref{lmm:hv:type1:proj}, the $(k-2)$-SJ instance $R_1', R_2, ..., R_{k-2}$  can be settled in $F_{k-2}(n, \out)$ time.
 
 \extraspacing {\bf Step 2.} We are ready to explain how to produce $\J_1(R_1, ..., R_{k-2}, H, V)$ from $\Pi_{1:k-2}(\J_1(R_1, ...,$ $R_{k-2}, H, V))$. Our algorithm for this purpose will find a set $S$ satisfying
 \myeqn{
@@ -374,10 +374,19 @@ In Figure~\ref{fig:hv:type1}(b), $H = \set{h_1, h_2, h_3}$ and $V = \set{v_1, v_
 
 \vgap 
 
+Appendix~\ref{app:hv} proves the next property: 
+
+\begin{lemma} \label{lmm:hv:type1:cross-non-empty}
+    Neither $\cross(r_a, B; H)$ nor $\cross(r_b, B; H)$ can be empty.
+\end{lemma}
+
+
+\vgap 
+
 Equipped with the above, we can generate the target $S$ as follows: 
 
 \mytab{
-    \> {\bf algorithm generate-$S$} \\
+    \> {\bf Algorithm Generate-$S$} \\
     \> 1.\> $S = \emptyset$ \\ 
     \> 2.\> {\bf for} each $(r_1, ..., r_{k-2}) \in \Pi_{1:k-2}(\J_1(R_1,$ $...,$ $R_{k-2}, H, V))$ {\bf do} \\
     \> 3.\>\> define $B, r_a$, and $r_b$ as above \\
@@ -385,7 +394,7 @@ Equipped with the above, we can generate the target $S$ as follows:
     \> 5.\>\>\> add $(r_1, ..., r_{k-2}, h, v)$ to $S$
 }
 
-\noindent In Appendix~\ref{app:hv:type1:gen-S}, we prove that the set $S$ computed satisfies \eqref{eqn:hv:type1:S}, as desired. If we exclude the time to compute all the $\cross(r_a, B; H)$ and $\cross(r_b, B; V)$, the running time of the above algorithm is
+\noindent In Appendix~\ref{app:hv}, we prove that the set $S$ computed satisfies \eqref{eqn:hv:type1:S}, as desired. If we exclude the time to compute all the $\cross(r_a, B; H)$ and $\cross(r_b, B; V)$, the running time of the above algorithm is
 \myeqn{
     O(1 + |\Pi_{1:k-2}(\J_1(R_1, ..., R_{k-2}, H, V))| + |S|) \nn
 }
@@ -418,7 +427,13 @@ which is $O(1 + \out)$ because of \eqref{eqn:hv:type1:S}. In what follows, we wi
 
 \section{Algorithm for Problem $\bm{\EuScript{D}}$} \label{app:prob-d}
 
-\section{Proof of Lemma~\ref{lmm:hv:type1:proj}} \label{app:lmm:hv:type1:proj} 
+\section{Completing the Proof of Lemma~\ref{lmm:hv}} \label{app:hv} 
+
+\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:proj}.}
+
+\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:cross-non-empty}.}
+
+\extraspacing {\bf Correctness of Algorithm Generate-$S$.}
 
 \section{Correctness of Algorithm generate-S} \label{app:hv:type1:gen-S}
 
