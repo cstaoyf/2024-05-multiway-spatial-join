@@ -333,7 +333,7 @@ The proof is presented in Appendix~\ref{app:lmm:hv:type1:proj}. Note that the si
     \subseteq 
     S
     \subseteq 
-    \J(R_1, ..., R_{k-2}, H, V). \nn
+    \J(R_1, ..., R_{k-2}, H, V). \label{eqn:hv:type1:S}
 }
 Recall that $\J(R_1, ..., R_{k-2}, H, V)$ is the result of the original H-V $k$-SJ problem, which has a size of $\out$. Only the $k$-tuples in $S$ that are of Type 1 will be reported. We will achieve the purpose in time $O(n \log n + |S|)$ and space $O(n + |S|)$.
 
@@ -369,7 +369,8 @@ Equipped with the above, we can generate the target $S$ as follows:
     \> 1.\> $S = \emptyset$ \\ 
     \> 2.\> {\bf for} each $(r_1, ..., r_{k-2}) \in \Pi_{1:k-2}(\J_1(R_1,$ $...,$ $R_{k-2}, H, V))$ {\bf do} \\
     \> 3.\>\> define $B, r_a$, and $r_b$ as above \\
-    \> 4.\>\> {\bf for} each $(h, v) \in \cross(r_a, B; H) \times cross(r_b, B; V)$ {\bf do} \\
+    \> 4.\>\> {\bf for} each $(h, v) \in \cross(r_a, B; H) \times \cross(r_b, B; V)$ {\bf do} \\
+    \> 5.\>\>\> add $(r_1, ..., r_{k-2}, h, v)$ to $S$
 }
 
 
