@@ -307,12 +307,11 @@ We will compute $\J_1(R_1, ..., R_{k-2}, H, V)$ in two steps:
 
 \noindent {\bf Step 1.} We will accomplish this step by solving an instance of $(k-2)$-SJ. To construct the instance, for each rectangle $r_1 \in R_1$, we compute four segments:
 \myitems{
-    \item $h_1$: the lowest segment (i.e., with the smallest y-coordinate) among all the segments in $H$ that cross $r$;
-    \item $h_2$: the highest segment (i.e., with the largest y-coordinate) among all the segments in $H$ that cross $r$;
-    \item $v_1$: the leftmost segment (i.e., with the smallest x-coordinate) among all the segments in $V$ that cross $r$;
-    \item $v_2$: the rightmost segment (i.e., with the largest x-coordinate) among all the segments in $V$ that cross $r$.
+    \item $h_1$ (resp., $h_2$): the lowest (resp., highest) segment --- i.e., with the smallest (resp., largest) y-coordinate --- among all the segments in $H$ that cross $r$;
+    
+    \item $v_1$ (resp., $v_2$): the leftmost (resp., rightmost) segment --- i.e., with the smallest (resp., largest) x-coordinate --- among all the segments in $V$ that cross $r$.
 }
-Define $r_1'$ as the rectangle defined by the above four segments in the way illustrated in Figure~\ref{fig:type1}(a), where $r_1'$ is the shaded area. Note that $r_1'$ exists if and only if $r_1$ is crossed by at least one horizontal segment in $H$ and by at least one vertical segment in $V$. Moreover, it is possible for $h_1$ and $h_2$ to be the same segment; same for $v_1$ and $v_2$. Define
+Define $r_1'$ as the rectangle defined by the above four segments in the way shown in Figure~\ref{fig:type1}(a) ($r_1'$ is the shaded area). Note that $r_1'$ exists if and only if $r_1$ is crossed by at least one horizontal segment in $H$ and by at least one vertical segment in $V$. Moreover, it is possible for $h_1$ and $h_2$ to be the same segment; same for $v_1$ and $v_2$. Define
 \myeqn{
     R_1' &=& \set{r_1' \mid r_1 \in R_1 \text{ and its $r_1'$ defined as above exists}}. \nn
 }
@@ -340,31 +339,50 @@ Recall that $\J(R_1, ..., R_{k-2}, H, V)$ is the result of the original H-V $k$-
 
 \vgap 
 
-Let us now fix an arbitrary $(k-2)$-tuple in $(r_1, ..., r_{k-2}) \in \Pi_{1:k-2}(\J_1(R_1,$ $...,$ $R_{k-2}, H, V))$. Denote by 
+Now, take an arbitrary $(k-2)$-tuple in $(r_1, ..., r_{k-2}) \in \Pi_{1:k-2}(\J_1(R_1,$ $...,$ $R_{k-2}, H, V))$. Denote by 
 \myeqn{
     B = \cap_{i=1}^{k-2} r_i. \nn
 }
 Note that $B$ is a rectangle itself. We say that $B$ is 
 \myitems{
-    \item {\em left-bounded} by $r_i$, if the left edge of $B$ is a part of the left boundary of $r_i$ for some $i \in [k-2]$;
-    \item {\em bottom-bounded} by $r_j$, if the bottom edge of $B$ is a part of the bottom boundary of $r_j$ for some $j \in [k-2]$.
+    \item {\em bottom-bounded} by $r_a$, if the bottom edge of $B$ is a part of the bottom boundary of $r_a$ for some $a \in [k-2]$;
+    
+    \item {\em left-bounded} by $r_b$, if the left edge of $B$ is a part of the left boundary of $r_b$ for some $b \in [k-2]$.
 }
-Figure~\ref{fig:type1}(b) shows an example with rectangles $r_1, r_2$, and $r_3$ (here $k = 5$). Their intersection is the gray rectangle $B$, which is left-bounded by $r_3$ and bottom-bounded by $r_2$. 
+Figure~\ref{fig:type1}(b) shows an example with rectangles $r_1, r_2$, and $r_3$ (here $k = 5$). Their intersection is the gray rectangle $B$, which is bottom-bounded by $r_2$ and left-bounded by $r_3$. 
+
+\vgap
+
+We aim to compute 
+\myitems{
+    \item $\cross(r_a, B; H)$, the set of segments in $H$ that cross $r_a$ and $B$; 
+    \item $\cross(r_b, B; V)$, the set of segments in $V$ that cross $r_b$ and $B$.
+}
+In Figure~\ref{fig:type1}(b), $H = \set{h_1, h_2, h_3}$ and $V = \set{v_1, v_2, v_3}$. As mentioned before, $r_a = r_2$ and $r_b = r_3$. We have $\cross(r_a, B; H) = \set{h_1, h_2}$ and $\cross(r_b, B; V) = \set{v_1, v_3}$. Note that $h_3$ is not in $\cross(r_a, B; H)$ because $h_3$ does not cross $B$, and $v_2$ is not in $\cross(r_b, B; V)$ because $v_2$ does not cross $r_3$.
 
 \vgap 
 
-We will compute:
-\myitems{
-    \item $\cross(B, H)$, the set of segments in $H$ that cross $B$; 
-    \item $\cross(B, V)$, the set of segments in $V$ that cross $B$.
+Equipped with the above, we can generate the target $S$ as follows: 
+
+\mytab{
+    \> {\bf algorithm generate-$S$} \\
+    \> 1.\> $S = \emptyset$ \\ 
+    \> 2.\> {\bf for} each $(r_1, ..., r_{k-2}) \in \Pi_{1:k-2}(\J_1(R_1,$ $...,$ $R_{k-2}, H, V))$ {\bf do} \\
+    \> 3.\>\> define $B, r_a$, and $r_b$ as above \\
+    \> 4.\>\> {\bf for} each $(h, v) \in \cross(r_a, B; H) \times cross(r_b, B; V)$ {\bf do} \\
 }
+
+
+\vgap 
 
 \begin{figure} 
     \begin{tabular}{cc}
-            \includegraphics[height=25mm]{./artwork/four-segs} &
-            \includegraphics[height=28mm]{./artwork/oracle} \\ 
-            (a) Constructing $r_1'$ from $r_1$ & 
-            (b) Crossing oracles
+            \hspace{-3mm}
+            \includegraphics[height=30mm]{./artwork/four-segs} &
+            \hspace{-5mm}
+            \includegraphics[height=37mm]{./artwork/oracle} \\ 
+            \hspace{-3mm} (a) Constructing $r_1'$ from $r_1$ & 
+            \hspace{-5mm} (b) Crossing oracles
     \end{tabular}
     \figcapup
     \caption{Illustrations for Section~\ref{sec:hv:type1}}
@@ -372,12 +390,6 @@ We will compute:
     \figcapdown
 \end{figure}
 
-\vgap
-
-We say that a $k$-tuple in $\J(R_1, ..., R_{k-2}, H, V)$ is {\em supported} by $(r_1, ..., r_{k-2})$ if it has the form $(r_1, ..., r_{k-2}, h, v)$, where $h \in H$ and $v \in V$. This means that the intersection of 
-
-
-Let us discuss how to generate all the $k$-tuples in 
 
 
 \subsection{Finding Result Tuples of Type 2} \label{sec:hv:type2}
