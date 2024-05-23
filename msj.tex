@@ -201,25 +201,25 @@ This section will first define some notions useful for our discussion and then i
 
 \vgap
 
-In Appendix~\ref{app:prob-a}, we explain how to solve the problem in $O(n \log n)$ time where $n = |H| + |R|$.
+In Appendix~\ref{app:prob-a}, we explain how to solve the problem in $O(n \log n)$ time and $O(n)$ space where $n = |H| + |R|$.
 
 \extraspacing {\bf Problem $\bm{\EuScript{B}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each segment $h \in H$, the rightmost point $p$ on $h$ satisfying the condition that $p$ is covered by at least one left-end covering rectangle of $h$ in $R$ --- formally, for $h = [x_1, x_2] \times y$, we aim to find the maximum $x \in [x_1, x_2]$ such that there exists at least one rectangle $r \in R$ covering both the left end point of $h$ and the point $(x, y)$. If the point $p$ exists (equivalently, $h$ has at least one left-end covering rectangle in $R$), then we should output a tuple $(h, p)$; otherwise, we output nothing for $h$. Figure~\ref{fig:probs}a gives an example where $H = \set{h_1, h_2}$ and $R$ includes the three rectangles shown; the output is $\set{(h_1, p_1), (h_2, p_2)}$.
 
 \vgap
 
-In Appendix~\ref{app:prob-b}, we explain how to solve the problem in $O(n \log n)$ time where $n = |H| + |R|$.
+In Appendix~\ref{app:prob-b}, we explain how to solve the problem in $O(n \log n)$ time and $O(n)$ space where $n = |H| + |R|$.
 
 \extraspacing {\bf Problem $\bm{\EuScript{C}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each segment $h \in H$, all the rectangles $r \in R$ containing $h$. Furthermore, those rectangles need to be sorted by the x-coordinates of their right boundaries. Formally, if $r_1, r_2, ..., r_t$ (for some $t \ge 1$) are all the rectangles in $R$ containing $h$, we output $(h: r_1, r_2, ..., r_t)$, provided that $x_i > x_{i-1}$ for each $i \in [2, t]$ where $x_i$ (resp., $x_{i-1}$) is the x-coordinate of the right boundary of $r_i$ (resp., $r_{i-1}$). Figure~\ref{fig:probs}c gives an example where $H = \set{h_1, h_2, h_3}$ and $R = \set{r_1, r_2, r_3}$; the output is $\set{(h_1: r_2, r_1), (h_2: r_2, r_3)}$.
 
 \vgap
 
-In Appendix~\ref{app:prob-c}, we explain how to solve the problem in $O(n \log n + \out)$ time where $n = |H| + |R|$ and $\out$ is the number of pairs $(h, r) \in H \times R$ such that $r$ contains $h$.
+In Appendix~\ref{app:prob-c}, we explain how to solve the problem in $O(n \log n + \out)$ time and $O(n + \out)$ space where $n = |H| + |R|$ and $\out$ is the number of pairs $(h, r) \in H \times R$ such that $r$ contains $h$.
 
 \extraspacing {\bf Problem $\bm{\EuScript{D}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each rectangle $r \in R$, all the segments $h \in H$ crossing $r$. Furthermore, those segments need to be sorted by their y-coordinates. Formally, if $h_1, h_2, ..., h_t$ (for some $t \ge 1$) are all the segments in $H$ crossing $r$, we output $(r: h_1, h_2, ..., h_t)$, provided that $y_i > y_{i-1}$ for each $i \in [2, t]$ where $y_i$ (resp., $y_{i-1}$) is the y-projection of $h_i$ (resp., $h_{i-1}$). See Figure~\ref{fig:probs}a again where $H = \set{h_1, h_2, h_3}$ and $R = \set{r_1, r_2}$; the output is $\set{(r_1: h_3, h_2), (r_2: h_2, h_1)}$.
 
 \vgap
 
-In Appendix~\ref{app:prob-d}, we explain how to solve the problem in $O(n \log n + \out)$ time where $n = |H| + |R|$ and $\out$ is the number of pairs $(h, r) \in H \times R$ such that $h$ crosses $r$.
+In Appendix~\ref{app:prob-d}, we explain how to solve the problem in $O(n \log n + \out)$ time and $O(n + \out)$ space where $n = |H| + |R|$ and $\out$ is the number of pairs $(h, r) \in H \times R$ such that $h$ crosses $r$.
 
 \section{H-V Multiway Spatial Joins} \label{sec:hv}
 
@@ -303,15 +303,6 @@ We will compute $\J_1(R_1, ..., R_{k-2}, H, V)$ in two steps:
     \item {{\bf Step 2:}} Generate $\J_1(R_1, ..., R_{k-2}, H, V)$ from the result of Step 1.
 }
 
-\noindent {\bf Step 1.} We will accomplish this step by solving an instance of $(k-2)$-SJ constructed as follows. For each rectangle $r_1 \in R_1$, we compute four segments:
-\myitems{
-    \item $h_1$: the lowest segment (i.e., with the smallest y-coordinate) among all the segments in $H$ that cross $r$;
-    \item $h_2$: the highest segment (i.e., with the largest y-coordinate) among all the segments in $H$ that cross $r$;
-    \item $v_1$: the leftmost segment (i.e., with the smallest x-coordinate) among all the segments in $V$ that cross $r$;
-    \item $v_2$: the rightmost segment (i.e., with the largest x-coordinate) among all the segments in $V$ that cross $r$.
-}
-Define $r_1'$ the rectangle defined by the above four segments in the way illustrated in Figure~\ref{fig:four-segs}, where $r_1'$ is the shaded area. Note that $r_1'$ exists if and only if $r_1$ is crossed by at least one horizontal segment in $H$ and by at least one vertical segment in $V$. It is possible for $h_1$ and $h_2$ to be the same segment (same for $v_1$ and $v_2$).
-
 \begin{figure}
     \includegraphics[height=25mm]{./artwork/four-segs}
     \figcapup
@@ -321,8 +312,20 @@ Define $r_1'$ the rectangle defined by the above four segments in the way illust
 \end{figure}
 
 
+\noindent {\bf Step 1.} We will accomplish this step by solving an instance of $(k-2)$-SJ constructed as follows. For each rectangle $r_1 \in R_1$, we compute four segments:
+\myitems{
+    \item $h_1$: the lowest segment (i.e., with the smallest y-coordinate) among all the segments in $H$ that cross $r$;
+    \item $h_2$: the highest segment (i.e., with the largest y-coordinate) among all the segments in $H$ that cross $r$;
+    \item $v_1$: the leftmost segment (i.e., with the smallest x-coordinate) among all the segments in $V$ that cross $r$;
+    \item $v_2$: the rightmost segment (i.e., with the largest x-coordinate) among all the segments in $V$ that cross $r$.
+}
+Define $r_1'$ the rectangle defined by the above four segments in the way illustrated in Figure~\ref{fig:four-segs}, where $r_1'$ is the shaded area. Note that $r_1'$ exists if and only if $r_1$ is crossed by at least one horizontal segment in $H$ and by at least one vertical segment in $V$. Moreover, it is possible for $h_1$ and $h_2$ to be the same segment (same for $v_1$ and $v_2$). Define
+\myeqn{
+    R_1' &=& \set{r_1' \mid r_1 \in R_1 \text{ and its $r_1'$ defined as above exists}}. \nn
+}
+Computing the corresponding ``segment $h_1$'' for each $r_1 \in R_1$ is an instance of Problem $\EuScript{A}$. By symmetry, so is the computation of $h_2, v_1$, and $v_2$ segments for each $r_1 \in R_1$. It thus follows from Section~\ref{sec:bricks} that $R_1'$ can be produced in $O(n \log n)$ time and $O(n)$ space.
 
-a rectangle $r_1'$ to an initially empty set $R_1'$ if $r_1$ is crossed by at least one horizontal segment in $H$ and by at least one vertical segment in $V$. Specifically,
+
 
 \subsection{Finding Result Tuples of Type 2} \label{sec:hv:type2}
 
