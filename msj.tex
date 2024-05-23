@@ -377,7 +377,7 @@ In Figure~\ref{fig:hv:type1}(b), $H = \set{h_1, h_2, h_3}$ and $V = \set{v_1, v_
 Appendix~\ref{app:hv} proves the next property: 
 
 \begin{lemma} \label{lmm:hv:type1:cross-non-empty}
-    Neither $\cross(r_a, B; H)$ nor $\cross(r_b, B; H)$ can be empty.
+    $\cross(r_a, B; H) \ne \emptyset$ and $\cross(r_b, B; H) \ne \emptyset$.
 \end{lemma}
 
 
@@ -394,11 +394,7 @@ Equipped with the above, we can generate the target $S$ as follows:
     \> 5.\>\>\> add $(r_1, ..., r_{k-2}, h, v)$ to $S$
 }
 
-\noindent In Appendix~\ref{app:hv}, we prove that the set $S$ computed satisfies \eqref{eqn:hv:type1:S}, as desired. If we exclude the time to compute all the $\cross(r_a, B; H)$ and $\cross(r_b, B; V)$, the running time of the above algorithm is
-\myeqn{
-    O(1 + |\Pi_{1:k-2}(\J_1(R_1, ..., R_{k-2}, H, V))| + |S|) \nn
-}
-which is $O(1 + \out)$ because of \eqref{eqn:hv:type1:S}. In what follows, we will explain how to compute all the $\cross(r_a, B; H)$ in $O(n \log n + |S|)$ time. A symmetric algorithm can be used to compute all the $\cross(r_b, B; V)$ in the same complexity. This will then allow us to conclude that Step 2 can be done in $O(n \log n + |S|)$ time.
+\noindent In Appendix~\ref{app:hv}, we prove that the set $S$ computed satisfies \eqref{eqn:hv:type1:S}, as desired. If we exclude the time to compute all the $\cross(r_a, B; H)$ and $\cross(r_b, B; V)$, the running time of the above algorithm is $O(1 + |S|)$, which is $O(1 + \out)$ because of \eqref{eqn:hv:type1:S}. In what follows, we will explain how to compute all the $\cross(r_a, B; H)$ in $O(n \log n + |S|)$ time. A symmetric algorithm can be used to compute all the $\cross(r_b, B; V)$ in the same complexity. This will then allow us to conclude that Step 2 can be done in $O(n \log n + |S|)$ time.
 
 
 
