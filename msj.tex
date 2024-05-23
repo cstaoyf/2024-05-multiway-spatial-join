@@ -81,11 +81,11 @@ This paper revisits the {\em spatial join} (SJ) problem formulated as follows. L
     \item $r_i \in R_i$ for each $i \in [1, k]$; and
     \item $r_1 \cap r_2 \cap ... \cap r_k \neq \emptyset$, namely, the $k$ rectangles $r_1, r_2, ..., r_k$ have a non-empty intersection.
 }
-We represent the set of $k$-tuples described above as $\J_k(R_1, R_2, ..., R_k)$, referred to as the {\em join result}. Set $n = \sum_{i=1}^k |R_i|$, i.e., the input size, and $\out = |\J_k(R_1, R_2, ..., R_k)|$, i.e., the output size.
+We represent the set of $k$-tuples described above as $\J(R_1, R_2, ..., R_k)$, referred to as the {\em join result}. Set $n = \sum_{i=1}^k |R_i|$, i.e., the input size, and $\out = |\J(R_1, R_2, ..., R_k)|$, i.e., the output size.
 
 \vgap
 
-SJ is a fundamental operation in spatial databases (SDB), which manage {\em geometric entities} such as land parcels, service areas, habitat zones, commercial districts, administrative boundaries, etc. It plays a crucial role in implementing the {\em filter-refinement mechanism}, which is the dominant approach for computing overlay information in an SDB. To explain this mechanism, first note that a geometric entity is typically modeled as a polygon. Determining whether two entities overlap amounts to deciding if two polygons intersect, which can be exceedingly expensive when the polygons have complex boundaries. To mitigate the issue, an SDB stores, for each polygon $g$, its {\em minimum bounding rectangle} (MBR) defined as the smallest axis-parallel rectangle enclosing $g$; this way, each set $\Gamma$ of geometric entities spawns a set $R$ of MBRs. Consider $k$ sets of geometric entities $\Gamma_1, \Gamma_2, ..., \Gamma_k$, and the corresponding sets of MBRs $R_1, R_2, ..., R_k$. To compute overlays from $\Gamma_1, \Gamma_2, ..., \Gamma_k$, filter-refinement first executes (i) ``a filter step'', which performs an SJ to obtain $\J_k(R_1, R_2, ..., R_k)$, and (ii) a ``refinement step'', which, for each $(r_1, r_2, ..., r_k) \in \J_k(R_1, R_2, ..., R_k)$, examines if $P_1, P_2, ..., P_k$ indeed have a non-empty intersection, where $P_i$ ($i \in [1, k]$) is the entity in $\Gamma_i$ whose MBR is $r_i$.
+SJ is a fundamental operation in spatial databases (SDB), which manage {\em geometric entities} such as land parcels, service areas, habitat zones, commercial districts, administrative boundaries, etc. It plays a crucial role in implementing the {\em filter-refinement mechanism}, which is the dominant approach for computing overlay information in an SDB. To explain this mechanism, first note that a geometric entity is typically modeled as a polygon. Determining whether two entities overlap amounts to deciding if two polygons intersect, which can be exceedingly expensive when the polygons have complex boundaries. To mitigate the issue, an SDB stores, for each polygon $\gamma$, its {\em minimum bounding rectangle} (MBR) defined as the smallest axis-parallel rectangle enclosing $\gamma$; this way, each set $\Gamma$ of geometric entities spawns a set $R$ of MBRs. Consider $k$ sets of geometric entities $\Gamma_1, \Gamma_2, ..., \Gamma_k$, and the corresponding sets of MBRs $R_1, R_2, ..., R_k$. To compute overlays from $\Gamma_1, \Gamma_2, ..., \Gamma_k$, filter-refinement first executes (i) a ``filter step'', which performs an SJ to obtain $\J(R_1, R_2, ..., R_k)$, and (ii) a ``refinement step'', which, for each $(r_1, r_2, ..., r_k) \in \J(R_1, R_2, ..., R_k)$, examines if $\gamma_1, \gamma_2, ..., \gamma_k$ indeed have a non-empty intersection, where $\gamma_i$ ($i \in [1, k]$) is the entity in $\Gamma_i$ whose MBR is $r_i$.
 
 %Two polygons $P_1$ and $P_2$ can overlap with each other only if their MBRs $r_1$ and $r_2$ intersect.
 
@@ -225,7 +225,7 @@ This section deals with a special version of the $k$-SJ problem. Recall that the
 
 \vgap 
 
-Our objective is to prove that the H-V $k$-SJ problem can be reduced to the $(k-1)$-SJ problem --- note: it is $(k-1)$-SJ here, rather than H-V $(k-1)$-SJ. To facilitate discussion, we will assume the existence of an algorithm $\A$ that can solve $\kappa$-SJ problems for all $\kappa \in [2, k-1]$. Denote by 
+Our objective is to prove that the H-V $k$-SJ problem can be efficiently reduced to the $(k-1)$-SJ problem --- note: it is $(k-1)$-SJ here, rather than H-V $(k-1)$-SJ. For this purpose, we will assume the existence of an algorithm $\A$ that can solve $\kappa$-SJ problems for all $\kappa \in [2, k-1]$. Denote by
 \myitems{
     \item $F_\kappa(n, \out)$ the worst-case runtime of $\A$ on any instance of $\kappa$-SJ that has input size $n$ and output size $\out$;
     \item $G_\kappa(n, \out)$ the worst-case space consumed by $\A$ on any instance mentioned above.
@@ -246,11 +246,11 @@ The rest of the section serves as a proof for:
 
 \subsection{Categorizing the Result Tuples} \label{sec:hv:result-part}
 
-Let us represent the result of the H-V $k$-SJ problem as $\J_k(R_1, ..., R_{k-2},$ $H, V)$. Recall that $\J_k(R_1, ..., R_{k-2},$ $H, V)$ contains all such $k$-tuples $(r_1, ..., r_{k-2}, h, v) \in R_1 \times ... \times R_{k-2} \times H \times V$ satisfying the condition that $h \cap v \bigcap_{i=1}^{k-2} r_i$ is not empty. The condition is equivalent to saying that the intersection point of $h$ and $v$ falls in every $r_i$ of $i \in [k-2]$.
+Let us represent the result of the H-V $k$-SJ problem as $\J(R_1, ..., R_{k-2},$ $H, V)$. Recall that $\J(R_1, ..., R_{k-2},$ $H, V)$ contains all such $k$-tuples $(r_1, ..., r_{k-2}, h, v) \in R_1 \times ... \times R_{k-2} \times H \times V$ satisfying the condition that $h \cap v \bigcap_{i=1}^{k-2} r_i$ is not empty. The condition is equivalent to saying that the intersection point of $h$ and $v$ falls in every $r_i$ of $i \in [k-2]$.
 
 \vgap
 
-Let us focus on any $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in  \J_k(R_1, ..., R_{k-2},$ $H, V)$. We classify the tuple into one of the two categories below: 
+Let us focus on any $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in  \J(R_1, ..., R_{k-2},$ $H, V)$. We classify the tuple into one of the two categories below:
 
 \myitems{
     \item {{\bf Type 1:}} $h$ crosses all of $r_1, ..., r_{k-2}$, and $v$  crosses all of $r_1, ..., r_{k-2}$; 
@@ -263,8 +263,8 @@ Figure~\ref{fig:hv:types} illustrates a result tuple of each type, assuming $k =
     \begin{tabular}{cc} 
         \includegraphics[height=27mm]{./artwork/type1} & 
         \hspace{5mm} \includegraphics[height=27mm]{./artwork/type2} \\
-        (a) Cat.\ 1 result tuple & 
-        (b) Cat.\ 2 result tuple
+        (a) Type 1 result tuple &
+        (b) Type 2 result tuple
     \end{tabular}
     
     \figcapup 
@@ -288,6 +288,8 @@ A remark is in order about duplicate removal. A result tuple of Type 2 can belon
 \subsection{Finding Result Tuples of Type 1} \label{sec:hv:type1}
 
 \subsection{Finding Result Tuples of Type 2} \label{sec:hv:type2}
+
+\subsection{Remarks} \label{sec:hv:remarks}
 
 \todo{Remark on Rahul's result}
 
