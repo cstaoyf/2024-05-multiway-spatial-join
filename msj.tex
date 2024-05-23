@@ -180,7 +180,7 @@ This section will first define some notions useful for our discussion and then i
 %         &
 %         \hspace{3mm}
 %         \includegraphics[height=30mm]{./artwork/prob-d} \\
-        (a) Problem $\EuScript{A}$ and $\EuScript{D}$ &
+        (a) Problems $\EuScript{A}$ and $\EuScript{D}$ &
         \hspace{3mm}
         (b) Problem $\EuScript{B}$ &
         \hspace{3mm}
@@ -329,10 +329,11 @@ Computing the corresponding ``segment $h_1$'' for each $r_1 \in R_1$ is an insta
 
 We now solve the $(k-2)$-SJ problem on $R_1', R_2, ..., R_{k-2}$ using the algorithm $\A$ supplied. Let us represent the result of this $(k-2)$-SJ as $\J(R_1', R_2, ..., R_{k-2})$. The following observation is crucial.
 
-\begin{lemma} \label{sec:hv:type1:proj}
+\begin{lemma} \label{lmm:hv:type1:proj}
     A $(k-2)$-tuple $(r_1', r_2, ..., r_k)$ exists in $\J(R_1', R_2, ..., R_{k-2})$ if and only if the $(k-2)$-tuple $(r_1, r_2, ..., r_k)$ exists in $\Pi_{1:k-2}(\J_1(R_1, ...,$ $R_{k-2}, H, V))$, where $r_1$ is the rectangle in $R_1$ defining $r_1'$.
 \end{lemma}
 
+The proof is presented in Appendix~\ref{app:lmm:hv:type1:proj}. Note that the size of $\Pi_{1:k-2}(\J_1(R_1, ...,$ $R_{k-2}, H, V))$ is bounded by that of $\J_1(R_1, ..., R_{k-2}, H, V)$, which in turn is bounded by $\out$. Thus, as a corollary of Lemma~\ref{lmm:hv:type1:proj}, the $(k-2)$-SJ instance $R_1', R_2, ..., R_{k-2}$  can be settled in $F_{k-2}(n, \out)$ time using $G_{k-2}(n, \out)$ space.
 
 \subsection{Finding Result Tuples of Type 2} \label{sec:hv:type2}
 
@@ -356,6 +357,8 @@ We now solve the $(k-2)$-SJ problem on $R_1', R_2, ..., R_{k-2}$ using the algor
 \section{Algorithm for Problem $\bm{\EuScript{C}}$} \label{app:prob-c}
 
 \section{Algorithm for Problem $\bm{\EuScript{D}}$} \label{app:prob-d}
+
+\section{Proof of Lemma~\ref{lmm:hv:type1:proj}} \label{app:lmm:hv:type1:proj}
 
 \section{An $\bm{\Omega(n \log n)}$ Lower Bound for 2-SJ} \label{app:lb}
 
