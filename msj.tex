@@ -71,7 +71,7 @@
 
 
 \begin{abstract}
-    In a {\em spatial join}, we are given a constant number $k \geq 2$ of sets containing axis-parallel rectangles in a 2D space, denoted as $R_1, R_2, ..., R_k$. The objective is to report all $k$-tuples $(r_1, r_2, ..., r_k) \in R_1 \times R_2 \times ... \times R_k$ where the rectangles $r_1, r_2, ..., r_k$ have a non-empty intersection, i.e., $r_1 \cap r_2 \cap ... \cap r_k \neq \emptyset$. This problem holds significant importance in spatial databases and has been extensively studied for over two decades. We explain how to settle the problem in $O(n \log n + \out)$ time using $O(n + \out)$ space --- regardless of the constant $k$ --- where $n = \sum_{i=1}^k |R_i|$ and $\out$ is the result size (i.e., the total number of $k$-tuples reported). The time complexity is asymptotically optimal in the class of comparison-based algorithms, to which our solution belongs. Our result significantly improves the state of the art, which is an algorithm with running time $O(n \log^{2k} n + \out)$.
+    In a {\em spatial join}, we are given a constant number $k \geq 2$ of sets containing axis-parallel rectangles in a 2D space, denoted as $R_1, R_2, ..., R_k$. The objective is to report all $k$-tuples $(r_1, r_2, ..., r_k) \in R_1 \times R_2 \times ... \times R_k$ where the rectangles $r_1, r_2, ..., r_k$ have a non-empty intersection, i.e., $r_1 \cap r_2 \cap ... \cap r_k \neq \emptyset$. This problem holds significant importance in spatial databases and has been extensively studied for over two decades. We explain how to settle the problem in $O(n \log n + \out)$ time --- regardless of the constant $k$ --- where $n = \sum_{i=1}^k |R_i|$ and $\out$ is the result size (i.e., the total number of $k$-tuples reported). The time complexity is asymptotically optimal in the class of comparison-based algorithms, to which our solution belongs. Our result significantly improves the state of the art, which is an algorithm with running time $O(n \log^{2k} n + \out)$.
 \end{abstract}
 
 \maketitle 
@@ -99,43 +99,43 @@ SJs have been extensively studied in the database-system community, leading to t
 
 \vgap
 
-From the perspective of theory, SJs are best understood when $k = 2$, i.e., the {\em pairwise} scenario, where it is folklore that the problem can be solved in $O(n \log n + \out)$ time using $O(n)$ space (e.g., by planesweep \cite{bcko08}). However, the problem becomes significantly more challenging for $k \ge 3$, i.e., the {\em multiway} scenario. All the solutions developed  before 2022 (see \cite{gcn+13,mp98,mp01,pmt99} and the references therein) suffer from a worst-case time complexity of $O(n^k)$, offering essentially no improvement over the naive method that enumerates the entire cartesian product $R_1 \times R_2 \times ... \times R_k$.
-
-
-\begin{table*} 
-    \begin{tabular}{c|c|c|c|c} 
-        $\bm{k}$ & {\bf method} & {\bf runtime} & {\bf space} & {\bf remark} \\
-        \hline\hline 
-        2 & folklore & $O(n \log n + \out)$ & $O(n)$ & comparison-based optimal \\ 
-        \hline
-        $\ge 3$ & before 2022 & $O(n^k)$ & - & \\
-        $\ge 3$ & \cite{ty22} & $O((n + \out) \cdot \polylog n)$ & $O(n \polylog n + \out)$ & \\
-        $\ge 3$ & \cite{kcko22} & $O(n \log^{2k} n + \out)$ & $O(n \log n + \out)$ & \\
-        \hline
-        $\ge 3$ & ours & $O(n \log n + \out)$ & $O(n + \out)$ & comparison-based optimal
-    \end{tabular}
-    
-    \vspace{3mm}
-    \caption{Comparison of results on the $k$-SJ problem for a constant $k$}
-    \label{tab:results-com}
-    \figcapdown
-\end{table*}
+From the perspective of theory, SJs are best understood when $k = 2$, i.e., the {\em pairwise} scenario, where it is folklore that the problem can be solved in $O(n \log n + \out)$ time (e.g., by planesweep \cite{bcko08}). However, the problem becomes significantly more challenging for $k \ge 3$, i.e., the {\em multiway} scenario. All the solutions developed  before 2022 (see \cite{gcn+13,mp98,mp01,pmt99} and the references therein) suffer from a worst-case time complexity of $O(n^k)$, offering essentially no improvement over the naive method that enumerates the entire cartesian product $R_1 \times R_2 \times ... \times R_k$.
 
 \vgap
 
-Year 2022 witnessed two independent works \cite{ty22,kcko22} that, although not tackling $k$-SJ directly, imply provably fast $k$-SJ algorithms. Specifically, in \cite{ty22}, Tao and Yi studied several variants of ``interval intersection joins'' under updates. Most relevant to our context is the variant where the input includes, for each $i \in [k]$, a set $\I_i$ of 1D intervals in $\real$, and the join result comprises all $k$-tuples $(I_1,$ $I_2,$ $..., I_k) \in \I_1 \times \I_2 \times ... \times \I_k$ with $\bigcap_{i=1}^k I_i \neq \emptyset$. The objective is to design a data structure, which, given the insertion (resp., deletion) of an interval in one of the $k$ sets, can identify all the newly-appearing (resp., disappearing) $k$-tuples in the join result in $O((1+\Delta) \cdot \polylog n)$ time, where $n = \sum_{i=1}^k |\I_i|$ and $\Delta$ is the number of such $k$-tuples. Tao and Yi \cite{ty22} presented a structure of $O(n \polylog n)$ space achieving the purpose. Combining their structure with planesweep, one can obtain an algorithm for solving the $k$-SJ problem in $O((n + \out) \cdot \polylog n)$ time using $O(n \polylog n + \out)$ space.
+Year 2022 witnessed two independent works \cite{ty22,kcko22} that, although not tackling $k$-SJ directly, imply provably fast $k$-SJ algorithms. Specifically, in \cite{ty22}, Tao and Yi studied several variants of ``interval intersection joins'' under updates. Most relevant to our context is the variant where the input includes, for each $i \in [k]$, a set $\I_i$ of 1D intervals in $\real$, and the join result comprises all $k$-tuples $(I_1,$ $I_2,$ $..., I_k) \in \I_1 \times \I_2 \times ... \times \I_k$ with $\bigcap_{i=1}^k I_i \neq \emptyset$. The objective is to design a data structure, which, given the insertion (resp., deletion) of an interval in one of the $k$ sets, can identify all the newly-appearing (resp., disappearing) $k$-tuples in the join result in $O((1+\Delta) \cdot \polylog n)$ time, where $n = \sum_{i=1}^k |\I_i|$ and $\Delta$ is the number of such $k$-tuples. Tao and Yi \cite{ty22} presented a structure of $O(n \polylog n)$ space achieving the purpose. Combining their structure with planesweep, one can obtain an algorithm for solving the $k$-SJ problem in $O((n + \out) \cdot \polylog n)$ time.
 
 \vgap
 
-In \cite{kcko22}, Khamis et al.\ investigated a type of joins that extends the conventional equi-join in two ways. First, each attribute value in a relation is an interval (rather than a real value); second, each equality predicate in equi-join is replaced with a ``non-empty intersection'' predicate on the attributes involved. The $k$-SJ problem can be converted to solving a join defined next under the framework of \cite{kcko22}. For each $i \in [k]$, define $R_i$ as a relation over two attributes $X$ and $Y$. For each tuple $\bm{u} \in R_i$, its values $\bm{u}(X)$ and $\bm{u}(Y)$ on the two attributes are both intervals (effectively defining a rectangle). The objective is to output all $k$-tuples $(\bm{u}_1, \bm{u}_2, ..., \bm{u}_k) \in R_1 \times R_2 \times ... \times R_k$ satisfying $\bigcap_{i=1}^k \bm{u}_i(X) \ne \emptyset$ and $\bigcap_{i=1}^k \bm{u}_i(Y) \ne \emptyset$. It is clear that there is one-one correspondence between the result of this join and that of k-SJ. Khamis et al.\ \cite{kcko22} developed an algorithm that can process the join  in $O(n \log^{2k} n + \out)$ time. Their algorithm requires $O(n \log n + \out)$ space.
+In \cite{kcko22}, Khamis et al.\ investigated a type of joins that extends the conventional equi-join in two ways. First, each attribute value in a relation is an interval (rather than a real value); second, each equality predicate in equi-join is replaced with a ``non-empty intersection'' predicate on the attributes involved. The $k$-SJ problem can be converted to solving a join defined next under the framework of \cite{kcko22}. For each $i \in [k]$, define $R_i$ as a relation over two attributes $X$ and $Y$. For each tuple $\bm{u} \in R_i$, its values $\bm{u}(X)$ and $\bm{u}(Y)$ on the two attributes are both intervals (effectively defining a rectangle). The objective is to output all $k$-tuples $(\bm{u}_1, \bm{u}_2, ..., \bm{u}_k) \in R_1 \times R_2 \times ... \times R_k$ satisfying $\bigcap_{i=1}^k \bm{u}_i(X) \ne \emptyset$ and $\bigcap_{i=1}^k \bm{u}_i(Y) \ne \emptyset$. It is clear that there is one-one correspondence between the result of this join and that of k-SJ. Khamis et al.\ \cite{kcko22} developed an algorithm that can process the join  in $O(n \log^{2k} n + \out)$ time.
 
 \vgap 
 
 It is worth noting that $\Omega(n \log n)$ is a lower bound on the runtime of any comparison-based algorithm solving the $k$-SJ problem, even for $k = 2$. This can be established via a reduction (presented in Appendix~\ref{app:lb} for self-containment) from the {\em element distinctness} (ED) problem, where we are given $n$ real values $e_1, e_2, ..., e_n$ and need to decide whether there are distinct $i, j \in [n]$ satisfying $e_i = e_j$. The ED problem demands $\Omega(n \log n)$ comparisons to solve \cite{dl79}.
 
+\begin{table} 
+    \begin{tabular}{c|c|c|c} 
+        $\bm{k}$ & {\bf method} & {\bf runtime} & {\bf remark} \\
+        \hline\hline 
+        2 & folklore & $O(n \log n + \out)$ & optimal \\ 
+        \hline
+        $\ge 3$ & before 2022 & $O(n^k)$ &  \\
+        $\ge 3$ & \cite{ty22} & $O((n + \out) \cdot \polylog n)$ & \\
+        $\ge 3$ & \cite{kcko22} & $O(n \log^{2k} n + \out)$ & \\
+        \hline
+        $\ge 3$ & ours & $O(n \log n + \out)$ & optimal
+    \end{tabular}
+    
+    \vspace{3mm}
+    \figcapup 
+    \caption{Result comparison on $k$-SJ problem for a constant $k$}
+    \label{tab:results-com}
+    \figcapdown \vspace{-5mm}
+\end{table}
+
 \subsection{Our Results} \label{sec:intro:ours} 
 
-In this paper, we show that the $k$-SJ problem can be settled by a comparison-based algorithm that runs in $O(n \log n + \out)$ time and uses  $O(n + \out)$ space, regardless of the constant $k$. The time complexity is asymptotically optimal.
+In this paper, we show that the $k$-SJ problem can be settled by a comparison-based algorithm that runs in $O(n \log n + \out)$ time, regardless of the constant $k$. The time complexity is asymptotically optimal.
 
 \vgap 
 
@@ -159,7 +159,7 @@ The theorem implies the existence of a recursive nature of $k$-SJ. Indeed, we wi
 \end{theorem}
 
 
-We will also prove that the space of our algorithm is $O(k \cdot n + k \cdot \out)$. When $k = O(1)$, the time and space complexities become $O(n \log n$ $+ \out)$ and $O(n + \out)$, as promised.
+When $k = O(1)$, the time complexity becomes $O(n \log n$ $+ \out)$, as promised.
 
 \vgap 
 
@@ -203,25 +203,25 @@ This section will first define some notions useful for our discussion and then i
 
 \vgap
 
-In Appendix~\ref{app:prob-a}, we explain how to solve the problem in $O(n \log n)$ time and $O(n)$ space where $n = |H| + |R|$.
+In Appendix~\ref{app:prob-a}, we explain how to solve the problem in $O(n \log n)$ time where $n = |H| + |R|$.
 
 \extraspacing {\bf Problem $\bm{\EuScript{B}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each segment $h \in H$, the rightmost point $p$ on $h$ satisfying the condition that $p$ is covered by at least one left-end covering rectangle of $h$ in $R$ --- formally, for $h = [x_1, x_2] \times y$, we aim to find the maximum $x \in [x_1, x_2]$ such that there exists at least one rectangle $r \in R$ covering both the left end point of $h$ and the point $(x, y)$. If the point $p$ exists (equivalently, $h$ has at least one left-end covering rectangle in $R$), then we should output a tuple $(h, p)$; otherwise, we output nothing for $h$. Figure~\ref{fig:probs}a gives an example where $H = \set{h_1, h_2}$ and $R$ includes the three rectangles shown; the output is $\set{(h_1, p_1), (h_2, p_2)}$.
 
 \vgap
 
-In Appendix~\ref{app:prob-b}, we explain how to solve the problem in $O(n \log n)$ time and $O(n)$ space where $n = |H| + |R|$.
+In Appendix~\ref{app:prob-b}, we explain how to solve the problem in $O(n \log n)$ time where $n = |H| + |R|$.
 
 \extraspacing {\bf Problem $\bm{\EuScript{C}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each segment $h \in H$, all the rectangles $r \in R$ containing $h$. Furthermore, those rectangles need to be sorted by the x-coordinates of their right boundaries. Formally, if $r_1, r_2, ..., r_t$ (for some $t \ge 1$) are all the rectangles in $R$ containing $h$, we output $(h: r_1, r_2, ..., r_t)$, provided that $x_i > x_{i-1}$ for each $i \in [2, t]$ where $x_i$ (resp., $x_{i-1}$) is the x-coordinate of the right boundary of $r_i$ (resp., $r_{i-1}$). Figure~\ref{fig:probs}c gives an example where $H = \set{h_1, h_2, h_3}$ and $R = \set{r_1, r_2, r_3}$; the output is $\set{(h_1: r_2, r_1), (h_2: r_2, r_3)}$.
 
 \vgap
 
-In Appendix~\ref{app:prob-c}, we explain how to solve the problem in $O(n \log n + \out)$ time and $O(n + \out)$ space where $n = |H| + |R|$ and $\out$ is the number of pairs $(h, r) \in H \times R$ such that $r$ contains $h$.
+In Appendix~\ref{app:prob-c}, we explain how to solve the problem in $O(n \log n + \out)$ time where $n = |H| + |R|$ and $\out$ is the number of pairs $(h, r) \in H \times R$ such that $r$ contains $h$.
 
 \extraspacing {\bf Problem $\bm{\EuScript{D}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each rectangle $r \in R$, all the segments $h \in H$ crossing $r$. Furthermore, those segments need to be sorted by their y-coordinates. Formally, if $h_1, h_2, ..., h_t$ (for some $t \ge 1$) are all the segments in $H$ crossing $r$, we output $(r: h_1, h_2, ..., h_t)$, provided that $y_i > y_{i-1}$ for each $i \in [2, t]$ where $y_i$ (resp., $y_{i-1}$) is the y-projection of $h_i$ (resp., $h_{i-1}$). See Figure~\ref{fig:probs}a again where $H = \set{h_1, h_2, h_3}$ and $R = \set{r_1, r_2}$; the output is $\set{(r_1: h_3, h_2), (r_2: h_2, h_1)}$.
 
 \vgap
 
-In Appendix~\ref{app:prob-d}, we explain how to solve the problem in $O(n \log n + \out)$ time and $O(n + \out)$ space where $n = |H| + |R|$ and $\out$ is the number of pairs $(h, r) \in H \times R$ such that $h$ crosses $r$.
+In Appendix~\ref{app:prob-d}, we explain how to solve the problem in $O(n \log n + \out)$ time where $n = |H| + |R|$ and $\out$ is the number of pairs $(h, r) \in H \times R$ such that $h$ crosses $r$.
 
 \section{H-V Multiway Spatial Joins} \label{sec:hv}
 
@@ -229,23 +229,17 @@ This section deals with a special version of the $k$-SJ problem. Recall that the
 
 \vgap 
 
-Our objective is to prove that the H-V $k$-SJ problem can be efficiently reduced to the $(k-1)$-SJ problem --- note: it is $(k-1)$-SJ here, rather than H-V $(k-1)$-SJ. For this purpose, we will assume the existence of an algorithm $\A$ that can solve $\kappa$-SJ problems for all $\kappa \in [2, k-1]$. Denote by
-\myitems{
-    \item $F_\kappa(n, \out)$ the worst-case runtime of $\A$ on any instance of $\kappa$-SJ that has input size $n$ and output size $\out$;
-    \item $G_\kappa(n, \out)$ the worst-case space consumed by $\A$ on any instance mentioned above.
-}
-We consider that $F_\kappa(n, \out) \le F_{\kappa + 1}(n, \out)$ and $G_\kappa(n, \out) \le G_{\kappa + 1}(n, \out)$ for any $\kappa \in [2, k-2]$, that is, its overhead on $\kappa$-SJ should not be larger than that on $(\kappa+1)$-SJ.
+Our objective is to prove that the H-V $k$-SJ problem can be efficiently reduced to the $(k-1)$-SJ problem --- note: it is $(k-1)$-SJ here, rather than H-V $(k-1)$-SJ. For this purpose, we will assume the existence of an algorithm $\A$ that can solve $\kappa$-SJ problems for all $\kappa \in [2, k-1]$. Denote by $F_\kappa(n, \out)$ the worst-case runtime of $\A$ on any instance of $\kappa$-SJ that has input size $n$ and output size $\out$. We consider that $F_\kappa(n, \out) \le F_{\kappa + 1}(n, \out)$, that is, its overhead on $\kappa$-SJ should not be larger than that on $(\kappa+1)$-SJ.
 
 \vgap
 
 The rest of the section serves as a proof for: 
 
 \begin{lemma} \label{lmm:hv}
-    The H-V $k$-SJ problem can be solved in 
+    The H-V $k$-SJ problem can be solved in time
     \myeqn{
-        O(k) \cdot \big( F_{k-1}(n, \out) + n\log n + k \cdot \out \big) \nn 
+        O(k) \cdot \big( F_{k-1}(n, \out) + n\log n + k \cdot \out \big). \nn 
     }
-    time using $O(n + \out) + G_{k-1}(n, \out)$ space.
 \end{lemma}
 
 Recall that $n$ is the total size of $R_1, ..., R_{k-2}, H$, and $V$. Henceforth, we assume that a distinct ID from 1 to $n$ is given to each rectangle or segment in $R_1, ..., R_{k-2}, H$, and $V$.
@@ -265,19 +259,6 @@ Let us focus on any $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in  \J(R_1, ..., R_{k-
 }
 Figure~\ref{fig:hv:types} illustrates a result tuple of each type, assuming $k = 4$.
 
-\begin{figure} 
-    \begin{tabular}{cc} 
-        \includegraphics[height=27mm]{./artwork/type1} & 
-        \hspace{5mm} \includegraphics[height=27mm]{./artwork/type2} \\
-        (a) Type 1 result tuple &
-        (b) Type 2 result tuple
-    \end{tabular}
-    
-    \figcapup 
-    \caption{Two categories of H-V $k$-SJ result tuples ($k$ = 4)} 
-    \label{fig:hv:types}
-    \figcapdown
-\end{figure}
 
 \vgap 
 
@@ -292,6 +273,21 @@ Our subsequent discussion will proceed as follows.  Section~\ref{sec:hv:type1} w
 A remark is in order about duplicate removal. A result tuple of Type 2 can belong to, in the worst case, all the $4(k-2)$ sub-types. Hence, by considering each sub-type separately, we may see the same result tuple multiple times (precisely, up to $4(k-2)$ times) in the whole algorithm. However, this does {\em not} mean that the tuple needs to be {\em reported} multiple times. Whenever a type-2 result tuple is found, we can immediately decide in $O(k)$ time all the sub-types it belongs to. To avoid outputting the tuple more than once, we can enforce a policy to designate a specific sub-type for outputting. One such policy is the following: among all sub-types that the tuple belongs to, identify the one with the smallest sub-type number $t$ (an integer from 1 to $4(k-2)$); report the tuple only when we are computing the particular sub-type $t$.
 
 \subsection{Finding Result Tuples of Type 1} \label{sec:hv:type1}
+
+
+\begin{figure} 
+    \begin{tabular}{cc} 
+        \includegraphics[height=27mm]{./artwork/type1} & 
+        \hspace{5mm} \includegraphics[height=27mm]{./artwork/type2} \\
+        (a) Type 1 result tuple &
+        (b) Type 2 result tuple
+    \end{tabular}
+    
+    \figcapup 
+    \caption{Two categories of H-V $k$-SJ result tuples ($k$ = 4)} 
+    \label{fig:hv:types}
+    \figcapdown
+\end{figure}
 
 This subsection will explain how to find the $k$-tuples of Type 1. Let us represent the set of such tuples as $\J_1(R_1, ..., R_{k-2}, H, V)$ and define its ``projection'' onto $(R_1, ..., R_{k-2})$ as
 \myeqn{
