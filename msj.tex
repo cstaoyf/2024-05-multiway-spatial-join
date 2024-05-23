@@ -373,8 +373,11 @@ Equipped with the above, we can generate the target $S$ as follows:
     \> 5.\>\>\> add $(r_1, ..., r_{k-2}, h, v)$ to $S$
 }
 
-\noindent In Appendix~\ref{app:hv:type1:gen-S}, we prove that the set $S$ computed satisfies \eqref{eqn:hv:type1:S}, as desired.
-
+\noindent In Appendix~\ref{app:hv:type1:gen-S}, we prove that the set $S$ computed satisfies \eqref{eqn:hv:type1:S}, as desired. The running time of the above algorithm is
+\myeqn{
+    O(1 + |\Pi_{1:k-2}(\J_1(R_1, ..., R_{k-2}, H, V))| + |S|) = O(1 + \out) \nn
+}
+and its space is bounded by $O(\out)$.
 
 \vgap 
 
