@@ -331,7 +331,7 @@ The proof is presented in Appendix~\ref{app:lmm:hv:type1:proj}. Note that the si
     \subseteq 
     \J(R_1, ..., R_{k-2}, H, V). \label{eqn:hv:type1:S}
 }
-Recall that $\J(R_1, ..., R_{k-2}, H, V)$ is the result of the original H-V $k$-SJ problem, which has a size of $\out$. Only the $k$-tuples in $S$ that are of Type 1 will be reported. We will achieve the purpose in $O(n \log n + |S|)$ time.
+Recall that $\J(R_1, ..., R_{k-2}, H, V)$ is the result of the original H-V $k$-SJ problem, which has a size of $\out$. Only the $k$-tuples in $S$ that are of Type 1 will be reported. We will achieve the purpose in $O(n \log n + |S|) = O(n \log n + \out)$ time.
 
 
 \begin{figure} 
@@ -389,7 +389,7 @@ Equipped with the above, we can generate the target $S$ as follows:
 \myeqn{
     O(1 + |\Pi_{1:k-2}(\J_1(R_1, ..., R_{k-2}, H, V))| + |S|) \nn
 }
-which is $O(1 + \out)$ because of \eqref{eqn:hv:type1:S}. In what follows, we will explain how to compute all the $\cross(r_a, B; H)$ in $O(n \log n + |S|)$ time. A symmetric algorithm can be used to compute 
+which is $O(1 + \out)$ because of \eqref{eqn:hv:type1:S}. In what follows, we will explain how to compute all the $\cross(r_a, B; H)$ in $O(n \log n + |S|)$ time. A symmetric algorithm can be used to compute all the $\cross(r_b, B; V)$ in the same complexity. This will then allow us to conclude that Step 2 can be done in $O(n \log n + |S|)$ time.
 
 
 
