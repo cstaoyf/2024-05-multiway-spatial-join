@@ -376,14 +376,28 @@ We now introduce:
     \cross(\bm{t}, H) = \set{h \in H \mid \text{$h$ crosses both $B_\bm{t}$ and $\gleft(\bm{t})$}} \nn \\
     \cross(\bm{t}, V) = \set{h \in H \mid \text{$v$ crosses both $B_\bm{t}$ and $\gbot(\bm{t})$}}. \nn
 }
-These sets have important properties, as proved in Appendix~\ref{app:hv}:
+These sets have important properties, as proved in Appendix~\ref{app:hv} (recall the notation $\bm{t}[i] = r_i'$ for each $i \in [k-2]$):
 
 \begin{lemma} \label{lmm:hv:type1:properties}
-    Let $r_i$ be the full rectangle of $r_i'$ for each $i \in [k-2]$. All the following statements are true:
+    %Let $r_i$ be the full rectangle of $r_i'$ for each $i \in [k-2]$.
+    All the following statements are true:
     \myenums{
-        \item $\cross(\bm{t}, H) \ne \emptyset$ and $\cross(\bm{t}, V) \ne \emptyset$.
-        \item For any $h \in \cross(\bm{t}, H)$ and any $v \in \cross(\bm{t}, V)$, the $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v)$ belongs to $\J(R_1, ..., R_{k-2}, H, V)$.
-        \item If a $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v)$ belongs to $\J_1$, then $h \in \cross(\bm{t}, H)$ and $v \in \cross(\bm{t}, V)$.
+        \item For each $\bm{t} \in \J(R_1', R'_2, ..., R'_{k-2})$, we have:
+
+        \vspace{2mm}
+
+        \myenums{
+            \item $\cross(\bm{t}, H) \ne \emptyset$ and $\cross(\bm{t}, V) \ne \emptyset$.
+
+            \item Let $r_i$ ($i \in [k-2]$) be the full rectangle of $\bm{t}[i']$. Then,
+            for any $h \in \cross(\bm{t}, H)$ and any $v \in \cross(\bm{t}, V)$, the $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v)$ belongs to $\J(R_1, ..., R_{k-2}, H, V)$.
+
+            \item If a $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v)$ belongs to $\J_1$, then $h \in \cross(\bm{t}, H)$ and $v \in \cross(\bm{t}, V)$.
+        }
+
+        \vspace{2mm}
+
+        \item $\sum_{\bm{t}} |\cross(\bm{t}, H)| \le \out$ and $\sum_{\bm{t}} |\cross(\bm{t}, V)| \le \out$.
     }
 \end{lemma}
 
