@@ -435,7 +435,7 @@ Lemma~\ref{lmm:hv:type1:properties} assures us that the set $\J^*$ thus computed
 
 \vgap 
 
-The rest of the section will focus on explaining how to prepare the sets $\dcross_H(\bm{t})$ of all $\bm{t} \in \J(R_1', ..., R_{k-2}')$ in $O(n \log n + k \cdot \out)$ time. An analogous algorithm can be used to compute the sets $\dcross_V(\bm{t})$ of all $\bm{t}$ in the same time complexity.
+The rest of the section will focus on how to prepare the sets $\dcross_H(\bm{t})$ of all $\bm{t} \in \J(R_1', ..., R_{k-2}')$ in $O(n \log n + k \cdot \out)$ time. An analogous method can be used to compute the sets $\dcross_V(\bm{t})$ of all $\bm{t}$ in the same time complexity.
 
 \extraspacing {\bf Sets $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} Fix any $i \in [k-2]$. For each rectangle $r' \in R_i'$, define
 \myeqn{
@@ -453,13 +453,17 @@ and call it the {\em top-sliced rectangle} of $r'$.
 
 \vgap 
 
-Now construct from $R_i'$ a new set of rectangles: 
+Next, we construct from $R_i'$ a new set of rectangles: 
 \myeqn{
     R^*_i = \set{r^* \mid r' \in R_i' \text{ and its top-sliced rectangle $r^*$ exists}}. \label{eqn:hv:type1:R*}
 }
 In Appendix~\ref{app:hv}, we show how to compute produce $R^*_1, ..., R^*_{k-2}$ together in $O(n + k \cdot \out)$ total time.
 
-\extraspacing {\bf Computing the ``d-cross'' Sets.}
+\vgap 
+
+Now, we compute $\cross_H(r^*)$ for each $r^* \in R^*_i$
+
+\extraspacing {\bf Computing the ``d-cross'' Sets.} 
 
 
 \section{Finding Result Tuples of Type 2} \label{sec:hv:type2}
