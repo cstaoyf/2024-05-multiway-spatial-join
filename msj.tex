@@ -44,6 +44,7 @@
 \def\gleft{\mathrm{left\text{-}guard}}
 \def\gbot{\mathrm{bot\text{-}guard}}
 \def\cross{\mathrm{cross}}
+\def\dcross{\mathrm{d\text{-}cross}}
 \def\out{\mathrm{OUT}}
 
 
@@ -374,10 +375,10 @@ We now introduce:
 %     \item $\cross(r_b, B; V)$, the set of segments in $V$ that cross $r_b$ and $B$.
 % }
 \myeqn{
-    \cross(\bm{t}, H) = \set{h \in H \mid \text{$h$ crosses both $B_\bm{t}$ and $\gleft(\bm{t})$}} \nn \\
-    \cross(\bm{t}, V) = \set{h \in H \mid \text{$v$ crosses both $B_\bm{t}$ and $\gbot(\bm{t})$}}. \nn
+    \dcross(\bm{t}, H) = \set{h \in H \mid \text{$h$ crosses both $B_\bm{t}$ and $\gleft(\bm{t})$}} \nn \\
+    \dcross(\bm{t}, V) = \set{h \in H \mid \text{$v$ crosses both $B_\bm{t}$ and $\gbot(\bm{t})$}}. \nn
 }
-These sets have important properties as stated in the next lemma, whose proof can be found in Appendix~\ref{app:hv}:
+The prefix ``d-'' stands for double. These sets have important properties as stated in the next lemma, whose proof can be found in Appendix~\ref{app:hv}:
 
 \begin{lemma} \label{lmm:hv:type1:properties}
     %Let $r_i$ be the full rectangle of $r_i'$ for each $i \in [k-2]$.
@@ -388,17 +389,17 @@ These sets have important properties as stated in the next lemma, whose proof ca
         \vspace{2mm}
 
         \myenums{
-            \item $\cross(\bm{t}, H) \ne \emptyset$ and $\cross(\bm{t}, V) \ne \emptyset$.
+            \item $\dcross(\bm{t}, H) \ne \emptyset$ and $\dcross(\bm{t}, V) \ne \emptyset$.
 
             \item Denote by $r_i$ ($i \in [k-2]$) the full rectangle of $\bm{t}[i]$. 
-            For any $h \in \cross(\bm{t}, H)$ and any $v \in \cross(\bm{t}, V)$, the $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v)$ belongs to $\J(R_1, ..., R_{k-2}, H, V)$.
+            For any $h \in \dcross(\bm{t}, H)$ and any $v \in \dcross(\bm{t}, V)$, the $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v)$ belongs to $\J(R_1, ..., R_{k-2}, H, V)$.
 
-            \item If the $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v)$ belongs to $\J_1$, then $h \in \cross(\bm{t}, H)$ and $v \in \cross(\bm{t}, V)$.
+            \item If the $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v)$ belongs to $\J_1$, then $h \in \dcross(\bm{t}, H)$ and $v \in \dcross(\bm{t}, V)$.
         }
 
         \vspace{2mm}
 
-        \item $\sum_{\bm{t}} |\cross(\bm{t}, H)| \le \out$ and $\sum_{\bm{t}} |\cross(\bm{t}, V)| \le \out$.
+        \item $\sum_{\bm{t}} |\dcross(\bm{t}, H)| \le \out$ and $\sum_{\bm{t}} |\dcross(\bm{t}, V)| \le \out$.
     }
 \end{lemma}
 
@@ -413,16 +414,16 @@ Equipped with Lemma~\ref{lmm:hv:type1:properties}, we generate our target $\J^*$
     \> 1.\> $\J^* = \emptyset$ \\
     \> 2.\> {\bf for} each $(k-2)$-tuple $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ {\bf do} \\
     \> 3.\>\> $r_i \leftarrow$ the full rectangle of $\bm{t}[i]$, for each $i \in [k-2]$ \\
-    \> 4.\>\> {\bf for} each $(h, v) \in \cross(\bm{t}, H) \times \cross(\bm{t}, V)$ {\bf do} \\
+    \> 4.\>\> {\bf for} each $(h, v) \in \dcross(\bm{t}, H) \times \dcross(\bm{t}, V)$ {\bf do} \\
     \> 5.\>\>\> add $(r_1, ..., r_{k-2}, h, v)$ to $\J^*$
 }
 
 
-Lemma~\ref{lmm:hv:type1:properties} assures us that the set $\J^*$ thus computed indeed satisfies \eqref{eqn:hv:type1:J*}. Furthermore, if we are given $\cross(\bm{t}, H)$ and $\cross(\bm{t}, V)$ for each $\bm{t}$, Lemma~\ref{lmm:hv:type1:properties} further asserts that the above algorithm runs in $O(1 + k \cdot |\J^*|) = O(1 + k \cdot \out)$ time.
+Lemma~\ref{lmm:hv:type1:properties} assures us that the set $\J^*$ thus computed indeed satisfies \eqref{eqn:hv:type1:J*}. Furthermore, if we are given $\dcross(\bm{t}, H)$ and $\dcross(\bm{t}, V)$ for each $\bm{t}$, Lemma~\ref{lmm:hv:type1:properties} further asserts that the above algorithm runs in $O(1 + k \cdot |\J^*|) = O(1 + k \cdot \out)$ time.
 
 \vgap 
 
-The rest of the section will focus on explaining how to prepare the sets $\cross(\bm{t}, H)$ of all $\bm{t} \in \J(R_1', ..., R_{k-2}')$ in $O(n \log n + k \cdot \out)$ time. An analogous algorithm can be used to compute the sets $\cross(\bm{t}, V)$ of all $\bm{t}$ in the same time complexity.
+The rest of the section will focus on explaining how to prepare the sets $\dcross(\bm{t}, H)$ of all $\bm{t} \in \J(R_1', ..., R_{k-2}')$ in $O(n \log n + k \cdot \out)$ time. An analogous algorithm can be used to compute the sets $\dcross(\bm{t}, V)$ of all $\bm{t}$ in the same time complexity.
 
 \extraspacing {\bf Sets $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} Fix any $i \in [k-2]$. For each rectangle $r' \in R_i'$, we define
 \myeqn{
@@ -440,9 +441,9 @@ We refer to $r^*$ as the {\em top-sliced rectangle} of $r'$.
 
 Now construct from $R_i'$ a new set of rectangles: 
 \myeqn{
-    R^*_i = \set{r^* \mid r' \in R_i' \text{ and its top-sliced rectangle $r^*$ exists}}. \nn
+    R^*_i = \set{r^* \mid r' \in R_i' \text{ and its top-sliced rectangle $r^*$ exists}}. \label{eqn:hv:type1:R*}
 }
-
+In Appendix~\ref{app:hv}, we show how to compute produce $R^*_1, ..., R^*_{k-2}$ together in $O(n + k \cdot \out)$ total time.
 
 
 \section{Finding Result Tuples of Type 2} \label{sec:hv:type2}
@@ -475,6 +476,8 @@ Now construct from $R_i'$ a new set of rectangles:
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:proj}.}
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:properties}.}
+
+\extraspacing {\bf Computing the Top-Sliced Rectangles.}
 
 \section{Hardness of 3-SJ in 3D Space} \label{app:lb-cond}
 
