@@ -413,8 +413,11 @@ Equipped with Lemma~\ref{lmm:hv:type1:properties}, we generate our target $\J^*$
 }
 
 
-Lemma~\ref{lmm:hv:type1:properties} assures us that the set $\J^*$ thus computed indeed satisfies \eqref{eqn:hv:type1:J*}. Furthermore, if we are given $\cross(\bm{t}, H)$ and $\cross(\bm{t}, V)$ for each $\bm{t}$, Lemma~\ref{lmm:hv:type1:properties} further asserts that the above algorithm runs in $O(1 + |\J^*|) = O(1 + \out)$ time.
+Lemma~\ref{lmm:hv:type1:properties} assures us that the set $\J^*$ thus computed indeed satisfies \eqref{eqn:hv:type1:J*}. Furthermore, if we are given $\cross(\bm{t}, H)$ and $\cross(\bm{t}, V)$ for each $\bm{t}$, Lemma~\ref{lmm:hv:type1:properties} further asserts that the above algorithm runs in $O(1 + k \cdot |\J^*|) = O(1 + k \cdot \out)$ time.
 
+\vgap 
+
+The rest of the section will focus on explaining how to prepare the sets $\cross(\bm{t}, H)$ of all $\bm{t} \in \J(R_1', ..., R_{k-2}')$ in $O(n \log n + k \cdot \out)$ time. An analogous algorithm can be used to compute the sets $\cross(\bm{t}, V)$ of all $\bm{t}$ in the same time complexity.
 
 
 
