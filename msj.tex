@@ -232,7 +232,7 @@ See Figure~\ref{fig:guard} for an illustration.
 
 In the {\em reporting version} of the problem, the goal is to output, for each point $p \in P$, all the rectangles $r \in R$ containing $p$, provided that at least one such $r$ exists. For example, in Figure~\ref{fig:guard}a, the output is $\set{(p_2: r_1, r_2), (p_3: r_2)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n + \out)$ time where $\out$ is the number of pairs $(p, r) \in P \times R$ such that $p \in r$.
 
-\extraspacing {\bf Problem $\bm{\mathscr{B}}$.} The input involves a set $H$ of horizontal segments and a set $V$ of vertical segments, all in 2D space. The goal is to report, for each segment $h \in H$, the leftmost point $p$ on $h$ such that $p$ is on some vertical segment in $V$. If $h$ does not intersect with any segment in $V$, report nothing for $h$. Figure~\ref{fig:probs}a gives an example where $H = \set{h_1, h_2, h_3}$ and $V = \set{v_1, v_2}$; the output is $\set{(h_1, p_1), (h_2, p_2)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n)$ time where $n = |H| + |V|$.
+\extraspacing {\bf Problem $\bm{\mathscr{B}}$.} The input involves a set $H$ of horizontal segments and a set $V$ of vertical segments, all in 2D space. The goal is to report, for each segment $h \in H$, the leftmost point $p$ on $h$ such that $p$ is on some vertical segment in $V$. If $h$ does not intersect with any segment in $V$, report nothing for $h$. Figure~\ref{fig:probs}b gives an example where $H = \set{h_1, h_2, h_3}$ and $V = \set{v_1, v_2}$; the output is $\set{(h_1, p_1), (h_2, p_2)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n)$ time where $n = |H| + |V|$.
 
 
 \extraspacing {\bf Problem $\bm{\mathscr{C}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each segment $h \in H$, the rightmost point $p$ on $h$ satisfying the condition that $p$ is covered by at least one left-end covering rectangle of $h$ in $R$ --- formally, for $h = [x_1, x_2] \times y$, we aim to find the maximum $x \in [x_1, x_2]$ such that at least one rectangle $r \in R$ covers both the point $(x_1, y)$ and the point $(x, y)$. If the point $p$ exists (i.e., $h$ has at least one left-end covering rectangle in $R$), we should output a tuple $(h, p)$; otherwise, output nothing for $h$. Figure~\ref{fig:probs}c gives an example where $H = \set{h_1, h_2}$ and $R$ includes the three rectangles shown; the output is $\set{(h_1, p_1), (h_2, p_2)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n)$ time where $n = |H| + |R|$.
@@ -244,7 +244,7 @@ In the {\em reporting version} of the problem, the goal is to output, for each p
 In the {\em find-all} version of the problem, the goal is to report, for each rectangle $r \in R$, all the segments $h \in H$ crossing $r$. Furthermore, those segments need to be sorted by y-coordinate. Formally, if $h_1, h_2, ..., h_z$ (for some $z \ge 1$) are all the segments in $H$ crossing $r$, we output $(r: h_1, h_2, ..., h_z)$, provided that $y_i \ge y_{i-1}$ for each $i \in [2, z]$ where $y_i$ (resp., $y_{i-1}$) is the y-projection of $h_i$ (resp., $h_{i-1}$). In the example of Figure~\ref{fig:probs}d, the output is $\set{(r_1: h_3, h_2), (r_2: h_2, h_1)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n + \out)$ time where $\out$ is the number of pairs $(h, r) \in H \times R$ such that $h$ crosses $r$.
 
 
-\extraspacing {\bf Problem $\bm{\mathscr{E}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each segment $h \in H$, all the rectangles $r \in R$ containing $h$. Furthermore, those rectangles need to be sorted by the x-coordinates of their right boundaries. Formally, if $r_1, r_2, ..., r_z$ (for some $z \ge 1$) are all the rectangles in $R$ containing $h$, we output $(h: r_1, r_2, ..., r_z)$, provided that $\xright(r_i) \ge \xright(r_{i-1})$ for each $i \in [2, z]$. Figure~\ref{fig:probs}c gives an example where $H = \set{h_1, h_2, h_3}$ and $R = \set{r_1, r_2, r_3}$; the output is $\set{(h_1: r_2, r_1), (h_2: r_2, r_3)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n + \out)$ time where $n = |H| + |R|$ and $\out$ is the number of pairs $(h, r) \in H \times R$ such that $r$ contains $h$.
+\extraspacing {\bf Problem $\bm{\mathscr{E}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each segment $h \in H$, all the rectangles $r \in R$ containing $h$. Furthermore, those rectangles need to be sorted by the x-coordinates of their right boundaries. Formally, if $r_1, r_2, ..., r_z$ (for some $z \ge 1$) are all the rectangles in $R$ containing $h$, we output $(h: r_1, r_2, ..., r_z)$, provided that $\xright(r_i) \ge \xright(r_{i-1})$ for each $i \in [2, z]$. Figure~\ref{fig:probs}e gives an example where $H = \set{h_1, h_2, h_3}$ and $R = \set{r_1, r_2, r_3}$; the output is $\set{(h_1: r_2, r_1), (h_2: r_2, r_3)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n + \out)$ time where $n = |H| + |R|$ and $\out$ is the number of pairs $(h, r) \in H \times R$ such that $r$ contains $h$.
 
 
 \section{The Core: H-V Multiway Spatial Joins} \label{sec:hv}
@@ -337,7 +337,7 @@ which we call the {\em trimmed} version of $R_1$. Computing the ``segment $h_1$'
 
 \vgap
 
-In the same fashion, we obtain the trimmed version $R_i'$ of $R_i$ for all $i \in [2, n]$, spending $O(k n \log n)$ time in total. We now solve the $(k-2)$-SJ problem on $R_1', R_2', ..., R_{k-2}'$ using the algorithm $\A$ supplied (see Lemma~\ref{lmm:hv}). This $(k-2)$-SJ clearly has an input size at most $n$, and let us represent its result as $\J(R_1', R_2, ..., R_{k-2})$. We prove in Appendix~\ref{app:hv}:
+In the same fashion, we obtain the trimmed version $R_i'$ of $R_i$ for all $i \in [2, k]$, spending $O(k n \log n)$ time in total. We now solve the $(k-2)$-SJ problem on $R_1', R_2', ..., R_{k-2}'$ using the algorithm $\A$ supplied (see Lemma~\ref{lmm:hv}). This $(k-2)$-SJ clearly has an input size at most $n$, and let us represent its result as $\J(R_1', R_2, ..., R_{k-2})$. We prove in Appendix~\ref{app:hv}:
 
 %The lemma below shows that the result is essentially what we aim to compute in Step 1.
 
@@ -345,7 +345,7 @@ In the same fashion, we obtain the trimmed version $R_i'$ of $R_i$ for all $i \i
     $|\J(R_1', R'_2, ..., R'_{k-2})| \le \out$.
 \end{lemma}
 
-We reminder the reader that $\out$ is the output size of the original H-V $k$-SJ problem. As a corollary of Lemma~\ref{lmm:hv:type1:proj}, the $(k-2)$-SJ can be settled in $F_{k-2}(n, \out)$ time.
+We remind the reader that $\out$ is the output size of the original H-V $k$-SJ problem. As a corollary of Lemma~\ref{lmm:hv:type1:proj}, the $(k-2)$-SJ can be settled in $F_{k-2}(n, \out)$ time.
 
 \yf{example}
 
@@ -385,10 +385,10 @@ These sets have important properties as stated in the next lemma, whose proof ca
         \myenums{
             \item $\cross(\bm{t}, H) \ne \emptyset$ and $\cross(\bm{t}, V) \ne \emptyset$.
 
-            \item Denote by $r_i$ ($i \in [k-2]$) the full rectangle of $\bm{t}[i']$. 
+            \item Denote by $r_i$ ($i \in [k-2]$) the full rectangle of $\bm{t}[i]$. 
             For any $h \in \cross(\bm{t}, H)$ and any $v \in \cross(\bm{t}, V)$, the $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v)$ belongs to $\J(R_1, ..., R_{k-2}, H, V)$.
 
-            \item If a $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v)$ belongs to $\J_1$, then $h \in \cross(\bm{t}, H)$ and $v \in \cross(\bm{t}, V)$.
+            \item If the $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v)$ belongs to $\J_1$, then $h \in \cross(\bm{t}, H)$ and $v \in \cross(\bm{t}, V)$.
         }
 
         \vspace{2mm}
