@@ -360,11 +360,11 @@ We now solve the $(k-2)$-SJ problem on $R_1', R_2', ..., R_{k-2}'$ using the alg
 
 %The lemma below shows that the result is essentially what we aim to compute in Step 1.
 
-\begin{lemma} \label{lmm:hv:type1:proj}
+\begin{lemma} \label{lmm:hv:type1:recur-output}
     $|\J(R_1', R'_2, ..., R'_{k-2})| \le \out$.
 \end{lemma}
 
-We remind the reader that $\out$ is the output size of the original H-V $k$-SJ problem. As a corollary of Lemma~\ref{lmm:hv:type1:proj}, the $(k-2)$-SJ can be settled in $F_{k-2}(n, \out)$ time.
+We remind the reader that $\out$ is the output size of the original H-V $k$-SJ problem. As a corollary of Lemma~\ref{lmm:hv:type1:recur-output}, the $(k-2)$-SJ can be settled in $F_{k-2}(n, \out)$ time.
 
 \yf{example}
 
@@ -463,24 +463,24 @@ In Appendix~\ref{app:hv}, we show how to compute produce $R^*_1, ..., R^*_{k-2}$
 
 \vgap 
 
-We pay particular attention to the sets $\cross_H(r^*)$ of the rectangles $r^*$ in $R^*_i$, where $\cross_H(r^*)$, defined in \eqref{eqn:cross}, is the set of segments in $H$ crossing $r^*$. The following lemma, proven in Appendix~\ref{app:hv}, presents some crucial properties for these sets. 
+We are particularly concerned with the sets $\cross_H(r^*)$ of the rectangles $r^*$ in $R^*_i$, where $\cross_H(r^*)$ --- defined in \eqref{eqn:cross} --- is the set of segments in $H$ crossing $r^*$. The following lemma, proven in Appendix~\ref{app:hv}, presents some useful properties for these sets. 
 
 \begin{lemma} \label{lmm:hv:type1:cross-r*}
     Both statements below are true: 
     \myenums{
         \item $\sum_{i=1}^k \sum_{r^* \in R^*_i} |\cross_H(r^*)| \le \out$.
         
-        \item Consider any $k$-tuple $\bm{t} \in \J(R'_1, ..., R'_{k-2})$. Let $r' = \gbot(\bm{t})$ and $r^*$ be the top-sliced rectangle of $r'$. Then, it must hold that $\dcross_H(\bm{t}) \subseteq \cross_H(r^*)$. Furthermore, if the (horizontal) segments of $\cross_H(r^*)$ have been sorted in ascending order of y-coordinate, then $\dcross_H(\bm{t})$ includes a prefix of the sorted order.
+        \item Consider any $k$-tuple $\bm{t} \in \J(R'_1, ..., R'_{k-2})$. Let $r' = \gbot(\bm{t})$ and $r^*$ be the top-sliced rectangle of $r'$. Then, we have $\dcross_H(\bm{t})$ $\subseteq \cross_H(r^*)$. Furthermore, if the (horizontal) segments of $\cross_H(r^*)$ are sorted in ascending order of y-coordinate, then $\dcross_H(\bm{t})$ includes a prefix of the sorted order.
     }
 \end{lemma}
 
 \yf{example}
 
-Finding the $\cross_H(r^*)$ sets of all $r^* \in R^*_i$ is an instance of the find-all-sorted version of Problem $\mathscr{D}$. Statement (1) of the above lemma assures us that the total time to do so for all $R^*_1, ..., R^*_{k-2}$ is bounded by $O(n \log n + \out)$. Note that, for each $\cross_H(r^*)$ computed, the (horizontal) segments therein has been sorted in ascending order of y-coordinate.
+Finding the $\cross_H(r^*)$ sets of all $r^* \in R^*_i$ is an instance of the find-all-sorted version of Problem $\mathscr{D}$. Statement (1) of Lemma~\ref{lmm:hv:type1:cross-r*} assures us that the total time to do so for all $R^*_1, ..., R^*_{k-2}$ is bounded by $O(n \log n + \out)$. Note that, for each $\cross_H(r^*)$ computed, the (horizontal) segments therein has been sorted in ascending order of y-coordinate.
 
 
 
-\extraspacing {\bf Computing the ``d-cross'' Sets.} We are ready to compute $\dcross_H(\bm{t})$, defined in \eqref{eqn:dcross-H}, for any $\bm{t} \in \J(R'_1, ..., R'_{k-2})$, thanks to Statement (2) of Lemma~\ref{lmm:hv:type1:cross-r*}. First, identify the rectangle $r' = \gbot(\bm{t})$ and fetch its (already computed) top-sliced rectangle $r^*$. Second, obtain $B_\bm{t}$ and $\gleft(\bm{t})$. These two steps require $O(k)$ time. Then, scan the segments in $\cross_H(r^*)$ in ascending order of their y-coordinates. For each segment $h$ scanned, check whether $h$ belongs to $\dcross_H(\bm{t})$, namely,  whether $h$ crosses both $B_\bm{t}$ and $\gleft(\bm{t})$; this can be done in constant time. Abort the scan as soon as $h \notin \dcross_H(\bm{t})$. This way, we produce $\dcross_H(\bm{t})$ in $O(k + |\dcross_H(\bm{t}|)$ time. Doing so for all $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ takes $O(k \cdot |\J| + |\J^*|) = O(k \cdot \out)$ time.
+\extraspacing {\bf Computing the ``d-cross'' Sets.} We are ready to compute $\dcross_H(\bm{t})$, defined in \eqref{eqn:dcross-H}, for any $\bm{t} \in \J(R'_1, ..., R'_{k-2})$, thanks to Statement (2) of Lemma~\ref{lmm:hv:type1:cross-r*}. First, identify the rectangle $r' = \gbot(\bm{t})$ and fetch its (already computed) top-sliced rectangle $r^*$. Second, obtain $B_\bm{t}$ and $\gleft(\bm{t})$. These two steps require $O(k)$ time. Then, scan the segments in $\cross_H(r^*)$ in ascending order of their y-coordinates. For each segment $h$ scanned, check whether $h$ belongs to $\dcross_H(\bm{t})$, namely,  whether $h$ crosses both $B_\bm{t}$ and $\gleft(\bm{t})$; this can be done in constant time. Abort the scan as soon as $h \notin \dcross_H(\bm{t})$. This way, we produce $\dcross_H(\bm{t})$ in $O(k + |\dcross_H(\bm{t}|)$ time. Doing so for all $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ takes $O(k \cdot |\J| + \sum_\bm{t} |\dcross_H(t)| = O(k \cdot \out)$ time, where the last step used statement (2) of Lemma~\ref{lmm:hv:type1:properties}.
 
 \vgap 
 
@@ -513,11 +513,13 @@ We now conclude that $\J_1$ (the set of type-1 result tuples) can be computed in
 
 \section{Completing the Proof of Lemma~\ref{lmm:hv}} \label{app:hv} 
 
-\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:proj}.}
+\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:recur-output}.}
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:properties}.}
 
 \extraspacing {\bf Computing the Top-Sliced Rectangles.}
+
+\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:cross-r*}.}
 
 \section{Hardness of 3-SJ in 3D Space} \label{app:lb-cond}
 
