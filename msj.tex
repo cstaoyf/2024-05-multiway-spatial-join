@@ -386,8 +386,8 @@ We now introduce:
 %     \item $\cross(r_b, B; V)$, the set of segments in $V$ that cross $r_b$ and $B$.
 % }
 \myeqn{
-    \dcross(\bm{t}, H) = \set{h \in H \mid \text{$h$ crosses both $B_\bm{t}$ and $\gleft(\bm{t})$}} \nn \\
-    \dcross(\bm{t}, V) = \set{h \in H \mid \text{$v$ crosses both $B_\bm{t}$ and $\gbot(\bm{t})$}}. \nn
+    \dcross_H(\bm{t}) = \set{h \in H \mid \text{$h$ crosses both $B_\bm{t}$ and $\gleft(\bm{t})$}} \label{eqn:dcross-H} \\
+    \dcross_V(\bm{t}) = \set{h \in H \mid \text{$v$ crosses both $B_\bm{t}$ and $\gbot(\bm{t})$}}. \label{eqn:dcross-H} 
 }
 The prefix ``d-'' stands for double. These sets have important properties as stated in the next lemma, whose proof can be found in Appendix~\ref{app:hv}:
 
@@ -400,17 +400,17 @@ The prefix ``d-'' stands for double. These sets have important properties as sta
         \vspace{2mm}
 
         \myenums{
-            \item $\dcross(\bm{t}, H) \ne \emptyset$ and $\dcross(\bm{t}, V) \ne \emptyset$.
+            \item $\dcross_H(\bm{t}) \ne \emptyset$ and $\dcross_V(\bm{t}) \ne \emptyset$.
 
             \item Denote by $r_i$ ($i \in [k-2]$) the full rectangle of $\bm{t}[i]$. 
-            For any $h \in \dcross(\bm{t}, H)$ and any $v \in \dcross(\bm{t}, V)$, the $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v)$ belongs to $\J(R_1, ..., R_{k-2}, H, V)$.
+            For any $h \in \dcross_H(\bm{t})$ and any $v \in \dcross_V(\bm{t})$, the $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v)$ belongs to $\J(R_1, ..., R_{k-2}, H, V)$.
 
-            \item If the $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v)$ belongs to $\J_1$, then $h \in \dcross(\bm{t}, H)$ and $v \in \dcross(\bm{t}, V)$.
+            \item If the $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v)$ belongs to $\J_1$, then $h \in \dcross_H(\bm{t})$ and $v \in \dcross_V(\bm{t})$.
         }
 
         \vspace{2mm}
 
-        \item $\sum_{\bm{t}} |\dcross(\bm{t}, H)| \le \out$ and $\sum_{\bm{t}} |\dcross(\bm{t}, V)| \le \out$.
+        \item $\sum_{\bm{t}} |\dcross_H(\bm{t})| \le \out$ and $\sum_{\bm{t}} |\dcross_V(\bm{t})| \le \out$.
     }
 \end{lemma}
 
@@ -425,26 +425,28 @@ Equipped with Lemma~\ref{lmm:hv:type1:properties}, we generate our target $\J^*$
     \> 1.\> $\J^* = \emptyset$ \\
     \> 2.\> {\bf for} each $(k-2)$-tuple $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ {\bf do} \\
     \> 3.\>\> $r_i \leftarrow$ the full rectangle of $\bm{t}[i]$, for each $i \in [k-2]$ \\
-    \> 4.\>\> {\bf for} each $(h, v) \in \dcross(\bm{t}, H) \times \dcross(\bm{t}, V)$ {\bf do} \\
+    \> 4.\>\> {\bf for} each $(h, v) \in \dcross_H(\bm{t}) \times \dcross_V(\bm{t})$ {\bf do} \\
     \> 5.\>\>\> add $(r_1, ..., r_{k-2}, h, v)$ to $\J^*$
 }
 
 
-Lemma~\ref{lmm:hv:type1:properties} assures us that the set $\J^*$ thus computed indeed satisfies \eqref{eqn:hv:type1:J*}. Furthermore, if we are given $\dcross(\bm{t}, H)$ and $\dcross(\bm{t}, V)$ for each $\bm{t}$, Lemma~\ref{lmm:hv:type1:properties} further asserts that the above algorithm runs in $O(1 + k \cdot |\J^*|) = O(1 + k \cdot \out)$ time.
+Lemma~\ref{lmm:hv:type1:properties} assures us that the set $\J^*$ thus computed indeed satisfies \eqref{eqn:hv:type1:J*}. Furthermore, if we are given $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$ for each $\bm{t}$, Lemma~\ref{lmm:hv:type1:properties} further asserts that the above algorithm runs in $O(1 + k \cdot |\J^*|) = O(1 + k \cdot \out)$ time.
 
 \vgap 
 
-The rest of the section will focus on explaining how to prepare the sets $\dcross(\bm{t}, H)$ of all $\bm{t} \in \J(R_1', ..., R_{k-2}')$ in $O(n \log n + k \cdot \out)$ time. An analogous algorithm can be used to compute the sets $\dcross(\bm{t}, V)$ of all $\bm{t}$ in the same time complexity.
+The rest of the section will focus on explaining how to prepare the sets $\dcross_H(\bm{t})$ of all $\bm{t} \in \J(R_1', ..., R_{k-2}')$ in $O(n \log n + k \cdot \out)$ time. An analogous algorithm can be used to compute the sets $\dcross_V(\bm{t})$ of all $\bm{t}$ in the same time complexity.
 
-\extraspacing {\bf Sets $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} Fix any $i \in [k-2]$. For each rectangle $r' \in R_i'$, we define
+\extraspacing {\bf Sets $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} Fix any $i \in [k-2]$. For each rectangle $r' \in R_i'$, define
 \myeqn{
-    \maxtop(r') &=& \max_{\bm{t} \in \J(R'_1, ..., R'_{k-2}): r' = \gbot(\bm{t})} \xright(B_\bm{t}). 
+    \maxtop(r') &=& \max_{\bm{t} \in \J(R'_1, ..., R'_{k-2}): r' = \gbot(\bm{t})} \ytop(B_\bm{t}). 
 }
 The value $\maxtop(r')$ is set to $-\infty$, if no $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ has $r'$ as the $\gbot(\bm{t})$. When $\maxtop(r') \ne -\infty$, assuming $r' = [x_1, x_2] \times [y_1, y_2]$, we introduce a rectangle
 \myeqn{
     r^* &=& [x_1, x_2] \times [y_1, \maxtop(r')]. \nn
 }
-We refer to $r^*$ as the {\em top-sliced rectangle} of $r'$.
+and call it the {\em top-sliced rectangle} of $r'$.
+
+\vgap
 
 \yf{example}
 
