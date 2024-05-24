@@ -249,11 +249,11 @@ In the {\em find-all} version of the problem, the goal is to report, for each re
 
 \section{The Core: H-V Multiway Spatial Joins} \label{sec:hv}
 
-Recall that the input of $k$-SJ comprises $k$ sets of rectangles: $R_1, R_2, ...,$ $R_k$. We now formulate a special version of $k$-SJ, named the {\em H-V $k$-SJ} problem. The special nature is reflected in the introduction of three constraints: (i) $k \ge 3$, (ii) $R_{k-1}$ should be a set of horizontal segments, and (iii) $R_k$ should be a set of vertical segments. For better clarity, we will represent the input sets as $R_1, R_2, ..., R_{k-2}, H$ ($=R_{k-1}$), and $V$ ($=R_k$). We want to output the join result $\J(R_1, ..., R_{k-2},$ $H, V)$, including every $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in R_1 \times ... \times R_{k-2} \times H \times V$ such that $h \cap v \cap \bigcap_{i=1}^{k-2} r_i$ is not empty. As we will see later, conquering this sepcial version is the most challenging step in settling the original $k$-SJ problem optimally.
+Recall that the input of $k$-SJ comprises $k$ sets of rectangles: $R_1, R_2, ...,$ $R_k$. We now formulate a special version of $k$-SJ, named the {\em H-V $k$-SJ} problem. The special nature is reflected in the introduction of three constraints: (i) $k \ge 3$, (ii) $R_{k-1}$ should be a set of horizontal segments, and (iii) $R_k$ should be a set of vertical segments. For better clarity, we will represent the input sets as $R_1, R_2, ..., R_{k-2}, H$ ($=R_{k-1}$), and $V$ ($=R_k$). The goal is to output the join result $\J(R_1, ..., R_{k-2},$ $H, V)$, including every $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in R_1 \times ... \times R_{k-2} \times H \times V$ such that $h \cap v \cap \bigcap_{i=1}^{k-2} r_i$ is not empty. As we will see, conquering this sepcial version is the most challenging step in settling the original $k$-SJ problem optimally.
 
 \vgap
 
-Our objective is to prove H-V $k$-SJ can be efficiently reduced to $(k-1)$-SJ --- note: it is $(k-1)$-SJ here, rather than H-V $(k-1)$-SJ. For this purpose, we assume the existence of an algorithm $\A$ that can solve $\kappa$-SJ problems for all $\kappa \in [2, k-1]$. Denote by $F_\kappa(n, \out)$ the worst-case runtime of $\A$ on any instance of $\kappa$-SJ that has input size $n$ and output size $\out$. We consider that $F_\kappa(n, \out) \le F_{\kappa + 1}(n, \out)$, that is, its overhead on $\kappa$-SJ should not be larger than that on $(\kappa+1)$-SJ.
+Our objective is to prove that H-V $k$-SJ can be efficiently reduced to $(k-1)$-SJ --- note: it is $(k-1)$-SJ here, rather than H-V $(k-1)$-SJ. For this purpose, we assume the existence of an algorithm $\A$ that can solve $\kappa$-SJ problems for all $\kappa \in [2, k-1]$. Denote by $F_\kappa(n, \out)$ the worst-case runtime of $\A$ on any instance of $\kappa$-SJ that has input size $n$ and output size $\out$. We consider that $F_\kappa(n, \out) \le F_{\kappa + 1}(n, \out)$, that is, its overhead on $\kappa$-SJ should not be larger than that on $(\kappa+1)$-SJ.
 
 \vgap
 
@@ -270,13 +270,13 @@ We will establish:
 %The condition is equivalent to saying that the intersection point of $h$ and $v$ falls in every $r_i$ of $i \in [k-2]$.
 
 
-To get started, consider any $k$-tuple $(r_1, ..., r_{k-2}, h, v)$ in the join result $\J(R_1, ..., R_{k-2}, H, V)$. We classify the tuple into one of the two types below:
+Consider any $k$-tuple $(r_1, ..., r_{k-2}, h, v)$ in the join result $\J(R_1, ...,$ $R_{k-2}, H, V)$. We classify the tuple into one of the two types below:
 
 \myitems{
-    \item {{\bf Type 1:}} $h$ crosses all of $r_1, ..., r_{k-2}$, and $v$  crosses all of $r_1, ..., r_{k-2}$; 
+    \item {{\bf Type 1:}} $h$ crosses all of $r_1, ..., r_{k-2}$ and, at the same time, $v$ crosses all of $r_1, ..., r_{k-2}$; 
     
-    \item {{\bf Type 2:}} $h$ or $v$ fails to cross some rectangle in $\set{r_1, r_2, ..., r_{k-2}}$. Equivalently,
-    there exists at least one rectangle $r_i$ (for some $i \in [k-2]$) that covers an endpoint of either $h$ or $v$ or both.
+    \item {{\bf Type 2:}} either $h$ or $v$ fails to cross at least one rectangle in $\set{r_1, r_2, ..., r_{k-2}}$. Equivalently,
+    there exists at least a rectangle $r_i$ (for some $i \in [k-2]$) that covers an endpoint of either $h$ or $v$ or both.
 }
 Figure~\ref{fig:hv:types} illustrates a result tuple of each type, assuming $k = 4$.
 
