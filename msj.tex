@@ -154,12 +154,13 @@ In this paper, we show that the $k$-SJ problem can be settled by a comparison-ba
 In terms of techniques, our primary contribution is the revelation of a new property on the problem's mathematical structure. Fix any $k \ge 3$ and an {\em arbitrary} algorithm $\A$ for the $(k-1)$-SJ problem. For any $n \ge 1$, define function $F_{k-1}(n, \out)$ to return the worst-case running time of $\A$ on any instance of the $(k-1)$-SJ problem having input size at most $n$ and output size at most $\out$. Our main technical contribution is to establish:
 
 \begin{theorem} \label{thm:main-recur}
-    For any $n \ge 1$, equipped with the algorithm $\A$ as described above, the $k$-SJ problem can be solved in time
+    Equipped with the algorithm $\A$ as described above, the $k$-SJ problem can be solved in time
     \myeqn{
-        O(k^3) \cdot \big( F_{k-1}(n, \out) + n \log n + k \cdot \out \big).
+        O(k^3) \cdot \big( F_{k-1}(n, \out) + n \log n + k \cdot \out \big)
         %\nn
         \label{eqn:main:reccurrence}
     }
+    where $n$ (resp., $\out$) is the input (resp., output) size of the problem.
 %     time using $O(n + \out)$ space, plus the worst-case space of $\A$ on any $(k-1)$-SJ instance with input size $n$ and output size $\out$.
 \end{theorem}
 
@@ -259,13 +260,17 @@ Recall that the input of $k$-SJ comprises $k$ sets of rectangles: $R_1, R_2, ...
 \vgap
 
 Our objective is to prove H-V $k$-SJ can be efficiently reduced to $(k-1)$-SJ --- note: it is $(k-1)$-SJ here, rather than H-V $(k-1)$-SJ. For this purpose, we assume the existence of an algorithm $\A$ that can solve $\kappa$-SJ problems for all $\kappa \in [2, k-1]$. Denote by $F_\kappa(n, \out)$ the worst-case runtime of $\A$ on any instance of $\kappa$-SJ that has input size $n$ and output size $\out$. We consider that $F_\kappa(n, \out) \le F_{\kappa + 1}(n, \out)$, that is, its overhead on $\kappa$-SJ should not be larger than that on $(\kappa+1)$-SJ.
-We will prove:
+
+\vgap
+
+We will establish:
 
 \begin{lemma} \label{lmm:hv}
     The H-V $k$-SJ problem can be solved in time
     \myeqn{
-        O(k) \cdot \big( F_{k-1}(n, \out) + n\log n + k \cdot \out \big). \nn 
+        O(k) \cdot \big( F_{k-1}(n, \out) + n\log n + k \cdot \out \big) \nn
     }
+    where $n$ (resp., $\out$) is the input (resp., output) size of the problem.
 \end{lemma}
 
 %The condition is equivalent to saying that the intersection point of $h$ and $v$ falls in every $r_i$ of $i \in [k-2]$.
@@ -281,20 +286,21 @@ To get started, consider any $k$-tuple $(r_1, ..., r_{k-2}, h, v)$ in the join r
 }
 Figure~\ref{fig:hv:types} illustrates a result tuple of each type, assuming $k = 4$.
 
-
 \vgap 
 
-We will find result tuples of each type separately. Before proceeding, however, let us observe a sense of symmetry for Type 2. As mentioned, for each result tuple $(r_1, ..., r_{k-2}, h, v)$ of this type, a rectangle $r_i$, for some $i \in [k-2]$, covers an endpoint of $h$ or $v$ or both. As (i) there are $k-2$ choices for $i$ and (ii) $h$ and $v$ together have four endpoints, we can divide Type 2 further into $4(k-2)$ ``sub-types'': e.g., in subtype 1 (resp., 2), $r_1$ covers the left (resp., right) endpoint of $h$, in subtype 3 (resp., 4), $r_1$ covers the bottom (resp., top) endpoint of $v$, in subtype 5 (resp., 6), $r_2$ covers the left (resp., right) endpoint of $h$, etc. It is possible for the result tuple to belong to multiple sub-types simultaneously.
+In Section~\ref{sec:hv:type1} (resp., \ref{sec:hv:type2}), we will explain how to produce the result tuples of Type 1 (resp., 2) in the time complexity claimed in Lemma~\ref{lmm:hv}.
+
+%We will find result tuples of each type separately. Before proceeding, however, let us observe a sense of symmetry for Type 2. As mentioned, for each result tuple $(r_1, ..., r_{k-2}, h, v)$ of this type, a rectangle $r_i$, for some $i \in [k-2]$, covers an endpoint of $h$ or $v$ or both. As (i) there are $k-2$ choices for $i$ and (ii) $h$ and $v$ together have four endpoints, we can divide Type 2 further into $4(k-2)$ ``sub-types'': e.g., in subtype 1 (resp., 2), $r_1$ covers the left (resp., right) endpoint of $h$, in subtype 3 (resp., 4), $r_1$ covers the bottom (resp., top) endpoint of $v$, in subtype 5 (resp., 6), $r_2$ covers the left (resp., right) endpoint of $h$, etc. It is possible for the result tuple to belong to multiple sub-types simultaneously.
 
 \vgap 
+%
+% Our subsequent discussion will proceed as follows.  Section~\ref{sec:hv:type1} will explain how to produce all the result tuples of Type 1. Section~\ref{sec:hv:type2} will explain how to produce the result tuples $(r_1, ..., r_{k-2}, h, v)$ of a particular sub-type of Type 2: those tuples where $r_1$ covers the left endpoint of $h$. Other sub-types can be computed using the same algorithm, by symmetry.
+%
+% \vgap
+%
+% A remark is in order about duplicate removal. A result tuple of Type 2 can belong to, in the worst case, all the $4(k-2)$ sub-types. Hence, by considering each sub-type separately, we may see the same result tuple multiple times (precisely, up to $4(k-2)$ times) in the whole algorithm. However, this does {\em not} mean that the tuple needs to be {\em reported} multiple times. Whenever a type-2 result tuple is found, we can immediately decide in $O(k)$ time all the sub-types it belongs to. To avoid outputting the tuple more than once, we can enforce a policy to designate a specific sub-type for outputting. One such policy is the following: among all sub-types that the tuple belongs to, identify the one with the smallest sub-type number $t$ (an integer from 1 to $4(k-2)$); report the tuple only when we are computing the particular sub-type $t$.
 
-Our subsequent discussion will proceed as follows.  Section~\ref{sec:hv:type1} will explain how to produce all the result tuples of Type 1. Section~\ref{sec:hv:type2} will explain how to produce the result tuples $(r_1, ..., r_{k-2}, h, v)$ of a particular sub-type of Type 2: those tuples where $r_1$ covers the left endpoint of $h$. Other sub-types can be computed using the same algorithm, by symmetry.
-
-\vgap 
-
-A remark is in order about duplicate removal. A result tuple of Type 2 can belong to, in the worst case, all the $4(k-2)$ sub-types. Hence, by considering each sub-type separately, we may see the same result tuple multiple times (precisely, up to $4(k-2)$ times) in the whole algorithm. However, this does {\em not} mean that the tuple needs to be {\em reported} multiple times. Whenever a type-2 result tuple is found, we can immediately decide in $O(k)$ time all the sub-types it belongs to. To avoid outputting the tuple more than once, we can enforce a policy to designate a specific sub-type for outputting. One such policy is the following: among all sub-types that the tuple belongs to, identify the one with the smallest sub-type number $t$ (an integer from 1 to $4(k-2)$); report the tuple only when we are computing the particular sub-type $t$.
-
-\subsection{Finding Result Tuples of Type 1} \label{sec:hv:type1}
+\section{H-V $k$-SJ: Result Tuples of Type 1} \label{sec:hv:type1}
 
 
 \begin{figure} 
@@ -422,7 +428,7 @@ Equipped with the above, we can generate the target $S$ as follows:
 
 
 
-\subsection{Finding Result Tuples of Type 2} \label{sec:hv:type2}
+\section{Finding Result Tuples of Type 2} \label{sec:hv:type2}
 
 \subsection{Putting Things Together} \label{sec:hv:analysis}
 
