@@ -181,17 +181,17 @@ Now that Theorem~\ref{thm:main-alg} offers a satisfactory $k$-SJ result for $k =
     \includegraphics[height=23mm]{./artwork/guard}
 
     \figcapup
-    \caption{Suppose $\bm{t} = \set{r_1, r_2, r_3}$. $B_\bm{t}$ is the rectangle in gray, $\gleft(\bm{t}) = r_3$ and $\gbot(\bm{t}) = r_2$.}
+    \caption{Define 3-tuple $\bm{t} = \set{r_1, r_2, r_3}$. $B_\bm{t}$ is the rectangle in gray, $\gleft(\bm{t}) = r_3$ and $\gbot(\bm{t}) = r_2$.}
     \label{fig:guard}
     \figcapdown
 \end{figure}
 
 
-\section{Geometric Building Bricks} \label{sec:bricks}
+\section{Preliminaries in Geometry} \label{sec:bricks}
 
-This section will first define some notions frequently used in our presentation and then introduce several computational geometry problems, whose solutions will serve as building bricks for our $k$-SJ algorithm.
+This section will first define some notions frequently used in our presentation and then introduce several  geometry problems, whose solutions will serve as building bricks for our $k$-SJ algorithm.
 
-\extraspacing {\bf Terminology.} A {\em horizontal} segment is a segment of the form $[x_1, x_2] \times y$, and a {\em vertical} segment is a segment of the form $x \times [y_1, y_2]$. Given a horizontal segment $h = [x_1, x_2] \times y$, we call a rectangle $r$ a {\em left-end covering rectangle} of $h$, if $r$ contains the left endpoint of $h$ (i.e., $(x_1, y) \in r$). Similarly, given a vertical segment $v$, we call a rectangle $r$ a {\em bottom-end covering rectangle} of $v$, if $r$ contains the bottom endpoint of $v$. We say that a horizontal/vertical segment $s$ {\em crosses} a rectangle $r$, if $s$ overlaps with $r$, but $r$ covers neither of the two endpoints of $s$. We say that a rectangle $r$ {\em contains} a horizontal/vertical segment $s$, if $r$ covers both endpoints of $s$.
+\extraspacing {\bf Terminology.} A {\em horizontal} segment is a segment of the form $[x_1, x_2] \times y$, and a {\em vertical} segment is a segment of the form $x \times [y_1, y_2]$. Given a horizontal segment $h = [x_1, x_2] \times y$, we call a rectangle $r$ a {\em left-end covering rectangle} of $h$, if $r$ contains the left endpoint of $h$ (i.e., $(x_1, y) \in r$). Similarly, given a vertical segment $v$, we call a rectangle $r$ a {\em bottom-end covering rectangle} of $v$, if $r$ contains the bottom endpoint of $v$. \yf{need this?} We say that a horizontal/vertical segment $s$ {\em crosses} a rectangle $r$, if $s$ overlaps with $r$, but $r$ covers neither of the two endpoints of $s$. We say that a rectangle $r$ {\em contains} a horizontal/vertical segment $s$, if $r$ covers both endpoints of $s$.
 
 \vgap
 
@@ -201,26 +201,25 @@ Given a rectangle $r = [x_1, x_2] \times [y_1, y_2]$, we define $\xleft(r) = x_1
 
     \item $\gbot(\bm{t})$ to be the rectangle $r_i$, $i \in [k]$, satisfying $\ybot(r_i)$ $= \ybot(B_\bm{t})$. In case multiple values in $[k]$ fulfill the condition, let $i$ be the smallest of such values.
 }
-See Figure~\ref{fig:guard} for
+See Figure~\ref{fig:guard} for an illustration.
 
 \begin{figure*}
-    \begin{tabular}{ccc}
+    \begin{tabular}{cccc}
         \includegraphics[height=30mm]{./artwork/prob-a} & 
         \hspace{3mm}
-        \includegraphics[height=30mm]{./artwork/prob-b} &
+        \includegraphics[height=27mm]{./artwork/prob-b} &
         \hspace{3mm}
-        \includegraphics[height=30mm]{./artwork/prob-c} \\
-%         &
-%         \hspace{3mm}
-%         \includegraphics[height=30mm]{./artwork/prob-d} \\
-        (a) Problems $\EuScript{A}$ and $\EuScript{D}$ &
+        \includegraphics[height=30mm]{./artwork/prob-c} &
+        \hspace{3mm}
+        \includegraphics[height=30mm]{./artwork/prob-d} \\[2mm]
+        (a) Problems $\EuScript{A}$ &
         \hspace{3mm}
         (b) Problem $\EuScript{B}$ &
         \hspace{3mm}
         (c) Problem $\EuScript{C}$
-%         &
-%         \hspace{3mm}
-%         (d) Problem $\EuScript{D}$
+        &
+        \hspace{3mm}
+        (d) Problem $\EuScript{D}$
     \end{tabular}
 
     \figcapup
@@ -229,6 +228,20 @@ See Figure~\ref{fig:guard} for
     \figcapdown
 \end{figure*}
 
+\extraspacing {\bf Problem $\bm{\EuScript{A}}$.} The input involves a set $P$ of points and set $R$ of rectangles, all in 2D space. In the {\em detection version} of Problem $\EuScript{A}$, the goal is to output, for each point $p \in P$, whether it is covered by at least one rectangle in $R$. Figure~\ref{fig:probs}a gives an example where $P = \set{p_1, p_2, p_3}$ and $R = \set{r_1, r_2}$; the output is ``yes'' for $p_2$ and $p_3$ and ``no'' for $p_1$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n)$ time, where $n = |P| + |R|$.
+
+\vgap
+
+In the {\em reporting version} of the problem, the goal is to output, for each point $p \in P$, all the rectangles $r \in R$ containing $p$, provided that at least one such $r$ exists. For example, in Figure~\ref{fig:guard}a, the output is $\set{(p_2: r_1, r_2), (p_3: r_2)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n + \out)$ time where $\out$ is the number of pairs $(p, r) \in P \times R$ such that $p \in r$.
+
+\extraspacing {\bf Problem $\bm{\EuScript{B}}$.} The input involves a set $H$ of horizontal segments and a set $V$ of vertical segments, all in 2D space. The goal is to report, for each segment $h \in R$, the leftmost point $p$ on $h$ such that $p$ is on some vertical segment in $V$. If $h$ does not intersect with any segment in $V$, report nothing for $h$. Figure~\ref{fig:probs}a gives an example where $H = \set{h_1, h_2, h_3}$ and $V = \set{v_1, v_2}$; the output is $\set{(h_1, p_1), (h_2, p_2)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n)$ time where $n = |H| + |V|$.
+
+
+\extraspacing {\bf Problem $\bm{\EuScript{C}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each segment $h \in H$, the rightmost point $p$ on $h$ satisfying the condition that $p$ is covered by at least one left-end covering rectangle of $h$ in $R$ --- formally, for $h = [x_1, x_2] \times y$, we aim to find the maximum $x \in [x_1, x_2]$ such that there exists at least one rectangle $r \in R$ covering both the left end point of $h$ and the point $(x, y)$. If the point $p$ exists (equivalently, $h$ has at least one left-end covering rectangle in $R$), then we should output a tuple $(h, p)$; otherwise, we output nothing for $h$. Figure~\ref{fig:probs}a gives an example where $H = \set{h_1, h_2}$ and $R$ includes the three rectangles shown; the output is $\set{(h_1, p_1), (h_2, p_2)}$.
+
+\vgap
+
+In Appendix~\ref{app:prob-b}, we explain how to solve the problem in $O(n \log n)$ time where $n = |H| + |R|$.
 
 \extraspacing {\bf Problem $\bm{\EuScript{A}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each rectangle $r \in R$, its lowest crossing segment $h \in H$ --- formally, $h = [x_1, x_2] \times y$ has the smallest $y$ coordinate among all the segments in $H$ crossing $r$. If such an $h$ does not exist, output nothing for $r$.  Figure~\ref{fig:probs}b gives an example where $H = \set{h_1, h_2, h_3}$ and $R = \set{r_1, r_2}$; the output is $\set{(r_1, h_3), (r_2, h_2)}$.
 
@@ -236,11 +249,6 @@ See Figure~\ref{fig:guard} for
 
 In Appendix~\ref{app:prob-a}, we explain how to solve the problem in $O(n \log n)$ time where $n = |H| + |R|$.
 
-\extraspacing {\bf Problem $\bm{\EuScript{B}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each segment $h \in H$, the rightmost point $p$ on $h$ satisfying the condition that $p$ is covered by at least one left-end covering rectangle of $h$ in $R$ --- formally, for $h = [x_1, x_2] \times y$, we aim to find the maximum $x \in [x_1, x_2]$ such that there exists at least one rectangle $r \in R$ covering both the left end point of $h$ and the point $(x, y)$. If the point $p$ exists (equivalently, $h$ has at least one left-end covering rectangle in $R$), then we should output a tuple $(h, p)$; otherwise, we output nothing for $h$. Figure~\ref{fig:probs}a gives an example where $H = \set{h_1, h_2}$ and $R$ includes the three rectangles shown; the output is $\set{(h_1, p_1), (h_2, p_2)}$.
-
-\vgap
-
-In Appendix~\ref{app:prob-b}, we explain how to solve the problem in $O(n \log n)$ time where $n = |H| + |R|$.
 
 \extraspacing {\bf Problem $\bm{\EuScript{C}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each segment $h \in H$, all the rectangles $r \in R$ containing $h$. Furthermore, those rectangles need to be sorted by the x-coordinates of their right boundaries. Formally, if $r_1, r_2, ..., r_t$ (for some $t \ge 1$) are all the rectangles in $R$ containing $h$, we output $(h: r_1, r_2, ..., r_t)$, provided that $x_i > x_{i-1}$ for each $i \in [2, t]$ where $x_i$ (resp., $x_{i-1}$) is the x-coordinate of the right boundary of $r_i$ (resp., $r_{i-1}$). Figure~\ref{fig:probs}c gives an example where $H = \set{h_1, h_2, h_3}$ and $R = \set{r_1, r_2, r_3}$; the output is $\set{(h_1: r_2, r_1), (h_2: r_2, r_3)}$.
 
@@ -446,13 +454,16 @@ Equipped with the above, we can generate the target $S$ as follows:
 
 \section*{Appendix}
 
-\section{Algorithm for Problem $\bm{\EuScript{A}}$} \label{app:prob-a}
+\section{Building Brick Geometry Algorithms} \label{app:bricks}
 
-\section{Algorithm for Problem $\bm{\EuScript{B}}$} \label{app:prob-b}
+\extraspacing {\bf Algorithm for Problem $\bm{\EuScript{A}}$}
 
-\section{Algorithm for Problem $\bm{\EuScript{C}}$} \label{app:prob-c}
+\extraspacing {\bf Algorithm for Problem $\bm{\EuScript{B}}$}
 
-\section{Algorithm for Problem $\bm{\EuScript{D}}$} \label{app:prob-d}
+\extraspacing {\bf Algorithm for Problem $\bm{\EuScript{C}}$}
+
+\extraspacing {\bf Algorithm for Problem $\bm{\EuScript{D}}$}
+
 
 \section{Completing the Proof of Lemma~\ref{lmm:hv}} \label{app:hv} 
 
