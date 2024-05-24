@@ -350,11 +350,11 @@ Construct
 \myeqn{
     R_i' &=& \set{r' \mid r \in R_i \text{ and its trimmed rectangle $r'$ exists}}. \nn
 }
-Computing the ``segment $h_1$'' for each $r \in R_1$ is an instance of Problem $\mathscr{D}$ (the find-lowest version). By symmetry, so is the computation of $h_2, v_1$, and $v_2$ segments for each $r_1 \in R_1$. It thus follows from Section~\ref{sec:bricks} that $R_i'$ can be produced in $O(n \log n)$ time.
+Computing the ``segment $h_1$'' for each $r \in R_1$ is an instance of Problem $\mathscr{D}$ (the find-lowest version). By symmetry, so is the computation of $h_2, v_1$, and $v_2$ segments for each $r_1 \in R_1$. It thus follows from Section~\ref{sec:bricks} that $R_1', R_2', ..., R_{k-2}'$ can be produced in $O(n \log n)$ total time.
 
 \vgap
 
-We now solve the $(k-2)$-SJ problem on $R_1', R_2', ..., R_{k-2}'$ using the algorithm $\A$ supplied (see Lemma~\ref{lmm:hv}). This $(k-2)$-SJ clearly has an input size at most $n$, and let us represent its result as $\J(R_1', R_2, ..., R_{k-2})$. We prove in Appendix~\ref{app:hv}:
+We now solve the $(k-2)$-SJ problem on $R_1', R_2', ..., R_{k-2}'$ using the algorithm $\A$ supplied (see Lemma~\ref{lmm:hv}). This $(k-2)$-SJ clearly has an input size at most $n$, and let us represent its result as $\J(R'_1, R'_2, ..., R'_{k-2})$. We prove in Appendix~\ref{app:hv}:
 
 %The lemma below shows that the result is essentially what we aim to compute in Step 1.
 
@@ -478,8 +478,11 @@ Finding the $\cross_H(r^*)$ sets of all $r^* \in R^*_i$ is an instance of the fi
 
 
 
-\extraspacing {\bf Computing the ``d-cross'' Sets.} We are ready explain how to compute $\dcross_H(\bm{t})$, defined in \eqref{eqn:dcross-H}, for any $\bm{t} \in \J(R'_1, ..., R'_{k-2})$. This, in fact, has been made easy by Statement (2) of Lemma~\ref{lmm:hv:type1:cross-r*}. First, identify the rectangle $r' = \gbot(\bm{t})$ and fetch its (already computed) top-sliced rectangle $r^*$. Second, compute $B_\bm{t}$ and $\gleft(\bm{t})$. These two steps require $O(k)$ time. Then, scan the segments in $\cross_H(r^*)$ in ascending order of their y-coordinates. For each segment $h$ scanned, check whether $h$ belongs to $\dcross_H(\bm{t})$, namely,  whether $h$ crosses both $B_\bm{t}$ and $\gleft(\bm{t})$; this can be done in constant time. Abort the scan as soon as $h \notin \dcross_H(\bm{t})$. This way, we produce $\dcross_H(\bm{t})$ in $O(k + |\dcross_H(\bm{t}|)$ time. Doing so for all $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ takes $O(k |\J| + |\J^*|) = O(k \cdot \out)$ time.
+\extraspacing {\bf Computing the ``d-cross'' Sets.} We are ready to compute $\dcross_H(\bm{t})$, defined in \eqref{eqn:dcross-H}, for any $\bm{t} \in \J(R'_1, ..., R'_{k-2})$, thanks to Statement (2) of Lemma~\ref{lmm:hv:type1:cross-r*}. First, identify the rectangle $r' = \gbot(\bm{t})$ and fetch its (already computed) top-sliced rectangle $r^*$. Second, obtain $B_\bm{t}$ and $\gleft(\bm{t})$. These two steps require $O(k)$ time. Then, scan the segments in $\cross_H(r^*)$ in ascending order of their y-coordinates. For each segment $h$ scanned, check whether $h$ belongs to $\dcross_H(\bm{t})$, namely,  whether $h$ crosses both $B_\bm{t}$ and $\gleft(\bm{t})$; this can be done in constant time. Abort the scan as soon as $h \notin \dcross_H(\bm{t})$. This way, we produce $\dcross_H(\bm{t})$ in $O(k + |\dcross_H(\bm{t}|)$ time. Doing so for all $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ takes $O(k \cdot |\J| + |\J^*|) = O(k \cdot \out)$ time.
 
+\vgap 
+
+We now conclude that $\J_1$ (the set of type-1 result tuples) can be computed in $F_{k-1}(n, \out) + O(n \log n +  k \cdot \out)$ time.
 
 \section{H-V $k$-SJ: Result Tuples of Type 2} \label{sec:hv:type2}
 
