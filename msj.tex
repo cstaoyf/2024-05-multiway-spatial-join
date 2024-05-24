@@ -252,17 +252,14 @@ In the {\em all-crossing} version of the problem, the goal is to report, for eac
 \extraspacing {\bf Problem $\bm{\mathscr{E}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each segment $h \in H$, all the rectangles $r \in R$ containing $h$. Furthermore, those rectangles need to be sorted by the x-coordinates of their right boundaries. Formally, if $r_1, r_2, ..., r_z$ (for some $z \ge 1$) are all the rectangles in $R$ containing $h$, we output $(h: r_1, r_2, ..., r_z)$, provided that $\xright(r_i) \ge \xright(r_{i-1})$ for each $i \in [2, z]$. Figure~\ref{fig:probs}c gives an example where $H = \set{h_1, h_2, h_3}$ and $R = \set{r_1, r_2, r_3}$; the output is $\set{(h_1: r_2, r_1), (h_2: r_2, r_3)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n + \out)$ time where $n = |H| + |R|$ and $\out$ is the number of pairs $(h, r) \in H \times R$ such that $r$ contains $h$.
 
 
-\section{H-V Multiway Spatial Joins} \label{sec:hv}
+\section{The Core: H-V Multiway Spatial Joins} \label{sec:hv}
 
-This section deals with a special version of the $k$-SJ problem. Recall that the input of $k$-SJ comprises $k$ sets of rectangles: $R_1, R_2, ..., R_k$. In the special version --- which we name the {\em H-V $k$-SJ} problem ---  we impose the constraints that (i) $k \ge 3$, (ii) $R_{k-1}$ should be a set of horizontal segments, and (iii) $R_k$ should be a set of vertical segments. For better clarity, we will represent the input sets as $R_1, R_2, ..., R_{k-2}, H$ ($=R_{k-1}$), and $V$ ($=R_k$). Remember that each $R_i$ ($i \in [k-2]$) is a set of rectangles. As shown in the next section, solving the H-V $k$-SJ problem is an imperative step for settling the original $k$-SJ problem. 
-
-\vgap 
-
-Our objective is to prove that the H-V $k$-SJ problem can be efficiently reduced to the $(k-1)$-SJ problem --- note: it is $(k-1)$-SJ here, rather than H-V $(k-1)$-SJ. For this purpose, we will assume the existence of an algorithm $\A$ that can solve $\kappa$-SJ problems for all $\kappa \in [2, k-1]$. Denote by $F_\kappa(n, \out)$ the worst-case runtime of $\A$ on any instance of $\kappa$-SJ that has input size $n$ and output size $\out$. We consider that $F_\kappa(n, \out) \le F_{\kappa + 1}(n, \out)$, that is, its overhead on $\kappa$-SJ should not be larger than that on $(\kappa+1)$-SJ.
+Recall that the input of $k$-SJ comprises $k$ sets of rectangles: $R_1, R_2, ...,$ $R_k$. We now formulate a special version of $k$-SJ, named the {\em H-V $k$-SJ} problem. The special nature is reflected in the introduction of three constraints: (i) $k \ge 3$, (ii) $R_{k-1}$ should be a set of horizontal segments, and (iii) $R_k$ should be a set of vertical segments. For better clarity, we will represent the input sets as $R_1, R_2, ..., R_{k-2}, H$ ($=R_{k-1}$), and $V$ ($=R_k$). We want to output the join result $\J(R_1, ..., R_{k-2},$ $H, V)$, including every $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in R_1 \times ... \times R_{k-2} \times H \times V$ such that $h \cap v \cap \bigcap_{i=1}^{k-2} r_i$ is not empty. As we will see later, conquering this sepcial version is the most challenging step in settling the original $k$-SJ problem optimally.
 
 \vgap
 
-The rest of the section serves as a proof for: 
+Our objective is to prove H-V $k$-SJ can be efficiently reduced to $(k-1)$-SJ --- note: it is $(k-1)$-SJ here, rather than H-V $(k-1)$-SJ. For this purpose, we assume the existence of an algorithm $\A$ that can solve $\kappa$-SJ problems for all $\kappa \in [2, k-1]$. Denote by $F_\kappa(n, \out)$ the worst-case runtime of $\A$ on any instance of $\kappa$-SJ that has input size $n$ and output size $\out$. We consider that $F_\kappa(n, \out) \le F_{\kappa + 1}(n, \out)$, that is, its overhead on $\kappa$-SJ should not be larger than that on $(\kappa+1)$-SJ.
+We will prove:
 
 \begin{lemma} \label{lmm:hv}
     The H-V $k$-SJ problem can be solved in time
@@ -271,27 +268,23 @@ The rest of the section serves as a proof for:
     }
 \end{lemma}
 
-Recall that $n$ is the total size of $R_1, ..., R_{k-2}, H$, and $V$. Henceforth, we assume that a distinct ID from 1 to $n$ is given to each rectangle or segment in $R_1, ..., R_{k-2}, H$, and $V$.
+%The condition is equivalent to saying that the intersection point of $h$ and $v$ falls in every $r_i$ of $i \in [k-2]$.
 
-\subsection{Categorizing the Result Tuples} \label{sec:hv:result-part}
 
-Let us represent the result of the H-V $k$-SJ problem as $\J(R_1, ..., R_{k-2},$ $H, V)$. Recall that $\J(R_1, ..., R_{k-2},$ $H, V)$ contains all such $k$-tuples $(r_1, ..., r_{k-2}, h, v) \in R_1 \times ... \times R_{k-2} \times H \times V$ satisfying the condition that $h \cap v \bigcap_{i=1}^{k-2} r_i$ is not empty. The condition is equivalent to saying that the intersection point of $h$ and $v$ falls in every $r_i$ of $i \in [k-2]$.
-
-\vgap
-
-Let us focus on any $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in  \J(R_1, ..., R_{k-2},$ $H, V)$. We classify the tuple into one of the two categories below:
+To get started, consider any $k$-tuple $(r_1, ..., r_{k-2}, h, v)$ in the join result $\J(R_1, ..., R_{k-2}, H, V)$. We classify the tuple into one of the two types below:
 
 \myitems{
     \item {{\bf Type 1:}} $h$ crosses all of $r_1, ..., r_{k-2}$, and $v$  crosses all of $r_1, ..., r_{k-2}$; 
     
-    \item {{\bf Type 2:}} $h$ or $v$ fails to cross some rectangle in $\set{r_1, r_2, ..., r_{k-2}}$. This means the existence of at least one rectangle $r_i$ (for some $i \in [k-2]$) that covers an endpoint of either $h$ or $v$ or both.
+    \item {{\bf Type 2:}} $h$ or $v$ fails to cross some rectangle in $\set{r_1, r_2, ..., r_{k-2}}$. Equivalently,
+    there exists at least one rectangle $r_i$ (for some $i \in [k-2]$) that covers an endpoint of either $h$ or $v$ or both.
 }
 Figure~\ref{fig:hv:types} illustrates a result tuple of each type, assuming $k = 4$.
 
 
 \vgap 
 
-We will find result tuples of each type separately. Before proceeding, however, let us observe a sense of symmetry for Type 2. As mentioned, for a result tuple $(r_1, ..., r_{k-2}, h, v)$ of this type, a rectangle $r_i$, for some $i \in [k-2]$, covers an endpoint of $h$ or $v$ or both. As (i) there are $k-2$ choices for $i$ and (ii) $h$ and $v$ together have four endpoints, we can divide Type 2 further into $4(k-2)$ ``sub-types'': e.g., in subtype 1 (resp., 2), $r_1$ covers the left (resp., right) endpoint of $h$, in subtype 3 (resp., 4), $r_1$ covers the bottom (resp., top) endpoint of $v$, in subtype 5 (resp., 6), $r_2$ covers the left (resp., right) endpoint of $h$, etc. It is possible for the result tuple to belong to multiple sub-types simultaneously.
+We will find result tuples of each type separately. Before proceeding, however, let us observe a sense of symmetry for Type 2. As mentioned, for each result tuple $(r_1, ..., r_{k-2}, h, v)$ of this type, a rectangle $r_i$, for some $i \in [k-2]$, covers an endpoint of $h$ or $v$ or both. As (i) there are $k-2$ choices for $i$ and (ii) $h$ and $v$ together have four endpoints, we can divide Type 2 further into $4(k-2)$ ``sub-types'': e.g., in subtype 1 (resp., 2), $r_1$ covers the left (resp., right) endpoint of $h$, in subtype 3 (resp., 4), $r_1$ covers the bottom (resp., top) endpoint of $v$, in subtype 5 (resp., 6), $r_2$ covers the left (resp., right) endpoint of $h$, etc. It is possible for the result tuple to belong to multiple sub-types simultaneously.
 
 \vgap 
 
@@ -308,12 +301,12 @@ A remark is in order about duplicate removal. A result tuple of Type 2 can belon
     \begin{tabular}{cc} 
         \includegraphics[height=27mm]{./artwork/type1} & 
         \hspace{5mm} \includegraphics[height=27mm]{./artwork/type2} \\
-        (a) Type 1 result tuple &
-        (b) Type 2 result tuple
+        (a) Type 1 &
+        (b) Type 2
     \end{tabular}
     
     \figcapup 
-    \caption{Two categories of H-V $k$-SJ result tuples ($k$ = 4)} 
+    \caption{Classifying H-V $k$-SJ result tuples ($k$ = 4)}
     \label{fig:hv:types}
     \figcapdown
 \end{figure}
