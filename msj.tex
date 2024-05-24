@@ -408,9 +408,9 @@ These sets have important properties, as proved in Appendix~\ref{app:hv} (recall
 Equipped Lemma~\ref{lmm:hv:type1:properties}, we can generate our target $\J^*$ as follows:
 
 \mytab{
-    \> {\bf Algorithm Generate-$\J^*$} \\
+    \> {\bf algorithm generate-$\J^*$} \\
     \> 1.\> $\J^* = \emptyset$ \\
-    \> 2.\> {\bf for} each $(k-2)$-tuple $\bm{t} \in \J(R_1,$ $...,$ $R_{k-2}))$ {\bf do} \\
+    \> 2.\> {\bf for} each $(k-2)$-tuple $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ {\bf do} \\
     \> 3.\>\> $r_i \leftarrow$ the full rectangle of $\bm{t}[i]$, for each $i \in [k-2]$ \\
     \> 4.\>\> {\bf for} each $(h, v) \in \cross(\bm{t}, H) \times \cross(\bm{t}, V)$ {\bf do} \\
     \> 5.\>\>\> add $(r_1, ..., r_{k-2}, h, v)$ to $\J^*$
