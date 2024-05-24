@@ -395,11 +395,12 @@ Equipped Lemma~\ref{lmm:hv:type1:properties}, we can generate the target $S$ as 
 
 \mytab{
     \> {\bf Algorithm Generate-$\J^*$} \\
-    \> 1.\> $S = \emptyset$ \\ 
-    \> 2.\> {\bf for} each $(r_1, ..., r_{k-2}) \in \Pi_{1:k-2}(\J_1(R_1,$ $...,$ $R_{k-2}, H, V))$ {\bf do} \\
-    \> 3.\>\> define $B, r_a$, and $r_b$ as above \\
-    \> 4.\>\> {\bf for} each $(h, v) \in \cross(r_a, B; H) \times \cross(r_b, B; V)$ {\bf do} \\
-    \> 5.\>\>\> add $(r_1, ..., r_{k-2}, h, v)$ to $S$
+    \> 1.\> $\J^* = \emptyset$ \\
+    \> 2.\> {\bf for} each $(k-2)$-tuple $\bm{t} \in \J(R_1,$ $...,$ $R_{k-2}))$ {\bf do} \\
+    \> 3.\>\> $r_i \leftarrow$ the full rectangle of $\bm{t}[i]$, for each $i \in [k-2]$ \\
+    \>\>\> /* recall that $\bm{t}[i]$ is the $i$-th rectangle in $\bm{t}$ */ \\
+    \> 4.\>\> {\bf for} each $(h, v) \in \cross(\bm{t}, H) \times \cross(\bm{t}, V)$ {\bf do} \\
+    \> 5.\>\>\> add $(r_1, ..., r_{k-2}, h, v)$ to $\J^*$
 }
 
 \noindent In Appendix~\ref{app:hv}, we prove that the set $S$ computed satisfies \eqref{eqn:hv:type1:S}, as desired. If we exclude the time to compute all the $\cross(r_a, B; H)$ and $\cross(r_b, B; V)$, the running time of the above algorithm is $O(1 + |S|)$, which is $O(1 + \out)$ because of \eqref{eqn:hv:type1:S}. In what follows, we will explain how to compute all the $\cross(r_a, B; H)$ in $O(n \log n + |S|)$ time. A symmetric algorithm can be used to compute all the $\cross(r_b, B; V)$ in the same complexity. This will then allow us to conclude that Step 2 can be done in $O(n \log n + |S|)$ time.
