@@ -36,6 +36,12 @@
 \def\YY{\mathscr{Y}}
 \def\Z{\mathcal{Z}}
 
+\def\xleft{\mathrm{left}}
+\def\xright{\mathrm{right}}
+\def\ybot{\mathrm{bot}}
+\def\ytop{\mathrm{top}}
+\def\gleft{\mathrm{left\text{-}guard}}
+\def\gbot{\mathrm{bot\text{-}guard}}
 \def\cross{\mathrm{cross}}
 \def\out{\mathrm{OUT}}
 
@@ -71,14 +77,14 @@
 
 
 \begin{abstract}
-    In a {\em spatial join}, we are given a constant number $k \geq 2$ of sets containing axis-parallel rectangles in a 2D space, denoted as $R_1, R_2, ..., R_k$. The objective is to report all $k$-tuples $(r_1, r_2, ..., r_k) \in R_1 \times R_2 \times ... \times R_k$ where the rectangles $r_1, r_2, ..., r_k$ have a non-empty intersection, i.e., $r_1 \cap r_2 \cap ... \cap r_k \neq \emptyset$. This problem holds significant importance in spatial databases and has been extensively studied in the database community. We explain how to settle the problem in $O(n \log n + \out)$ time --- regardless of the constant $k$ --- where $n = \sum_{i=1}^k |R_i|$ and $\out$ is the result size (i.e., the total number of $k$-tuples reported). The time complexity is asymptotically optimal in the class of comparison-based algorithms, to which our solution belongs. Our result significantly improves the state of the art, which is an algorithm with running time $O(n \log^{2k} n + \out)$.
+    In a {\em spatial join}, we are given a constant number $k \geq 2$ of sets containing axis-parallel rectangles in a 2D space, denoted as $R_1, R_2, ..., R_k$. The objective is to report all $k$-tuples $(r_1, r_2, ..., r_k) \in R_1 \times R_2 \times ... \times R_k$ where the rectangles $r_1, r_2, ..., r_k$ have a non-empty intersection, i.e., $r_1 \cap r_2 \cap ... \cap r_k \neq \emptyset$. The problem holds significant importance in spatial databases and has been extensively studied in the database community. In this paper, we show how to settle the problem in $O(n \log n + \out)$ time --- regardless of the constant $k$ --- where $n = \sum_{i=1}^k |R_i|$ and $\out$ is the result size (i.e., the total number of $k$-tuples reported). The runtime  is asymptotically optimal in the class of comparison-based algorithms, to which our solution belongs. Our result significantly improves the state of the art, which is an algorithm with running time $O(n \log^{2k} n + \out)$.
 \end{abstract}
 
 \maketitle 
 
 \section{Introduction} \label{sec:intro}
 
-This paper revisits the {\em spatial join} (SJ) problem formulated as follows. Let $k \ge 2$ be a constant integer. In the {\em $k$-SJ} problem, the input comprises $k$ sets --- denoted as $R_1, R_2, ..., R_k$ --- of axis-parallel rectangles\footnote{A rectangle $r$ in 2D space is {\em axis-parallel} if it has the form $r = [x_1, x_2] \times [y_1, y_2]$.} in $\real^2$. The goal is to find all $k$-tuples $(r_1, r_2, ..., r_k)$ where
+This paper studies the {\em spatial join} (SJ) problem formulated as follows. Let $k \ge 2$ be a constant integer. In the {\em $k$-SJ} problem, the input comprises $k$ sets --- denoted as $R_1, R_2, ..., R_k$ --- of axis-parallel rectangles\footnote{A rectangle is {\em axis-parallel} if it has the form $r = [x_1, x_2] \times [y_1, y_2]$.} in $\real^2$. The goal is to find all $k$-tuples $(r_1, r_2, ..., r_k)$ where
 \myitems{
     \item $r_i \in R_i$ for each $i \in [1, k]$; and
     \item $r_1 \cap r_2 \cap ... \cap r_k \neq \emptyset$, namely, the $k$ rectangles $r_1, r_2, ..., r_k$ have a non-empty intersection.
@@ -87,11 +93,15 @@ We represent the set of $k$-tuples described above as $\J(R_1, R_2, ..., R_k)$, 
 
 \vgap
 
-SJ is a fundamental operation in spatial databases (SDB), which manage {\em geometric entities} such as land parcels, service areas, habitat zones, commercial districts, administrative boundaries, etc. It plays a crucial role in implementing the {\em filter-refinement mechanism}, which is the dominant approach for computing overlay information in an SDB. To explain this mechanism, first note that a geometric entity is typically modeled as a polygon. Determining whether two entities overlap amounts to deciding if two polygons intersect, which can be exceedingly expensive when the polygons have complex boundaries. To mitigate the issue, an SDB stores, for each polygon $\gamma$, its {\em minimum bounding rectangle} (MBR) defined as the smallest axis-parallel rectangle enclosing $\gamma$; this way, each set $\Gamma$ of geometric entities spawns a set $R$ of MBRs. Consider $k$ sets of geometric entities $\Gamma_1, \Gamma_2, ..., \Gamma_k$, and the corresponding sets of MBRs $R_1, R_2, ..., R_k$. To compute overlays from $\Gamma_1, \Gamma_2, ..., \Gamma_k$, filter-refinement first executes (i) a ``filter step'', which performs an SJ to obtain $\J(R_1, R_2, ..., R_k)$, and (ii) a ``refinement step'', which, for each $(r_1, r_2, ..., r_k) \in \J(R_1, R_2, ..., R_k)$, examines if $\gamma_1, \gamma_2, ..., \gamma_k$ indeed have a non-empty intersection, where $\gamma_i$ ($i \in [1, k]$) is the entity in $\Gamma_i$ whose MBR is $r_i$.
+SJ is a fundamental operation in spatial databases (SDB), which manage geometric entities such as land parcels, service areas, habitat zones, commercial districts, administrative boundaries, etc. The operation plays a crucial role in implementing the {\em filter-refinement mechanism}, which is the dominant approach for computing overlay information in an SDB. To explain this mechanism, first note that a geometric entity is typically modeled as a polygon. Determining whether two entities overlap amounts to deciding if two polygons intersect, which can be exceedingly expensive when the polygons have complex boundaries. To mitigate the issue, an SDB stores, for each polygon $\gamma$, its {\em minimum bounding rectangle} (MBR) defined as the smallest axis-parallel rectangle enclosing $\gamma$; this way, each set $\Gamma$ of geometric entities spawns a set $R$ of MBRs. Consider $k$ sets of geometric entities $\Gamma_1, \Gamma_2, ..., \Gamma_k$, and the corresponding sets of MBRs $R_1, R_2, ..., R_k$. To compute overlays from $\Gamma_1, \Gamma_2, ..., \Gamma_k$, filter-refinement first executes (i) a ``filter step'', which performs an SJ to obtain $\J(R_1, R_2, ..., R_k)$, and (ii) a ``refinement step'', which, for each $(r_1, r_2, ..., r_k) \in \J(R_1, R_2, ..., R_k)$, examines if $\gamma_1, \gamma_2, ..., \gamma_k$ indeed have a non-empty intersection, where $\gamma_i$ ($i \in [1, k]$) is the entity in $\Gamma_i$ whose MBR is $r_i$.
 
 %Two polygons $P_1$ and $P_2$ can overlap with each other only if their MBRs $r_1$ and $r_2$ intersect.
 
-\extraspacing {\bf Math Conventions.} For any integer $x \ge 1$, we use $[x]$ to represent the set $\set{1, 2, ..., x}$. Every mention of the word ``rectangle'' henceforth will refer to an axis-parallel rectangle. All logarithms have base 2 by default.
+\extraspacing {\bf Math Conventions.} For any integer $x \ge 1$, we use $[x]$ to represent the set $\set{1, 2, ..., x}$. Given $k \ge 2$ sets $S_1, S_2, ..., S_k$ (of arbitrary elements), we often treat a $k$-tuple $\bm{t} = (e_1, e_2, .., e_k)$ in the cartesian product $S_1 \times S_2 \times ... \times S_k$ as a $k$-dimensional vector such that $\bm{t}[i] = e_i$ for each $i \in [k]$.
+
+\vgap
+
+Every mention of the word ``rectangle'' henceforth will refer to an axis-parallel rectangle. All logarithms have base 2 by default.
 
 \subsection{Previous Results} \label{sec:intro:prev}
 
@@ -99,7 +109,7 @@ SJs have been extensively studied in the database-system community, leading to t
 
 \vgap
 
-From the perspective of theory, SJs are best understood when $k = 2$, i.e., the {\em pairwise} scenario, where it is folklore that the problem can be solved in $O(n \log n + \out)$ time (e.g., by planesweep \cite{bcko08}). However, the problem becomes significantly more challenging for $k \ge 3$, i.e., the {\em multiway} scenario. All the solutions developed  before 2022 (see \cite{gcn+13,mp98,mp01,pmt99} and the references therein) suffer from a worst-case time complexity of $O(n^k)$, offering essentially no improvement over the naive method that enumerates the entire cartesian product $R_1 \times R_2 \times ... \times R_k$.
+From the perspective of theory, SJs are best understood when $k = 2$, i.e., the {\em pairwise} scenario, where it is folklore that the problem can be solved in $O(n \log n + \out)$ time (e.g., by planesweep \cite{bcko08}). However, the problem becomes much more challenging for $k \ge 3$, known as the {\em multiway} scenario. All the solutions developed  before 2022 (see \cite{gcn+13,mp98,mp01,pmt99} and the references therein) suffer from a worst-case time complexity of $O(n^k)$, offering essentially no improvement over the naive method that enumerates the entire cartesian product $R_1 \times R_2 \times ... \times R_k$.
 
 \vgap
 
@@ -107,11 +117,13 @@ Year 2022 witnessed two independent works \cite{ty22,kcko22} that, although not 
 
 \vgap
 
-In \cite{kcko22}, Khamis et al.\ investigated a type of joins that extends the conventional equi-join in two ways. First, each attribute value in a relation is an interval (rather than a real value); second, each equality predicate in equi-join is replaced with a ``non-empty intersection'' predicate on the attributes involved. The $k$-SJ problem can be converted to solving a join defined next under the framework of \cite{kcko22}. For each $i \in [k]$, define $R_i$ as a relation over two attributes $X$ and $Y$. For each tuple $\bm{u} \in R_i$, its values $\bm{u}(X)$ and $\bm{u}(Y)$ on the two attributes are both intervals (effectively defining a rectangle). The objective is to output all $k$-tuples $(\bm{u}_1, \bm{u}_2, ..., \bm{u}_k) \in R_1 \times R_2 \times ... \times R_k$ satisfying $\bigcap_{i=1}^k \bm{u}_i(X) \ne \emptyset$ and $\bigcap_{i=1}^k \bm{u}_i(Y) \ne \emptyset$. It is clear that there is one-one correspondence between the result of this join and that of k-SJ. Khamis et al.\ \cite{kcko22} developed an algorithm that can process the join  in $O(n \log^{2k} n + \out)$ time.
+In \cite{kcko22}, Khamis et al.\ investigated a type of joins that extends the conventional equi-join in two ways. First, each attribute value in a relation is an interval (rather than a real value); second, each equality predicate in equi-join is replaced with a ``non-empty intersection'' predicate on the attributes involved. The $k$-SJ problem can be converted to solving a join defined next under the framework of \cite{kcko22}. For each $i \in [k]$, define $R_i$ as a relation over two attributes $X$ and $Y$. For each tuple $\bm{t} \in R_i$, its values $\bm{t}(X)$ and $\bm{t}(Y)$ on the two attributes are both intervals (effectively defining a rectangle). The objective is to output all $k$-tuples $(\bm{t}_1, \bm{t}_2, ..., \bm{t}_k) \in R_1 \times R_2 \times ... \times R_k$ satisfying $\bigcap_{i=1}^k \bm{t}_i(X) \ne \emptyset$ and $\bigcap_{i=1}^k \bm{t}_i(Y) \ne \emptyset$. It is clear that there is one-one correspondence between the result of this join and that of k-SJ. Khamis et al.\ \cite{kcko22} developed an algorithm that can process the join  in $O(n \log^{2k} n + \out)$ time.
 
 \vgap 
 
-It is worth noting that $\Omega(n \log n)$ is a lower bound on the runtime of any comparison-based algorithm solving the $k$-SJ problem, even for $k = 2$. This can be established via a reduction (presented in Appendix~\ref{app:lb} for self-containment) from the {\em element distinctness} (ED) problem, where we are given $n$ real values $e_1, e_2, ..., e_n$ and need to decide whether there are distinct $i, j \in [n]$ satisfying $e_i = e_j$. The ED problem demands $\Omega(n \log n)$ comparisons to solve \cite{dl79}.
+It is worth noting that $\Omega(n \log n)$ is a lower bound on the runtime of any comparison-based algorithm solving the $k$-SJ problem, even for $k = 2$. This can be established via a reduction from the {\em element distinctness} (ED) problem; see \cite{dl79}.
+
+%where we are given $n$ real values $e_1, e_2, ..., e_n$ and need to decide whether there are distinct $i, j \in [n]$ satisfying $e_i = e_j$. The ED problem demands $\Omega(n \log n)$ comparisons to solve \cite{dl79}.
 
 \begin{table} 
     \begin{tabular}{c|c|c|c} 
@@ -145,8 +157,8 @@ In terms of techniques, our primary contribution is the revelation of a new prop
     For any $n \ge 1$, equipped with the algorithm $\A$ as described above, the $k$-SJ problem can be solved in time
     \myeqn{
         O(k^3) \cdot \big( F_{k-1}(n, \out) + n \log n + k \cdot \out \big).
-        \nn
-        %\label{eqn:main:reccurrence}
+        %\nn
+        \label{eqn:main:reccurrence}
     }
 %     time using $O(n + \out)$ space, plus the worst-case space of $\A$ on any $(k-1)$-SJ instance with input size $n$ and output size $\out$.
 \end{theorem}
@@ -163,14 +175,33 @@ When $k = O(1)$, the time complexity becomes $O(n \log n$ $+ \out)$, as promised
 
 \vgap 
 
-Now that Theorem~\ref{thm:main-alg} offers a satisfactory $k$-SJ result for $k = O(1)$ in 2D space, it is natural to wonder whether the constraint on dimensionality 2 is necessary. The answer, interestingly, is ``yes'' as far as $k \ge 3$ is concerned, subject to the absence of breakthroughs on a classical problem in graph theory. Specifically, if the 3D version of the 3-SJ problem (which we will formally define in Appendix~\ref{app:lb-cond}) could be solved in $O(n \polylog n + \out)$ time, we would obtain an algorithm that detects the presence of a triangle (i.e., 3-clique) in a graph of $m$ edges in $O(m \polylog m)$ time, which would make a truly surprising breakthrough because the state of the art needs $O(m^{1.41})$ time \cite{ayz97}. This reduction can be inferred from an argument in \cite{kcko22} used to prove a more generic result. We simplify the argument for 3D 3-SJ and present the full reduction in Appendix~\ref{app:lb-cond}.
+Now that Theorem~\ref{thm:main-alg} offers a satisfactory $k$-SJ result for $k = O(1)$ in 2D space, it is natural to wonder whether the constraint on dimensionality 2 is necessary. The answer, interestingly, is ``yes'' as far as $k \ge 3$ is concerned, subject to the absence of breakthroughs on a classical problem in graph theory. Specifically, if the 3D version of the 3-SJ problem (which we will formally define in Appendix~\ref{app:lb-cond}) could be solved in $O(n \polylog n + \out)$ time, we would obtain an algorithm that detects the presence of a triangle (i.e., 3-clique) in a graph of $m$ edges in $O(m \polylog m)$ time, which would make a truly remarkable breakthrough because the state of the art needs $O(m^{1.41})$ time \cite{ayz97}. This reduction can be inferred from an argument in \cite{kcko22} used to prove a more generic result. We simplify the argument for 3D 3-SJ and present the full reduction in Appendix~\ref{app:lb-cond}.
+
+\begin{figure}
+    \includegraphics[height=23mm]{./artwork/guard}
+
+    \figcapup
+    \caption{Suppose $\bm{t} = \set{r_1, r_2, r_3}$. $B_\bm{t}$ is the rectangle in gray, $\gleft(\bm{t}) = r_3$ and $\gbot(\bm{t}) = r_2$.}
+    \label{fig:guard}
+    \figcapdown
+\end{figure}
+
 
 \section{Geometric Building Bricks} \label{sec:bricks}
 
-This section will first define some notions useful for our discussion and then introduce four computational geometry problems, whose solutions will serve as building bricks for our $k$-SJ algorithm.
+This section will first define some notions frequently used in our presentation and then introduce several computational geometry problems, whose solutions will serve as building bricks for our $k$-SJ algorithm.
 
 \extraspacing {\bf Terminology.} A {\em horizontal} segment is a segment of the form $[x_1, x_2] \times y$, and a {\em vertical} segment is a segment of the form $x \times [y_1, y_2]$. Given a horizontal segment $h = [x_1, x_2] \times y$, we call a rectangle $r$ a {\em left-end covering rectangle} of $h$, if $r$ contains the left endpoint of $h$ (i.e., $(x_1, y) \in r$). Similarly, given a vertical segment $v$, we call a rectangle $r$ a {\em bottom-end covering rectangle} of $v$, if $r$ contains the bottom endpoint of $v$. We say that a horizontal/vertical segment $s$ {\em crosses} a rectangle $r$, if $s$ overlaps with $r$, but $r$ covers neither of the two endpoints of $s$. We say that a rectangle $r$ {\em contains} a horizontal/vertical segment $s$, if $r$ covers both endpoints of $s$.
 
+\vgap
+
+Given a rectangle $r = [x_1, x_2] \times [y_1, y_2]$, we define $\xleft(r) = x_1$, $\xright(r) = x_2$, $\ybot(r) = y_1$, and $\ytop(r) = y_2$. Consider a $k$-tuple $\bm{t} = (r_1, r_2, ..., r_k)$ where $k \ge 2$, and each $r_i$ ($i \le [k]$) is a rectangle. We define $B_\bm{t} = \bigcap_{i=1}^t r_i$, namely, the intersection of the rectangles in $\bm{t}$. Note that $B_\bm{t}$ is a rectangle itself. We define:
+\myitems{
+    \item $\gleft(\bm{t})$ to be the rectangle $r_i$, $i \in [k]$, satisfying $\xleft(r_i)$ $= \xleft(B_\bm{t})$. In case multiple values in $[k]$ fulfill the condition, let $i$ be the smallest of such values.
+
+    \item $\gbot(\bm{t})$ to be the rectangle $r_i$, $i \in [k]$, satisfying $\ybot(r_i)$ $= \ybot(B_\bm{t})$. In case multiple values in $[k]$ fulfill the condition, let $i$ be the smallest of such values.
+}
+See Figure~\ref{fig:guard} for
 
 \begin{figure*}
     \begin{tabular}{ccc}
