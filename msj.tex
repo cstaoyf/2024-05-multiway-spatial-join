@@ -266,7 +266,7 @@ Our objective is to prove H-V $k$-SJ can be efficiently reduced to $(k-1)$-SJ --
 We will establish:
 
 \begin{lemma} \label{lmm:hv}
-    The H-V $k$-SJ problem can be solved in time
+    Equipped with the algorithm $\A$ described above, the H-V $k$-SJ problem can be solved in time
     \myeqn{
         O(k) \cdot \big( F_{k-1}(n, \out) + n\log n + k \cdot \out \big) \nn
     }
@@ -340,6 +340,8 @@ Define $r_1'$ as the rectangle bounded by the above four segments as shown in Fi
 which we refer to as the {\em trimmed} version of $R_1$. Computing the ``segment $h_1$'' for each $r_1 \in R_1$ is an instance of Problem $\mathscr{D}$ (the first-crossing version). By symmetry, so is the computation of $h_2, v_1$, and $v_2$ segments for each $r_1 \in R_1$. It thus follows from Section~\ref{sec:bricks} that $R_1'$ can be produced in $O(n \log n)$ time.
 
 \vgap
+
+In the same fashion, we obtain the trimmed version $R_i'$ of $R_i$ for all $i \in [2, n]$, spending $O(k n \log n)$ time in total.
 
 We now solve the $(k-2)$-SJ problem on $R_1', R_2, ..., R_{k-2}$ using the algorithm $\A$ supplied. Let us represent the result of this $(k-2)$-SJ as $\J(R_1', R_2, ..., R_{k-2})$. The lemma below shows that the result is essentially what we aim to compute in Step 1.
 
