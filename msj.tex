@@ -441,9 +441,9 @@ The rest of the section will focus on how to prepare the sets $\dcross_H(\bm{t})
 
 \extraspacing {\bf Sets $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} Fix any $i \in [k-2]$. For each rectangle $r' \in R_i'$, define
 \myeqn{
-    \maxtop(r') &=& \max_{\bm{t} \in \J(R'_1, ..., R'_{k-2}): r' = \gbot(\bm{t})} \ytop(B_\bm{t}). 
+    \maxtop(r') &=& \max_{\bm{t} \in \J(R'_1, ..., R'_{k-2}): \gbot(\bm{t}) = r'} \ytop(B_\bm{t}). 
 }
-The value $\maxtop(r')$ is set to $-\infty$, if no $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ has $r'$ as the $\gbot(\bm{t})$. When $\maxtop(r') \ne -\infty$, assuming $r' = [x_1, x_2] \times [y_1, y_2]$, we introduce a rectangle
+We set $\maxtop(r')$ to $-\infty$, if no $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ has $r'$ as the $\gbot(\bm{t})$. When $\maxtop(r') \ne -\infty$, assuming $r' = [x_1, x_2] \times [y_1, y_2]$, we introduce a rectangle
 \myeqn{
     r^* &=& [x_1, x_2] \times [y_1, \maxtop(r')]. \nn
 }
