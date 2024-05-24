@@ -325,7 +325,7 @@ As before, let $R_1, ..., R_{k-2}, H$, and $V$ be the input sets of the H-V $k$-
     \subseteq
     \J^*
     \subseteq
-    \J(R_1, ..., R_{k-2}, H, V) \label{eqn:hv:type1:S}
+    \J(R_1, ..., R_{k-2}, H, V) \label{eqn:hv:type1:J*}
 }
 where $\J(R_1, ..., R_{k-2}, H, V)$, let us recall, is the join result of the (whole) H-V $k$-SJ. From $\J^*$, we will report only those $k$-tuples belonging to $\J_1$ and ignore the rest. Remember that $\out$ is the size of $\J(R_1, ..., R_{k-2}, H, V)$.
 
@@ -405,19 +405,18 @@ These sets have important properties, as proved in Appendix~\ref{app:hv} (recall
 
 \vgap 
 
-Equipped Lemma~\ref{lmm:hv:type1:properties}, we can generate the target $S$ as follows:
+Equipped Lemma~\ref{lmm:hv:type1:properties}, we can generate our target $\J^*$ as follows:
 
 \mytab{
     \> {\bf Algorithm Generate-$\J^*$} \\
     \> 1.\> $\J^* = \emptyset$ \\
     \> 2.\> {\bf for} each $(k-2)$-tuple $\bm{t} \in \J(R_1,$ $...,$ $R_{k-2}))$ {\bf do} \\
     \> 3.\>\> $r_i \leftarrow$ the full rectangle of $\bm{t}[i]$, for each $i \in [k-2]$ \\
-    \>\>\> /* recall that $\bm{t}[i]$ is the $i$-th rectangle in $\bm{t}$ */ \\
     \> 4.\>\> {\bf for} each $(h, v) \in \cross(\bm{t}, H) \times \cross(\bm{t}, V)$ {\bf do} \\
     \> 5.\>\>\> add $(r_1, ..., r_{k-2}, h, v)$ to $\J^*$
 }
 
-\noindent In Appendix~\ref{app:hv}, we prove that the set $S$ computed satisfies \eqref{eqn:hv:type1:S}, as desired. If we exclude the time to compute all the $\cross(r_a, B; H)$ and $\cross(r_b, B; V)$, the running time of the above algorithm is $O(1 + |S|)$, which is $O(1 + \out)$ because of \eqref{eqn:hv:type1:S}. In what follows, we will explain how to compute all the $\cross(r_a, B; H)$ in $O(n \log n + |S|)$ time. A symmetric algorithm can be used to compute all the $\cross(r_b, B; V)$ in the same complexity. This will then allow us to conclude that Step 2 can be done in $O(n \log n + |S|)$ time.
+\noindent Lemma~\ref{lmm:hv:type1:properties} assures us that the set $\J^*$ thus computed indeed satisfies \eqref{eqn:hv:type1:J*}. Furthermore, if we are given $\cross(\bm{t}, H)$ and $\cross(\bm{t}, V)$ for each $\bm{t}$, Lemma~\ref{lmm:hv:type1:properties} further asserts that the above algorithm runs in $O(1 + |\J^*|) = O(1 + \out)$ time.
 
 
 
