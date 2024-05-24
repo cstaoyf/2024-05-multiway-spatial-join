@@ -10,7 +10,7 @@
 %\usepackage{times}
 \usepackage{microtype}
 
-\def\vgap{\vspace{1mm}}
+\def\vgap{\vspace{0mm}}
 \def\extraspacing{\vspace{2mm} \noindent}
 \def\figcapup{\vspace{-0mm}}
 \def\figcapdown{\vspace{-0mm}}
@@ -40,7 +40,7 @@
 \def\xright{\mathrm{right}}
 \def\ybot{\mathrm{bot}}
 \def\ytop{\mathrm{top}}
-\def\maxright{\mathrm{maxright}}
+\def\maxtop{\mathrm{maxtop}}
 \def\gleft{\mathrm{left\text{-}guard}}
 \def\gbot{\mathrm{bot\text{-}guard}}
 \def\cross{\mathrm{cross}}
@@ -324,21 +324,25 @@ As before, let $R_1, ..., R_{k-2}, H$, and $V$ be the input sets of the H-V $k$-
 }
 where $\J(R_1, ..., R_{k-2}, H, V)$, let us recall, is the join result of the (whole) H-V $k$-SJ. Remember that the output size $\out$ is defined to $|\J(R_1, ..., R_{k-2}, H, V)|$. From $\J^*$, we will report only those $k$-tuples belonging to $\J_1$ and ignore the rest. 
 
-\extraspacing {\bf Sets $\bm{R_1', R_2', ..., R'_{k-2}}$.} For each rectangle $r_1 \in R_1$, we compute four segments:
+\extraspacing {\bf Sets $\bm{R_1', R_2', ..., R'_{k-2}}$.} Fix any $i \in [k-2]$. For each rectangle $r \in R_i$, we compute four segments:
 \myitems{
     \item $h_1$ (resp., $h_2$): the lowest (resp., highest) segment in $H$ that crosses $r$;
     
     \item $v_1$ (resp., $v_2$): the leftmost (resp., rightmost) segment in $V$ that crosses $r$.
 }
-Define $r_1' = [x_1, x_2] \times [y_1, y_2]$, where $x_1$ (resp., $x_2$) is x-coordinate of $v_1$ (resp., $v_2$), and $y_1$ (resp., $y_2$) is y-coordinate of $h_1$ (resp., $h_2$). We say that $r_1'$ is the {\em trimmed rectangle} of $r_1$, and conversely, $r_1$ is the {\em full rectangle} of $r_1'$. Note that $r_1'$ exists if and only if $r_1$ is crossed by at least one horizontal segment in $H$ and by at least one vertical segment in $V$. Moreover, it is possible for $h_1$ and $h_2$ to be the same segment; same for $v_1$ and $v_2$. Define
+Define $r' = [x_1, x_2] \times [y_1, y_2]$, where $x_1$ (resp., $x_2$) is x-coordinate of $v_1$ (resp., $v_2$), and $y_1$ (resp., $y_2$) is y-coordinate of $h_1$ (resp., $h_2$). We say that $r'$ is the {\em trimmed rectangle} of $r$, and conversely, $r$ is the {\em full rectangle} of $r'$. Note that $r'$ exists if and only if $r$ is crossed by at least one horizontal segment in $H$ and by at least one vertical segment in $V$. Moreover, it is possible for $h_1$ and $h_2$ to be the same segment; same for $v_1$ and $v_2$. 
+
+\vgap 
+
+Construct
 \myeqn{
-    R_1' &=& \set{r_1' \mid r_1 \in R_1 \text{ and its $r_1'$ defined as above exists}} \nn
+    R_i' &=& \set{r' \mid r \in R_i \text{ and its trimmed rectangle $r'$ exists}}. \nn
 }
-which we call the {\em trimmed} version of $R_1$. Computing the ``segment $h_1$'' for each $r_1 \in R_1$ is an instance of Problem $\mathscr{D}$ (the find-lowest version). By symmetry, so is the computation of $h_2, v_1$, and $v_2$ segments for each $r_1 \in R_1$. It thus follows from Section~\ref{sec:bricks} that $R_1'$ can be produced in $O(n \log n)$ time.
+Computing the ``segment $h_1$'' for each $r \in R_1$ is an instance of Problem $\mathscr{D}$ (the find-lowest version). By symmetry, so is the computation of $h_2, v_1$, and $v_2$ segments for each $r_1 \in R_1$. It thus follows from Section~\ref{sec:bricks} that $R_i'$ can be produced in $O(n \log n)$ time.
 
 \vgap
 
-In the same fashion, we obtain the trimmed version $R_i'$ of $R_i$ for all $i \in [2, k]$, spending $O(k n \log n)$ time in total. We now solve the $(k-2)$-SJ problem on $R_1', R_2', ..., R_{k-2}'$ using the algorithm $\A$ supplied (see Lemma~\ref{lmm:hv}). This $(k-2)$-SJ clearly has an input size at most $n$, and let us represent its result as $\J(R_1', R_2, ..., R_{k-2})$. We prove in Appendix~\ref{app:hv}:
+We now solve the $(k-2)$-SJ problem on $R_1', R_2', ..., R_{k-2}'$ using the algorithm $\A$ supplied (see Lemma~\ref{lmm:hv}). This $(k-2)$-SJ clearly has an input size at most $n$, and let us represent its result as $\J(R_1', R_2, ..., R_{k-2})$. We prove in Appendix~\ref{app:hv}:
 
 %The lemma below shows that the result is essentially what we aim to compute in Step 1.
 
@@ -422,21 +426,21 @@ The rest of the section will focus on explaining how to prepare the sets $\cross
 
 \extraspacing {\bf Sets $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} Fix any $i \in [k-2]$. For each rectangle $r' \in R_i'$, we define
 \myeqn{
-    \maxright(r') &=& \max_{\bm{t} \in \J(R'_1, ..., R'_{k-2}): r' = \gbot(\bm{t})} \xright(B_\bm{t}). 
+    \maxtop(r') &=& \max_{\bm{t} \in \J(R'_1, ..., R'_{k-2}): r' = \gbot(\bm{t})} \xright(B_\bm{t}). 
 }
-The value of $\maxright(r')$ does not exist if no $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ has $r'$ as the $\gbot(\bm{t})$. When $\maxright(r')$ exists, assuming $r' = [x_1, x_2] \times [y_1, y_2]$, we introduce a rectangle
+The value $\maxtop(r')$ is set to $-\infty$, if no $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ has $r'$ as the $\gbot(\bm{t})$. When $\maxtop(r') \ne -\infty$, assuming $r' = [x_1, x_2] \times [y_1, y_2]$, we introduce a rectangle
 \myeqn{
-    r^* &=& [x_1, \maxright(r')] \times [y_1, y_2]. \nn
+    r^* &=& [x_1, x_2] \times [y_1, \maxtop(r')]. \nn
 }
-We refer to $r^*$ as the {\em star rectangle} of $r'$.
+We refer to $r^*$ as the {\em top-sliced rectangle} of $r'$.
 
 \yf{example}
 
 \vgap 
 
-Now construct from $R_i'$ a new set: 
+Now construct from $R_i'$ a new set of rectangles: 
 \myeqn{
-    R^*_i = \set{r* \mid r' \in R_i' \text{ and $r^*$ defined as above exists}}. \nn
+    R^*_i = \set{r^* \mid r' \in R_i' \text{ and its top-sliced rectangle $r^*$ exists}}. \nn
 }
 
 
