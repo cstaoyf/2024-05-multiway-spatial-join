@@ -378,11 +378,11 @@ We now introduce:
 }
 These sets have important properties, as proved in Appendix~\ref{app:hv}:
 
-\begin{lemma} \label{lmm:hv:type1:cross-non-empty}
+\begin{lemma} \label{lmm:hv:type1:properties}
     Let $r_i$ be the full rectangle of $r_i'$ for each $i \in [k-2]$. All the following statements are true:
     \myenums{
         \item $\cross(\bm{t}, H) \ne \emptyset$ and $\cross(\bm{t}, V) \ne \emptyset$.
-        \item For any $h \in \cross(\bm{t}, H)$ and $v \in \cross(\bm{t}, V)$, the $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v)$ belongs to $\J(R_1, ..., R_{k-2}, H, V)$.
+        \item For any $h \in \cross(\bm{t}, H)$ and any $v \in \cross(\bm{t}, V)$, the $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v)$ belongs to $\J(R_1, ..., R_{k-2}, H, V)$.
         \item If a $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v)$ belongs to $\J_1$, then $h \in \cross(\bm{t}, H)$ and $v \in \cross(\bm{t}, V)$.
     }
 \end{lemma}
@@ -391,10 +391,10 @@ These sets have important properties, as proved in Appendix~\ref{app:hv}:
 
 \vgap 
 
-Equipped with the above, we can generate the target $S$ as follows: 
+Equipped Lemma~\ref{lmm:hv:type1:properties}, we can generate the target $S$ as follows:
 
 \mytab{
-    \> {\bf Algorithm Generate-$S$} \\
+    \> {\bf Algorithm Generate-$\J^*$} \\
     \> 1.\> $S = \emptyset$ \\ 
     \> 2.\> {\bf for} each $(r_1, ..., r_{k-2}) \in \Pi_{1:k-2}(\J_1(R_1,$ $...,$ $R_{k-2}, H, V))$ {\bf do} \\
     \> 3.\>\> define $B, r_a$, and $r_b$ as above \\
