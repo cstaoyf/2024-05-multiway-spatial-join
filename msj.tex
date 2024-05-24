@@ -394,8 +394,8 @@ We now introduce:
 %     \item $\cross(r_b, B; V)$, the set of segments in $V$ that cross $r_b$ and $B$.
 % }
 \myeqn{
-    \dcross_H(\bm{t}) = \set{h \in H \mid \text{$h$ crosses both $B_\bm{t}$ and $\gleft(\bm{t})$}} \label{eqn:dcross-H} \\
-    \dcross_V(\bm{t}) = \set{v \in V \mid \text{$v$ crosses both $B_\bm{t}$ and $\gbot(\bm{t})$}}. \nn
+    \dcross_H(\bm{t}) = \set{h \in H \mid \text{$h$ crosses both $B_\bm{t}$ and $\gbot(\bm{t})$}} \label{eqn:dcross-H} \\
+    \dcross_V(\bm{t}) = \set{v \in V \mid \text{$v$ crosses both $B_\bm{t}$ and $\gleft(\bm{t})$}}. \nn
     %\label{eqn:dcross-H} 
 }
 The prefix ``d-'' stands for ``double''. These sets have important properties as stated in the next lemma, whose proof can be found in Appendix~\ref{app:hv}:
@@ -486,7 +486,7 @@ Finding the $\cross_H(r^*)$ sets of all $r^* \in R^*_i$ is an instance of the fi
 
 
 
-\extraspacing {\bf Computing the ``d-cross'' Sets.} We are ready to compute $\dcross_H(\bm{t})$, defined in \eqref{eqn:dcross-H}, for any $\bm{t} \in \J(R'_1, ..., R'_{k-2})$, thanks to Statement (2) of Lemma~\ref{lmm:hv:type1:cross-r*}. First, identify the rectangle $r' = \gbot(\bm{t})$ and fetch its (already computed) top-sliced rectangle $r^*$. Second, obtain $B_\bm{t}$ and $\gleft(\bm{t})$. These two steps require $O(k)$ time. Then, scan the segments in $\cross_H(r^*)$ in ascending order of their y-coordinates. For each segment $h$ scanned, check whether $h$ belongs to $\dcross_H(\bm{t})$, namely,  whether $h$ crosses both $B_\bm{t}$ and $\gleft(\bm{t})$; this can be done in constant time. Abort the scan as soon as $h \notin \dcross_H(\bm{t})$. This way, we produce $\dcross_H(\bm{t})$ in $O(k + |\dcross_H(\bm{t}|))$ time. Doing so for all $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ takes $O(k \cdot |\J| + \sum_\bm{t} |\dcross_H(t)|) = O(k \cdot \out)$ time, where the derivation used statement (2) of Lemma~\ref{lmm:hv:type1:properties}.
+\extraspacing {\bf Computing the ``d-cross'' Sets.} We are ready to compute $\dcross_H(\bm{t})$, defined in \eqref{eqn:dcross-H}, for any $\bm{t} \in \J(R'_1, ..., R'_{k-2})$, thanks to Statement (2) of Lemma~\ref{lmm:hv:type1:cross-r*}. First, compute $B_\bm{t}$, obtain the rectangle $r' = \gbot(\bm{t})$, and fetch the (already computed) top-sliced rectangle $r^*$ of $r'$; these steps require $O(k)$ time. Then, scan the segments in $\cross_H(r^*)$ in ascending order of their y-coordinates. For each segment $h$ scanned, check whether $h$ belongs to $\dcross_H(\bm{t})$, namely, whether $h$ crosses both $B_\bm{t}$ and $\gbot(\bm{t})$; this can be done in constant time. Abort the scan as soon as $h \notin \dcross_H(\bm{t})$. This way, we produce $\dcross_H(\bm{t})$ in $O(k + |\dcross_H(\bm{t}|))$ time. Doing so for all $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ takes $O(k \cdot |\J| + \sum_\bm{t} |\dcross_H(t)|) = O(k \cdot \out)$ time, where the derivation used statement (2) of Lemma~\ref{lmm:hv:type1:properties}.
 
 \vgap 
 
