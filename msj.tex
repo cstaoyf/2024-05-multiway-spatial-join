@@ -486,11 +486,12 @@ Finding the $\cross_H(r^*)$ sets of all $r^* \in R^*_i$ is an instance of the fi
 
 
 
-\extraspacing {\bf Computing the ``d-cross'' Sets.} We are ready to compute $\dcross_H(\bm{t})$, defined in \eqref{eqn:dcross-H}, for any $\bm{t} \in \J(R'_1, ..., R'_{k-2})$, thanks to Statement (2) of Lemma~\ref{lmm:hv:type1:cross-r*}. First, identify the rectangle $r' = \gbot(\bm{t})$ and fetch its (already computed) top-sliced rectangle $r^*$. Second, obtain $B_\bm{t}$ and $\gleft(\bm{t})$. These two steps require $O(k)$ time. Then, scan the segments in $\cross_H(r^*)$ in ascending order of their y-coordinates. For each segment $h$ scanned, check whether $h$ belongs to $\dcross_H(\bm{t})$, namely,  whether $h$ crosses both $B_\bm{t}$ and $\gleft(\bm{t})$; this can be done in constant time. Abort the scan as soon as $h \notin \dcross_H(\bm{t})$. This way, we produce $\dcross_H(\bm{t})$ in $O(k + |\dcross_H(\bm{t}|)$ time. Doing so for all $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ takes $O(k \cdot |\J| + \sum_\bm{t} |\dcross_H(t)| = O(k \cdot \out)$ time, where the last step used statement (2) of Lemma~\ref{lmm:hv:type1:properties}.
+\extraspacing {\bf Computing the ``d-cross'' Sets.} We are ready to compute $\dcross_H(\bm{t})$, defined in \eqref{eqn:dcross-H}, for any $\bm{t} \in \J(R'_1, ..., R'_{k-2})$, thanks to Statement (2) of Lemma~\ref{lmm:hv:type1:cross-r*}. First, identify the rectangle $r' = \gbot(\bm{t})$ and fetch its (already computed) top-sliced rectangle $r^*$. Second, obtain $B_\bm{t}$ and $\gleft(\bm{t})$. These two steps require $O(k)$ time. Then, scan the segments in $\cross_H(r^*)$ in ascending order of their y-coordinates. For each segment $h$ scanned, check whether $h$ belongs to $\dcross_H(\bm{t})$, namely,  whether $h$ crosses both $B_\bm{t}$ and $\gleft(\bm{t})$; this can be done in constant time. Abort the scan as soon as $h \notin \dcross_H(\bm{t})$. This way, we produce $\dcross_H(\bm{t})$ in $O(k + |\dcross_H(\bm{t}|))$ time. Doing so for all $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ takes $O(k \cdot |\J| + \sum_\bm{t} |\dcross_H(t)|) = O(k \cdot \out)$ time, where the derivation used statement (2) of Lemma~\ref{lmm:hv:type1:properties}.
 
 \vgap 
 
-We now conclude that $\J_1$ (the set of type-1 result tuples) can be computed in $F_{k-1}(n, \out) + O(n \log n +  k \cdot \out)$ time.
+We 
+conclude that $\J_1$ (the set of type-1 result tuples) can be computed in $F_{k-1}(n, \out) + O(n \log n +  k \cdot \out)$ time.
 
 \section{H-V $k$-SJ: Result Tuples of Type 2} \label{sec:hv:type2}
 
