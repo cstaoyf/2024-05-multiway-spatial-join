@@ -40,6 +40,7 @@
 \def\xright{\mathrm{right}}
 \def\ybot{\mathrm{bot}}
 \def\ytop{\mathrm{top}}
+\def\maxright{\mathrm{maxright}}
 \def\gleft{\mathrm{left\text{-}guard}}
 \def\gbot{\mathrm{bot\text{-}guard}}
 \def\cross{\mathrm{cross}}
@@ -360,8 +361,8 @@ We remind the reader that $\out$ is the output size of the original H-V $k$-SJ p
 \extraspacing {\bf Generating $\bm{\J^*}$.} Take an arbitrary $(k-2)$-tuple $\bm{t} = (r'_1, r'_2, ...,$ $r'_{k-2}) \in \J(R_1', R'_2, ..., R'_{k-2})$. The reader should recall from Section~\ref{sec:bricks} that
 \myitems{
     \item $B_\bm{t}$ is $\bigcap_{i=1}^{k-2} \bm{t}[i]$, i.e., the intersection of $r'_1, r'_2, ..., r'_{k-2}$;
-    \item $\gleft(\bm{t})$ is the $r_i$ ($1 \le i \le k-2$) with $\xleft(r'_i) = \xleft(B_\bm{t})$;
-    \item $\gbot(\bm{t})$ is the $r_i$ ($1 \le i \le k-2$) with $\ybot(r'_i) = \ybot(B_\bm{t})$.
+    \item $\gleft(\bm{t})$ is the $r'_i$ ($1 \le i \le k-2$) with $\xleft(r'_i) = \xleft(B_\bm{t})$;
+    \item $\gbot(\bm{t})$ is the $r'_i$ ($1 \le i \le k-2$) with $\ybot(r'_i) = \ybot(B_\bm{t})$.
 }
 We now introduce:
 % \myitems{
@@ -419,7 +420,10 @@ Lemma~\ref{lmm:hv:type1:properties} assures us that the set $\J^*$ thus computed
 
 The rest of the section will focus on explaining how to prepare the sets $\cross(\bm{t}, H)$ of all $\bm{t} \in \J(R_1', ..., R_{k-2}')$ in $O(n \log n + k \cdot \out)$ time. An analogous algorithm can be used to compute the sets $\cross(\bm{t}, V)$ of all $\bm{t}$ in the same time complexity.
 
-\extraspacing {\bf Sets $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.}
+\extraspacing {\bf Sets $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} Fix any $i \in [k-2]$. For each rectangle $r' \in R_i'$, we define
+\myeqn{
+    \maxright(r') &=& \max_{\bm{t} \in \J(R'_1, ..., R'_{k-2}): r' = \gbot(\bm{t})} \xright(B_\bm{t}). 
+}
 
 
 \section{Finding Result Tuples of Type 2} \label{sec:hv:type2}
