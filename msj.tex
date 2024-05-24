@@ -97,11 +97,7 @@ SJ is a fundamental operation in spatial databases (SDB), which manage geometric
 
 %Two polygons $P_1$ and $P_2$ can overlap with each other only if their MBRs $r_1$ and $r_2$ intersect.
 
-\extraspacing {\bf Math Conventions.} For any integer $x \ge 1$, we use $[x]$ to represent the set $\set{1, 2, ..., x}$. Given $k \ge 2$ sets $S_1, S_2, ..., S_k$ (of arbitrary elements), we often treat a $k$-tuple $\bm{t} = (e_1, e_2, .., e_k)$ in the cartesian product $S_1 \times S_2 \times ... \times S_k$ as a $k$-dimensional vector such that $\bm{t}[i] = e_i$ for each $i \in [k]$.
-
-\vgap
-
-Every mention of the word ``rectangle'' henceforth will refer to an axis-parallel rectangle. All logarithms have base 2 by default.
+\extraspacing {\bf Math Conventions.} For any integer $x \ge 1$, we use $[x]$ to represent the set $\set{1, 2, ..., x}$. Given $k \ge 2$ sets $S_1, S_2, ..., S_k$ (of arbitrary elements), we often treat a $k$-tuple $\bm{t} = (e_1, e_2, .., e_k)$ in the cartesian product $S_1 \times S_2 \times ... \times S_k$ as a $k$-dimensional vector such that $\bm{t}[i] = e_i$ for each $i \in [k]$. Every mention of the word ``rectangle'' henceforth will refer to an axis-parallel rectangle. All logarithms have base 2 by default.
 
 \subsection{Previous Results} \label{sec:intro:prev}
 
@@ -147,11 +143,11 @@ It is worth noting that $\Omega(n \log n)$ is a lower bound on the runtime of an
 
 \subsection{Our Results} \label{sec:intro:ours} 
 
-In this paper, we show that the $k$-SJ problem can be settled by a comparison-based algorithm that runs in $O(n \log n + \out)$ time, regardless of the constant $k$. The time complexity is asymptotically optimal.
+In this paper, we solve the $k$-SJ problem with a comparison-based algorithm that runs in $O(n \log n + \out)$ time regardless of the constant $k$. The time complexity is asymptotically optimal.
 
 \vgap 
 
-In terms of techniques, our primary contribution is the revelation of a new property on the problem's mathematical structure. Fix any $k \ge 3$ and an {\em arbitrary} algorithm $\A$ for the $(k-1)$-SJ problem. For any $n \ge 1$, define function $F_{k-1}(n, \out)$ to return the worst-case running time of $\A$ on any instance of the $(k-1)$-SJ problem having input size at most $n$ and output size at most $\out$. Our main technical contribution is to establish:
+In terms of techniques, our primary contribution is the revelation of a new property on the problem's mathematical structure. Fix any $k \ge 3$ and an {\em arbitrary} algorithm $\A$ for the $(k-1)$-SJ problem. For any $n \ge 1$, define function $F_{k-1}(n, \out)$ to return the worst-case running time of $\A$ on any instance of the $(k-1)$-SJ problem having input size at most $n$ and output size at most $\out$. Our core technical contribution is to establish:
 
 \begin{theorem} \label{thm:main-recur}
     Equipped with the algorithm $\A$ as described above, the $k$-SJ problem can be solved in time
@@ -172,11 +168,7 @@ The theorem implies the existence of a recursive nature of $k$-SJ. Indeed, we wi
 \end{theorem}
 
 
-When $k = O(1)$, the time complexity becomes $O(n \log n$ $+ \out)$, as promised.
-
-\vgap 
-
-Now that Theorem~\ref{thm:main-alg} offers a satisfactory $k$-SJ result for $k = O(1)$ in 2D space, it is natural to wonder whether the constraint on dimensionality 2 is necessary. The answer, interestingly, is ``yes'' as far as $k \ge 3$ is concerned, subject to the absence of breakthroughs on a classical problem in graph theory. Specifically, if the 3D version of the 3-SJ problem (which we will formally define in Appendix~\ref{app:lb-cond}) could be solved in $O(n \polylog n + \out)$ time, we would obtain an algorithm that detects the presence of a triangle (i.e., 3-clique) in a graph of $m$ edges in $O(m \polylog m)$ time, which would make a truly remarkable breakthrough because the state of the art needs $O(m^{1.41})$ time \cite{ayz97}. This reduction can be inferred from an argument in \cite{kcko22} used to prove a more generic result. We simplify the argument for 3D 3-SJ and present the full reduction in Appendix~\ref{app:lb-cond}.
+When $k = O(1)$, the time complexity becomes $O(n \log n$ $+ \out)$, as promised. Now that Theorem~\ref{thm:main-alg} offers a satisfactory $k$-SJ result for $k = O(1)$ in 2D space, it is natural to wonder whether the constraint on dimensionality 2 is necessary. Interestingly, the answer is ``yes'' as far as $k \ge 3$ is concerned, subject to the absence of breakthroughs on a classical problem in graph theory. Specifically, if the 3D version of the 3-SJ problem (which we will formally define in Appendix~\ref{app:lb-cond}) could be solved in $O(n \polylog n + \out)$ time, we would obtain an algorithm that detects the presence of a triangle (i.e., 3-clique) in a graph of $m$ edges in $O(m \polylog m)$ time, which would make a truly remarkable breakthrough because the state of the art needs $O(m^{1.41})$ time \cite{ayz97}. This reduction can be inferred from an argument in \cite{kcko22} used to prove a more generic result. We simplify the argument for 3D 3-SJ and present the full reduction in Appendix~\ref{app:lb-cond}.
 
 \begin{figure}
     \includegraphics[height=23mm]{./artwork/guard}
@@ -192,15 +184,17 @@ Now that Theorem~\ref{thm:main-alg} offers a satisfactory $k$-SJ result for $k =
 
 This section will first define some notions frequently used in our presentation and then introduce several  geometry problems, whose solutions will serve as building bricks for our $k$-SJ algorithm.
 
-\extraspacing {\bf Terminology.} A {\em horizontal} segment is a segment of the form $[x_1, x_2] \times y$, and a {\em vertical} segment is a segment of the form $x \times [y_1, y_2]$. Given a horizontal segment $h = [x_1, x_2] \times y$, we call a rectangle $r$ a {\em left-end covering rectangle} of $h$, if $r$ contains the left endpoint of $h$ (i.e., $(x_1, y) \in r$). Similarly, given a vertical segment $v$, we call a rectangle $r$ a {\em bottom-end covering rectangle} of $v$, if $r$ contains the bottom endpoint of $v$. \yf{need this?} We say that a horizontal/vertical segment $s$ {\em crosses} a rectangle $r$, if $s$ overlaps with $r$, but $r$ covers neither of the two endpoints of $s$. We say that a rectangle $r$ {\em contains} a horizontal/vertical segment $s$, if $r$ covers both endpoints of $s$.
+\extraspacing {\bf Terminology.} A {\em horizontal} segment is a segment of the form $[x_1, x_2] \times y$, and a {\em vertical} segment is a segment of the form $x \times [y_1, y_2]$. We say that a horizontal segment $h_1$ is {\em lower} (resp., {\em higher}) than another horizontal segment $h_2$ if the y-coordinate of $h_1$ is smaller (resp., larger) than that of $h_2$. Similarly, a vertical segment $v_1$ is {\em to the left} (resp., {\em right}) {\em of} another vertical segment $v_2$ if the x-coordinate of $v_1$ is smaller (resp., larger) than that of $v_2$.
+
+Given a horizontal segment $h = [x_1, x_2] \times y$, we call a rectangle $r$ a {\em left-end covering rectangle} of $h$, if $r$ contains the left endpoint of $h$ (i.e., $(x_1, y) \in r$). Similarly, given a vertical segment $v$, we call a rectangle $r$ a {\em bottom-end covering rectangle} of $v$, if $r$ contains the bottom endpoint of $v$. \yf{need this?} A horizontal/vertical segment $s$ {\em crosses} a rectangle $r$, if $s$ overlaps with $r$, but $r$ covers neither of the two endpoints of $s$. A rectangle $r$ {\em contains} a horizontal/vertical segment $s$, if $r$ covers both endpoints of $s$.
 
 \vgap
 
-Given a rectangle $r = [x_1, x_2] \times [y_1, y_2]$, we define $\xleft(r) = x_1$, $\xright(r) = x_2$, $\ybot(r) = y_1$, and $\ytop(r) = y_2$. Consider a $k$-tuple $\bm{t} = (r_1, r_2, ..., r_k)$ where $k \ge 2$, and each $r_i$ ($i \le [k]$) is a rectangle. We define $B_\bm{t} = \bigcap_{i=1}^t r_i$, namely, the intersection of the rectangles in $\bm{t}$. Note that $B_\bm{t}$ is a rectangle itself. We define:
+Given a rectangle $r = [x_1, x_2] \times [y_1, y_2]$, we define $\xleft(r) = x_1$, $\xright(r) = x_2$, $\ybot(r) = y_1$, and $\ytop(r) = y_2$. Consider a $k$-tuple $\bm{t} = (r_1, r_2, ..., r_k)$ where $k \ge 2$, and each $\bm{t}[i] = r_i$ ($i \le [k]$) is a rectangle. We use $B_\bm{t}$ to represent $\bigcap_{i=1}^t r_i$, namely, the intersection of the rectangles in $\bm{t}$. Note that $B_\bm{t}$ is a rectangle itself. We define:
 \myitems{
-    \item $\gleft(\bm{t})$ to be the rectangle $r_i$, $i \in [k]$, satisfying $\xleft(r_i)$ $= \xleft(B_\bm{t})$. In case multiple values in $[k]$ fulfill the condition, let $i$ be the smallest of such values.
+    \item $\gleft(\bm{t})$ as the rectangle $r_i$, $i \in [k]$, satisfying $\xleft(r_i)$ $= \xleft(B_\bm{t})$. In case multiple values in $[k]$ fulfill the condition, let $i$ be the smallest of such values.
 
-    \item $\gbot(\bm{t})$ to be the rectangle $r_i$, $i \in [k]$, satisfying $\ybot(r_i)$ $= \ybot(B_\bm{t})$. In case multiple values in $[k]$ fulfill the condition, let $i$ be the smallest of such values.
+    \item $\gbot(\bm{t})$ as the rectangle $r_i$, $i \in [k]$, satisfying $\ybot(r_i)$ $= \ybot(B_\bm{t})$. In case multiple values in $[k]$ fulfill the condition, let $i$ be the smallest of such values.
 }
 See Figure~\ref{fig:guard} for an illustration.
 
@@ -223,7 +217,7 @@ See Figure~\ref{fig:guard} for an illustration.
         \hspace{3mm}
         (d) Problem $\mathscr{D}$ &
         \hspace{3mm}
-        (3) Problem $\mathscr{E}$
+        (e) Problem $\mathscr{E}$
     \end{tabular}
 
     \figcapup
@@ -238,16 +232,16 @@ See Figure~\ref{fig:guard} for an illustration.
 
 In the {\em reporting version} of the problem, the goal is to output, for each point $p \in P$, all the rectangles $r \in R$ containing $p$, provided that at least one such $r$ exists. For example, in Figure~\ref{fig:guard}a, the output is $\set{(p_2: r_1, r_2), (p_3: r_2)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n + \out)$ time where $\out$ is the number of pairs $(p, r) \in P \times R$ such that $p \in r$.
 
-\extraspacing {\bf Problem $\bm{\mathscr{B}}$.} The input involves a set $H$ of horizontal segments and a set $V$ of vertical segments, all in 2D space. The goal is to report, for each segment $h \in R$, the leftmost point $p$ on $h$ such that $p$ is on some vertical segment in $V$. If $h$ does not intersect with any segment in $V$, report nothing for $h$. Figure~\ref{fig:probs}a gives an example where $H = \set{h_1, h_2, h_3}$ and $V = \set{v_1, v_2}$; the output is $\set{(h_1, p_1), (h_2, p_2)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n)$ time where $n = |H| + |V|$.
+\extraspacing {\bf Problem $\bm{\mathscr{B}}$.} The input involves a set $H$ of horizontal segments and a set $V$ of vertical segments, all in 2D space. The goal is to report, for each segment $h \in H$, the leftmost point $p$ on $h$ such that $p$ is on some vertical segment in $V$. If $h$ does not intersect with any segment in $V$, report nothing for $h$. Figure~\ref{fig:probs}a gives an example where $H = \set{h_1, h_2, h_3}$ and $V = \set{v_1, v_2}$; the output is $\set{(h_1, p_1), (h_2, p_2)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n)$ time where $n = |H| + |V|$.
 
 
-\extraspacing {\bf Problem $\bm{\mathscr{C}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each segment $h \in H$, the rightmost point $p$ on $h$ satisfying the condition that $p$ is covered by at least one left-end covering rectangle of $h$ in $R$ --- formally, for $h = [x_1, x_2] \times y$, we aim to find the maximum $x \in [x_1, x_2]$ such that there exists at least one rectangle $r \in R$ covering both the point $(x_1, y)$ and the point $(x, y)$. If the point $p$ exists (equivalently, $h$ has at least one left-end covering rectangle in $R$), then we should output a tuple $(h, p)$; otherwise, we output nothing for $h$. Figure~\ref{fig:probs}c gives an example where $H = \set{h_1, h_2}$ and $R$ includes the three rectangles shown; the output is $\set{(h_1, p_1), (h_2, p_2)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n)$ time where $n = |H| + |R|$.
+\extraspacing {\bf Problem $\bm{\mathscr{C}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each segment $h \in H$, the rightmost point $p$ on $h$ satisfying the condition that $p$ is covered by at least one left-end covering rectangle of $h$ in $R$ --- formally, for $h = [x_1, x_2] \times y$, we aim to find the maximum $x \in [x_1, x_2]$ such that at least one rectangle $r \in R$ covers both the point $(x_1, y)$ and the point $(x, y)$. If the point $p$ exists (i.e., $h$ has at least one left-end covering rectangle in $R$), we should output a tuple $(h, p)$; otherwise, output nothing for $h$. Figure~\ref{fig:probs}c gives an example where $H = \set{h_1, h_2}$ and $R$ includes the three rectangles shown; the output is $\set{(h_1, p_1), (h_2, p_2)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n)$ time where $n = |H| + |R|$.
 
-\extraspacing {\bf Problem $\bm{\mathscr{D}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. In the {\em first-crossing} version of the problem, the goal is to report, for each rectangle $r \in R$, its lowest crossing segment $h \in H$ --- formally, $h = [x_1, x_2] \times y$ has the smallest $y$ coordinate among all the segments in $H$ crossing $r$. If such an $h$ does not exist, output nothing for $r$.  Figure~\ref{fig:probs}d gives an example where $H = \set{h_1, h_2, h_3}$ and $R = \set{r_1, r_2}$; the output is $\set{(r_1, h_3), (r_2, h_2)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n)$ time where $n = |H| + |R|$.
+\extraspacing {\bf Problem $\bm{\mathscr{D}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. In the {\em find-lowest} version of the problem, the goal is to report, for each rectangle $r \in R$, its lowest crossing segment $h \in H$. If such an $h$ does not exist, output nothing for $r$.  Figure~\ref{fig:probs}d gives an example where $H = \set{h_1, h_2, h_3}$ and $R = \set{r_1, r_2}$; the output is $\set{(r_1, h_3), (r_2, h_2)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n)$ time where $n = |H| + |R|$.
 
 \vgap
 
-In the {\em all-crossing} version of the problem, the goal is to report, for each rectangle $r \in R$, all the segments $h \in H$ crossing $r$. Furthermore, those segments need to be sorted by their y-coordinates. Formally, if $h_1, h_2, ..., h_z$ (for some $z \ge 1$) are all the segments in $H$ crossing $r$, we output $(r: h_1, h_2, ..., h_z)$, provided that $y_i \ge y_{i-1}$ for each $i \in [2, z]$ where $y_i$ (resp., $y_{i-1}$) is the y-projection of $h_i$ (resp., $h_{i-1}$). In the example of Figure~\ref{fig:probs}d, the output is $\set{(r_1: h_3, h_2), (r_2: h_2, h_1)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n + \out)$ time where $\out$ is the number of pairs $(h, r) \in H \times R$ such that $h$ crosses $r$.
+In the {\em find-all} version of the problem, the goal is to report, for each rectangle $r \in R$, all the segments $h \in H$ crossing $r$. Furthermore, those segments need to be sorted by y-coordinate. Formally, if $h_1, h_2, ..., h_z$ (for some $z \ge 1$) are all the segments in $H$ crossing $r$, we output $(r: h_1, h_2, ..., h_z)$, provided that $y_i \ge y_{i-1}$ for each $i \in [2, z]$ where $y_i$ (resp., $y_{i-1}$) is the y-projection of $h_i$ (resp., $h_{i-1}$). In the example of Figure~\ref{fig:probs}d, the output is $\set{(r_1: h_3, h_2), (r_2: h_2, h_1)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n + \out)$ time where $\out$ is the number of pairs $(h, r) \in H \times R$ such that $h$ crosses $r$.
 
 
 \extraspacing {\bf Problem $\bm{\mathscr{E}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each segment $h \in H$, all the rectangles $r \in R$ containing $h$. Furthermore, those rectangles need to be sorted by the x-coordinates of their right boundaries. Formally, if $r_1, r_2, ..., r_z$ (for some $z \ge 1$) are all the rectangles in $R$ containing $h$, we output $(h: r_1, r_2, ..., r_z)$, provided that $\xright(r_i) \ge \xright(r_{i-1})$ for each $i \in [2, z]$. Figure~\ref{fig:probs}c gives an example where $H = \set{h_1, h_2, h_3}$ and $R = \set{r_1, r_2, r_3}$; the output is $\set{(h_1: r_2, r_1), (h_2: r_2, r_3)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n + \out)$ time where $n = |H| + |R|$ and $\out$ is the number of pairs $(h, r) \in H \times R$ such that $r$ contains $h$.
