@@ -290,6 +290,8 @@ Figure~\ref{fig:hv:types} illustrates a result tuple of each type, assuming $k =
 
 In Section~\ref{sec:hv:type1} (resp., \ref{sec:hv:type2}), we will explain how to produce the result tuples of Type 1 (resp., 2) in the time complexity claimed in Lemma~\ref{lmm:hv}.
 
+\yf{Rahul's result here}
+
 %We will find result tuples of each type separately. Before proceeding, however, let us observe a sense of symmetry for Type 2. As mentioned, for each result tuple $(r_1, ..., r_{k-2}, h, v)$ of this type, a rectangle $r_i$, for some $i \in [k-2]$, covers an endpoint of $h$ or $v$ or both. As (i) there are $k-2$ choices for $i$ and (ii) $h$ and $v$ together have four endpoints, we can divide Type 2 further into $4(k-2)$ ``sub-types'': e.g., in subtype 1 (resp., 2), $r_1$ covers the left (resp., right) endpoint of $h$, in subtype 3 (resp., 4), $r_1$ covers the bottom (resp., top) endpoint of $v$, in subtype 5 (resp., 6), $r_2$ covers the left (resp., right) endpoint of $h$, etc. It is possible for the result tuple to belong to multiple sub-types simultaneously.
 
 \vgap 
@@ -325,7 +327,7 @@ As before, let $R_1, ..., R_{k-2}, H$, and $V$ be the input sets of the H-V $k$-
     \subseteq
     \J(R_1, ..., R_{k-2}, H, V) \label{eqn:hv:type1:S}
 }
-where $\J(R_1, ..., R_{k-2}, H, V)$, let us recall, is the join result of the (whole) H-V $k$-SJ. From $\J^*$, we will report only those $k$-tuples belonging to $\J_1$ and ignore the rest.
+where $\J(R_1, ..., R_{k-2}, H, V)$, let us recall, is the join result of the (whole) H-V $k$-SJ. From $\J^*$, we will report only those $k$-tuples belonging to $\J_1$ and ignore the rest. Remember that $\out$ is the size of $\J(R_1, ..., R_{k-2}, H, V)$.
 
 \extraspacing {\bf The Sets $\bm{R_1', R_2', ..., R'_{k-2}}$.} For each rectangle $r_1 \in R_1$, we compute four segments:
 \myitems{
@@ -333,7 +335,7 @@ where $\J(R_1, ..., R_{k-2}, H, V)$, let us recall, is the join result of the (w
     
     \item $v_1$ (resp., $v_2$): the leftmost (resp., rightmost) segment --- i.e., with the smallest (resp., largest) x-coordinate --- among all the segments in $V$ that cross $r$.
 }
-Define $r_1'$ as the rectangle bounded by the above four segments as shown in Figure~\ref{fig:hv:type1}(a) ($r_1'$ is the shaded area). Note that $r_1'$ exists if and only if $r_1$ is crossed by at least one horizontal segment in $H$ and by at least one vertical segment in $V$. Moreover, it is possible for $h_1$ and $h_2$ to be the same segment; same for $v_1$ and $v_2$. Define
+Define $r_1'$ as the rectangle bounded by the above four segments as shown in Figure~\ref{fig:hv:type1:trim} ($r_1'$ is the shaded area). We say that $r_1'$ is the {\em trimmed rectangle} of $r_1$, and conversely, $r_1$ is the {\em full rectangle} of $r_1'$. Note that $r_1'$ exists if and only if $r_1$ is crossed by at least one horizontal segment in $H$ and by at least one vertical segment in $V$. Moreover, it is possible for $h_1$ and $h_2$ to be the same segment; same for $v_1$ and $v_2$. Define
 \myeqn{
     R_1' &=& \set{r_1' \mid r_1 \in R_1 \text{ and its $r_1'$ defined as above exists}} \nn
 }
@@ -341,73 +343,49 @@ which we refer to as the {\em trimmed} version of $R_1$. Computing the ``segment
 
 \vgap
 
-In the same fashion, we obtain the trimmed version $R_i'$ of $R_i$ for all $i \in [2, n]$, spending $O(k n \log n)$ time in total.
+In the same fashion, we obtain the trimmed version $R_i'$ of $R_i$ for all $i \in [2, n]$, spending $O(k n \log n)$ time in total. We now solve the $(k-2)$-SJ problem on $R_1', R_2', ..., R_{k-2}'$ using the algorithm $\A$ supplied (see Lemma~\ref{lmm:hv}). This $(k-2)$-SJ clearly has an input size at most $n$, and let us represent its result as $\J(R_1', R_2, ..., R_{k-2})$. We prove in Appendix~\ref{app:hv}:
 
-We now solve the $(k-2)$-SJ problem on $R_1', R_2, ..., R_{k-2}$ using the algorithm $\A$ supplied. Let us represent the result of this $(k-2)$-SJ as $\J(R_1', R_2, ..., R_{k-2})$. The lemma below shows that the result is essentially what we aim to compute in Step 1.
+%The lemma below shows that the result is essentially what we aim to compute in Step 1.
 
 \begin{lemma} \label{lmm:hv:type1:proj}
-    A $(k-2)$-tuple $(r_1', r_2, ..., r_{k-2})$ exists in $\J(R_1', R_2, ...,$ $R_{k-2})$ if and only if the $(k-2)$-tuple $(r_1, r_2, ..., r_{k-2})$ is in $\Pi_{1:k-2}(\J_1(R_1,$ $...,$ $R_{k-2}, H, V))$, where $r_1$ is the rectangle in $R_1$ defining $r_1'$.
+    $|\J(R_1', R'_2, ..., R'_{k-2})| \le \out$.
 \end{lemma}
 
-The proof can be found in Appendix~\ref{app:hv}. Note that the size of $\Pi_{1:k-2}(\J_1(R_1, ...,$ $R_{k-2}, H, V))$ is bounded by that of $\J_1(R_1, ..., R_{k-2},$ $H, V)$, which in turn is bounded by $\out$. Thus, as a corollary of Lemma~\ref{lmm:hv:type1:proj}, the $(k-2)$-SJ instance $R_1', R_2, ..., R_{k-2}$  can be settled in $F_{k-2}(n, \out)$ time.
+We reminder the reader that $\out$ is the output size of the original H-V $k$-SJ problem. As a corollary of Lemma~\ref{lmm:hv:type1:proj}, the $(k-2)$-SJ can be settled in $F_{k-2}(n, \out)$ time.
 
-\extraspacing {\bf Step 2.} We are ready to explain how to produce $\J_1(R_1, ..., R_{k-2}, H, V)$ from $\Pi_{1:k-2}(\J_1(R_1, ...,$ $R_{k-2}, H, V))$. Our algorithm for this purpose will find a set $S$ satisfying
-\myeqn{
-    \J_1(R_1, ..., R_{k-2}, H, V) 
-    \subseteq 
-    S
-    \subseteq 
-    \J(R_1, ..., R_{k-2}, H, V). \label{eqn:hv:type1:S}
-}
-Recall that $\J(R_1, ..., R_{k-2}, H, V)$ is the result of the original H-V $k$-SJ problem, which has a size of $\out$. Only the $k$-tuples in $S$ that are of Type 1 will be reported. We will achieve the purpose in $O(n \log n + |S|) = O(n \log n + \out)$ time.
+\yf{example}
 
-
-\begin{figure} 
-    \begin{tabular}{cc}
-            \hspace{-3mm}
-            \includegraphics[height=30mm]{./artwork/four-segs} &
-            \hspace{-5mm}
-            \includegraphics[height=37mm]{./artwork/oracle} \\ 
-            \hspace{-3mm} (a) Constructing $r_1'$ from $r_1$ & 
-            \hspace{-5mm} (b) Generating the set $S$ 
-    \end{tabular}
+\begin{figure}
+    \includegraphics[height=30mm]{./artwork/four-segs}
     \figcapup
-    \caption{Illustrations for Section~\ref{sec:hv:type1}}
-    \label{fig:hv:type1}
+    \caption{Trimming}
+    \label{fig:hv:type1:trim}
     \figcapdown
 \end{figure}
 
-\vgap 
-
-Now, take an arbitrary $(k-2)$-tuple in $(r_1, ..., r_{k-2}) \in \Pi_{1:k-2}(\J_1(R_1,$ $...,$ $R_{k-2}, H, V))$. Denote by 
-\myeqn{
-    B = \cap_{i=1}^{k-2} r_i. \nn
-}
-Note that $B$ is a rectangle itself. We say that $B$ is 
-\myitems{
-    \item {\em bottom-bounded} by $r_a$, if the bottom edge of $B$ is a part of the bottom boundary of $r_a$ for some $a \in [k-2]$;
-    
-    \item {\em left-bounded} by $r_b$, if the left edge of $B$ is a part of the left boundary of $r_b$ for some $b \in [k-2]$.
-}
-Figure~\ref{fig:hv:type1}(b) shows an example with rectangles $r_1, r_2$, and $r_3$ (here $k = 5$). Their intersection is the gray rectangle $B$, which is bottom-bounded by $r_2$ and left-bounded by $r_3$. 
+\extraspacing {\bf Generating $\bm{\J^*}$.} Take an arbitrary $(k-2)$-tuple in $\bm{t} = (r'_1, r'_2, ...,$ $r'_{k-2}) \in \J(R_1', R'_2, ..., R'_{k-2})$. The reader should recall from Section~\ref{sec:bricks} that $B_\bm{t}$ is the intersection of of $r'_1, r'_2, ..., r'_{k-2}$, $\gleft(\bm{t})$ is the $r_i$ ($i \in [k-2]$) satisfying $\xleft(r'_i) = \xleft(B_\bm{t})$, and $\gbot(\bm{t})$ is the $r_i$ ($i \in [k-2]$) satisfying $\ybot(r'_i) = \ybot(B_\bm{t})$.
 
 \vgap
 
-We aim to compute 
-\myitems{
-    \item $\cross(r_a, B; H)$, the set of segments in $H$ that cross $r_a$ and $B$; 
-    \item $\cross(r_b, B; V)$, the set of segments in $V$ that cross $r_b$ and $B$.
+We now introduce:
+% \myitems{
+%     \item $\cross(r_a, B; H)$, the set of segments in $H$ that cross $r_a$ and $B$;
+%     \item $\cross(r_b, B; V)$, the set of segments in $V$ that cross $r_b$ and $B$.
+% }
+\myeqn{
+    \cross(\bm{t}, H) = \set{h \in H \mid \text{$h$ crosses both $B_\bm{t}$ and $\gleft(\bm{t})$}} \nn \\
+    \cross(\bm{t}, V) = \set{h \in H \mid \text{$v$ crosses both $B_\bm{t}$ and $\gbot(\bm{t})$}}. \nn
 }
-In Figure~\ref{fig:hv:type1}(b), $H = \set{h_1, h_2, h_3}$ and $V = \set{v_1, v_2, v_3}$. As mentioned before, $r_a = r_2$ and $r_b = r_3$. We have $\cross(r_a, B; H) = \set{h_1, h_2}$ and $\cross(r_b, B; V) = \set{v_1, v_3}$. Note that $h_3$ is not in $\cross(r_a, B; H)$ because $h_3$ does not cross $B$, and $v_2$ is not in $\cross(r_b, B; V)$ because $v_2$ does not cross $r_3$.
-
-\vgap 
-
-Appendix~\ref{app:hv} proves the next property: 
+These sets have important properties, as proved in Appendix~\ref{app:hv}:
 
 \begin{lemma} \label{lmm:hv:type1:cross-non-empty}
-    $\cross(r_a, B; H) \ne \emptyset$ and $\cross(r_b, B; H) \ne \emptyset$.
+    Suppose that $r_1, r_2, ..., r_{k-2}$ are the full rectangles of $r_1', r_2', ..., r_{k-2}'$, respectively. All the following statements are true:
+    \myenums{
+        \item $\cross(\bm{t}, H) \ne \emptyset$ and $\cross(\bm{t}, V) \ne \emptyset$.
+    }
 \end{lemma}
 
+\yf{example}
 
 \vgap 
 
@@ -430,9 +408,6 @@ Equipped with the above, we can generate the target $S$ as follows:
 
 \section{Finding Result Tuples of Type 2} \label{sec:hv:type2}
 
-\subsection{Putting Things Together} \label{sec:hv:analysis}
-
-\todo{Remark on Rahul's result}
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
