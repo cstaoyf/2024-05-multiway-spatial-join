@@ -321,19 +321,19 @@ As before, let $R_1, ..., R_{k-2}, H$, and $V$ be the input sets of the H-V $k$-
     \subseteq
     \J(R_1, ..., R_{k-2}, H, V) \label{eqn:hv:type1:J*}
 }
-where $\J(R_1, ..., R_{k-2}, H, V)$, let us recall, is the join result of the (whole) H-V $k$-SJ. From $\J^*$, we will report only those $k$-tuples belonging to $\J_1$ and ignore the rest. Remember that $\out$ is the size of $\J(R_1, ..., R_{k-2}, H, V)$.
+where $\J(R_1, ..., R_{k-2}, H, V)$, let us recall, is the join result of the (whole) H-V $k$-SJ. Remember that the output size $\out$ is defined to $|\J(R_1, ..., R_{k-2}, H, V)|$. From $\J^*$, we will report only those $k$-tuples belonging to $\J_1$ and ignore the rest. 
 
-\extraspacing {\bf The Sets $\bm{R_1', R_2', ..., R'_{k-2}}$.} For each rectangle $r_1 \in R_1$, we compute four segments:
+\extraspacing {\bf Sets $\bm{R_1', R_2', ..., R'_{k-2}}$.} For each rectangle $r_1 \in R_1$, we compute four segments:
 \myitems{
-    \item $h_1$ (resp., $h_2$): the lowest (resp., highest) segment --- i.e., with the smallest (resp., largest) y-coordinate --- among all the segments in $H$ that cross $r$;
+    \item $h_1$ (resp., $h_2$): the lowest (resp., highest) segment in $H$ that crosses $r$;
     
-    \item $v_1$ (resp., $v_2$): the leftmost (resp., rightmost) segment --- i.e., with the smallest (resp., largest) x-coordinate --- among all the segments in $V$ that cross $r$.
+    \item $v_1$ (resp., $v_2$): the leftmost (resp., rightmost) segment in $V$ that crosses $r$.
 }
-Define $r_1'$ as the rectangle bounded by the above four segments as shown in Figure~\ref{fig:hv:type1:trim} ($r_1'$ is the shaded area). We say that $r_1'$ is the {\em trimmed rectangle} of $r_1$, and conversely, $r_1$ is the {\em full rectangle} of $r_1'$. Note that $r_1'$ exists if and only if $r_1$ is crossed by at least one horizontal segment in $H$ and by at least one vertical segment in $V$. Moreover, it is possible for $h_1$ and $h_2$ to be the same segment; same for $v_1$ and $v_2$. Define
+Define $r_1' = [x_1, x_2] \times [y_1, y_2]$, where $x_1$ (resp., $x_2$) is x-coordinate of $v_1$ (resp., $v_2$), and $y_1$ (resp., $y_2$) is y-coordinate of $h_1$ (resp., $h_2$). We say that $r_1'$ is the {\em trimmed rectangle} of $r_1$, and conversely, $r_1$ is the {\em full rectangle} of $r_1'$. Note that $r_1'$ exists if and only if $r_1$ is crossed by at least one horizontal segment in $H$ and by at least one vertical segment in $V$. Moreover, it is possible for $h_1$ and $h_2$ to be the same segment; same for $v_1$ and $v_2$. Define
 \myeqn{
     R_1' &=& \set{r_1' \mid r_1 \in R_1 \text{ and its $r_1'$ defined as above exists}} \nn
 }
-which we refer to as the {\em trimmed} version of $R_1$. Computing the ``segment $h_1$'' for each $r_1 \in R_1$ is an instance of Problem $\mathscr{D}$ (the first-crossing version). By symmetry, so is the computation of $h_2, v_1$, and $v_2$ segments for each $r_1 \in R_1$. It thus follows from Section~\ref{sec:bricks} that $R_1'$ can be produced in $O(n \log n)$ time.
+which we call the {\em trimmed} version of $R_1$. Computing the ``segment $h_1$'' for each $r_1 \in R_1$ is an instance of Problem $\mathscr{D}$ (the find-lowest version). By symmetry, so is the computation of $h_2, v_1$, and $v_2$ segments for each $r_1 \in R_1$. It thus follows from Section~\ref{sec:bricks} that $R_1'$ can be produced in $O(n \log n)$ time.
 
 \vgap
 
@@ -349,13 +349,13 @@ We reminder the reader that $\out$ is the output size of the original H-V $k$-SJ
 
 \yf{example}
 
-\begin{figure}
-    \includegraphics[height=30mm]{./artwork/four-segs}
-    \figcapup
-    \caption{Trimming}
-    \label{fig:hv:type1:trim}
-    \figcapdown
-\end{figure}
+% \begin{figure}
+%     \includegraphics[height=30mm]{./artwork/four-segs}
+%     \figcapup
+%     \caption{Trimming}
+%     \label{fig:hv:type1:trim}
+%     \figcapdown
+% \end{figure}
 
 \extraspacing {\bf Generating $\bm{\J^*}$.} Take an arbitrary $(k-2)$-tuple in $\bm{t} = (r'_1, r'_2, ...,$ $r'_{k-2}) \in \J(R_1', R'_2, ..., R'_{k-2})$. The reader should recall from Section~\ref{sec:bricks} that $B_\bm{t}$ is the intersection of of $r'_1, r'_2, ..., r'_{k-2}$, $\gleft(\bm{t})$ is the $r_i$ ($i \in [k-2]$) satisfying $\xleft(r'_i) = \xleft(B_\bm{t})$, and $\gbot(\bm{t})$ is the $r_i$ ($i \in [k-2]$) satisfying $\ybot(r'_i) = \ybot(B_\bm{t})$.
 
