@@ -262,7 +262,9 @@ In the {\em find-all-sorted} version of the problem, the goal is to report, for 
 
 \section{The Core: H-V Multiway Spatial Joins} \label{sec:hv}
 
-Recall that the input of $k$-SJ comprises $k$ sets of rectangles: $R_1, R_2, ...,$ $R_k$. We now formulate a special version of $k$-SJ, named the {\em H-V $k$-SJ} problem. The special nature is reflected in the introduction of three constraints: (i) $k \ge 3$, (ii) $R_{k-1}$ should be a set of horizontal segments, and (iii) $R_k$ should be a set of vertical segments. For better clarity, we will represent the input sets as $R_1, R_2, ..., R_{k-2}, H$ ($=R_{k-1}$), and $V$ ($=R_k$). The goal is to output the join result $\J(R_1, ..., R_{k-2},$ $H, V)$, including every $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in R_1 \times ... \times R_{k-2} \times H \times V$ such that $h \cap v \cap \bigcap_{i=1}^{k-2} r_i$ is not empty. As we will see, conquering this sepcial version is the most challenging step in settling the original $k$-SJ problem optimally.
+Recall that the input of $k$-SJ comprises $k$ sets of rectangles: $R_1, R_2, ...,$ $R_k$. We now formulate a special version of $k$-SJ, named the {\em H-V $k$-SJ} problem. The special nature is reflected in the introduction of three constraints: (i) $k \ge 3$, (ii) $R_{k-1}$ should be a set of horizontal segments, and (iii) $R_k$ should be a set of vertical segments. For better clarity, we will represent the input sets as $R_1, R_2, ..., R_{k-2}, H$ ($=R_{k-1}$), and $V$ ($=R_k$). The goal is to output the join result $\J(R_1, ..., R_{k-2},$ $H, V)$, including every $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in R_1 \times ... \times R_{k-2} \times H \times V$ such that $h \cap v \cap \bigcap_{i=1}^{k-2} r_i$ is not empty. 
+
+%As we will see, conquering this sepcial version is the most challenging step in settling the original $k$-SJ problem optimally.
 
 \vgap
 
@@ -279,6 +281,10 @@ We will establish:
     }
     where $n$ (resp., $\out$) is the input (resp., output) size of the problem.
 \end{lemma}
+
+The part of the paper from now until the appendix will be devoted to proving the above lemma. This is the most challenging step in settling the general $k$-SJ problem optimally.
+
+\vgap
 
 %The condition is equivalent to saying that the intersection point of $h$ and $v$ falls in every $r_i$ of $i \in [k-2]$.
 
