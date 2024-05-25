@@ -600,7 +600,7 @@ Finding the $\contained_{R_{k-2}}(h^*)$ sets of all $h^* \in H^*$ is an instance
 
 
 \extraspacing {\bf Computing the ``$\bm{\contained_{R_{k-2}}(t)}$'' Sets.} Statement (2) of Lemma~\ref{lmm:hv:type2:contained-h*} allows us to produce $\contained_{R_{k-2}}(h^*)$, defined in \eqref{eqn:type2:contained-t}, for each $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$ as follows. First, fetch the (already computed) minimal segment $h^*$ of $\bm{t}[k-2]$ in $O(1)$ time. Then, scan the rectangles $r$ of $\contained_{R_{k-2}}(h^*)$ in descending order of $\xright(r)$. For each $r$ scanned, check whether $r \in \contained_{R_{k-2}}(\bm{t})$, or equivalently, whether $r$ covers $B_\bm{t}$ (recall that $B_\bm{t}$ is a point); the cost for such a check is $O(1)$. Abort the scan as soon as $r \notin 
-\contained_{R_{k-2}}(\bm{t})$. This way, $\contained_{R_{k-2}}(t)$ can be decided in $O(k + |\contained_{R_{k-2}}(t)|)$ time. Doing so for all $\bm{t} \in \J(R_1, ..., R_{k-3},$ $H', V)$ takes $O(k \cdot |\J| + \sum_\bm{t} |\contained_{R_{k-2}}(t)|) = O(k \cdot \out)$ time, where the derivation used Lemma~\ref{lmm:hv:type2:recur-output} and statement (3) of Lemma~\ref{lmm:hv:type2:properties}.
+\contained_{R_{k-2}}(\bm{t})$. This way, $\contained_{R_{k-2}}(t)$ can be decided in $O(k + |\contained_{R_{k-2}}(\bm{t})|)$ time. Doing so for all $\bm{t} \in \J(R_1, ..., R_{k-3},$ $H', V)$ takes $O(k \cdot |\J| + \sum_\bm{t} |\contained_{R_{k-2}}(\bm{t})|) = O(k \cdot \out)$ time, where the derivation used Lemma~\ref{lmm:hv:type2:recur-output} and statement (3) of Lemma~\ref{lmm:hv:type2:properties}.
 
 
 
