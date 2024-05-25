@@ -555,12 +555,10 @@ Equipped with Lemma~\ref{lmm:hv:type1:properties}, we generate our target $\J_2$
     \> 2.\> {\bf for} each $(k-2)$-tuple $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$ {\bf do} \\
     \> 3.\>\> $h \leftarrow$ the full segment of $\bm{t}[k-2]$ \\
     \> 4.\>\> {\bf for} each $r \in \contained_{R_{k-2}}(\bm{t})$ {\bf do} \\
-    \> 5.\>\>\> add $(\bm{t}[1], ..., \bm{t}[k-3], r, h, \bm{t}[k-1])$ to $\J_2?
-    $
+    \> 5.\>\>\> add $(\bm{t}[1], ..., \bm{t}[k-3], r, h, \bm{t}[k-1])$ to $\J_2$
 }
 
-
-%By statements (b) and (2) of Lemma~\ref{lmm:hv:type1:properties}, the set $\J_2$ thus produced is indeed what we aim to compute. Furthermore, if we are given $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$ for each $\bm{t}$, statement (a) of Lemma~\ref{lmm:hv:type1:properties} assures us that the above algorithm runs in $O(1 + k \cdot |\J^*|) = O(1 + k \cdot \out)$ time.
+The correctness of the algorithm follows from statements (b) and (2) of Lemma~\ref{lmm:hv:type1:properties}. Furthermore, if we are given $\contained_{R_{k-2}}(\bm{t})$ for each $\bm{t}$, statement (3) of assures us that the algorithm runs in $O(1 + |\J(R_1, ..., R_{k-3}, H', V)| + k \sum_\bm{t} |\contained_{R_{k-2}}(\bm{t})|) = O(1 + k \cdot \out)$ time.
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
