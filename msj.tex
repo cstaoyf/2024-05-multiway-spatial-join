@@ -45,6 +45,7 @@
 \def\gbot{\mathrm{bot\text{-}guard}}
 \def\cross{\mathrm{cross}}
 \def\dcross{\mathrm{d\text{-}cross}}
+\def\contained{\mathrm{contained}}
 \def\out{\mathrm{OUT}}
 
 
@@ -218,7 +219,9 @@ This section will first define some notions frequently used in our presentation 
 
 \vgap
 
-Given a horizontal segment $h = [x_1, x_2] \times y$, we call a rectangle $r$ a {\em left-end covering rectangle} of $h$, if $r$ contains the left endpoint of $h$ (i.e., $(x_1, y) \in r$). Similarly, given a vertical segment $v$, we call a rectangle $r$ a {\em bottom-end covering rectangle} of $v$, if $r$ contains the bottom endpoint of $v$. \yf{need this?} A horizontal/vertical segment $s$ {\em crosses} a rectangle $r$, if $s$ overlaps with $r$, but $r$ covers neither of the two endpoints of $s$. A rectangle $r$ {\em contains} a horizontal/vertical segment $s$, if $r$ covers both endpoints of $s$.
+%Similarly, given a vertical segment $v$, we call a rectangle $r$ a {\em bottom-end covering rectangle} of $v$, if $r$ contains the bottom endpoint of $v$. \yf{need this?}
+
+Given a horizontal segment $h = [x_1, x_2] \times y$, we call a rectangle $r$ a {\em left-end covering rectangle} of $h$, if $r$ contains the left endpoint of $h$ (i.e., $(x_1, y) \in r$). A horizontal/vertical segment $s$ {\em crosses} a rectangle $r$, if $s$ overlaps with $r$, but $r$ covers neither of the two endpoints of $s$. A rectangle $r$ {\em contains} a horizontal/vertical segment $s$, if $r$ covers both endpoints of $s$.
 
 \vgap
 
@@ -227,8 +230,11 @@ Let $S$ be a set of segments where either all segments are horizontal or all are
     \cross_S(r) = \{s \in S \mid \text{$s$ crosses $r$} \}. 
     \label{eqn:cross}
 }
-
-\vgap
+Let $R$ be a set of rectangles. Given a horizontal segment, we define 
+\myeqn{
+    \contained_R(h) = \{r \in R \mid \text{$h$ is contained in $r$} \}. 
+    \label{eqn:contained}
+}
 
 Given a rectangle $r = [x_1, x_2] \times [y_1, y_2]$, we define $\xleft(r) = x_1$, $\xright(r) = x_2$, $\ybot(r) = y_1$, and $\ytop(r) = y_2$. Consider a $k$-tuple $\bm{t} = (r_1, r_2, ..., r_k)$ where $k \ge 2$, and each $\bm{t}[i] = r_i$ ($i \le [k]$) is a rectangle. We use $B_\bm{t}$ to represent $\bigcap_{i=1}^t r_i$, namely, the intersection of the rectangles in $\bm{t}$. Note that $B_\bm{t}$ is a rectangle itself. We define:
 \myitems{
@@ -257,7 +263,7 @@ In the {\em reporting version} of the problem, the goal is to output, for each p
 In the {\em find-all-sorted} version of the problem, the goal is to report, for each rectangle $r \in R$, the entire $\cross_H(r)$ sorted by y-coordinate. Formally, if $\cross_H(r) = \set{h_1, h_2, ..., h_z}$ (for some $z \ge 1$), we output $(r: h_1, h_2, ..., h_z)$, provided that $y_i \ge y_{i-1}$ for each $i \in [2, z]$ where $y_i$ (resp., $y_{i-1}$) is the y-projection of $h_i$ (resp., $h_{i-1}$). In the example of Figure~\ref{fig:probs}d, the output is $\set{(r_1: h_3, h_2), (r_2: h_2, h_1)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n + \out)$ time where $\out$ is the number of pairs $(h, r) \in H \times R$ such that $h$ crosses $r$.
 
 
-\extraspacing {\bf Problem $\bm{\mathscr{E}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each segment $h \in H$, all the rectangles $r \in R$ containing $h$. Furthermore, those rectangles need to be sorted by the x-coordinates of their right boundaries. Formally, if $r_1, r_2, ..., r_z$ (for some $z \ge 1$) are all the rectangles in $R$ containing $h$, we output $(h: r_1, r_2, ..., r_z)$, provided that $\xright(r_i) \ge \xright(r_{i-1})$ for each $i \in [2, z]$. Figure~\ref{fig:probs}e gives an example where $H = \set{h_1, h_2, h_3}$ and $R = \set{r_1, r_2, r_3}$; the output is $\set{(h_1: r_2, r_1), (h_2: r_2, r_3)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n + \out)$ time where $n = |H| + |R|$ and $\out$ is the number of pairs $(h, r) \in H \times R$ such that $r$ contains $h$.
+\extraspacing {\bf Problem $\bm{\mathscr{E}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each segment $h \in H$, the set $\contained_R(h)$ (defined in \eqref{eqn:contained}), where the rectangles are sorted by their right boundaries. Formally, if $r_1, r_2, ..., r_z$ (for some $z \ge 1$) are all the rectangles in $\contained_R(h)$, we output $(h: r_1, r_2, ..., r_z)$, provided that $\xright(r_i) \ge \xright(r_{i-1})$ for each $i \in [2, z]$. Figure~\ref{fig:probs}e gives an example where $H = \set{h_1, h_2, h_3}$ and $R = \set{r_1, r_2, r_3}$; the output is $\set{(h_1: r_2, r_1), (h_2: r_2, r_3)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n + \out)$ time where $n = |H| + |R|$ and $\out$ is the number of pairs $(h, r) \in H \times R$ such that $r$ contains $h$.
 
 
 \section{The Core: H-V Multiway Spatial Joins} \label{sec:hv}
@@ -466,8 +472,7 @@ Finding the $\cross_H(r^*)$ sets of all $r^* \in R^*_i$ is an instance of the fi
 
 \vgap 
 
-We 
-conclude that $\J_1$ (the set of type-1 result tuples) can be computed in $F_{k-1}(n, \out) + O(n \log n +  k \cdot \out)$ time.
+We conclude that $\J_1$ (the set of type-1 result tuples) can be computed in $F_{k-2}(n, \out) + O(n \log n +  k \cdot \out)$ time.
 
 \section{H-V $k$-SJ: Result Tuples of Type 2} \label{sec:hv:type2}
 
@@ -497,11 +502,17 @@ The construction requires solving an instance of Problem $\mathscr{C}$, which ta
 
 \vgap 
 
-We now solve a $(k-1)$-SJ problem with $R_1, ..., R_{k-1}, H', V$ as the input using the algorithm $\A$ supplied (see Lemma~\ref{lmm:hv}). This $(k-1)$-SJ has an input size at most $n$, and let us represent its result as $\J(R_1, R_2, ..., R_{k-1}, H', V)$. We prove in Appendix~\ref{app:hv}:
+We now solve a $(k-1)$-SJ problem with $R_1, ..., R_{k-1}, H', V$ as the input using the algorithm $\A$ supplied (see Lemma~\ref{lmm:hv}). This $(k-1)$-SJ has an input size at most $n$, and let us represent its result as $\J(R_1, ..., R_{k-1}, H', V)$. We prove in Appendix~\ref{app:hv}:
 
 \begin{lemma} \label{lmm:hv:type2:recur-output}
     $|\J(R_1, ..., R_{k-1}, H', V)| \le \out$.
 \end{lemma}
+
+The $(k-1)$-SJ can be settled in $F_{k-1}(n, \out)$ time.
+
+\yf{example}
+
+\extraspacing {\bf Generating $\bm{\J^*}$.}
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
