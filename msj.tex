@@ -399,8 +399,7 @@ The prefix ``d-'' stands for ``double''. These sets have important properties as
 
         \vspace{2mm}
         
-        \item If a $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v)$ belongs to $\J_1$, then $\bm{t} = (r'_1, r'_2, ...,$ $r'_{k-2})$ belongs to $\J(R_1', R'_2, ..., R'_{k-2})$, and       
-        $h \in \dcross_H(\bm{t})$ and $v \in \dcross_V(\bm{t})$, where $r'_i$ ($i \in [k-2])$ is the trimmed rectangle of $r_i$.
+        \item Consider any a $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v) \in \J_1$. Let $r'_i$ ($i \in [k-2])$ be the trimmed rectangle of $r_i$, and set $\bm{t} = (r'_1, r'_2, ...,$ $r'_{k-2})$. Then, $\bm{t} \in \J(R_1', R'_2, ..., R'_{k-2})$, $h \in \dcross_H(\bm{t})$, and $v \in \dcross_V(\bm{t})$. 
 
         \item $\sum_{\bm{t}} |\dcross_H(\bm{t})| \le \out$ and $\sum_{\bm{t}} |\dcross_V(\bm{t})| \le \out$.
     }
@@ -481,11 +480,11 @@ Still, denote by $R_1, ..., R_{k-2}, H$, and $V$ the input sets of the H-V $k$-S
 
 \vgap
 
-As mentioned before, for a $(k-2)$-tuple $(r_1, ..., r_{k-2}, h, v)$ of this type, a rectangle $r_i$, for some $i \in [k-2]$, covers an endpoint of $h$ or $v$ or both. As (i) there are $k-2$ choices for $i$ and (ii) $h$ and $v$ together have four endpoints, we can divide Type 2 further into $4(k-2)$ ``sub-types'': e.g., in subtype 1 (resp., 2), $r_1$ covers the left (resp., right) endpoint of $h$, in subtype 3 (resp., 4), $r_1$ covers the bottom (resp., top) endpoint of $v$, in subtype 5 (resp., 6), $r_2$ covers the left (resp., right) endpoint of $h$, etc. It is possible for the result tuple to belong to multiple sub-types simultaneously.
+As mentioned before, for a result tuple $(r_1, ..., r_{k-2}, h, v)$ of this type, a rectangle $r_i$, for some $i \in [k-2]$, covers an endpoint of $h$ or $v$ or both. As (i) there are $k-2$ choices for $i$ and (ii) $h$ and $v$ together have four endpoints, we can divide Type 2 further into $4(k-2)$ ``sub-types'': e.g., in subtype 1 (resp., 2), $r_1$ covers the left (resp., right) endpoint of $h$, in subtype 3 (resp., 4), $r_1$ covers the bottom (resp., top) endpoint of $v$, in subtype 5 (resp., 6), $r_2$ covers the left (resp., right) endpoint of $h$, etc. It is possible for the result tuple to belong to multiple sub-types simultaneously.
 
 \vgap 
 
-Next, we will focus on producing the result tuples of a particular sub-type: those tuples $(r_1, ..., r_{k-2}, h, v)$ where $r_1$ covers the left endpoint of $h$ --- let us denote this set of result tuples as $\J_2$. Other sub-types can be computed using the same algorithm, by symmetry.
+Next, we will focus on producing the result tuples of a particular sub-type: those tuples $(r_1, ..., r_{k-2}, h, v)$ where $r_{k-2}$ covers the left endpoint of $h$ --- let us denote this set of result tuples as $\J_2$. Other sub-types can be computed using the same algorithm, by symmetry.
 
 \vgap
 
@@ -536,13 +535,12 @@ We prove the next lemma in Appendix~\ref{app:hv}.
             \item $\contained_{R_{k-2}}(\bm{t}) \ne \emptyset$.
 
             \item Denote by $h$ the full segment of $\bm{t}[k-2]$. 
-            For any $r \in \contained_{R_{k-2}}(\bm{t})$, the $k$-tuple $(\bm{t}[1], ..., \bm{t}[k-3], r, h, \bm{t}[k])$ belongs to $\J_2$.
+            For any $r \in \contained_{R_{k-2}}(\bm{t})$, the $k$-tuple $(\bm{t}[1], ..., \bm{t}[k-3], r, h, \bm{t}[k-1])$ belongs to $\J_2$.
         }
         
         \vspace{2mm}
         
-        \item If the $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v)$ belongs to $\J_2$, then $\bm{t} = (r_1, ..., r_{k-3}, h', v)$ belongs to $\J(R_1, ..., R_{k-3}, H', V)$ and        
-        $h' \in \contained_{R_{k-2}}(\bm{t})$, where $h'$ is the trimmed segment of $h$.
+        \item Consider any $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v) \in \J_2$. Let $h'$ be the trimmed segment of $h$, and set $\bm{t} = (r_1, ..., r_{k-3}, h', v)$. Then, $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$ and $h' \in \contained_{R_{k-2}}(\bm{t})$.
         
         \item $\sum_{\bm{t}} |\contained_{R_{k-2}}(\bm{t})| \le \out$.
     }
@@ -557,7 +555,8 @@ Equipped with Lemma~\ref{lmm:hv:type1:properties}, we generate our target $\J_2$
     \> 2.\> {\bf for} each $(k-2)$-tuple $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$ {\bf do} \\
     \> 3.\>\> $h \leftarrow$ the full segment of $\bm{t}[k-2]$ \\
     \> 4.\>\> {\bf for} each $r \in \contained_{R_{k-2}}(\bm{t})$ {\bf do} \\
-    \> 5.\>\>\> add $(\bm{t}[1], ..., \bm{t}[k-3], r, h, \bm{t}[k])$ to $\J^*$
+    \> 5.\>\>\> add $(\bm{t}[1], ..., \bm{t}[k-3], r, h, \bm{t}[k-1])$ to $\J_2?
+    $
 }
 
 
