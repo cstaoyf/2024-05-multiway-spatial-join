@@ -511,7 +511,7 @@ The $(k-1)$-SJ can be settled in $F_{k-1}(n, \out)$ time.
 \myeqn{
     \contained_{R_{k-2}}(\bm{t}) &=& \{r_{k-2} \in R_{k-2} \mid \text{ the effective horizontal } \nn \\
     && \text{segment of $\bm{t}$ is contained in $r_{k-2}$}   \}
-    \nn
+    \label{eqn:type2:contained-t}
 }
 The above definition should not be confused with \eqref{eqn:contained}, where the $\contained$ function takes a horizontal segment as the input.
 
@@ -585,7 +585,11 @@ We will utilize the sets $\contained_{R_{k-2}}(h^*)$ of the segments $h^*$ in $H
 Finding the $\contained_{R_{k-2}}(h^*)$ sets of all $h^* \in H^*$ is an instance of the find-all-sorted version of Problem $\mathscr{E}$ (with $H^*$ and $R_{k-2}$ as the input). The cost is $O(n \log n + \out)$ according statement (1) of Lemma~\ref{lmm:hv:type1:cross-r*} and the discussion in Section~\ref{sec:bricks}. Note that, for each $\contained_{R_{k-2}}(h^*)$ computed, the rectangles $r$ therein have been sorted in descending order of $\xright(r)$.
 
 
-\extraspacing {\bf Computing the ``d-cross'' Sets.} We are ready to compute $\dcross_H(\bm{t})$, defined in \eqref{eqn:dcross-H}, for any $\bm{t} \in \J(R'_1, ..., R'_{k-2})$, thanks to Statement (2) of Lemma~\ref{lmm:hv:type1:cross-r*}. First, compute $B_\bm{t}$, obtain the rectangle $r' = \gbot(\bm{t})$, and fetch the (already computed) top-sliced rectangle $r^*$ of $r'$; these steps require $O(k)$ time. Then, scan the segments in $\cross_H(r^*)$ in ascending order of their y-coordinates. For each segment $h$ scanned, check whether $h$ belongs to $\dcross_H(\bm{t})$, namely, whether $h$ crosses $B_\bm{t}$ (the reader can verify that $h$ must cross $\gbot(\bm{t})$); this can be done in constant time. Abort the scan as soon as $h \notin \dcross_H(\bm{t})$. This way, we produce $\dcross_H(\bm{t})$ in $O(k + |\dcross_H(\bm{t})|)$ time. Doing so for all $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ takes $O(k \cdot |\J| + \sum_\bm{t} |\dcross_H(t)|) = O(k \cdot \out)$ time, where the derivation used Lemma~\ref{lmm:hv:type1:recur-output} and statement (3) of Lemma~\ref{lmm:hv:type1:properties}.
+\extraspacing {\bf Computing the ``$\bm{\contained_{R_{k-2}}(t)}$'' Sets.} We are ready to produce $\contained_{R_{k-2}}(h^*)$, defined in \eqref{eqn:type2:contained-t}, for any $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$, based on Statement (2) of Lemma~\ref{lmm:hv:type2:contained-h*}. First, fetch the (already computed) minimal segment $h^*$ of $h'$ in $O(1)$ time. Then, scan the rectangles $r$ in $\contained_{R_{k-2}}(h^*)$ in descending order of $\xright(r)$. For each $r$ scanned, check whether $r \in 
+\contained_{R_{k-2}}(\bm{t})$, or equivalently, whether $r$ covers the intersection point between $h$ and $v$; this takes $O(1)$ time. Abort the scan as soon as $r \notin 
+\contained_{R_{k-2}}(\bm{t})$. This way, we compute $\contained_{R_{k-2}}(t)$ in $O(k + |\contained_{R_{k-2}}(t)|)$ time. Doing so for all $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$ takes $O(k \cdot |\J| + \sum_\bm{t} |\contained_{R_{k-2}}(t)|) = O(k \cdot \out)$ time, where the derivation used Lemma~\ref{lmm:hv:type2:recur-output} and statement (3) of Lemma~\ref{lmm:hv:type2:properties}.
+
+
 
 \vgap 
 
