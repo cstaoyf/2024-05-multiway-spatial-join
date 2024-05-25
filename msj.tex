@@ -574,9 +574,9 @@ We will utilize the sets $\contained_{R_{k-2}}(h^*)$ of the segments $h^*$ in $H
 \begin{lemma} \label{lmm:hv:type2:contained-h*}
     Both statements below are true: 
     \myenums{
-        \item $\sum_{i=1}^k \sum_{r^* \in R^*_i} |\cross_H(r^*)| \le \out$.
+        \item $\sum_{h^* \in H^*} |\contained_{R_{k-2}}(h^*)| \le \out$.
         
-        \item Consider any tuple $\bm{t} \in \J(R'_1, ..., R'_{k-2})$. Let $r' = \gbot(\bm{t})$ and $r^*$ be the top-sliced rectangle of $r'$. Then, we have $\dcross_H(\bm{t})$ $\subseteq \cross_H(r^*)$. Furthermore, if the (horizontal) segments of $\cross_H(r^*)$ are sorted in ascending order of y-coordinate, then $\dcross_H(\bm{t})$ includes a prefix of the sorted order.
+        \item Consider any tuple $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$. Set $h' = \bm{t}[k-2]$ and let $h^*$ be the minimal segment of $h'$. Then, we have $$\contained_{R_{k-2}}(\bm{t}) \subseteq \contained_{R_{k-2}}(h^*).$$ Furthermore, if the rectangles $r$ in $\contained_{R_{k-2}}(h^*)$ are sorted in descending order of $\xright(r)$, then $\contained_{R_{k-2}}(\bm{t})$ includes a prefix of the sorted order.
     }
 \end{lemma}
 
