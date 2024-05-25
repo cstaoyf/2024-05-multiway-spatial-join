@@ -573,7 +573,7 @@ This can be done in $O(n + k \cdot \out)$ time, as shown in Appendix~\ref{app:hv
 
 \vgap 
 
-We will utilize the sets $\contained_{R_{k-2}}(h^*)$ of the segments $h^*$ in $H^*$, where $\contained_{R_{k-2}}(h^*)$ --- defined in \eqref{eqn:contained} --- is the set of rectangles in $R_{k-2}$ containing $h^*$. The next lemma is proven in Appendix~\ref{app:hv}. 
+We will utilize the sets $\contained_{R_{k-2}}(h^*)$ of the segments $h^*$ in $H^*$, where $\contained_{R_{k-2}}(h^*)$ --- defined in \eqref{eqn:contained} --- is the set of rectangles in $R_{k-2}$ containing $h^*$. These sets have some useful properties:
 
 \begin{lemma} \label{lmm:hv:type2:contained-h*}
     Both statements below are true: 
@@ -583,6 +583,8 @@ We will utilize the sets $\contained_{R_{k-2}}(h^*)$ of the segments $h^*$ in $H
         \item Consider any tuple $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$. Set $h' = \bm{t}[k-2]$ and let $h^*$ be the minimal segment of $h'$. Then, $$\contained_{R_{k-2}}(\bm{t}) \subseteq \contained_{R_{k-2}}(h^*).$$ Furthermore, if the rectangles $r$ in $\contained_{R_{k-2}}(h^*)$ are sorted in descending order of $\xright(r)$, then $\contained_{R_{k-2}}(\bm{t})$ includes a prefix of the sorted order.
     }
 \end{lemma}
+
+The proof can be found in Appendix~\ref{app:hv}. 
 
 \yf{example}
 
