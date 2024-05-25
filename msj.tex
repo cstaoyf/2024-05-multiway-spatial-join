@@ -563,11 +563,13 @@ and call it the {\em minimal segment} of $h'$.
 
 \vgap 
 
-Next, we construct from $H'$ a new set of horizontal segments: 
+Next, we construct a new set of horizontal segments: 
 \myeqn{
     H^* = \set{h^* \mid h' \in H' \text{ and its minimal segment $h^*$ exists}}. \label{eqn:hv:type2:H*}
 }
-Computing $H^*$ from $H'$ and $V$ is an instance of Problem $\mathscr{B}$, and can be achieved in $O(n \log n)$ as per the discussion from Section~\ref{sec:bricks}. 
+This can be done in $O(n + k \cdot \out)$ time, as shown in Appendix~\ref{app:hv}. 
+
+%Computing $H^*$ from $H'$ and $V$ is an instance of Problem $\mathscr{B}$, and can be achieved in $O(n \log n)$ as per the discussion from Section~\ref{sec:bricks}. 
 
 \vgap 
 
@@ -627,13 +629,15 @@ We conclude that $\J_2$ --- the set of type-2 result tuples $(r_1, ..., r_{k-2},
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:properties}.}
 
-\extraspacing {\bf Computing the Top-Sliced Rectangles.}
+\extraspacing {\bf Computing $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.}
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:cross-r*}.}
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type2:recur-output}.}
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type2:properties}.}
+
+\extraspacing {\bf Computing $\bm{H^*}$.}
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type2:contained-h*}.}
 
