@@ -305,16 +305,6 @@ In Section~\ref{sec:hv:type1} (resp., \ref{sec:hv:type2}), we will explain how t
 
 \extraspacing {\bf Remark.} In \cite{rdr+11}, Rahul et al.\ studied the problem of storing a set $H$ of horizontal segments and a set $V$ of vertical segments in a data structure such that, given a query rectangle $r$, all the pairs $(h, v) \in H \times V$ satisfying $h \cap v \cap r \ne \emptyset$ can be reported efficiently. They developed a structure of $O(n \log n)$ space that can be built in $O(n \log n)$ time, and can be used to answer a query in $O(\log n + K)$ time, where $n = |H| + |V|$ and $K$ is the number of pairs reported. Their structure can be utilized to solve H-V 3-SJ in $O(n \log n + \out)$ time. We are unaware of a way to extend their solution to handle H-V $k$-SJ of $k > 3$. Our method for proving Lemma~\ref{lmm:hv} is based on fundamentally different ideas. 
 
-%We will find result tuples of each type separately. Before proceeding, however, let us observe a sense of symmetry for Type 2. As mentioned, for each result tuple $(r_1, ..., r_{k-2}, h, v)$ of this type, a rectangle $r_i$, for some $i \in [k-2]$, covers an endpoint of $h$ or $v$ or both. As (i) there are $k-2$ choices for $i$ and (ii) $h$ and $v$ together have four endpoints, we can divide Type 2 further into $4(k-2)$ ``sub-types'': e.g., in subtype 1 (resp., 2), $r_1$ covers the left (resp., right) endpoint of $h$, in subtype 3 (resp., 4), $r_1$ covers the bottom (resp., top) endpoint of $v$, in subtype 5 (resp., 6), $r_2$ covers the left (resp., right) endpoint of $h$, etc. It is possible for the result tuple to belong to multiple sub-types simultaneously.
-
-\vgap 
-%
-% Our subsequent discussion will proceed as follows.  Section~\ref{sec:hv:type1} will explain how to produce all the result tuples of Type 1. Section~\ref{sec:hv:type2} will explain how to produce the result tuples $(r_1, ..., r_{k-2}, h, v)$ of a particular sub-type of Type 2: those tuples where $r_1$ covers the left endpoint of $h$. Other sub-types can be computed using the same algorithm, by symmetry.
-%
-% \vgap
-%
-% A remark is in order about duplicate removal. A result tuple of Type 2 can belong to, in the worst case, all the $4(k-2)$ sub-types. Hence, by considering each sub-type separately, we may see the same result tuple multiple times (precisely, up to $4(k-2)$ times) in the whole algorithm. However, this does {\em not} mean that the tuple needs to be {\em reported} multiple times. Whenever a type-2 result tuple is found, we can immediately decide in $O(k)$ time all the sub-types it belongs to. To avoid outputting the tuple more than once, we can enforce a policy to designate a specific sub-type for outputting. One such policy is the following: among all sub-types that the tuple belongs to, identify the one with the smallest sub-type number $t$ (an integer from 1 to $4(k-2)$); report the tuple only when we are computing the particular sub-type $t$.
-
 \begin{figure}
     \begin{tabular}{cc}
         \includegraphics[height=27mm]{./artwork/type1} &
@@ -495,6 +485,21 @@ conclude that $\J_1$ (the set of type-1 result tuples) can be computed in $F_{k-
 
 \section{H-V $k$-SJ: Result Tuples of Type 2} \label{sec:hv:type2}
 
+Still, denote by $R_1, ..., R_{k-2}, H$, and $V$ the input sets of the H-V $k$-SJ problem. This section will explain how to find the result tuples of Type 2 as defined in Section~\ref{sec:hv}.
+
+\vgap
+
+As mentioned before, for a $(k-2)$-tuple $(r_1, ..., r_{k-2}, h, v)$ of this type, a rectangle $r_i$, for some $i \in [k-2]$, covers an endpoint of $h$ or $v$ or both. As (i) there are $k-2$ choices for $i$ and (ii) $h$ and $v$ together have four endpoints, we can divide Type 2 further into $4(k-2)$ ``sub-types'': e.g., in subtype 1 (resp., 2), $r_1$ covers the left (resp., right) endpoint of $h$, in subtype 3 (resp., 4), $r_1$ covers the bottom (resp., top) endpoint of $v$, in subtype 5 (resp., 6), $r_2$ covers the left (resp., right) endpoint of $h$, etc. It is possible for the result tuple to belong to multiple sub-types simultaneously.
+
+\vgap 
+
+Next, we will focus on producing the result tuples of a particular sub-type: those tuples $(r_1, ..., r_{k-2}, h, v)$ where $r_1$ covers the left endpoint of $h$ --- let us denote this set of result tuples as $\J_2$. Other sub-types can be computed using the same algorithm, by symmetry.
+
+\vgap
+
+A remark is in order about duplicate removal. By finding each sub-type separately, we may see the same result tuple multiple times (precisely, up to $4(k-2)$ times) in the whole algorithm. However, this does not mean that the tuple needs to be {\em reported} multiple times. Whenever a type-2 result tuple is found, we can immediately decide in $O(k)$ time all the sub-types it belongs to. To avoid outputting the tuple more than once, we can enforce a policy to designate a specific sub-type for outputting. One such policy is the following: among all sub-types that the tuple belongs to, identify the one with the smallest sub-type number $t$ (an integer from 1 to $4(k-2)$); report the tuple only when we are computing the particular sub-type $t$.
+
+\extraspacing {\bf Set $\bm{H'}$.}
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
