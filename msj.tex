@@ -237,7 +237,11 @@ Let $R$ be a set of rectangles. Given a horizontal segment, we define
     \label{eqn:contained}
 }
 
-Given a rectangle $r = [x_1, x_2] \times [y_1, y_2]$, we define $\xleft(r) = x_1$, $\xright(r) = x_2$, $\ybot(r) = y_1$, and $\ytop(r) = y_2$. Consider a $k$-tuple $\bm{t} = (r_1, r_2, ..., r_k)$ where $k \ge 2$, and each $\bm{t}[i] = r_i$ ($i \le [k]$) is a rectangle. We use $B_\bm{t}$ to represent $\bigcap_{i=1}^t r_i$, namely, the intersection of the rectangles in $\bm{t}$. Note that $B_\bm{t}$ is a rectangle itself. We define:
+Given a rectangle $r = [x_1, x_2] \times [y_1, y_2]$, we define $\xleft(r) = x_1$, $\xright(r) = x_2$, $\ybot(r) = y_1$, and $\ytop(r) = y_2$. Consider a $k$-tuple $\bm{t} = (r_1, r_2, ..., r_k)$ where $k \ge 2$, and each $\bm{t}[i] = r_i$ ($i \le [k]$) is a rectangle. We define 
+\myeqn{
+    B_\bm{t} &=& \cap_{i=1}^t r_i \label{eqn:B_t}
+}
+namely, $B_\bm{t}$ is the intersection of the rectangles in $\bm{t}$ (note: $B_\bm{t}$ is a rectangle itself). Let us introduce:
 \myitems{
     \item $\gleft(\bm{t})$ as the rectangle $r_i$, $i \in [k]$, satisfying $\xleft(r_i)$ $= \xleft(B_\bm{t})$. In case multiple values in $[k]$ fulfill the condition, let $i$ be the smallest of such values.
 
@@ -507,7 +511,11 @@ Now, solve a $(k-1)$-SJ problem with $R_1, ..., R_{k-3}, H', V$ as the input usi
 
 \yf{example}
 
-\extraspacing {\bf Generating $\bm{\J_2}$.} Take any $(k-1)$-tuple $\bm{t} = (r_1, ..., r_{k-3}, h', v) \in \J(R_1, ..., R_{k-3}, H', V)$. Note that $\bm{t}[k-2] = h'$ must intersect with $v$, because $\bm{t}$ is a result tuple of the $(k-1)$-SJ on $R_1, ..., R_{k-3}, H', V$. Suppose $h = [x_1, x_2] \times y$ and $p = (x, y)$ is the intersection point between $h$ and $v$, we define the {\em effective horizontal segment} of $\bm{t}$ as the horizontal segment $h' = [x_1, x] \times y$.
+\extraspacing {\bf Generating $\bm{\J_2}$.} Take any $(k-1)$-tuple $\bm{t} = (r_1, ..., r_{k-3}, h', v) \in \J(R_1, ..., R_{k-3}, H', V)$. Observe that $B_\bm{t}$ --- defined in \eqref{eqn:B_t} --- is a point (due to $h'$ and $v$). Suppose $h' = [x_1, x_2] \times y$ and $B_\bm{t} = (x, y)$, we define the {\em effective horizontal segment} of $\bm{t}$ as the horizontal segment $[x_1, x] \times y$. 
+
+\vgap
+
+Define
 \myeqn{
     \contained_{R_{k-2}}(\bm{t}) &=& \{r \in R_{k-2} \mid \text{ the effective horizontal } \nn \\
     && \text{segment of $\bm{t}$ is contained in $r$}   \}
@@ -517,7 +525,7 @@ The above should not be confused with \eqref{eqn:contained}, where the ``$\conta
 
 \vgap 
 
-We prove the next lemma in Appendix~\ref{app:hv}.
+We prove the next lemma in Appendix~\ref{app:hv} (to avoid confusion, the reader may want to be reminded that, for each $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$, $\bm{t}[k-2]$ is a horizontal segment and $\bm{t}[k-1]$ is a vertical segment).
 
 \begin{lemma} \label{lmm:hv:type2:properties}
     All the following statements are true:
@@ -551,7 +559,7 @@ For each segment $h' \in H'$, define
     \minleft(h') = \min_{\substack{\text{$\bm{t} \in \J(R_1, ..., R_{k-3}, H', V):$}\\ \text{$\bm{t}[k-2] = h'$}}} \text{$x$-coordinate of $\bm{t}[k-1]$}. 
     \label{eqn:minleft}
 }
-We reminder the reader that, in the above equation, $\bm{t}[k-2]$ is a horizontal segment and $\bm{t}[k-1]$ is a vertical segment. We set $\minleft(h')$ to $\infty$, if no $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$ has $h'$ in its field $\bm{t}[k-2]$. When $\minleft(h') \ne \infty$, assuming $h' = [x_1, x_2] \times y$, we introduce a horizontal segment
+We set $\minleft(h')$ to $\infty$, if no $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$ has $h'$ in its field $\bm{t}[k-2]$. When $\minleft(h') \ne \infty$, assuming $h' = [x_1, x_2] \times y$, we introduce a horizontal segment
 \myeqn{
     h^* &=& [x_1, \minleft(h')] \times y. \nn
 }
@@ -591,9 +599,8 @@ The proof can be found in Appendix~\ref{app:hv}.
 Finding the $\contained_{R_{k-2}}(h^*)$ sets of all $h^* \in H^*$ is an instance of the find-all-sorted version of Problem $\mathscr{E}$ (with $H^*$ and $R_{k-2}$ as the input). The cost is $O(n \log n + \out)$ according statement (1) of Lemma~\ref{lmm:hv:type1:cross-r*} and the discussion in Section~\ref{sec:bricks}. Note that, for each $\contained_{R_{k-2}}(h^*)$ computed, the rectangles $r$ therein have been sorted in descending order of $\xright(r)$.
 
 
-\extraspacing {\bf Computing the ``$\bm{\contained_{R_{k-2}}(t)}$'' Sets.} We are ready to produce $\contained_{R_{k-2}}(h^*)$, defined in \eqref{eqn:type2:contained-t}, for any $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$, based on Statement (2) of Lemma~\ref{lmm:hv:type2:contained-h*}. First, fetch the (already computed) minimal segment $h^*$ of $\bm{t}[k-2]$ in $O(1)$ time. Then, scan the rectangles $r$ of $\contained_{R_{k-2}}(h^*)$ in descending order of $\xright(r)$. For each $r$ scanned, check whether $r \in 
-\contained_{R_{k-2}}(\bm{t})$, or equivalently, whether $r$ covers the intersection point between $\bm{t}[k-2]$ and $\bm{t}[k-1]$; this takes $O(1)$ time. Abort the scan as soon as $r \notin 
-\contained_{R_{k-2}}(\bm{t})$. This way, we compute $\contained_{R_{k-2}}(t)$ in $O(k + |\contained_{R_{k-2}}(t)|)$ time. Doing so for all $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$ takes $O(k \cdot |\J| + \sum_\bm{t} |\contained_{R_{k-2}}(t)|) = O(k \cdot \out)$ time, where the derivation used Lemma~\ref{lmm:hv:type2:recur-output} and statement (3) of Lemma~\ref{lmm:hv:type2:properties}.
+\extraspacing {\bf Computing the ``$\bm{\contained_{R_{k-2}}(t)}$'' Sets.} We are ready to produce $\contained_{R_{k-2}}(h^*)$, defined in \eqref{eqn:type2:contained-t}, for any $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$, based on Statement (2) of Lemma~\ref{lmm:hv:type2:contained-h*}. First, fetch the (already computed) minimal segment $h^*$ of $\bm{t}[k-2]$ in $O(1)$ time. Then, scan the rectangles $r$ of $\contained_{R_{k-2}}(h^*)$ in descending order of $\xright(r)$. For each $r$ scanned, check whether $r \in \contained_{R_{k-2}}(\bm{t})$, or equivalently, whether $r$ covers $B_\bm{t}$ (recall that $B_\bm{t}$ is a point); the cost for such a check is $O(1)$. Abort the scan as soon as $r \notin 
+\contained_{R_{k-2}}(\bm{t})$. This way, $\contained_{R_{k-2}}(t)$ can be decided in $O(k + |\contained_{R_{k-2}}(t)|)$ time. Doing so for all $\bm{t} \in \J(R_1, ..., R_{k-3},$ $H', V)$ takes $O(k \cdot |\J| + \sum_\bm{t} |\contained_{R_{k-2}}(t)|) = O(k \cdot \out)$ time, where the derivation used Lemma~\ref{lmm:hv:type2:recur-output} and statement (3) of Lemma~\ref{lmm:hv:type2:properties}.
 
 
 
