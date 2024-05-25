@@ -497,7 +497,7 @@ The construction is an instance of Problem $\mathscr{C}$ (with $H$ and $R_{k-2}$
 
 \vgap 
 
-Now, solve a $(k-1)$-SJ problem with $R_1, ..., R_{k-3}, H', V$ as the input using the algorithm $\A$ supplied (see Lemma~\ref{lmm:hv}). Let $\J(R_1, ...,$ $R_{k-3}, H', V)$ represent the result of this $(k-1)$-SJ. As the $(k-1)$-SJ has an input size at most $n$, given the lemma below (which is proved in Appendix~\ref{app:hv}), we assert that $\J(R_1, ..., R_{k-3}, H', V)$ can be computed in $F_{k-1}(n, \out)$ time.
+Now, solve a $(k-1)$-SJ problem with $R_1, ..., R_{k-3}, H', V$ as the input using the algorithm $\A$ supplied (see Lemma~\ref{lmm:hv}). Let $\J(R_1, ...,$ $R_{k-3}, H', V)$ represent the result of this $(k-1)$-SJ, whose input size is at most $n$. Given the lemma below (which is proved in Appendix~\ref{app:hv}), we assert that $\J(R_1, ..., R_{k-3}, H', V)$ can be computed in $F_{k-1}(n, \out)$ time.
 
 \begin{lemma} \label{lmm:hv:type2:recur-output}
     $|\J(R_1, ..., R_{k-3}, H', V)| \le \out$.
