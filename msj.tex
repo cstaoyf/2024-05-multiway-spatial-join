@@ -502,17 +502,17 @@ The construction requires solving an instance of Problem $\mathscr{C}$, which ta
 
 \vgap 
 
-We now solve a $(k-1)$-SJ problem with $R_1, ..., R_{k-1}, H', V$ as the input using the algorithm $\A$ supplied (see Lemma~\ref{lmm:hv}). This $(k-1)$-SJ has an input size at most $n$, and let us represent its result as $\J(R_1, ..., R_{k-1}, H', V)$. We prove in Appendix~\ref{app:hv}:
+We now solve a $(k-1)$-SJ problem with $R_1, ..., R_{k-3}, H', V$ as the input using the algorithm $\A$ supplied (see Lemma~\ref{lmm:hv}). This $(k-1)$-SJ has an input size at most $n$, and let us represent its result as $\J(R_1, ..., R_{k-3}, H', V)$. We prove in Appendix~\ref{app:hv}:
 
 \begin{lemma} \label{lmm:hv:type2:recur-output}
-    $|\J(R_1, ..., R_{k-1}, H', V)| \le \out$.
+    $|\J(R_1, ..., R_{k-3}, H', V)| \le \out$.
 \end{lemma}
 
 The $(k-1)$-SJ can be settled in $F_{k-1}(n, \out)$ time.
 
 \yf{example}
 
-\extraspacing {\bf Generating $\bm{\J^*}$.}
+\extraspacing {\bf Generating $\bm{\J_2}$.} Take any $(k-1)$-tuple $\bm{t} = (r_1, ..., r_{k-3}, h, v)$.
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
