@@ -388,8 +388,14 @@ The prefix ``d-'' stands for ``double''. These sets have important properties as
     \myenums{
         \item Consider any $(k-2)$-tuple $\bm{t} \in \J(R_1', R'_2, ..., R'_{k-2})$. Let $r_i$ ($i$ $\in$  $[k-2]$) be the full rectangle of $\bm{t}[i]$. Then, for any $h \in \dcross_H(\bm{t})$ and any $v \in \dcross_V(\bm{t})$, the $k$-tuple $(r_1, r_2,$ $...,$ $r_{k-2}, h, v)$ must belong to $\J(R_1, ..., R_{k-2}, H, V)$.
         
-        \item Consider any a $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v) \in \J_1$. Let $r'_i$ ($i \in [k-2])$ be the trimmed rectangle of $r_i$, and set $\bm{t} = (r'_1, r'_2, ...,$ $r'_{k-2})$. Then, we must have $\bm{t} \in \J(R_1', R'_2, ..., R'_{k-2})$, $h \in \dcross_H(\bm{t})$, and $v \in \dcross_V(\bm{t})$. 
-
+        \item Consider any a $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v) \in \J_1$. Let $r'_i$ ($i \in [k-2])$ be the trimmed rectangle of $r_i$, and set $\bm{t} = (r'_1, r'_2, ...,$ $r'_{k-2})$. Then, we must have 
+        \myitems{
+            \item $\bm{t} \in \J(R_1', R'_2, ..., R'_{k-2})$;
+            \item $h \in \dcross_H(\bm{t})$ and $v \in \dcross_V(\bm{t})$. 
+        }
+        
+        \vspace{2mm}
+        
         \item $\sum_{\bm{t}} |\dcross_H(\bm{t})| \le \out$ and $\sum_{\bm{t}} |\dcross_V(\bm{t})| \le \out$.
     }
 \end{lemma}
@@ -515,18 +521,7 @@ We prove the next lemma in Appendix~\ref{app:hv}.
 \begin{lemma} \label{lmm:hv:type2:properties}
     All the following statements are true:
     \myenums{
-        \item For each $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$, we have:
-        
-        \vspace{2mm}
-        
-        \myenums{
-            \item $\contained_{R_{k-2}}(\bm{t}) \ne \emptyset$.
-
-            \item Denote by $h$ the full segment of $\bm{t}[k-2]$. 
-            For any $r \in \contained_{R_{k-2}}(\bm{t})$, the $k$-tuple $(\bm{t}[1], ..., \bm{t}[k-3], r, h, \bm{t}[k-1])$ belongs to $\J_2$.
-        }
-        
-        \vspace{2mm}
+        \item Consider any $(k-1)$-tuple $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$. Denote by $h$ the full segment of $\bm{t}[k-2]$. Then, for any $r \in \contained_{R_{k-2}}(\bm{t})$, the $k$-tuple $(\bm{t}[1], ..., \bm{t}[k-3], r, h, \bm{t}[k-1])$ must belong to $\J_2$.
         
         \item Consider any $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v) \in \J_2$. Let $h'$ be the trimmed segment of $h$, and set $\bm{t} = (r_1, ..., r_{k-3}, h', v)$. Then, $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$ and $h' \in \contained_{R_{k-2}}(\bm{t})$.
         
