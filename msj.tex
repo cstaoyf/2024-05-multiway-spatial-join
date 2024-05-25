@@ -513,7 +513,7 @@ The $(k-1)$-SJ can be settled in $F_{k-1}(n, \out)$ time.
 
 \yf{example}
 
-\extraspacing {\bf Generating $\bm{\J_2}$.} Take any $(k-1)$-tuple $\bm{t} = (r_1, ..., r_{k-3}, h', v) \in \J(R_1, ..., R_{k-3}, H', V)$. Note that $\bm{t}[k-2] = h'$ must intersect with $v$ (because $\bm{t}$ is a result tuple of the $(k-1)$-SJ). If $p$ is the intersection point between $h$ and $v$, we define the {\em effective horizontal segment} of $\bm{t}$ as the horizontal segment from the left endpoint of $h'$ to $p$.
+\extraspacing {\bf Generating $\bm{\J_2}$.} Take any $(k-1)$-tuple $\bm{t} = (r_1, ..., r_{k-3}, h', v) \in \J(R_1, ..., R_{k-3}, H', V)$. Note that $\bm{t}[k-2] = h'$ must intersect with $v$ as $\bm{t}$ is a result tuple of the $(k-1)$-SJ. If $p$ is the intersection point between $h$ and $v$, we define the {\em effective horizontal segment} of $\bm{t}$ as the horizontal segment from the left endpoint of $h'$ to $p$.
 \myeqn{
     \contained_{R_{k-2}}(\bm{t}) &=& \{r_{k-2} \in R_{k-2} \mid \text{ $r_{k-2}$ contains the effective} \nn \\
     && \text{horizontal segment of $\bm{t}$}   \}
@@ -536,7 +536,7 @@ We prove the next lemma in Appendix~\ref{app:hv}.
             \item $\contained_{R_{k-2}}(\bm{t}) \ne \emptyset$.
 
             \item Denote by $h$ the full segment of $\bm{t}[k-2]$. 
-            For any $r_{k-2} \in \contained_{R_{k-2}}(\bm{t})$, the $k$-tuple $(\bm{t}[1], ..., \bm{t}[k-3], r_{k-2}, h, \bm{t}[k])$ belongs to $\J_2$.
+            For any $r \in \contained_{R_{k-2}}(\bm{t})$, the $k$-tuple $(\bm{t}[1], ..., \bm{t}[k-3], r, h, \bm{t}[k])$ belongs to $\J_2$.
         }
         
         \vspace{2mm}
@@ -556,12 +556,12 @@ Equipped with Lemma~\ref{lmm:hv:type1:properties}, we generate our target $\J_2$
     \> 1.\> $\J_2 = \emptyset$ \\
     \> 2.\> {\bf for} each $(k-2)$-tuple $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$ {\bf do} \\
     \> 3.\>\> $h \leftarrow$ the full segment of $\bm{t}[k-2]$ \\
-    \> 4.\>\> {\bf for} each $(h, v) \in \dcross_H(\bm{t}) \times \dcross_V(\bm{t})$ {\bf do} \\
-    \> 5.\>\>\> add $(r_1, ..., r_{k-2}, h, v)$ to $\J^*$
+    \> 4.\>\> {\bf for} each $r \in \contained_{R_{k-2}}(\bm{t})$ {\bf do} \\
+    \> 5.\>\>\> add $(\bm{t}[1], ..., \bm{t}[k-3], r, h, \bm{t}[k])$ to $\J^*$
 }
 
 
-By statements (b) and (2) of Lemma~\ref{lmm:hv:type1:properties}, the set $\J^*$ thus computed indeed satisfies \eqref{eqn:hv:type1:J*}. Furthermore, if we are given $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$ for each $\bm{t}$, statement (a) of Lemma~\ref{lmm:hv:type1:properties} assures us that the above algorithm runs in $O(1 + k \cdot |\J^*|) = O(1 + k \cdot \out)$ time.
+%By statements (b) and (2) of Lemma~\ref{lmm:hv:type1:properties}, the set $\J_2$ thus produced is indeed what we aim to compute. Furthermore, if we are given $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$ for each $\bm{t}$, statement (a) of Lemma~\ref{lmm:hv:type1:properties} assures us that the above algorithm runs in $O(1 + k \cdot |\J^*|) = O(1 + k \cdot \out)$ time.
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
