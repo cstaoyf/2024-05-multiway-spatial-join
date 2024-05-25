@@ -41,6 +41,7 @@
 \def\ybot{\mathrm{bot}}
 \def\ytop{\mathrm{top}}
 \def\maxtop{\mathrm{maxtop}}
+\def\minleft{\mathrm{minleft}}
 \def\gleft{\mathrm{left\text{-}guard}}
 \def\gbot{\mathrm{bot\text{-}guard}}
 \def\cross{\mathrm{cross}}
@@ -263,7 +264,7 @@ In the {\em reporting version} of the problem, the goal is to output, for each p
 In the {\em find-all-sorted} version of the problem, the goal is to report, for each rectangle $r \in R$, the entire $\cross_H(r)$ sorted by y-coordinate. Formally, if $\cross_H(r) = \set{h_1, h_2, ..., h_z}$ (for some $z \ge 1$), we output $(r: h_1, h_2, ..., h_z)$, provided that $y_i \ge y_{i-1}$ for each $i \in [2, z]$ where $y_i$ (resp., $y_{i-1}$) is the y-projection of $h_i$ (resp., $h_{i-1}$). In the example of Figure~\ref{fig:probs}d, the output is $\set{(r_1: h_3, h_2), (r_2: h_2, h_1)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n + \out)$ time where $\out$ is the number of pairs $(h, r) \in H \times R$ such that $h$ crosses $r$.
 
 
-\extraspacing {\bf Problem $\bm{\mathscr{E}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each segment $h \in H$, the set $\contained_R(h)$ (defined in \eqref{eqn:contained}), where the rectangles are sorted by their right boundaries. Formally, if $r_1, r_2, ..., r_z$ (for some $z \ge 1$) are all the rectangles in $\contained_R(h)$, we output $(h: r_1, r_2, ..., r_z)$, provided that $\xright(r_i) \ge \xright(r_{i-1})$ for each $i \in [2, z]$. Figure~\ref{fig:probs}e gives an example where $H = \set{h_1, h_2, h_3}$ and $R = \set{r_1, r_2, r_3}$; the output is $\set{(h_1: r_2, r_1), (h_2: r_2, r_3)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n + \out)$ time where $n = |H| + |R|$ and $\out$ is the number of pairs $(h, r) \in H \times R$ such that $r$ contains $h$.
+\extraspacing {\bf Problem $\bm{\mathscr{E}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles, all in 2D space. The goal is to report, for each segment $h \in H$, the set $\contained_R(h)$ --- defined in \eqref{eqn:contained} --- where the rectangles are sorted by their right boundaries. Formally, if $r_1, r_2, ..., r_z$ (for some $z \ge 1$) are all the rectangles in $\contained_R(h)$, we output $(h: r_1, r_2, ..., r_z)$, provided that $\xright(r_i) \ge \xright(r_{i-1})$ for each $i \in [2, z]$. Figure~\ref{fig:probs}e gives an example where $H = \set{h_1, h_2, h_3}$ and $R = \set{r_1, r_2, r_3}$; the output is $\set{(h_1: r_2, r_1), (h_2: r_2, r_3)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n + \out)$ time where $n = |H| + |R|$ and $\out$ is the number of pairs $(h, r) \in H \times R$ such that $r$ contains $h$.
 
 
 \section{The Core: H-V Multiway Spatial Joins} \label{sec:hv}
@@ -446,7 +447,7 @@ In Appendix~\ref{app:hv}, we show how to compute produce $R^*_1, ..., R^*_{k-2}$
 
 \vgap 
 
-We are particularly concerned with the sets $\cross_H(r^*)$ of the rectangles $r^*$ in $R^*_i$, where $\cross_H(r^*)$ --- defined in \eqref{eqn:cross} --- is the set of segments in $H$ crossing $r^*$. The following lemma, proven in Appendix~\ref{app:hv}, presents some useful properties for these sets. 
+Our focus lies specifically on the sets $\cross_H(r^*)$ of the rectangles $r^*$ in $R^*_i$, where $\cross_H(r^*)$ --- defined in \eqref{eqn:cross} --- is the set of segments in $H$ crossing $r^*$. The following lemma, proven in Appendix~\ref{app:hv}, presents some useful properties of these sets. 
 
 \begin{lemma} \label{lmm:hv:type1:cross-r*}
     Both statements below are true: 
@@ -543,6 +544,53 @@ Equipped with Lemma~\ref{lmm:hv:type1:properties}, we generate our target $\J_2$
 
 The correctness of the algorithm follows from statements (1) and (2) of Lemma~\ref{lmm:hv:type2:properties}. Furthermore, if we are given $\contained_{R_{k-2}}(\bm{t})$ for each $\bm{t}$, statement (3) of assures us that the algorithm runs in $O(1 + |\J(R_1, ..., R_{k-3}, H', V)| + k \sum_\bm{t} |\contained_{R_{k-2}}(\bm{t})|) = O(1 + k \cdot \out)$ time, where the derivation used Lemma~\ref{lmm:hv:type2:recur-output} and statement (3) of Lemma~\ref{lmm:hv:type2:properties}.
 
+
+\extraspacing {\bf Set $\bm{H^*}$.} Fix any $i \in [k-2]$. For each segment $h' \in H'$, define
+\myeqn{
+    \minleft(h') &=& \min_{v \in V: h' \cap v \ne \emptyset} \text{$x$-coordinate of $v$}. 
+}
+We set $\minleft(h')$ to $\infty$, if $h'$ intersects no segment in $V$. When $\minleft(h') \ne \infty$, assuming $h' = [x_1, x_2] \times y$, we introduce a horizontal segment
+\myeqn{
+    h^* &=& [x_1, \minleft(h')] \times y. \nn
+}
+and call it the {\em minimal segment} of $r'$.
+
+\vgap
+
+\yf{example}
+
+\vgap 
+
+Next, we construct from $H'$ a new set of rectangles: 
+\myeqn{
+    H^* = \set{h^* \mid h' \in H' \text{ and its minimal segment $h^*$ exists}}. \label{eqn:hv:type2:H*}
+}
+Computing $H^*$ from $H'$ and $V$ is an instance of Problem $\mathscr{B}$, and can be achieved in $O(n \log n)$ as per the discussion from Section~\ref{sec:bricks}. 
+
+\vgap 
+
+We will utilize the sets $\contained_{R_{k-2}}(h^*)$ of the segments $h^*$ in $H^*$, where $\contained_{R_{k-2}}(h^*)$ --- defined in \eqref{eqn:contained} --- is the set of rectangles in $R_{k-2}$ containing $h^*$. The next lemma is proven in Appendix~\ref{app:hv}. 
+
+\begin{lemma} \label{lmm:hv:type2:contained-h*}
+    Both statements below are true: 
+    \myenums{
+        \item $\sum_{i=1}^k \sum_{r^* \in R^*_i} |\cross_H(r^*)| \le \out$.
+        
+        \item Consider any tuple $\bm{t} \in \J(R'_1, ..., R'_{k-2})$. Let $r' = \gbot(\bm{t})$ and $r^*$ be the top-sliced rectangle of $r'$. Then, we have $\dcross_H(\bm{t})$ $\subseteq \cross_H(r^*)$. Furthermore, if the (horizontal) segments of $\cross_H(r^*)$ are sorted in ascending order of y-coordinate, then $\dcross_H(\bm{t})$ includes a prefix of the sorted order.
+    }
+\end{lemma}
+
+\yf{example}
+
+Finding the $\cross_H(r^*)$ sets of all $r^* \in R^*_i$ is an instance of the find-all-sorted version of Problem $\mathscr{D}$. Statement (1) of Lemma~\ref{lmm:hv:type1:cross-r*}, as well as the discussion in Section~\ref{sec:bricks}, assures us that the total time to do so for all $R^*_1, ..., R^*_{k-2}$ is bounded by $O(n \log n + \out)$. Note that, for each $\cross_H(r^*)$ computed, the (horizontal) segments therein has been sorted in ascending order of y-coordinate.
+
+
+\extraspacing {\bf Computing the ``d-cross'' Sets.} We are ready to compute $\dcross_H(\bm{t})$, defined in \eqref{eqn:dcross-H}, for any $\bm{t} \in \J(R'_1, ..., R'_{k-2})$, thanks to Statement (2) of Lemma~\ref{lmm:hv:type1:cross-r*}. First, compute $B_\bm{t}$, obtain the rectangle $r' = \gbot(\bm{t})$, and fetch the (already computed) top-sliced rectangle $r^*$ of $r'$; these steps require $O(k)$ time. Then, scan the segments in $\cross_H(r^*)$ in ascending order of their y-coordinates. For each segment $h$ scanned, check whether $h$ belongs to $\dcross_H(\bm{t})$, namely, whether $h$ crosses $B_\bm{t}$ (the reader can verify that $h$ must cross $\gbot(\bm{t})$); this can be done in constant time. Abort the scan as soon as $h \notin \dcross_H(\bm{t})$. This way, we produce $\dcross_H(\bm{t})$ in $O(k + |\dcross_H(\bm{t})|)$ time. Doing so for all $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ takes $O(k \cdot |\J| + \sum_\bm{t} |\dcross_H(t)|) = O(k \cdot \out)$ time, where the derivation used Lemma~\ref{lmm:hv:type1:recur-output} and statement (3) of Lemma~\ref{lmm:hv:type1:properties}.
+
+\vgap 
+
+We conclude that $\J_1$ (the set of type-1 result tuples) can be computed in $F_{k-2}(n, \out) + O(n \log n +  k \cdot \out)$ time.
+
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
 
@@ -576,6 +624,10 @@ The correctness of the algorithm follows from statements (1) and (2) of Lemma~\r
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:cross-r*}.}
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type2:recur-output}.}
+
+\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type2:properties}.}
+
+\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type2:contained-h*}.}
 
 \section{Solving the $k$-SJ Problem} \label{app:ksj}
 
