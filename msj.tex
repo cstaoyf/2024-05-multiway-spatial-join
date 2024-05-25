@@ -524,7 +524,7 @@ We prove the next lemma in Appendix~\ref{app:hv}.
     \myenums{
         \item Consider any $(k-1)$-tuple $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$. Denote by $h$ the full segment of $\bm{t}[k-2]$. Then, for any $r \in \contained_{R_{k-2}}(\bm{t})$, the $k$-tuple $(\bm{t}[1], ..., \bm{t}[k-3], r, h, \bm{t}[k-1])$ must belong to $\J_2$.
         
-        \item Consider any $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v) \in \J_2$. Let $h'$ be the trimmed segment of $h$, and set $\bm{t} = (r_1, ..., r_{k-3}, h', v)$. Then, $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$ and $h' \in \contained_{R_{k-2}}(\bm{t})$.
+        \item Consider any $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in \J_2$. Let $h'$ be the trimmed segment of $h$, and set $\bm{t} = (r_1, ..., r_{k-3}, h', v)$. Then, $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$ and $h' \in \contained_{R_{k-2}}(\bm{t})$.
         
         \item $\sum_{\bm{t}} |\contained_{R_{k-2}}(\bm{t})| \le \out$.
     }
@@ -545,11 +545,13 @@ Equipped with Lemma~\ref{lmm:hv:type1:properties}, we generate our target $\J_2$
 The correctness of the algorithm follows from statements (1) and (2) of Lemma~\ref{lmm:hv:type2:properties}. Furthermore, if we are given $\contained_{R_{k-2}}(\bm{t})$ for each $\bm{t}$, statement (3) of assures us that the algorithm runs in $O(1 + |\J(R_1, ..., R_{k-3}, H', V)| + k \sum_\bm{t} |\contained_{R_{k-2}}(\bm{t})|) = O(1 + k \cdot \out)$ time, where the derivation used Lemma~\ref{lmm:hv:type2:recur-output} and statement (3) of Lemma~\ref{lmm:hv:type2:properties}.
 
 
-\extraspacing {\bf Set $\bm{H^*}$.} Fix any $i \in [k-2]$. For each segment $h' \in H'$, define
+\extraspacing {\bf Set $\bm{H^*}$.} 
+For each segment $h' \in H'$, define
 \myeqn{
-    \minleft(h') &=& \min_{v \in V: h' \cap v \ne \emptyset} \text{$x$-coordinate of $v$}. 
+    \minleft(h') = \min_{\substack{\text{$\bm{t} \in \J(R_1, ..., R_{k-3}, H', V):$}\\ \text{$\bm{t}[k-2] = h'$}}} \text{$x$-coordinate of $\bm{t}[k-1]$}. 
+    \label{eqn:minleft}
 }
-We set $\minleft(h')$ to $\infty$, if $h'$ intersects no segment in $V$. When $\minleft(h') \ne \infty$, assuming $h' = [x_1, x_2] \times y$, we introduce a horizontal segment
+We reminder the reader that, in the above equation, $\bm{t}[k-2]$ is a horizontal segment and $\bm{t}[k-1]$ is a vertical segment. We set $\minleft(h')$ to $\infty$, if no $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$ has $h'$ in its field $\bm{t}[k-2]$. When $\minleft(h') \ne \infty$, assuming $h' = [x_1, x_2] \times y$, we introduce a horizontal segment
 \myeqn{
     h^* &=& [x_1, \minleft(h')] \times y. \nn
 }
