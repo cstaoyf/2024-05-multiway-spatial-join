@@ -514,8 +514,8 @@ The $(k-1)$-SJ can be settled in $F_{k-1}(n, \out)$ time.
 
 \extraspacing {\bf Generating $\bm{\J_2}$.} Take any $(k-1)$-tuple $\bm{t} = (r_1, ..., r_{k-3}, h', v) \in \J(R_1, ..., R_{k-3}, H', V)$. Note that $\bm{t}[k-2] = h'$ must intersect with $v$ as $\bm{t}$ is a result tuple of the $(k-1)$-SJ. If $p$ is the intersection point between $h$ and $v$, we define the {\em effective horizontal segment} of $\bm{t}$ as the horizontal segment from the left endpoint of $h'$ to $p$.
 \myeqn{
-    \contained_{R_{k-2}}(\bm{t}) &=& \{r_{k-2} \in R_{k-2} \mid \text{ $r_{k-2}$ contains the effective} \nn \\
-    && \text{horizontal segment of $\bm{t}$}   \}
+    \contained_{R_{k-2}}(\bm{t}) &=& \{r_{k-2} \in R_{k-2} \mid \text{ the effective horizontal } \nn \\
+    && \text{segment of $\bm{t}$ is contained in $r_{k-2}$}   \}
     \nn
 }
 The above definition should not be confused with \eqref{eqn:contained}, where the $\contained$ function takes a horizontal segment as the input.
