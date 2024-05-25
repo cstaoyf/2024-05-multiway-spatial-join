@@ -512,7 +512,25 @@ The $(k-1)$-SJ can be settled in $F_{k-1}(n, \out)$ time.
 
 \yf{example}
 
-\extraspacing {\bf Generating $\bm{\J_2}$.} Take any $(k-1)$-tuple $\bm{t} = (r_1, ..., r_{k-3}, h, v)$.
+\extraspacing {\bf Generating $\bm{\J_2}$.} Take any $(k-1)$-tuple $\bm{t} = (r_1, ..., r_{k-3}, h', v) \in \J(R_1, ..., R_{k-3}, H', V)$. Note that $\bm{t}[k-1] = h'$ must intersect with $v$ (because $\bm{t}$ is a result tuple of the $(k-1)$-SJ). If $p$ is the intersection point between $h$ and $v$, we define the {\em effective horizontal segment} of $\bm{t}$ as the horizontal segment from the left endpoint of $h'$ to $p$.
+\myeqn{
+    \contained_{R_{k-2}}(\bm{t}) &=& \{r_{k-2} \in R_{k-2} \mid \text{ $r_{k-2}$ contains the effective} \nn \\
+    && \text{horizontal segment of $\bm{t}$}   \}
+    \nn
+}
+The above definition should not be confused with \eqref{eqn:contained}, where the $\contained$ function takes a horizontal segment as the input.
+
+\begin{lemma} \label{lmm:hv:type2:properties}
+    For each $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$, we have:
+        \myenums{
+            \item $\contained_{R_{k-2}}(\bm{t}) \ne \emptyset$.
+
+            \item Denote by $h$ the full segment of $\bm{t}[k-1]$. 
+            For any $r_{k-2} \in \contained_{R_{k-2}}(\bm{t})$, the $k$-tuple $(\bm{t}[1], ..., \bm{t}[k-3], r_{k-2}, h, \bm{t}[k])$ belongs to $\J(R_1, ..., R_{k-2}, H, V)$.
+
+            \item If the $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v)$ belongs to $\J_1$, then $h \in \dcross_H(\bm{t})$ and $v \in \dcross_V(\bm{t})$.
+        }
+\end{lemma}
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
