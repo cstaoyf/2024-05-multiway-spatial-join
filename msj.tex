@@ -507,7 +507,7 @@ Now, solve a $(k-1)$-SJ problem with $R_1, ..., R_{k-3}, H', V$ as the input usi
 
 \yf{example}
 
-\extraspacing {\bf Generating $\bm{\J_2}$.} Take any $(k-1)$-tuple $\bm{t} = (r_1, ..., r_{k-3}, h', v) \in \J(R_1, ..., R_{k-3}, H', V)$. Note that $\bm{t}[k-2] = h'$ must intersect with $v$, because $\bm{t}$ is a result tuple of the $(k-1)$-SJ on $R_1, ..., R_{k-3}, H', V$. If $p$ is the intersection point between $h$ and $v$, we define the {\em effective horizontal segment} of $\bm{t}$ as the horizontal segment from the left endpoint of $h'$ to $p$.
+\extraspacing {\bf Generating $\bm{\J_2}$.} Take any $(k-1)$-tuple $\bm{t} = (r_1, ..., r_{k-3}, h', v) \in \J(R_1, ..., R_{k-3}, H', V)$. Note that $\bm{t}[k-2] = h'$ must intersect with $v$, because $\bm{t}$ is a result tuple of the $(k-1)$-SJ on $R_1, ..., R_{k-3}, H', V$. Suppose $h = [x_1, x_2] \times y$ and $p = (x, y)$ is the intersection point between $h$ and $v$, we define the {\em effective horizontal segment} of $\bm{t}$ as the horizontal segment $h' = [x_1, x] \times y$.
 \myeqn{
     \contained_{R_{k-2}}(\bm{t}) &=& \{r_{k-2} \in R_{k-2} \mid \text{ the effective horizontal } \nn \\
     && \text{segment of $\bm{t}$ is contained in $r_{k-2}$}   \}
