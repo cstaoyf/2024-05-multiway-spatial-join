@@ -475,7 +475,7 @@ Still, denote by $R_1, ..., R_{k-2}, H$, and $V$ the input sets of the H-V $k$-S
 
 \vgap
 
-As mentioned before, for a result tuple $(r_1, ..., r_{k-2}, h, v)$ of this type, a rectangle $r_i$, for some $i \in [k-2]$, covers an endpoint of $h$ or $v$ or both. As (i) there are $k-2$ choices for $i$ and (ii) $h$ and $v$ together have four endpoints, we can divide Type 2 further into $4(k-2)$ ``sub-types'': e.g., in subtype 1 (resp., 2), $r_1$ covers the left (resp., right) endpoint of $h$, in subtype 3 (resp., 4), $r_1$ covers the bottom (resp., top) endpoint of $v$, in subtype 5 (resp., 6), $r_2$ covers the left (resp., right) endpoint of $h$, etc. It is possible for the result tuple to belong to multiple sub-types simultaneously.
+As mentioned before, for a result tuple $(r_1, ..., r_{k-2}, h, v)$ of this type, a rectangle $r_i$, for some $i \in [k-2]$, covers an endpoint of $h$ or $v$ or both. As (i) there are $k-2$ choices for $i$ and (ii) $h$ and $v$ together have four endpoints, we can divide Type 2 further into $4(k-2)$ ``sub-types'': in subtype 1 (resp., 2), $r_1$ covers the left (resp., right) endpoint of $h$, in subtype 3 (resp., 4), $r_1$ covers the bottom (resp., top) endpoint of $v$, in subtype 5 (resp., 6), $r_2$ covers the left (resp., right) endpoint of $h$, etc. It is possible for the result tuple to belong to multiple sub-types simultaneously.
 
 \vgap 
 
@@ -483,9 +483,9 @@ Next, we will focus on producing the result tuples of a particular sub-type: tho
 
 \vgap
 
-A remark is in order about duplicate removal. By finding each sub-type separately, we may see the same result tuple multiple times (precisely, up to $4(k-2)$ times) in the whole algorithm. However, this does not mean that the tuple needs to be {\em reported} multiple times. Whenever a type-2 result tuple is found, we can immediately decide in $O(k)$ time all the sub-types it belongs to. To avoid outputting the tuple more than once, we can enforce a policy to designate a specific sub-type for outputting. One such policy is the following: among all sub-types that the tuple belongs to, identify the one with the smallest sub-type number $t$ (an integer from 1 to $4(k-2)$); report the tuple only when we are computing the particular sub-type $t$.
+A remark is in order about duplicate removal. By finding each sub-type separately, we may see the same result tuple multiple times (precisely, up to $4(k-2)$ times) in the whole algorithm. However, this does not mean that the tuple needs to be reported multiple times. Whenever a type-2 result tuple is found, we can immediately decide in $O(k)$ time all the sub-types it belongs to. To avoid outputting the tuple more than once, we can enforce a policy to designate a specific sub-type for outputting. One such policy is the following: among all sub-types that the tuple belongs to, identify the one with the smallest sub-type number $t$ (an integer from 1 to $4(k-2)$); report the tuple only when we are computing the particular sub-type $t$.
 
-\extraspacing {\bf Set $\bm{H'}$.} For each horizontal segment $h = [x_1, x_2] \times y \in H$, we want to find the rightmost point $p$ on $h$, such that $p$ is covered by at least one rectangle $r_{k-2} \in R_{k-2}$. This point $p$ exists if and only if $h$ has at least one left-end covering rectangle in $R_{k-2}$. If $p$ exists and has coordinates $(x, y)$, we construct a segment $h' = [x_1, x] \times y$,  referred to as the {\em trimmed segment} of $h$; conversely, we call $h$ the {\em full segment} of $h'$. 
+\extraspacing {\bf Set $\bm{H'}$.} Take any horizontal segment $h = [x_1, x_2] \times y \in H$. Let $p$ be the rightmost point $p$ on $h$ satisfying the condition that at least one rectangle in $R_{k-2}$ covers $p$. This point $p$ exists if and only if $h$ has at least one left-end covering rectangle in $R_{k-2}$. If $p$ exists and has coordinates $(x, y)$, we refer to the segment $h' = [x_1, x] \times y$ as the {\em trimmed segment} of $h$; conversely, we call $h$ the {\em full segment} of $h'$. 
 
 \vgap 
 
@@ -493,7 +493,7 @@ Construct
 \myeqn{
     H' &=& \{h' \mid h \in H \text{ and its trimmed segment $h'$ exists} \}. \nn
 }
-The construction requires solving an instance of Problem $\mathscr{C}$ (with $H$ and $R_{k-2}$ as the input), which takes $O(n \log n)$ time based on the discussion in Section~\ref{sec:bricks}.
+The construction is an instance of Problem $\mathscr{C}$ (with $H$ and $R_{k-2}$ as the input) and finishes in $O(n \log n)$ time based on the discussion in Section~\ref{sec:bricks}.
 
 \vgap 
 
