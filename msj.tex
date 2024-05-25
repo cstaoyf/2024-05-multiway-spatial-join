@@ -593,7 +593,7 @@ Finding the $\contained_{R_{k-2}}(h^*)$ sets of all $h^* \in H^*$ is an instance
 
 \vgap 
 
-We conclude that $\J_1$ (the set of type-1 result tuples) can be computed in $F_{k-2}(n, \out) + O(n \log n +  k \cdot \out)$ time.
+We conclude that $\J_2$ (the set of type-2 result tuples $(r_1, ..., r_{k-2}, h, v)$ where $r_{k-2}$ covers the left endpoint of $h$) can be computed in $F_{k-1}(n, \out) + O(n \log n +  k \cdot \out)$ time. Remember that, to generate the entire type-2 result, we need to repeat the algorithm $4(k-2)$ times (one for each sub-type). The total running time is therefore $O(k) \cdot (F_{k-1}(n, \out) + O(n \log n +  k \cdot \out))$, as claimed in Lemma~\ref{lmm:hv}.
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
