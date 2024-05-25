@@ -289,7 +289,7 @@ We will establish:
     where $n$ (resp., $\out$) is the input (resp., output) size of the problem.
 \end{lemma}
 
-The part of the paper from this point onwards until the appendix will be devoted to proving the above lemma. This is the most challenging step in settling the general $k$-SJ problem optimally, as we will see in Appendix~\ref{app:ksj}, where we will prove Theorems~\ref{thm:main-recur} and \ref{thm:main-alg} based on Lemma~\ref{lmm:hv}.
+The part of the paper from this point till the end of Section~\ref{sec:hv:type2} will be devoted to proving the above lemma. This is the most challenging step in settling the general $k$-SJ problem optimally, as we will see in Appendix~\ref{sec:ksj}, where we will prove Theorems~\ref{thm:main-recur} and \ref{thm:main-alg} based on Lemma~\ref{lmm:hv}.
 
 \vgap
 
@@ -467,7 +467,7 @@ Finding the $\cross_H(r^*)$ sets of all $r^* \in R^*_i$ is an instance of the fi
 
 \vgap 
 
-We conclude that $\J_1$ (the set of type-1 result tuples) can be computed in $F_{k-2}(n, \out) + O(n \log n +  k \cdot \out)$ time.
+We conclude that $\J_1$ --- the set of type-1 result tuples --- can be computed in $F_{k-2}(n, \out) + O(n \log n +  k \cdot \out)$ time.
 
 \section{H-V $k$-SJ: Result Tuples of Type 2} \label{sec:hv:type2}
 
@@ -593,7 +593,9 @@ Finding the $\contained_{R_{k-2}}(h^*)$ sets of all $h^* \in H^*$ is an instance
 
 \vgap 
 
-We conclude that $\J_2$ (the set of type-2 result tuples $(r_1, ..., r_{k-2}, h, v)$ where $r_{k-2}$ covers the left endpoint of $h$) can be computed in $F_{k-1}(n, \out) + O(n \log n +  k \cdot \out)$ time. Remember that, to generate the entire type-2 result, we need to repeat the algorithm $4(k-2)$ times (one for each sub-type). The total running time is therefore $O(k) \cdot (F_{k-1}(n, \out) + O(n \log n +  k \cdot \out))$, as claimed in Lemma~\ref{lmm:hv}.
+We conclude that $\J_2$ --- the set of type-2 result tuples $(r_1, ..., r_{k-2},$ $h, v)$ where $r_{k-2}$ covers the left endpoint of $h$ --- can be computed in $F_{k-1}(n, \out) + O(n \log n +  k \cdot \out)$ time. Remember that, to generate the entire type-2 result, we need to repeat the algorithm $4(k-2)$ times (one for each sub-type). The total running time is therefore $O(k) \cdot (F_{k-1}(n, \out) + n \log n +  k \cdot \out)$, as claimed in Lemma~\ref{lmm:hv}.
+
+\section{Settling $k$-SJ} \label{sec:ksj}
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
@@ -632,8 +634,6 @@ We conclude that $\J_2$ (the set of type-2 result tuples $(r_1, ..., r_{k-2}, h,
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type2:properties}.}
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type2:contained-h*}.}
-
-\section{Solving the $k$-SJ Problem} \label{app:ksj}
 
 \section{Hardness of 3-SJ in 3D Space} \label{app:lb-cond}
 
