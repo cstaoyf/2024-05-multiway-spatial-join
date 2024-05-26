@@ -654,11 +654,15 @@ Let $P'$ be the set of remaining points in $P$ after the aforementioned removal.
     O\Big(kn \log n + \sum_{p \in P'} \sum_{j \in [k-1]} |\contained_{R_j}(p)| \Big). \label{eqn:ksj:cat1:help1}
 }
 
-We are now ready to generate $\J^\cat_k$. Take any point $p \in P'$, let $r_k \in R_k$ be the rectangle with $p$ as the top-left corner. For every $(k-1)$-tuple 
+We are ready to generate $\J^\cat_k$. Take any point $p \in P'$, let $r_k \in R_k$ be the rectangle with $p$ as the top-left corner. For every $(k-1)$-tuple 
 \myeqn{
     (r_1, ..., r_{k-1}) \in \contained_{R_1}(p) \times ... \times \contained_{R_{k-1}}(p) \label{eqn:ksj:cat1:help2}
 }
 we add $(r_1, ..., r_{k-1}, r_k)$ to $\J^\cat_k$. Performing the above for all $p \in P'$ correctly generates the whole $\J^\cat_k$ in $O(1 + |\J^\cat_k|)$ time. The way $P'$ is computed ensures that $\contained_{R_j}(p)$ is non-empty for all $j \in [k-1]$. Hence, $\sum_{j \in [k-1]} |\contained_{R_j}(p)|$ is bounded by $\prod_{j \in [k-1]} |\contained_{R_j}(p)|$. This implies that \eqref{eqn:ksj:cat1:help1} is bounded by $O(kn \log n + k \cdot |\J^\cat_k|)$.
+
+\vgap 
+
+We can now conclude that the total time of computing all of $\J^\cat_1, ..., \J^\cat_k$ is $O(k^2 n \log n + k \cdot \sum_{i=1}^k |\J^\cat_i|) = O(k^2 n \log n + k \cdot \out)$.
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
