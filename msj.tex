@@ -47,7 +47,9 @@
 \def\cross{\mathrm{cross}}
 \def\dcross{\mathrm{d\text{-}cross}}
 \def\contained{\mathrm{contained}}
+\def\cat{\mathrm{cat1}}
 \def\out{\mathrm{OUT}}
+
 
 
 \allowdisplaybreaks
@@ -639,7 +641,24 @@ Figure~\ref{fig:ksj:cats} illustrates a tuple of each category, assuming $k=4$.
 
 As stated in Theorem~\ref{thm:main-recur}, we are given an algorithm $\A$ that can solve any $(k-1)$-SJ problem in $F_{k-1}(n, \out)$ time, where $n$ and $\out$ are the input and output sizes, respectively. Equipped with $\A$, we will show how to find the result tuples of each category within the time complexity of \eqref{eqn:main:reccurrence}.
 
-\extraspacing {\bf Category 1.} Fix an arbitrary $i \in [k]$. We now explain how to find all the result tuples $\bm{t} \in \J(R_1, R_2, ..., R_k)$ such that the top-left corner of $B_\bm{t}$ is the top-left corner of $\bm{t}[i]$.
+\extraspacing {\bf Category 1.} Fix an arbitrary $i \in [k]$. Define $\J^\cat_i$ as the set of result tuples $\bm{t} = (r_1, r_2, ..., r_k) \in \J(R_1, R_2, ..., R_k)$ such that the top-left corner of $B_\bm{t}$ is the top-left corner of $\bm{t}[i]$. We will compute $\J^\cat_i$ for $i = k$; the set $\J^\cat_i$ of every other $i$ can be produced in the same manner. 
+
+\vgap 
+
+For every $\bm{t} = (r_1, r_2, ..., r_k) \in \J^\cat_k$, the top-left corner of $r_k$ must be covered by all of $r_1, ..., r_{k-1}$. This observation motivates us to find the target result tuples as follows. First, collect the set $P$ of top-left corners of all the rectangles in $R_k$. Remove from $P$ every point $p$ with the property that, there exists at least one $j \in [k-1]$ such that $p$ is covered by no rectangle in $R_j$. This requires solving $k-1$ instances of the detection version of Problem $\mathscr{A}$ (pairing $P$ together with a different $R_j$ where $j \in [k-1]$ as the input in each instance); the cost is $O(k n \log n)$ by the discussion in Section~\ref{sec:bricks}.
+
+\vgap 
+
+Let $P'$ be the set of remaining points in $P$ after the aforementioned removal. Next, for each $j \in [k-1]$, solve the reporting version of Problem $\mathscr{A}$ by feeding $P'$ and $R_j$ as the input. Doing so produces, for each point $p \in P'$, $\contained_{R_j}(p)$, which --- as defined in \eqref{eqn:contained} (noticing that $p$ is a degenerated ``horizontal segment'') --- is the set of rectangles in $R_j$ covering $p$. By the discussion in Section~\ref{sec:bricks}, the total cost of this step is bounded by
+\myeqn{
+    O\Big(kn \log n + \sum_{j \in [k-1]} \sum_{p \in P'} |\contained_{R_j}(p)| \Big). \label{eqn:ksj:cat1:help1}
+}
+
+We are now ready to generate $\J^\cat_k$. Take any point $p \in P'$, let $r_k \in R_k$ be the rectangle with $p$ as the top-left corner. For every $(k-1)$-tuple 
+\myeqn{
+    (r_1, ..., r_{k-1}) \in \contained_{R_1}(p) \times ... \times \contained_{R_{k-1}}(p) \label{eqn:ksj:cat1:help2}
+}
+
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
