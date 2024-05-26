@@ -638,7 +638,7 @@ Consider any result tuple $\bm{t} = (r_1, r_2, ..., r_k) \in \J(R_1, R_2, ..., R
 }
 Figure~\ref{fig:ksj:cats} illustrates a tuple of each category, assuming $k=4$. 
 
-\vgap 
+\subsection{Proof of Theorem~\ref{thm:main-recur}} \label{sec:ksj:thm1}
 
 As stated in Theorem~\ref{thm:main-recur}, we are given an algorithm $\A$ that can solve any $(k-1)$-SJ problem in $F_{k-1}(n, \out)$ time, where $n$ and $\out$ are the input and output sizes, respectively. Equipped with $\A$, we will show how to find the result tuples of each category within the time complexity of \eqref{eqn:main:reccurrence}.
 
@@ -673,7 +673,11 @@ The computation of $\J^\catt_{i,j}$ is an instance of H-V $k$-SJ. Specifically, 
 
 \vgap 
 
-Performing the above for all $i, j \in [k]$ with $i \ne j$ results in a total time complexity of $O(k^3) \cdot (F_{k-1}(n, \out) + n \log n + k \cdot \out)$. A category-1 result tuple $\bm{t}$ may be seen more than once (this happens if the top-left corner of $B_\bm{t}$ is the top-left corner of more than one rectangle in $\bm{t}$). Duplicate removal can be achieved at no extra cost asymptotically, following the ideas explained in Section~\ref{sec:hv:type2}.
+Performing the above for all $i, j \in [k]$ with $i \ne j$ results in a total time complexity of $O(k^3) \cdot (F_{k-1}(n, \out) + n \log n + k \cdot \out)$. A category-2 result tuple $\bm{t}$ may be seen more than once (this can happen if, for example, more than one rectangle in $\bm{t}$ has the same top-edge or the same left-edge). Again, duplicate removal can be achieved at no extra cost asymptotically.
+
+\vgap 
+
+We now complete the proof of Theorem~\ref{thm:main-recur}.
 
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
