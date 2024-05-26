@@ -645,24 +645,24 @@ As stated in Theorem~\ref{thm:main-recur}, we are given an algorithm $\A$ that c
 
 \vgap 
 
-For every $\bm{t} = (r_1, r_2, ..., r_k) \in \J^\cat_k$, the top-left corner of $r_k$ must be covered by all of $r_1, ..., r_{k-1}$. This observation motivates us to find the target result tuples as follows. First, collect the set $P$ of top-left corners of all the rectangles in $R_k$. Remove from $P$ every point $p$ with the property that, there exists at least one $j \in [k-1]$ such that $p$ is covered by no rectangle in $R_j$. This requires solving $k-1$ instances of the detection version of Problem $\mathscr{A}$ (pairing $P$ together with a different $R_j$ where $j \in [k-1]$ as the input in each instance); the cost is $O(k n \log n)$ by the discussion in Section~\ref{sec:bricks}.
+For every $\bm{t} = (r_1, r_2, ..., r_k) \in \J^\cat_k$, the top-left corner of $r_k$ must be covered by all of $r_1, ..., r_{k-1}$. This observation motivates us to find $\J^\cat_i$ as follows. First, collect the set $P$ of top-left corners of all the rectangles in $R_k$. Remove from $P$ every point $p$ with the property that, there exists at least one $j \in [k-1]$ such that $p$ is covered by no rectangle in $R_j$. This requires solving $k-1$ instances of the detection version of Problem $\mathscr{A}$ (in each instance, the input includes $P$ together with a different $R_j$, $j \in [k-1]$); the cost is $O(k n \log n)$ by the discussion in Section~\ref{sec:bricks}.
 
 \vgap 
 
-Let $P'$ be the set of remaining points in $P$ after the aforementioned removal. Next, for each $j \in [k-1]$, solve the reporting version of Problem $\mathscr{A}$ by feeding $P'$ and $R_j$ as the input. Doing so produces, for each point $p \in P'$, $\contained_{R_j}(p)$, which --- as defined in \eqref{eqn:contained} (noticing that $p$ is a degenerated ``horizontal segment'') --- is the set of rectangles in $R_j$ covering $p$. By the discussion in Section~\ref{sec:bricks}, the total cost of this step is bounded by
+Let $P'$ be the set of remaining points in $P$ after the aforementioned removal. Next, for each $j \in [k-1]$, solve the reporting version of Problem $\mathscr{A}$ by feeding $P'$ and $R_j$ as the input. Doing so produces, for each point $p \in P'$, the set $\contained_{R_j}(p)$, which --- as defined in \eqref{eqn:contained},  noticing that $p$ is a degenerated ``horizontal segment'' --- is the set of rectangles in $R_j$ covering $p$. By the discussion in Section~\ref{sec:bricks}, the total cost of this step is bounded by
 \myeqn{
     O\Big(kn \log n + \sum_{p \in P'} \sum_{j \in [k-1]} |\contained_{R_j}(p)| \Big). \label{eqn:ksj:cat1:help1}
 }
 
-We are ready to generate $\J^\cat_k$. Take any point $p \in P'$, let $r_k \in R_k$ be the rectangle with $p$ as the top-left corner. For every $(k-1)$-tuple 
+We are ready to generate $\J^\cat_k$. Take any point $p \in P'$, let $r \in R_k$ be the rectangle with $p$ as the top-left corner. For every $(k-1)$-tuple 
 \myeqn{
     (r_1, ..., r_{k-1}) \in \contained_{R_1}(p) \times ... \times \contained_{R_{k-1}}(p) \label{eqn:ksj:cat1:help2}
 }
-we add $(r_1, ..., r_{k-1}, r_k)$ to $\J^\cat_k$. Performing the above for all $p \in P'$ correctly generates the whole $\J^\cat_k$ in $O(1 + |\J^\cat_k|)$ time. The way $P'$ is computed ensures that $\contained_{R_j}(p)$ is non-empty for all $j \in [k-1]$. Hence, $\sum_{j \in [k-1]} |\contained_{R_j}(p)|$ is bounded by $\prod_{j \in [k-1]} |\contained_{R_j}(p)|$. This implies that \eqref{eqn:ksj:cat1:help1} is bounded by $O(kn \log n + k \cdot |\J^\cat_k|)$.
+we add $(r_1, ..., r_{k-1}, r)$ to $\J^\cat_k$. Performing the above for all $p \in P'$ generates the whole $\J^\cat_k$ in $O(1 + |\J^\cat_k|)$ time. The way $P'$ is computed ensures that $\contained_{R_j}(p) \ne \emptyset$ for all $j \in [k-1]$. Hence, we have $\sum_{j \in [k-1]} |\contained_{R_j}(p)| \le \prod_{j \in [k-1]} |\contained_{R_j}(p)|$, which implies that \eqref{eqn:ksj:cat1:help1} is bounded by $O(kn \log n + k \cdot |\J^\cat_k|)$.
 
 \vgap 
 
-We can now conclude that the total time of computing all of $\J^\cat_1, ..., \J^\cat_k$ is $O(k^2 n \log n + k \cdot \sum_{i=1}^k |\J^\cat_i|) = O(k^2 n \log n + k \cdot \out)$.
+Therefore, the total time of computing all of $\J^\cat_1, ..., \J^\cat_k$ is $O(k^2 n \log n + k \cdot \sum_{i=1}^k |\J^\cat_i|) = O(k^2 n \log n + k \cdot \out)$.
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
