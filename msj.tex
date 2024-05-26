@@ -625,15 +625,15 @@ We conclude that $\J_2$ --- the set of type-2 result tuples $(r_1, ..., r_{k-2},
 
 \section{Settling $k$-SJ} \label{sec:ksj}
 
-This section will tackle the (generic form of the) $k$-SJ problem, where the input comprises $k$ sets of rectangles $R_1, R_2, ..., R_k$. The join result, denoted by $\J(R_1, R_2, ..., R_k)$, is the set of $k$-tuples $\bm{t} = (r_1, r_2, ..., r_k) \in R_1 \times R_2 \times ... \times R_k$ satisfying the condition that $B_\bm{t}$ --- defined as $\bigcap_{i=1}^k r_i \ne \emptyset$; see \eqref{eqn:B_t} --- is non-empty. 
+This section will tackle the $k$-SJ problem in its general form, where the input comprises $k$ sets of rectangles $R_1, R_2, ..., R_k$. The join result $\J(R_1, R_2, ..., R_k)$ is the set of $k$-tuples $\bm{t} = (r_1, r_2, ..., r_k) \in R_1 \times R_2 \times ... \times R_k$ satisfying the condition that $B_\bm{t}$ --- which is $\bigcap_{i=1}^k r_i \ne \emptyset$ (see \eqref{eqn:B_t}) --- is non-empty. 
 
 \vgap 
 
 Consider any result tuple $\bm{t} = (r_1, r_2, ..., r_k) \in \J(R_1, R_2, ..., R_k)$, and let $p$ be the top-left corner of $B_\bm{t}$. Depending on how $p$ is determined, we classify $\bm{t}$ into one of the two categories below: 
 \myitems{
-    \item {{\bf Cat.\ 1:}} $p$ is the top-left corner of $r_i$, for some $i \in [k]$. 
+    \item {{\bf Cat.\ 1:}} $p$ is the top-left corner of $r_i$ for some $i \in [k]$. 
     
-    \item {{\bf Cat.\ 2:}} $p$ is not a corner of any of $r_1, ..., r_k$. Note that this means $p$ must be the intersection point between the left edge of some rectangle $r_i$ and the top edge of another rectangle $r_j$, where $i, j \in [k]$ and $i \ne j$.
+    \item {{\bf Cat.\ 2:}} $p$ is not a corner of any of $r_1, ..., r_k$. This means $p$ must be the intersection point between the left edge of some rectangle $r_i$ and the top edge of another rectangle $r_j$, where $i, j \in [k]$ and $i \ne j$.
 }
 Figure~\ref{fig:ksj:cats} illustrates a tuple of each category, assuming $k=4$. 
 
