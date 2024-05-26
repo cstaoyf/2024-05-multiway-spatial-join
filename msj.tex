@@ -175,10 +175,10 @@ The theorem implies the existence of a recursive nature of $k$-SJ. Indeed, we wi
 When $k = O(1)$, the time complexity becomes $O(n \log n$ $+ \out)$, as promised; the space consumption of our algorithm is $O(n + \out)$. Now that Theorem~\ref{thm:main-alg} offers a satisfactory $k$-SJ result for $k = O(1)$ in 2D space, it is natural to wonder whether the constraint on dimensionality 2 is necessary. Interestingly, the answer is ``yes'' as far as $k \ge 3$ is concerned, subject to the absence of breakthroughs on a classical problem in graph theory. Specifically, if the 3D version of the 3-SJ problem (which we will formally define in Appendix~\ref{app:lb-cond}) could be solved in $O(n \polylog n + \out)$ time, we would obtain an algorithm that detects the presence of a triangle (i.e., 3-clique) in a graph of $m$ edges in $O(m \polylog m)$ time, which would make a truly remarkable breakthrough because the state of the art needs $O(m^{1.41})$ time \cite{ayz97}. This reduction can be inferred from an argument in \cite{kcko22} used to prove a more generic result. We simplify the argument for 3D 3-SJ and present the full reduction in Appendix~\ref{app:lb-cond}.
 
 \begin{figure}
-    \includegraphics[height=23mm]{./artwork/guard}
+    \includegraphics[height=27mm]{./artwork/guard}
 
     \figcapup
-    \caption{Define 3-tuple $\bm{t} = \set{r_1, r_2, r_3}$. $B_\bm{t}$ is the rectangle in gray, $\gleft(\bm{t}) = r_3$ and $\gbot(\bm{t}) = r_2$.}
+    \caption{Consider a 4-tuple $\bm{t} = \set{r_1, r_2, r_3, r_4}$. $B_\bm{t}$ is the rectangle in gray, $\gleft(\bm{t}) = r_3$ and $\gbot(\bm{t}) = r_2$.}
     \label{fig:guard}
     \figcapdown
 \end{figure}
@@ -249,7 +249,6 @@ namely, $B_\bm{t}$ is the intersection of the rectangles in $\bm{t}$ (note: $B_\
 }
 See Figure~\ref{fig:guard} for an illustration.
 
-
 \extraspacing {\bf Problem $\bm{\mathscr{A}}$.} The input involves a set $P$ of 2D points and set $R$ of rectangles. In the {\em detection version} of Problem $\mathscr{A}$, the goal is to output, for each point $p \in P$, whether it is covered by at least one rectangle in $R$. Figure~\ref{fig:probs}a gives an example where $P = \set{p_1, p_2, p_3}$ and $R = \set{r_1, r_2}$; the output is ``yes'' for $p_2$ and $p_3$ and ``no'' for $p_1$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n)$ time, where $n = |P| + |R|$.
 
 \vgap
@@ -318,7 +317,7 @@ In Section~\ref{sec:hv:type1} (resp., \ref{sec:hv:type2}), we will explain how t
 
 \begin{figure}
     \begin{tabular}{cc}
-        \includegraphics[height=27mm]{./artwork/type1} &
+        \includegraphics[height=23mm]{./artwork/type1} &
         \hspace{5mm} \includegraphics[height=27mm]{./artwork/type2} \\
         (a) Type 1 &
         (b) Type 2
@@ -608,7 +607,39 @@ Finding the $\contained_{R_{k-2}}(h^*)$ sets of all $h^* \in H^*$ is an instance
 
 We conclude that $\J_2$ --- the set of type-2 result tuples $(r_1, ..., r_{k-2},$ $h, v)$ where $r_{k-2}$ covers the left endpoint of $h$ --- can be computed in $F_{k-1}(n, \out) + O(n \log n +  k \cdot \out)$ time. Remember that, to generate the entire type-2 result, we need to repeat the algorithm $4(k-2)$ times (one for each sub-type). The total running time is therefore $O(k) \cdot (F_{k-1}(n, \out) + n \log n +  k \cdot \out)$, as claimed in Lemma~\ref{lmm:hv}.
 
+\begin{figure}
+    \begin{tabular}{cc}
+        \includegraphics[height=27mm]{./artwork/cat1} &
+        \hspace{5mm} \includegraphics[height=27mm]{./artwork/cat2} \\
+        (a) Category 1 &
+        (b) Category 2
+    \end{tabular}
+
+    \figcapup
+    \caption{Classifying $k$-SJ result tuples ($k$ = 4)}
+    \label{fig:ksj:cats}
+    \figcapdown
+\end{figure}
+
 \section{Settling $k$-SJ} \label{sec:ksj}
+
+This section will tackle the (generic form of the) $k$-SJ problem, where the input comprises $k$ sets of rectangles $R_1, R_2, ..., R_k$. The join result, denoted by $\J(R_1, R_2, ..., R_k)$, is the set of $k$-tuples $\bm{t} = (r_1, r_2, ..., r_k) \in R_1 \times R_2 \times ... \times R_k$ satisfying the condition that $B_\bm{t}$ --- defined as $\bigcap_{i=1}^k r_i \ne \emptyset$; see \eqref{eqn:B_t} --- is non-empty. 
+
+\vgap 
+
+Consider any result tuple $\bm{t} \in \J(R_1, R_2, ..., R_k)$, and let $p$ be the top-left corner of $B_\bm{t}$. Depending on how $p$ is determined, we classify $\bm{t}$ into one of the two categories below: 
+\myitems{
+    \item {{\bf Cat.\ 1:}} $p$ is a corner of a rectangle $\bm{t}[i]$, for some $i \in [k]$. 
+    
+    \item {{\bf Cat.\ 2:}} $p$ is not a corner of any of $\bm{t}[1], ..., \bm{t}[k]$. Note that this means $p$ must be the intersection point between the left edge of some rectangle $\bm{t}[i]$ and the top edge of another rectangle $\bm{t}[j]$, where $i, j \in [k]$ and $i \ne j$.
+}
+Figure~\ref{fig:ksj:cats} illustrates a tuple $\bm{t} = (r_1, r_2, ..., r_4)$ of each category. 
+
+\vgap 
+
+We assume the existence of an algorithm $\A$ that can solve any $(k-1)$-SJ problem in $F_{k-1}(n, \out)$ time, where $n$ and $\out$ are the input and output sizes, respectively. Equipped with $\A$, we will find the result tuples of each category separately, within the time complexity stated in Theorem~\ref{thm:main-recur}.
+
+\extraspacing {\bf Category 1.}
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
