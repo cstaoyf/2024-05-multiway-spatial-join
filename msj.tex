@@ -638,9 +638,9 @@ Consider any result tuple $\bm{t} = (r_1, r_2, ..., r_k) \in \J(R_1, R_2, ..., R
 }
 Figure~\ref{fig:ksj:cats} illustrates a tuple of each category, assuming $k=4$. 
 
-\subsection{Proof of Theorem~\ref{thm:main-recur}} \label{sec:ksj:thm1}
+\vgap
 
-As stated in Theorem~\ref{thm:main-recur}, we are given an algorithm $\A$ that can solve any $(k-1)$-SJ problem in $F_{k-1}(n, \out)$ time, where $n$ and $\out$ are the input and output sizes, respectively. Equipped with $\A$, we will show how to find the result tuples of each category within the time complexity of \eqref{eqn:main:reccurrence}.
+The rest of this section serves as a proof of Theorem~\ref{thm:main-recur}. Theorem~\ref{thm:main-alg} is a corollary of Theorem~\ref{thm:main-recur}, as we show in Appendix~\ref{app:main-alg}. As stated in Theorem~\ref{thm:main-recur}, we are given an algorithm $\A$ that can solve any $(k-1)$-SJ problem in $F_{k-1}(n, \out)$ time, where $n$ and $\out$ are the input and output sizes, respectively. Equipped with $\A$, we will show how to find the result tuples of each category within the time complexity of \eqref{eqn:main:reccurrence}.
 
 \extraspacing {\bf Category 1.} Given an $i \in [k]$, we denote by $\J^\cat_i$ the set of $k$-tuples $\bm{t} = (r_1, ..., r_k) \in \J(R_1, ..., R_k)$ such that the top-left corner of $B_\bm{t}$ is the top-left corner of $\bm{t}[i]$. We will compute $\J^\cat_i$ for $i = k$; the set $\J^\cat_i$ of every other $i$ can be produced in the same manner. 
 
@@ -718,7 +718,9 @@ We now complete the proof of Theorem~\ref{thm:main-recur}.
 
 \extraspacing {\bf Computing $\bm{H^*}$.}
 
-\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type2:contained-h*}.}
+\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type2:contained-h*}.} 
+
+\section{Proof of Theorem~\ref{thm:main-alg}} \label{app:main-alg}
 
 \section{Hardness of 3-SJ in 3D Space} \label{app:lb-cond}
 
