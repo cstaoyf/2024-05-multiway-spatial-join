@@ -48,6 +48,7 @@
 \def\dcross{\mathrm{d\text{-}cross}}
 \def\contained{\mathrm{contained}}
 \def\cat{\mathrm{cat1}}
+\def\catt{\mathrm{cat2}}
 \def\out{\mathrm{OUT}}
 
 
@@ -633,7 +634,7 @@ Consider any result tuple $\bm{t} = (r_1, r_2, ..., r_k) \in \J(R_1, R_2, ..., R
 \myitems{
     \item {{\bf Cat.\ 1:}} $p$ is the top-left corner of $r_i$ for some $i \in [k]$. 
     
-    \item {{\bf Cat.\ 2:}} $p$ is not a corner of any of $r_1, ..., r_k$. This means $p$ must be the intersection point between the left edge of some rectangle $r_i$ and the top edge of another rectangle $r_j$, where $i, j \in [k]$ and $i \ne j$.
+    \item {{\bf Cat.\ 2:}} $p$ is not a corner of any of $r_1, ..., r_k$. This means $p$ must be the intersection point between the top edge of some rectangle $r_i$ and the left edge of another rectangle $r_j$, where $i, j \in [k]$ and $i \ne j$.
 }
 Figure~\ref{fig:ksj:cats} illustrates a tuple of each category, assuming $k=4$. 
 
@@ -641,7 +642,7 @@ Figure~\ref{fig:ksj:cats} illustrates a tuple of each category, assuming $k=4$.
 
 As stated in Theorem~\ref{thm:main-recur}, we are given an algorithm $\A$ that can solve any $(k-1)$-SJ problem in $F_{k-1}(n, \out)$ time, where $n$ and $\out$ are the input and output sizes, respectively. Equipped with $\A$, we will show how to find the result tuples of each category within the time complexity of \eqref{eqn:main:reccurrence}.
 
-\extraspacing {\bf Category 1.} Fix an arbitrary $i \in [k]$. Define $\J^\cat_i$ as the set of result tuples $\bm{t} = (r_1, r_2, ..., r_k) \in \J(R_1, R_2, ..., R_k)$ such that the top-left corner of $B_\bm{t}$ is the top-left corner of $\bm{t}[i]$. We will compute $\J^\cat_i$ for $i = k$; the set $\J^\cat_i$ of every other $i$ can be produced in the same manner. 
+\extraspacing {\bf Category 1.} Given an $i \in [k]$, we denote by $\J^\cat_i$ the set of $k$-tuples $\bm{t} = (r_1, ..., r_k) \in \J(R_1, ..., R_k)$ such that the top-left corner of $B_\bm{t}$ is the top-left corner of $\bm{t}[i]$. We will compute $\J^\cat_i$ for $i = k$; the set $\J^\cat_i$ of every other $i$ can be produced in the same manner. 
 
 \vgap 
 
@@ -658,11 +659,15 @@ We are ready to generate $\J^\cat_k$. Take any point $p \in P'$, let $r \in R_k$
 \myeqn{
     (r_1, ..., r_{k-1}) \in \contained_{R_1}(p) \times ... \times \contained_{R_{k-1}}(p) \label{eqn:ksj:cat1:help2}
 }
-we add $(r_1, ..., r_{k-1}, r)$ to $\J^\cat_k$. Performing the above for all $p \in P'$ generates the whole $\J^\cat_k$ in $O(1 + |\J^\cat_k|)$ time. The way $P'$ is computed ensures that $\contained_{R_j}(p) \ne \emptyset$ for all $j \in [k-1]$. Hence, we have $\sum_{j \in [k-1]} |\contained_{R_j}(p)| \le \prod_{j \in [k-1]} |\contained_{R_j}(p)|$, which implies that \eqref{eqn:ksj:cat1:help1} is bounded by $O(kn \log n + k \cdot |\J^\cat_k|)$.
+we add $(r_1, ..., r_{k-1}, r)$ to $\J^\cat_k$. Performing the above for all $p \in P'$ generates the whole $\J^\cat_k$ in $O(1 + |\J^\cat_k|)$ time. The way $P'$ is computed ensures that $\contained_{R_j}(p) \ne \emptyset$ for all $j \in [k-1]$. Hence, we have $\sum_{j \in [k-1]} |\contained_{R_j}(p)| \le \prod_{j \in [k-1]} |\contained_{R_j}(p)|$, which implies that \eqref{eqn:ksj:cat1:help1} is bounded by $O(kn \log n + k \cdot |\J^\cat_k|) = O(kn \log n + k \cdot \out)$ .
 
 \vgap 
 
-Therefore, the total time of computing all of $\J^\cat_1, ..., \J^\cat_k$ is $O(k^2 n \log n + k \cdot \sum_{i=1}^k |\J^\cat_i|) = O(k^2 n \log n + k \cdot \out)$.
+Therefore, the total time of computing all of $\J^\cat_1, ..., \J^\cat_k$ is $O(k) \cdot (kn \log n + k \cdot \out)$. A category-1 result tuple $\bm{t}$ may be seen more than once (this happens if the top-left corner of $B_\bm{t}$ is the top-left corner of more than one rectangle in $\bm{t}$). Duplicate removal can be achieved at no extra cost asymptotically, following the ideas explained in Section~\ref{sec:hv:type2}.
+
+\extraspacing {\bf Category 2.} Given $i, j \in [k]$ with $i \ne j$, we denote by $\J^\catt_{i,j}$ the set of $k$-tuples $\bm{t} = (r_1, ..., r_k) \in \J(R_1, ..., R_k)$ such that the top-left corner of $B_\bm{t}$ is the intersection between the top edge of $r_i$ and the left edge of $r_j$. The Category 2 of result tuples is the union of the $\J^\catt_{i,j}$ of all possible $i, j$.
+
+top-left corner of $\bm{t}[i]$. We will compute $\J^\cat_i$ for $i = k$; the set $\J^\cat_i$ of every other $i$ can be produced in the same manner. 
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
