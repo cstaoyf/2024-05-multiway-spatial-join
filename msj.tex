@@ -627,19 +627,19 @@ This section will tackle the (generic form of the) $k$-SJ problem, where the inp
 
 \vgap 
 
-Consider any result tuple $\bm{t} \in \J(R_1, R_2, ..., R_k)$, and let $p$ be the top-left corner of $B_\bm{t}$. Depending on how $p$ is determined, we classify $\bm{t}$ into one of the two categories below: 
+Consider any result tuple $\bm{t} = (r_1, r_2, ..., r_k) \in \J(R_1, R_2, ..., R_k)$, and let $p$ be the top-left corner of $B_\bm{t}$. Depending on how $p$ is determined, we classify $\bm{t}$ into one of the two categories below: 
 \myitems{
-    \item {{\bf Cat.\ 1:}} $p$ is a corner of a rectangle $\bm{t}[i]$, for some $i \in [k]$. 
+    \item {{\bf Cat.\ 1:}} $p$ is the top-left corner of $r_i$, for some $i \in [k]$. 
     
-    \item {{\bf Cat.\ 2:}} $p$ is not a corner of any of $\bm{t}[1], ..., \bm{t}[k]$. Note that this means $p$ must be the intersection point between the left edge of some rectangle $\bm{t}[i]$ and the top edge of another rectangle $\bm{t}[j]$, where $i, j \in [k]$ and $i \ne j$.
+    \item {{\bf Cat.\ 2:}} $p$ is not a corner of any of $r_1, ..., r_k$. Note that this means $p$ must be the intersection point between the left edge of some rectangle $r_i$ and the top edge of another rectangle $r_j$, where $i, j \in [k]$ and $i \ne j$.
 }
-Figure~\ref{fig:ksj:cats} illustrates a tuple $\bm{t} = (r_1, r_2, ..., r_4)$ of each category. 
+Figure~\ref{fig:ksj:cats} illustrates a tuple of each category, assuming $k=4$. 
 
 \vgap 
 
-We assume the existence of an algorithm $\A$ that can solve any $(k-1)$-SJ problem in $F_{k-1}(n, \out)$ time, where $n$ and $\out$ are the input and output sizes, respectively. Equipped with $\A$, we will find the result tuples of each category separately, within the time complexity stated in Theorem~\ref{thm:main-recur}.
+As stated in Theorem~\ref{thm:main-recur}, we are given an algorithm $\A$ that can solve any $(k-1)$-SJ problem in $F_{k-1}(n, \out)$ time, where $n$ and $\out$ are the input and output sizes, respectively. Equipped with $\A$, we will show how to find the result tuples of each category within the time complexity of \eqref{eqn:main:reccurrence}.
 
-\extraspacing {\bf Category 1.}
+\extraspacing {\bf Category 1.} Fix an arbitrary $i \in [k]$. We now explain how to find all the result tuples $\bm{t} \in \J(R_1, R_2, ..., R_k)$ such that the top-left corner of $B_\bm{t}$ is the top-left corner of $\bm{t}[i]$.
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
