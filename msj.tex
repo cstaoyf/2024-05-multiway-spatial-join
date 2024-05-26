@@ -665,9 +665,11 @@ we add $(r_1, ..., r_{k-1}, r)$ to $\J^\cat_k$. Performing the above for all $p 
 
 Therefore, the total time of computing all of $\J^\cat_1, ..., \J^\cat_k$ is $O(k) \cdot (kn \log n + k \cdot \out)$. A category-1 result tuple $\bm{t}$ may be seen more than once (this happens if the top-left corner of $B_\bm{t}$ is the top-left corner of more than one rectangle in $\bm{t}$). Duplicate removal can be achieved at no extra cost asymptotically, following the ideas explained in Section~\ref{sec:hv:type2}.
 
-\extraspacing {\bf Category 2.} Given $i, j \in [k]$ with $i \ne j$, we denote by $\J^\catt_{i,j}$ the set of $k$-tuples $\bm{t} = (r_1, ..., r_k) \in \J(R_1, ..., R_k)$ such that the top-left corner of $B_\bm{t}$ is the intersection between the top edge of $r_i$ and the left edge of $r_j$. The Category 2 of result tuples is the union of the $\J^\catt_{i,j}$ of all possible $i, j$.
+\extraspacing {\bf Category 2.} Given $i, j \in [k]$ with $i \ne j$, we denote by $\J^\catt_{i,j}$ the set of $k$-tuples $\bm{t} = (r_1, ..., r_k) \in \J(R_1, ..., R_k)$ such that the top-left corner of $B_\bm{t}$ is the intersection between the top edge of $r_i$ and the left edge of $r_j$. The Category 2 of result tuples is the union of the $\J^\catt_{i,j}$ of all possible $i, j$. 
 
-top-left corner of $\bm{t}[i]$. We will compute $\J^\cat_i$ for $i = k$; the set $\J^\cat_i$ of every other $i$ can be produced in the same manner. 
+\vgap 
+
+The computation of $\J^\catt_{i,j}$ is an instance of H-V $k$-SJ. Specifically, collect the top-edges of all rectangles $r_i \in R_i$ into a set $H$, and collect the left-edges of all rectangles $r_j \in R_j$ into a set $V$. This yields an H-V $k$-SJ problem whose input comprises all the $R_z$ with $z \in [k] \setminus \set{i,j}$, and $H$ and $V$
 
 \bibliographystyle{plainurl}% the mandatory bibstyle
 \bibliography{ref}
