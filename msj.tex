@@ -637,13 +637,9 @@ Figure~\ref{fig:ksj:cats} illustrates a tuple of each category, assuming $k=4$.
 
 \vgap
 
-The rest of this section serves as a proof of Theorem~\ref{thm:main-recur}. Theorem~\ref{thm:main-alg} is a corollary of Theorem~\ref{thm:main-recur}, as proved in Appendix~\ref{app:main-alg}. 
+The rest of this section serves as a proof of Theorem~\ref{thm:main-recur}. Theorem~\ref{thm:main-alg} is a corollary of Theorem~\ref{thm:main-recur}, as proved in Appendix~\ref{app:main-alg}. As stated in Theorem~\ref{thm:main-recur}, we are given an algorithm $\A$ that can solve any $(k-1)$-SJ problem in $F_{k-1}(n, \out)$ time, where $n$ and $\out$ are the input and output sizes, respectively. Equipped with $\A$, we will show how to find the result tuples of each category within the time complexity of \eqref{eqn:main:reccurrence}.
 
-\vgap
-
-As stated in Theorem~\ref{thm:main-recur}, we are given an algorithm $\A$ that can solve any $(k-1)$-SJ problem in $F_{k-1}(n, \out)$ time, where $n$ and $\out$ are the input and output sizes, respectively. Equipped with $\A$, we will show how to find the result tuples of each category within the time complexity of \eqref{eqn:main:reccurrence}.
-
-\extraspacing {\bf Category 1.} Given an $i \in [k]$, we denote by $\J^\cat_i$ the set of $k$-tuples $\bm{t} = (r_1, ..., r_k) \in \J(R_1, ..., R_k)$ such that the top-left corner of $B_\bm{t}$ is the top-left corner of $\bm{t}[i]$. We will compute $\J^\cat_i$ for $i = k$; the set $\J^\cat_i$ of every other $i$ can be produced in the same manner. 
+\extraspacing {\bf Category 1.} Given an $i \in [k]$, we denote by $\J^\cat_i$ the set of $k$-tuples $\bm{t} = (r_1, ..., r_k) \in \J(R_1, ..., R_k)$ such that the top-left corner of $B_\bm{t}$ is the top-left corner of $\bm{t}[i] = r_i$. We will show how to compute $\J^\cat_i$ for $i = k$; the set $\J^\cat_i$ of every other $i$ can be produced in the same manner.
 
 \vgap 
 
@@ -651,7 +647,7 @@ For every $\bm{t} = (r_1, r_2, ..., r_k) \in \J^\cat_k$, the top-left corner of 
 
 \vgap 
 
-Let $P'$ be the set of remaining points in $P$ after the aforementioned removal. Next, for each $j \in [k-1]$, solve the reporting version of Problem $\mathscr{A}$ by feeding $P'$ and $R_j$ as the input. Doing so produces, for each point $p \in P'$, the set $\contained_{R_j}(p)$, which --- as defined in \eqref{eqn:contained},  noticing that $p$ is a degenerated ``horizontal segment'' --- is the set of rectangles in $R_j$ covering $p$. By the discussion in Section~\ref{sec:bricks}, the total cost of this step is bounded by
+Let $P'$ be the set of remaining points in $P$ after the aforementioned removal. Next, for each $j \in [k-1]$, solve the reporting version of Problem $\mathscr{A}$ by feeding $P'$ and $R_j$ as the input. This produces the set $\contained_{R_j}(p)$ for each point $p \in P'$, where $\contained_{R_j}(p)$ is defined in \eqref{eqn:contained} (treating $p$ as a degenerated ``horizontal segment'') and includes all rectangles of $R_j$ covering $p$. By the discussion in Section~\ref{sec:bricks}, the total cost of this step is bounded by
 \myeqn{
     O\Big(kn \log n + \sum_{p \in P'} \sum_{j \in [k-1]} |\contained_{R_j}(p)| \Big). \label{eqn:ksj:cat1:help1}
 }
