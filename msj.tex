@@ -51,8 +51,6 @@
 \def\catt{\mathrm{cat2}}
 \def\out{\mathrm{OUT}}
 
-
-
 \allowdisplaybreaks
 %=================================
 
@@ -365,13 +363,15 @@ As before, let $R_1, ..., R_{k-2}, H$, and $V$ be the input sets of the H-V $k$-
 }
 where $\J(R_1, ..., R_{k-2}, H, V)$, let us recall, is the join result of the (whole) H-V $k$-SJ. Remember that the output size $\out$ is defined as $|\J(R_1, ..., R_{k-2}, H, V)|$. From $\J^*$, we will report only those $k$-tuples belonging to $\J_1$ and ignore the rest.
 
+\extraspacing {\underline{\em Example.}} To illustrate our algorithm, we will utilize the running example in Figure~\ref{fig:hv:type1:ex}a, where $k = 4$, and $R_1 = \set{\alpha}$, $R_2 = \set{\beta_2, \beta_2}$, $H$ $=$ $\set{h_1,$ $h_2,$ $..., h_6}$, and $V = \set{v_1, v_2, ..., v_5}$. The set $\J_1$ contains the following 4-tuples: $(\alpha, \beta_2, h_2, v_3)$, $(\alpha, \beta_2, h_2, v_5)$, $(\alpha, \beta_2, h_5, v_3)$, and $(\alpha,$ $\beta_2, h_5, v_6)$. \qed
+
 \extraspacing {\bf Sets $\bm{R_1', R_2', ..., R'_{k-2}}$.} Fix any $i \in [k-2]$. For each rectangle $r \in R_i$, we compute four segments:
 \myitems{
-    \item $h_1$ (resp., $h_2$): the lowest (resp., highest) segment in $H$ that crosses $r$;
+    \item $h_\bot$ (resp., $h_\top$): the lowest (resp., highest) segment in $H$ that crosses $r$;
     
-    \item $v_1$ (resp., $v_2$): the leftmost (resp., rightmost) segment in $V$ that crosses $r$.
+    \item $v_\vdash$ (resp., $v_\dashv$): the leftmost (resp., rightmost) segment in $V$ that crosses $r$.
 }
-Define $r' = [x_1, x_2] \times [y_1, y_2]$, where $x_1$ (resp., $x_2$) is x-coordinate of $v_1$ (resp., $v_2$), and $y_1$ (resp., $y_2$) is y-coordinate of $h_1$ (resp., $h_2$). We say that $r'$ is the {\em trimmed rectangle} of $r$, and conversely, $r$ is the {\em full rectangle} of $r'$. Note that $r'$ exists if and only if $r$ is crossed by at least one horizontal segment in $H$ and by at least one vertical segment in $V$. 
+Define $r' = [x_\vdash, x_\dashv] \times [y_\bot, y_\top]$, where $x_\vdash$ (resp., $x_\dashv$) is the x-coordinate of $v_\vdash$ (resp., $v_\dashv$), and $y_\bot$ (resp., $y_\top$) is the y-coordinate of $h_\bot$ (resp., $h_\top$). We say that $r'$ is the {\em trimmed rectangle} of $r$, and conversely, $r$ is the {\em full rectangle} of $r'$. Note that $r'$ exists if and only if $r$ is crossed by at least one horizontal segment in $H$ and by at least one vertical segment in $V$. 
 
 %Moreover, it is possible for $h_1$ and $h_2$ to be the same segment; same for $v_1$ and $v_2$. 
 
@@ -393,7 +393,10 @@ We now solve a $(k-2)$-SJ problem on the input $\set{R_1', R_2', ..., R_{k-2}'}$
 
 As a corollary of Lemma~\ref{lmm:hv:type1:recur-output}, the $(k-2)$-SJ can be settled in $F_{k-2}(n, \out)$ time.
 
-\yf{example}
+\extraspacing {\underline{\em Example.}} Figure~\ref{fig:hv:type1:ex}b shows the rectangles in $R'_1 = \set{\alpha'}$ and $R'_2$ $=$ $\{\beta'_1,$ $\beta'_2\}$. For instance, $\alpha'$, which is trimmed from rectangle $\alpha$, is decided by $h_\bot$ $=$ $h_2$, $h_\top$ $=$ $h_6$, $v_\vdash = v_3$, and $v_\dashv = v_5$. The $(k-2)$-SJ on $R'_1$ and $R'_2$ returns $\J(R_1', R'_2, ..., R'_{k-2}) = \set{(\alpha', \beta_1'), (\alpha', \beta_2')}$.
+\qed
+
+%\yf{example}
 
 \extraspacing {\bf Generating $\bm{\J^*}$.} Take any $(k-2)$-tuple $\bm{t} = (r'_1, r'_2, ...,$ $r'_{k-2}) \in \J(R_1', R'_2, ..., R'_{k-2})$. The reader should recall from Section~\ref{sec:bricks} that
 \myitems{
