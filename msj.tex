@@ -282,8 +282,6 @@ In the {\em find-all-sorted} version of the problem, the goal is to report, for 
 
 Recall that the input of $k$-SJ comprises $k$ sets of rectangles: $R_1, R_2, ...,$ $R_k$. We now formulate a special version of $k$-SJ, named the {\em H-V $k$-SJ problem}. The special nature is reflected in the introduction of three constraints: (i) $k \ge 3$, (ii) $R_{k-1}$ should be a set of horizontal segments, and (iii) $R_k$ should be a set of vertical segments. For better clarity, we will represent the input sets as $R_1, R_2, ..., R_{k-2}, H$ ($=R_{k-1}$), and $V$ ($=R_k$). The goal is to output the join result $\J(R_1, ..., R_{k-2},$ $H, V)$, including every $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in R_1 \times ... \times R_{k-2} \times H \times V$ such that $h \cap v \cap \bigcap_{i=1}^{k-2} r_i$ is not empty.
 
-%As we will see, conquering this sepcial version is the most challenging step in settling the original $k$-SJ problem optimally.
-
 \vgap
 
 Our objective is to prove that H-V $k$-SJ can be efficiently reduced to $(k-1)$-SJ --- note: it is $(k-1)$-SJ here, rather than H-V $(k-1)$-SJ. To ensure the soundness of our notation system, let us formulate the ``1-SJ'' as the trivial problem where the input is a set $R$ of $n$ rectangles, and the goal is simply to enumerate each rectangle of $R$; the problem can obviously be ``solved'' in $O(n)$ time. We assume the existence of an algorithm $\A$ that can settle $\kappa$-SJ for all $\kappa \in [1, k-1]$. Denote by $F_\kappa(n, \out)$ the worst-case runtime of $\A$ on any instance of $\kappa$-SJ that has input size $n$ and output size $\out$. We consider that $F_\kappa(n, \out) \le F_{\kappa + 1}(n, \out)$ for any $\kappa \ge 1$, that is, its overhead on $\kappa$-SJ should not be larger than that on $(\kappa+1)$-SJ.
@@ -297,7 +295,7 @@ We will establish:
     \myeqn{
         O(k) \cdot \big( F_{k-1}(n, \out) + n\log n + k \cdot \out \big) \nn
     }
-    where $n$ (resp., $\out$) is the input (resp., output) size of the problem.
+    where $n$ (resp., $\out$) is the input (resp., output) size of the problem. Furthermore, if $\A$ is comparison-based, so is the H-V $k$-SJ algorithm.
 \end{lemma}
 
 The part of the paper from this point till the end of Section~\ref{sec:hv:type2} will be devoted to proving the above lemma. This is the most challenging step in solving the general $k$-SJ problem optimally, as will be discussed in Section~\ref{sec:ksj}, where we will prove Theorems~\ref{thm:main-recur} and \ref{thm:main-alg} based on Lemma~\ref{lmm:hv}.
