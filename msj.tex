@@ -11,9 +11,9 @@
 \usepackage{microtype}
 
 \def\vgap{\vspace{0mm}}
-\def\extraspacing{\vspace{2mm} \noindent}
-\def\figcapup{\vspace{-0mm}}
-\def\figcapdown{\vspace{-0mm}}
+\def\extraspacing{\vspace{1mm} \noindent}
+\def\figcapup{\vspace{-2mm}}
+\def\figcapdown{\vspace{-4mm}}
 
 \def\A{\mathcal{A}}
 \def\B{\mathcal{B}}
@@ -363,7 +363,7 @@ As before, let $R_1, ..., R_{k-2}, H$, and $V$ be the input sets of the H-V $k$-
 }
 where $\J(R_1, ..., R_{k-2}, H, V)$, let us recall, is the join result of the (whole) H-V $k$-SJ. Remember that the output size $\out$ is defined as $|\J(R_1, ..., R_{k-2}, H, V)|$. From $\J^*$, we will report only those $k$-tuples belonging to $\J_1$ and ignore the rest.
 
-\extraspacing {\underline{\em Example.}} To illustrate our algorithm, we will utilize the running example in Figure~\ref{fig:hv:type1:ex}a, where $k = 4$, and $R_1 = \set{\alpha}$, $R_2 = \set{\beta_2, \beta_2}$, $H$ $=$ $\set{h_1,$ $h_2,$ $..., h_6}$, and $V = \set{v_1, v_2, ..., v_5}$. The set $\J_1$ contains the following tuples: $(\alpha, \beta_2, h_2, v_3)$, $(\alpha, \beta_2, h_2, v_5)$, $(\alpha, \beta_2, h_5, v_3)$, and $(\alpha,$ $\beta_2, h_5, v_6)$. \qed
+\extraspacing {\underline{\em Example 4.1.}} To illustrate our algorithm, we will utilize the running example in Figure~\ref{fig:hv:type1:ex}a, where $k = 4$, and $R_1 = \set{\alpha}$, $R_2 = \set{\beta_2, \beta_2}$, $H$ $=$ $\set{h_1,$ $h_2,$ $..., h_6}$, and $V = \set{v_1, v_2, ..., v_5}$. The set $\J_1$ contains the following tuples: $(\alpha, \beta_2, h_2, v_3)$, $(\alpha, \beta_2, h_2, v_5)$, $(\alpha, \beta_2, h_5, v_3)$, and $(\alpha,$ $\beta_2, h_5, v_6)$. \qed
 
 \extraspacing {\bf Sets $\bm{R_1', R_2', ..., R'_{k-2}}$.} Fix any $i \in [k-2]$. For each rectangle $r \in R_i$, we compute four segments:
 \myitems{
@@ -393,7 +393,7 @@ We now solve a $(k-2)$-SJ problem on the input $\set{R_1', R_2', ..., R_{k-2}'}$
 
 As a corollary of Lemma~\ref{lmm:hv:type1:recur-output}, the $(k-2)$-SJ can be settled in $F_{k-2}(n, \out)$ time.
 
-\extraspacing {\underline{\em Example.}} Figure~\ref{fig:hv:type1:ex}b shows the rectangles in $R'_1 = \set{\alpha'}$ and $R'_2$ $=$ $\{\beta'_1,$ $\beta'_2\}$. For instance, $\alpha'$, which is trimmed from rectangle $\alpha$, is decided by $h_\bot$ $=$ $h_2$, $h_\top$ $=$ $h_6$, $v_\vdash = v_3$, and $v_\dashv = v_5$. The $(k-2)$-SJ on $R'_1$ and $R'_2$ returns $\J(R_1', R'_2, ..., R'_{k-2}) = \set{(\alpha', \beta_1'), (\alpha', \beta_2')}$.
+\extraspacing {\underline{\em Example 4.2.}} Figure~\ref{fig:hv:type1:ex}b shows the rectangles in $R'_1 = \set{\alpha'}$ and $R'_2$ $=$ $\{\beta'_1,$ $\beta'_2\}$. For instance, $\alpha'$, which is trimmed from rectangle $\alpha$, is decided by $h_\bot$ $=$ $h_2$, $h_\top$ $=$ $h_6$, $v_\vdash = v_3$, and $v_\dashv = v_5$. The $(k-2)$-SJ on $R'_1$ and $R'_2$ returns $\J(R_1', R'_2, ..., R'_{k-2}) = \set{(\alpha', \beta_1'), (\alpha', \beta_2')}$.
 \qed
 
 %\yf{example}
@@ -430,7 +430,7 @@ The prefix ``d-'' stands for ``double''. These sets have important properties as
     }
 \end{lemma}
 
-\noindent {\underline{\em Example.} Let us examine, in turn, the two 2-tuples $\bm{t}_1 = (\alpha', \beta_1')$ and $\bm{t}_2 = (\alpha', \beta_2')$ in $\J(R_1', R_2')$. For $\bm{t}_1$, $B_{\bm{t}_1}$ is the rectangle \ttt{ABCD}, and $\gleft(\bm{t}_1) = \gbot(\bm{t}_1) = \alpha'$. Accordingly, $\dcross_H(\bm{t}_1) = \set{h_2}$ and $\dcross_V(\bm{t}_1) = \set{v_3}$. For $\bm{t}_2$, $B_{\bm{t}_2}$ is the rectangle \ttt{AEFG}, and $\gleft(\bm{t}_1) = \gbot(\bm{t}_1) = \alpha'$. Accordingly, $\dcross_H(\bm{t}_2) = \set{h_2, h_4, h_5}$ and $\dcross_V(\bm{t}_1) = \set{v_3, v_4, v_5}$.
+\noindent {\underline{\em Example 4.3.} Let us examine, in turn, the two 2-tuples $\bm{t}_1 = (\alpha', \beta_1')$ and $\bm{t}_2 = (\alpha', \beta_2')$ in $\J(R_1', R_2')$. For $\bm{t}_1$, $B_{\bm{t}_1}$ is the rectangle \ttt{ABCD}, and $\gleft(\bm{t}_1) = \gbot(\bm{t}_1) = \alpha'$. Accordingly, $\dcross_H(\bm{t}_1) = \set{h_2}$ and $\dcross_V(\bm{t}_1) = \set{v_3}$. For $\bm{t}_2$, $B_{\bm{t}_2}$ is the rectangle \ttt{AEFG}, and $\gleft(\bm{t}_1) = \gbot(\bm{t}_1) = \alpha'$. Accordingly, $\dcross_H(\bm{t}_2) = \set{h_2, h_4, h_5}$ and $\dcross_V(\bm{t}_1) = \set{v_3, v_4, v_5}$.
 \qed
 
 \vspace{1mm}
@@ -454,7 +454,7 @@ By statements (1) and (2) of Lemma~\ref{lmm:hv:type1:properties}, the set $\J^*$
 
 The rest of the section will focus on how to prepare the sets $\dcross_H(\bm{t})$ of all $\bm{t} \in \J(R_1', ..., R_{k-2}')$ in $O(n \log n + k \cdot \out)$ time. An analogous method can be used to compute the sets $\dcross_V(\bm{t})$ of all $\bm{t}$ within the same time complexity.
 
-\noindent {\underline{\em Example.} In our running example, the $\J^*$ computed includes 10 tuples in total: $(\alpha, \beta_1, h_2, v_3)$, and $\{\alpha\} \times \{\beta_2\} \times \set{h_2, h_4, h_5} \times \set{v_3, v_4, v_5}$. All these 10 tuples belong to $\J(R_1, R_2, H, V)$ and include the 4 tuples in $\J_1$ (mentioned earlier).
+\extraspacing {\underline{\em Example 4.4.} In our running example, the $\J^*$ computed includes 10 tuples in total: $(\alpha, \beta_1, h_2, v_3)$, and $\{\alpha\} \times \{\beta_2\} \times \set{h_2, h_4, h_5} \times \set{v_3, v_4, v_5}$. All these 10 tuples belong to $\J(R_1, R_2, H, V)$ and include the 4 tuples in $\J_1$ (see Example 4.1).
 \qed
 
 \extraspacing {\bf Sets $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} Fix any $i \in [k-2]$. For each rectangle $r' \in R_i'$, define
@@ -469,7 +469,7 @@ and call it the {\em top-sliced rectangle} of $r'$.
 
 \vgap
 
-\yf{example}
+\extraspacing {\underline{\em Example 4.4.}
 
 \vgap 
 
