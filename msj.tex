@@ -163,14 +163,15 @@ In terms of techniques, our primary contribution is the revelation of a new prop
         %\nn
         \label{eqn:main:reccurrence}
     }
-    where $n$ (resp., $\out$) is the input (resp., output) size of the problem.
+    where $n$ (resp., $\out$) is the input (resp., output) size of the problem. Furthermore, if $\A$ is comparison-based, so is the $k$-SJ algorithm.
+
 %     time using $O(n + \out)$ space, plus the worst-case space of $\A$ on any $(k-1)$-SJ instance with input size $n$ and output size $\out$.
 \end{theorem}
 
 The theorem implies a recursive nature of $k$-SJ. Indeed, we will see that an $k$-SJ instance with input size $n$ and output size $\out$ can be converted to $O(k^3)$ instances of the $(k-1)$-SJ problem --- all having input size at most $n$ and output size at most $\out$ --- plus an additional processing cost of $O(n \log n + \out)$. Moreover, if $\A$ is comparison-based, so is the $k$-SJ algorithm that ensues. For 2-SJ, we can set $\A$  to the ``folklore algorithm'' mentioned in Section~\ref{sec:intro:prev}, which ensures $F_2(n, \out) = O(n \log n + \out)$. Combining this with \eqref{eqn:main:reccurrence} gives a recurrence that relates the time complexity of $k$-SJ to that of $(k-1)$-SJ. Solving the recurrence yields:
 
 \begin{theorem} \label{thm:main-alg}
-    For $k \ge 3$, we can settle $k$-SJ with a comparison-based algorithm in $O( c^k (k!)^3 \cdot (n \log n + k \cdot \out))$ time.
+    For $k \ge 3$, we can settle $k$-SJ with a comparison-based algorithm in $O( c^{k-1} (k!)^3 \cdot (n \log n + k \cdot \out))$ time.
     %and $O(k \cdot n + \out)$ space, where $c > 1$ is a positive constant.
 \end{theorem}
 
@@ -726,22 +727,22 @@ We now complete the proof of Theorem~\ref{thm:main-recur}.
 
 \section{Proof of Theorem~\ref{thm:main-alg}} \label{app:main-alg}
 
-As mentioned in Section~\ref{sec:intro:prev}, 2-SJ can be solved in $F_2(n, \out) = O(n \log n + \out)$ time using a comparison-based algorithm. By Theorem~\ref{thm:main-recur}, in general, a $(k-1)$-SJ algorithm with runtime $F_{k-1}(n, \out)$ spawns a $k$-SJ algorithm whose running time $F_k(n, \out)$ obeys \eqref{eqn:main:reccurrence}. More specifically, for $k \ge 3$, there is a constant $c > 0$ such that
+As mentioned in Section~\ref{sec:intro:prev}, 2-SJ can be solved in $F_2(n, \out) = O(n \log n + \out)$ time using a comparison-based algorithm. By Theorem~\ref{thm:main-recur}, in general, a comparison-based $(k-1)$-SJ algorithm with runtime $F_{k-1}(n, \out)$ spawns a comparison-based $k$-SJ algorithm whose running time $F_k(n, \out)$ obeys \eqref{eqn:main:reccurrence}. Specifically, for $k \ge 3$, there is a constant $c > 1$ such that
 \myeqn{
     && F_{k}(n, \out) \nn \\
     &\le& c \cdot k^3 \cdot \big( F_{k-1}(n, \out) + n \log n + k \cdot \out \big) \nn \\
-    &=& c \cdot k^3(n\log n + k\cdot \out )+ \nn \\
-    && c^2 \cdot k^3(k-1)^3 \cdot (F_{k-2}(n,\out) + n\log n + k\cdot \out)\nn\\
-    &<& (c+c^2)\cdot k^3(k-1)^3(n\log n + k \cdot\out)+  \nn\\
-    && c^2 \cdot k^3(k-1)^3 \cdot F_{k-2}(n,\out) \nn \\
-    &\leq& (c+c^2+c^3)\cdot k^3(k-1)^3(k-2)^3(n\log n + k \cdot\out)+  \nn\\
-    && c^3 \cdot k^3(k-1)^3(k-2)^3 \cdot F_{k-3}(n,\out)\nn\\
+    &=& c^2 \cdot k^3(k-1)^3 \cdot (F_{k-2}(n,\out) + n\log n + k\cdot \out) + \nn \\
+    && c \cdot k^3(n\log n + k\cdot \out ) \nn\\
+    &<& c^2 \cdot k^3(k-1)^3 \cdot F_{k-2}(n,\out) +  \nn\\
+    && (c+c^2)\cdot k^3(k-1)^3(n\log n + k \cdot\out) \nn \\
+    &\leq& c^3 \cdot k^3(k-1)^3(k-2)^3 \cdot F_{k-3}(n,\out) + \nn\\
+    && (c+c^2+c^3)\cdot k^3(k-1)^3(k-2)^3(n\log n + k \cdot\out) \nn\\
     &\leq& ... \nn \\
-    &\leq& \Big(\sum_{i =1}^{k-2}c^i \Big)\cdot (k!/2)^3\cdot (n\log n + k \cdot\out)+ \nn \\
-    && c^{k-2}(k!/2)^3 \cdot F_{2}(n,\out) \nn \\
-    &\leq & 2c^{k-1}(k!/2)^3 \cdot O(n\log n + k \cdot\out). \nn
+    &\leq& c^{k-2} \cdot (k!)^3 \cdot F_{2}(n,\out) + \nn \\
+    && \Big(\sum_{i =1}^{k-2}c^i \Big)\cdot (k!)^3\cdot (n\log n + k \cdot\out) \nn \\
+    &\leq & 2c^{k-1} \cdot (k!)^3 \cdot O(n\log n + k \cdot\out) \nn
 }
-As a result, Theorem~\ref{thm:main-alg} holds.
+which completes the proof of Theorem~\ref{thm:main-alg}.
 
 \section{Hardness of 3-SJ in 3D Space} \label{app:lb-cond}
 
