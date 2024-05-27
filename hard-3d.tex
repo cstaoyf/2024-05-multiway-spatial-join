@@ -1,9 +1,10 @@
-The input to the 3-SJ problem in 3D space is three sets of axis-parallel boxes $S_1$, $S_2$ and $S_3$. 
+The input to the 3-SJ problem in 3D space comprises
+ three sets of axis-parallel boxes $S_1$, $S_2$, and $S_3$. 
 % A box $s_i \in S_i$, for $i \in [3]$, is of the form $s_i = [x_1,x_2]\times[y_1,y_2]\times[z_1,z_2]$. 
 The goal is to find the set of tuples $(s_1,s_2,s_3)$ such that $s_i \in S_i$ for $i \in [3]$ and $s_1 \cap s_2 \cap s_3 \neq \emptyset$. Denote the output set as $\J(S_1,S_2,S_3)$.
 Let $n:=|S_1|+|S_2|+|S_3|$ be the input size, and let $\out = |\J(S_1,S_2,S_3)|$.
 
-We will use the detection version of the 3-SJ problem in 3D space to solve the triangle detection problem defined as follows. Given a graph $G = (V,E)$, where $m:=|E|$, we want to find out whether there exists a triangle in the graph. We will convert this problem to an instance of the 3-SJ problem in 3D space with input size $12m=O(m)$. First, we represent each node in $G$ as a unique integer in $[|V|]$, and create three empty sets of 3D boxes $S_1$, $S_2$, $S_3$. For each edge $\set{u,v}\in E$, we add the following boxes to the sets $S_1$:
+The triangle detection problem is defined as follows. Given a graph $G = (V,E)$, where $m:=|E|$, we want to find out whether there exists a triangle in the graph. We will convert this problem to an instance of the 3-SJ problem in 3D space with input size $12m=O(m)$. First, we represent each node in $G$ as a unique integer in $[|V|]$, and create three empty sets of 3D boxes $S_1$, $S_2$, $S_3$. For each edge $\set{u,v}\in E$, we add the following boxes to the sets $S_1$:
 \begin{itemize}
     \item $[u,u]\times [v,v]\times(-\infty,u-1]$,
     \item $[u,u]\times [v,v]\times[u+1,+\infty)$,
@@ -12,10 +13,10 @@ We will use the detection version of the 3-SJ problem in 3D space to solve the t
 \end{itemize}
 and the following boxes to the sets $S_2$:
 \begin{itemize}
-    \item $(-\infty,v-1]\times[u,u]\times [v,v]$,
-    \item $[v+1,+\infty)\times[u,u]\times [v,v]$,
-    \item $(-\infty,u-1] \times[v,v]\times [u,u]$,
-    \item $ [u+1,+\infty)\times [v,v]\times [u,u]$;
+    \item $(-\infty,u-1]\times[u,u]\times [v,v]$,
+    \item $[u+1,+\infty)\times[u,u]\times [v,v]$,
+    \item $(-\infty,v-1] \times[v,v]\times [u,u]$,
+    \item $ [v+1,+\infty)\times [v,v]\times [u,u]$;
 \end{itemize}
 and the following boxes to the sets $S_3$:
 \begin{itemize}
@@ -27,8 +28,8 @@ and the following boxes to the sets $S_3$:
 There is a triangle in $G$ if and only if $\J(S_1,S_2,S_3) \neq \emptyset$. We prove as follows. If there is a triangle in $G$ with nodes $u$, $v$, $w$, where $u < v < w$, then the three boxes:
 \begin{itemize}
     \item $[u,u]\times [v,v]\times[u+1, +\infty)\in S_1$,
-    \item $(-\infty,w-1]\times[v,v]\times [w,w] \in S_2$,
+    \item $(-\infty,v-1]\times[v,v]\times [w,w] \in S_2$,
     \item $[u,u]\times(-\infty, w-1]\times [w,w] \in S_3$,
 \end{itemize}
-will form a result tuple in $\J(S_1,S_2,S_3)$. Conversely, w.l.o.g., suppose there is a tuple $(s_1,s_2,s_3)\in \J(S_1,S_2,S_3)$, s.t. $s_1 = [u,u]\times [v,v]\times[u+1, +\infty)$, $s_2 = (-\infty,w-1]\times[v,v]\times [w,w]$, and $s_3 = [u,u]\times(-\infty, w-1]\times [w,w]$. Then, we have $u < v < w$, and the edges $\set{u,v}$, $\set{v,w}$, and $\set{u,w}$ form a triangle in $G$. Therefore, if we can detect whethere there is an output in $O(n\polylog n)$ time for the 3-SJ problem in 3D space, then we can solve the triangle detection problem 
+will form a result tuple in $\J(S_1,S_2,S_3)$. Conversely, w.l.o.g., assume the existence of a tuple $(s_1,s_2,s_3)\in \J(S_1,S_2,S_3)$, s.t. $s_1 = [v,v]\times [u,u]\times[v+1, +\infty)$, $s_2 = (-\infty,u-1]\times[u,u]\times [w,w]$, and $s_3 = [v,v]\times(-\infty, w-1]\times [w,w]$. We can reason about the other forms of result tuples analogously. From the assumption, we have $v< u< w$, and the edges $\set{u,v}$, $\set{v,w}$, and $\set{u,w}$ form a triangle in $G$. Therefore, if we can detect whether there is an output in $O(n\polylog n)$ time for the 3-SJ problem in 3D space, then we can solve the triangle detection problem 
 in $O(m \polylog m)$ time. However, the state of the art needs $O(m^{1.41})$ time \cite{ayz97}.
