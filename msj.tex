@@ -343,7 +343,7 @@ Figure~\ref{fig:hv:types} illustrates a result tuple of each type, assuming $k =
         \hspace{-5mm} (a) $R_1$, $R_2$, $H$, and $V$ &
         \hspace{-4mm} (b) $R_1'$ and $R_2'$ &
         \hspace{-4mm} (c) $R_1'$, $R_2'$, $H$, and $V$ &
-        \hspace{-4mm} (d) $R_1^*$, $R_2^*$ ($= \emptyset$), $H$, and $V$
+        \hspace{-4mm} (d) $R_1^*$ and $H$ 
     \end{tabular}
     \figcapup 
     \caption{Finding H-V $k$-SJ result tuples of type 1 ($k = 4$)} 
@@ -492,7 +492,8 @@ Our focus lies specifically on the sets $\cross_H(r^*)$ of the rectangles $r^*$ 
     }
 \end{lemma}
 
-\yf{example}
+\extraspacing {\underline{\em Example 4.6.}}
+\qed
 
 Finding the $\cross_H(r^*)$ sets of all $r^* \in R^*_i$ is an instance of the find-all-sorted version of Problem $\mathscr{D}$ (with $H$ and $R^*_i$ as the input). Statement (1) of Lemma~\ref{lmm:hv:type1:cross-r*}, as well as the discussion in Section~\ref{sec:bricks}, assures us that the total time to do so for all $R^*_1, ..., R^*_{k-2}$ is bounded by $O(k n \log n + \out)$. Note that, for each $\cross_H(r^*)$ computed, the (horizontal) segments therein have been sorted in ascending order of y-coordinate.
 
