@@ -427,7 +427,7 @@ By statements (1) and (2) of Lemma~\ref{lmm:hv:type1:properties}, the set $\J^*$
 
 \vgap 
 
-The rest of the section will focus on how to prepare the sets $\dcross_H(\bm{t})$ of all $\bm{t} \in \J(R_1', ..., R_{k-2}')$ in $O(n \log n + k \cdot \out)$ time. An analogous method can be used to compute the sets $\dcross_V(\bm{t})$ of all $\bm{t}$ in the same time complexity.
+The rest of the section will focus on how to prepare the sets $\dcross_H(\bm{t})$ of all $\bm{t} \in \J(R_1', ..., R_{k-2}')$ in $O(n \log n + k \cdot \out)$ time. An analogous method can be used to compute the sets $\dcross_V(\bm{t})$ of all $\bm{t}$ within the same time complexity.
 
 \extraspacing {\bf Sets $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} Fix any $i \in [k-2]$. For each rectangle $r' \in R_i'$, define
 \myeqn{
@@ -466,7 +466,7 @@ Our focus lies specifically on the sets $\cross_H(r^*)$ of the rectangles $r^*$ 
 
 \yf{example}
 
-Finding the $\cross_H(r^*)$ sets of all $r^* \in R^*_i$ is an instance of the find-all-sorted version of Problem $\mathscr{D}$ (with $H$ and $R^*_i$ as the input). Statement (1) of Lemma~\ref{lmm:hv:type1:cross-r*}, as well as the discussion in Section~\ref{sec:bricks}, assures us that the total time to do so for all $R^*_1, ..., R^*_{k-2}$ is bounded by $O(n \log n + \out)$. Note that, for each $\cross_H(r^*)$ computed, the (horizontal) segments therein has been sorted in ascending order of y-coordinate.
+Finding the $\cross_H(r^*)$ sets of all $r^* \in R^*_i$ is an instance of the find-all-sorted version of Problem $\mathscr{D}$ (with $H$ and $R^*_i$ as the input). Statement (1) of Lemma~\ref{lmm:hv:type1:cross-r*}, as well as the discussion in Section~\ref{sec:bricks}, assures us that the total time to do so for all $R^*_1, ..., R^*_{k-2}$ is bounded by $O(k n \log n + \out)$. Note that, for each $\cross_H(r^*)$ computed, the (horizontal) segments therein has been sorted in ascending order of y-coordinate.
 
 
 \extraspacing {\bf Computing the ``d-cross'' Sets.} We are ready to compute $\dcross_H(\bm{t})$, defined in \eqref{eqn:dcross-H}, for any $\bm{t} \in \J(R'_1, ..., R'_{k-2})$, thanks to Statement (2) of Lemma~\ref{lmm:hv:type1:cross-r*}. First, compute $B_\bm{t}$, obtain the rectangle $r' = \gbot(\bm{t})$, and fetch the (already computed) top-sliced rectangle $r^*$ of $r'$; these steps require $O(k)$ time. Then, scan the segments in $\cross_H(r^*)$ in ascending order of their y-coordinates. For each segment $h$ scanned, check whether $h$ belongs to $\dcross_H(\bm{t})$, namely, whether $h$ crosses $B_\bm{t}$ (the reader can verify that $h$ must cross $\gbot(\bm{t})$); this can be done in constant time. Abort the scan as soon as $h \notin \dcross_H(\bm{t})$. This way, we produce $\dcross_H(\bm{t})$ in $O(k + |\dcross_H(\bm{t})|)$ time. Doing so for all $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ takes $O(k \cdot |\J| + \sum_\bm{t} |\dcross_H(t)|) = O(k \cdot \out)$ time, where the derivation used Lemma~\ref{lmm:hv:type1:recur-output} and statement (3) of Lemma~\ref{lmm:hv:type1:properties}.
