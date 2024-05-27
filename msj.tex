@@ -430,10 +430,9 @@ The prefix ``d-'' stands for ``double''. These sets have important properties as
     }
 \end{lemma}
 
-\noindent {\underline{\em Example 4.3.} Let us examine, in turn, the two 2-tuples $\bm{t}_1 = (\alpha', \beta_1')$ and $\bm{t}_2 = (\alpha', \beta_2')$ in $\J(R_1', R_2')$. For $\bm{t}_1$, $B_{\bm{t}_1}$ is the rectangle \ttt{ABCD}, and $\gleft(\bm{t}_1) = \gbot(\bm{t}_1) = \alpha'$. Accordingly, $\dcross_H(\bm{t}_1) = \set{h_2}$ and $\dcross_V(\bm{t}_1) = \set{v_3}$. For $\bm{t}_2$, $B_{\bm{t}_2}$ is the rectangle \ttt{AEFG}, and $\gleft(\bm{t}_1) = \gbot(\bm{t}_1) = \alpha'$. Accordingly, $\dcross_H(\bm{t}_2) = \set{h_2, h_4, h_5}$ and $\dcross_V(\bm{t}_1) = \set{v_3, v_4, v_5}$.
+\noindent {\underline{\em Example 4.3.} Let us examine, in turn, the two 2-tuples $\bm{t}_1 = (\alpha', \beta_1')$ and $\bm{t}_2 = (\alpha', \beta_2')$ in $\J(R_1', R_2')$. For $\bm{t}_1$, $B_{\bm{t}_1}$ is the rectangle \ttt{ABCD} in Figure~\ref{fig:hv:type1:ex}c, and $\gleft(\bm{t}_1) = \gbot(\bm{t}_1) = \alpha'$. Accordingly, $\dcross_H(\bm{t}_1) = \set{h_2}$ and $\dcross_V(\bm{t}_1) = \set{v_3}$. For $\bm{t}_2$, $B_{\bm{t}_2}$ is the rectangle \ttt{AEFG}, and $\gleft(\bm{t}_1) = \gbot(\bm{t}_1) = \alpha'$. Accordingly, $\dcross_H(\bm{t}_2) = \set{h_2, h_4, h_5}$ and $\dcross_V(\bm{t}_1) = \set{v_3, v_4, v_5}$.
 \qed
 
-\vspace{1mm}
 \vgap 
 
 Equipped with Lemma~\ref{lmm:hv:type1:properties}, we generate our target $\J^*$ as follows:
@@ -454,10 +453,10 @@ By statements (1) and (2) of Lemma~\ref{lmm:hv:type1:properties}, the set $\J^*$
 
 The rest of the section will focus on how to prepare the sets $\dcross_H(\bm{t})$ of all $\bm{t} \in \J(R_1', ..., R_{k-2}')$ in $O(n \log n + k \cdot \out)$ time. An analogous method can be used to compute the sets $\dcross_V(\bm{t})$ of all $\bm{t}$ within the same time complexity.
 
-\extraspacing {\underline{\em Example 4.4.} In our running example, the $\J^*$ computed includes 10 tuples in total: $(\alpha, \beta_1, h_2, v_3)$, and $\{\alpha\} \times \{\beta_2\} \times \set{h_2, h_4, h_5} \times \set{v_3, v_4, v_5}$. All these 10 tuples belong to $\J(R_1, R_2, H, V)$ and include the 4 tuples in $\J_1$ (see Example 4.1).
+\extraspacing {\underline{\em Example 4.4.} In our running example, the $\J^*$ computed includes 10 tuples: $(\alpha, \beta_1, h_2, v_3)$, and $\{\alpha\} \times \{\beta_2\} \times \set{h_2, h_4, h_5} \times \set{v_3, v_4, v_5}$. All these 10 tuples belong to $\J(R_1, R_2, H, V)$ and include the 4 tuples in $\J_1$ (see Example 4.1).
 \qed
 
-\extraspacing {\bf Sets $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} Fix any $i \in [k-2]$. For each rectangle $r' \in R_i'$, define
+\extraspacing {\bf Sets $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} Fix any $i \in [k-2]$. Define for each $r' \in R_i'$:
 \myeqn{
     \maxtop(r') &=& \max_{\bm{t} \in \J(R'_1, ..., R'_{k-2}): \gbot(\bm{t}) = r'} \ytop(B_\bm{t}). 
 }
@@ -467,9 +466,10 @@ We set $\maxtop(r')$ to $-\infty$, if no $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ ha
 }
 and call it the {\em top-sliced rectangle} of $r'$.
 
-\vgap
+%\vgap
 
-\extraspacing {\underline{\em Example 4.4.}
+\extraspacing {\underline{\em Example 4.5.} The two tuples $\bm{t}_1 = (\alpha', \beta_1')$ and $\bm{t}_2 = (\alpha', \beta_2')$ in $\J(R_1',$ $R_2')$ satisfy $\gbot(\bm{t}_1) = \gbot(\bm{t}_2) = \alpha'$. Therefore, $\maxtop(\alpha') = \max\{\ytop(B_{\bm{t}_1}), \ytop(B_{\bm{t}_2})\} = \max\{6, 9.5\} = 9.5$. The top-sliced rectangle of $r'$ is the rectangle $\alpha^*$ in Figure~\ref{fig:hv:type1:ex}d. Rectangles $\beta'_1$ and $\beta'_2$ do not have top-sliced rectangles.
+\qed
 
 \vgap 
 
