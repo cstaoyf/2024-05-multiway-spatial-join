@@ -720,7 +720,7 @@ We now complete the proof of Theorem~\ref{thm:main-recur}.
 
 \section{Proof of Theorem~\ref{thm:main-alg}} \label{app:main-alg}
 
-As mentioned in Section~\ref{sec:intro:prev}, 2-SJ can be solved in $F_2(n, \out) = O(n \log n + \out)$ time using a comparison-based algorithm. By Theorem~\ref{thm:main-recur}, in general, a comparison-based $(k-1)$-SJ algorithm with runtime $F_{k-1}(n, \out)$ spawns a comparison-based $k$-SJ algorithm whose running time $F_k(n, \out)$ obeys \eqref{eqn:main:reccurrence}. Specifically, for $k \ge 3$, there is a constant $c > 1$ such that
+As mentioned in Section~\ref{sec:intro:prev}, 2-SJ can be solved in $F_2(n, \out) = O(n \log n + \out)$ time using a comparison-based algorithm. By Theorem~\ref{thm:main-recur}, in general, a comparison-based $(k-1)$-SJ algorithm with runtime $F_{k-1}(n, \out)$ spawns a comparison-based $k$-SJ algorithm whose running time $F_k(n, \out)$ obeys \eqref{eqn:main:reccurrence}. Specifically, for $k \ge 3$, there is a constant $c \ge 2$ such that
 \myeqn{
     && F_{k}(n, \out) \nn \\
     &\le& c \cdot k^3 \cdot \big( F_{k-1}(n, \out) + n \log n + k \cdot \out \big) \nn \\
