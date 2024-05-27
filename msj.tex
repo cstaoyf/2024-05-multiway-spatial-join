@@ -652,21 +652,22 @@ Let $P'$ be the set of remaining points in $P$ after the aforementioned removal.
     O\Big(kn \log n + \sum_{p \in P'} \sum_{j \in [k-1]} |\contained_{R_j}(p)| \Big). \label{eqn:ksj:cat1:help1}
 }
 
-We are ready to generate $\J^\cat_k$. Take any point $p \in P'$, let $r \in R_k$ be the rectangle with $p$ as the top-left corner. For every $(k-1)$-tuple 
+We are ready to generate $\J^\cat_k$. Take any point $p \in P'$, and let $r \in R_k$ be the rectangle with $p$ as the top-left corner. For every $(k-1)$-tuple
 \myeqn{
-    (r_1, ..., r_{k-1}) \in \contained_{R_1}(p) \times ... \times \contained_{R_{k-1}}(p) \label{eqn:ksj:cat1:help2}
+    (r_1, ..., r_{k-1}) \in \contained_{R_1}(p) \times ... \times \contained_{R_{k-1}}(p) \nn
+    %\label{eqn:ksj:cat1:help2}
 }
-we add $(r_1, ..., r_{k-1}, r)$ to $\J^\cat_k$. Performing the above for all $p \in P'$ generates the whole $\J^\cat_k$ in $O(1 + |\J^\cat_k|)$ time. The way $P'$ is computed ensures that $\contained_{R_j}(p) \ne \emptyset$ for all $j \in [k-1]$. Hence, we have $\sum_{j \in [k-1]} |\contained_{R_j}(p)| \le \prod_{j \in [k-1]} |\contained_{R_j}(p)|$, which implies that \eqref{eqn:ksj:cat1:help1} is bounded by $O(kn \log n + k \cdot |\J^\cat_k|) = O(kn \log n + k \cdot \out)$ .
+we add $(r_1, ..., r_{k-1}, r)$ to $\J^\cat_k$. Performing the above for all $p \in P'$ generates the whole $\J^\cat_k$ in $O(1 + |\J^\cat_k|)$ time. The way $P'$ is computed ensures that $\contained_{R_j}(p) \ne \emptyset$ for each $j \in [k-1]$. Hence, $\sum_{j \in [k-1]} |\contained_{R_j}(p)| \le \prod_{j \in [k-1]} |\contained_{R_j}(p)|$, which implies that \eqref{eqn:ksj:cat1:help1} is bounded by $O(kn \log n + k \cdot |\J^\cat_k|) = O(kn \log n + k \cdot \out)$ .
 
 \vgap 
 
-Therefore, the total time of computing all of $\J^\cat_1, ..., \J^\cat_k$ is $O(k) \cdot (kn \log n + k \cdot \out)$. A category-1 result tuple $\bm{t}$ may be seen more than once (this happens if the top-left corner of $B_\bm{t}$ is the top-left corner of more than one rectangle in $\bm{t}$). Duplicate removal can be achieved at no extra cost asymptotically, following the ideas explained in Section~\ref{sec:hv:type2}.
+Therefore, the total time of computing all of $\J^\cat_1, ..., \J^\cat_k$ is $O(k) \cdot (kn \log n + k \cdot \out)$. A category-1 result tuple $\bm{t}$ may be seen more than once (this happens if the top-left corner of $B_\bm{t}$ is the top-left corner of more than one rectangle in $\bm{t}$). Duplicate removal can be implemented at no extra cost asymptotically, following the ideas explained in Section~\ref{sec:hv:type2}.
 
 \extraspacing {\bf Category 2.} Given $i, j \in [k]$ with $i \ne j$, we denote by $\J^\catt_{i,j}$ the set of $k$-tuples $\bm{t} = (r_1, ..., r_k) \in \J(R_1, ..., R_k)$ such that the top-left corner of $B_\bm{t}$ is the intersection between the top edge of $r_i$ and the left edge of $r_j$. The Category 2 of result tuples is the union of the $\J^\catt_{i,j}$ of all possible $i, j$. 
 
 \vgap 
 
-The computation of $\J^\catt_{i,j}$ is an instance of H-V $k$-SJ. Specifically, collect the top-edges of all rectangles of $R_i$ into a set $H$, and collect the left-edges of all the rectangles of $R_j$ into a set $V$. This yields an H-V $k$-SJ problem whose input comprises all the $R_z$ with $z \in [k] \setminus \set{i,j}$,  $H$, and $V$. Each result tuple consists of a rectangle $r_z \in R_z$, for $z \in [k] \setminus \set{i,j}$, a horizontal segment $h \in H$, and a vertical segment $v \in V$ such that $h \cap v \cap \bigcap_{z \in [k] \setminus \set{i,j}} r_z \ne \emptyset$. There is one-one correspondence between the output of the H-V $k$-SJ and $\J^\catt_{i,j}$. Thus, by Lemma~\ref{lmm:hv}, the H-V $k$-SJ can be solved in $O(k) \cdot (F_{k-1}(n, |\J^\catt_{i,j}|) + n \log n + k \cdot |\J^\catt_{i,j}|)$ time. Converting the output into $\J^\catt_{i,j}$ takes another $O(|\J^\catt_{i,j}|)$ time. Applying $|\J^\catt_{i,j}| \le \out$, we can assert that $\J^\catt_{i,j}$ can be produced in $O(k) \cdot (F_{k-1}(n, \out) + n \log n + k \cdot \out)$ time
+The computation of $\J^\catt_{i,j}$ is an instance of the H-V $k$-SJ problem. Specifically, collect the top-edges of all rectangles of $R_i$ into a set $H$, and collect the left-edges of all the rectangles of $R_j$ into a set $V$. This yields an H-V $k$-SJ instance whose input comprises all the $R_z$ with $z \in [k] \setminus \set{i,j}$,  $H$, and $V$. Each result tuple consists of a rectangle $r_z \in R_z$, for $z \in [k] \setminus \set{i,j}$, a horizontal segment $h \in H$, and a vertical segment $v \in V$ such that $h \cap v \cap \bigcap_{z \in [k] \setminus \set{i,j}} r_z \ne \emptyset$. There is one-one correspondence between the output of the H-V $k$-SJ and $\J^\catt_{i,j}$. Thus, by Lemma~\ref{lmm:hv}, the H-V $k$-SJ can be solved in $O(k) \cdot (F_{k-1}(n, |\J^\catt_{i,j}|) + n \log n + k \cdot |\J^\catt_{i,j}|)$ time. Converting the output into $\J^\catt_{i,j}$ takes another $O(|\J^\catt_{i,j}|)$ time. Applying $|\J^\catt_{i,j}| \le \out$, we know that $\J^\catt_{i,j}$ can be produced in $O(k) \cdot (F_{k-1}(n, \out) + n \log n + k \cdot \out)$ time
 
 \vgap 
 
