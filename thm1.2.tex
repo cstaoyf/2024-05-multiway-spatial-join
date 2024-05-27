@@ -17,7 +17,7 @@ We solve the recurrence by expanding it $k-2$ times. And we get
     &\leq& ... \nn \\
     &\leq& (\sum_{i =1}^{k-2}c^i)\cdot (k!/2)^3\cdot (n\log n + k \cdot\out)+ \nn \\
     && c^{k-2}(k!/2)^3 \cdot F_{2}(n,\out) \nn \\
-    &\leq & 2c^{k-1}(k!/2)^3(n\log n + k \cdot\out) \nn \\
-    &=& O(c^k \cdot (k!)^3(n\log n + k \cdot\out)). \nn
+    &\leq & 2c^{k-1}(k!/2)^3\cdot (n\log n + k \cdot\out) \nn \\
+    &=& O(c^k (k!)^3\cdot (n\log n + k \cdot\out)). \nn
 }
 As a result, Theorem~\ref{thm:main-alg} holds. 
