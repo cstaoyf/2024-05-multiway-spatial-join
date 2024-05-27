@@ -18,7 +18,6 @@ We solve the recurrence by expanding it $k-2$ times. And we get
     &\leq& (k-2)c^{k-2}(k!/2)^3(n\log n + k \cdot\out) \nn \\
     && + c^{k-2}(k!/2)^3 \cdot F_{2}(n,\out) \nn \\
     &=& (k-1)c^{k-2}(k!/2)^3(n\log n + k \cdot\out) \nn \\
-    &=& O((c')^k(n\log n + k \cdot\out)), \nn
+    &=& O(k\cdot c^k \cdot (k!)^3(n\log n + k \cdot\out)). \nn
 }
-where $c'$ is a constant satisfying that $(c')^k \geq (k-1)c^{k-2}/2^3$. 
 As a result, Theorem~\ref{thm:main-alg} holds. 
