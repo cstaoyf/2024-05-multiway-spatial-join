@@ -157,7 +157,7 @@ In this paper, we solve the $k$-SJ problem with a comparison-based algorithm tha
 In terms of techniques, our primary contribution is the revelation of a new property on the problem's mathematical structure. Fix any $k \ge 3$ and an {\em arbitrary} algorithm $\A$ for the $(k-1)$-SJ problem. Define function $F_{k-1}(n, \out)$ to return the worst-case running time of $\A$ on any instance of the $(k-1)$-SJ problem having input size at most $n$ and output size at most $\out$. Our core technical contribution is to establish:
 
 \begin{theorem} \label{thm:main-recur}
-    Equipped with the algorithm $\A$ as described above, the $k$-SJ problem can be solved in time
+    Equipped with the algorithm $\A$ as described above, the $k$-SJ problem with $k \ge 3$ can be solved in time
     \myeqn{
         O(k^3) \cdot \big( F_{k-1}(n, \out) + n \log n + k \cdot \out \big)
         %\nn
@@ -279,13 +279,13 @@ In the {\em find-all-sorted} version of the problem, the goal is to report, for 
 
 \section{The Core: H-V Multiway Spatial Joins} \label{sec:hv}
 
-Recall that the input of $k$-SJ comprises $k$ sets of rectangles: $R_1, R_2, ...,$ $R_k$. We now formulate a special version of $k$-SJ, named the {\em H-V $k$-SJ} problem. The special nature is reflected in the introduction of three constraints: (i) $k \ge 3$, (ii) $R_{k-1}$ should be a set of horizontal segments, and (iii) $R_k$ should be a set of vertical segments. For better clarity, we will represent the input sets as $R_1, R_2, ..., R_{k-2}, H$ ($=R_{k-1}$), and $V$ ($=R_k$). The goal is to output the join result $\J(R_1, ..., R_{k-2},$ $H, V)$, including every $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in R_1 \times ... \times R_{k-2} \times H \times V$ such that $h \cap v \cap \bigcap_{i=1}^{k-2} r_i$ is not empty. 
+Recall that the input of $k$-SJ comprises $k$ sets of rectangles: $R_1, R_2, ...,$ $R_k$. We now formulate a special version of $k$-SJ, named the {\em H-V $k$-SJ problem}. The special nature is reflected in the introduction of three constraints: (i) $k \ge 3$, (ii) $R_{k-1}$ should be a set of horizontal segments, and (iii) $R_k$ should be a set of vertical segments. For better clarity, we will represent the input sets as $R_1, R_2, ..., R_{k-2}, H$ ($=R_{k-1}$), and $V$ ($=R_k$). The goal is to output the join result $\J(R_1, ..., R_{k-2},$ $H, V)$, including every $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in R_1 \times ... \times R_{k-2} \times H \times V$ such that $h \cap v \cap \bigcap_{i=1}^{k-2} r_i$ is not empty.
 
 %As we will see, conquering this sepcial version is the most challenging step in settling the original $k$-SJ problem optimally.
 
 \vgap
 
-Our objective is to prove that H-V $k$-SJ can be efficiently reduced to $(k-1)$-SJ --- note: it is $(k-1)$-SJ here, rather than H-V $(k-1)$-SJ. To facilitate our analysis, let us define the 1-SJ problem as follows: the input is a set $R$ of $n$ rectangles, and the goal is simply to enumerate each rectangle of $R$. The 1-SJ problem can be trivially ``solved'' in $O(n)$ time. We assume the existence of an algorithm $\A$ that can solve $\kappa$-SJ problems for all $\kappa \in [1, k-1]$. Denote by $F_\kappa(n, \out)$ the worst-case runtime of $\A$ on any instance of $\kappa$-SJ that has input size $n$ and output size $\out$. We consider that $F_\kappa(n, \out) \le F_{\kappa + 1}(n, \out)$ for any $\kappa \ge 1$, that is, its overhead on $\kappa$-SJ should not be larger than that on $(\kappa+1)$-SJ.
+Our objective is to prove that H-V $k$-SJ can be efficiently reduced to $(k-1)$-SJ --- note: it is $(k-1)$-SJ here, rather than H-V $(k-1)$-SJ. To ensure the soundness of our notation system, let us formulate the ``1-SJ'' as the trivial problem where the input is a set $R$ of $n$ rectangles, and the goal is simply to enumerate each rectangle of $R$; the problem can obviously be ``solved'' in $O(n)$ time. We assume the existence of an algorithm $\A$ that can settle $\kappa$-SJ for all $\kappa \in [1, k-1]$. Denote by $F_\kappa(n, \out)$ the worst-case runtime of $\A$ on any instance of $\kappa$-SJ that has input size $n$ and output size $\out$. We consider that $F_\kappa(n, \out) \le F_{\kappa + 1}(n, \out)$ for any $\kappa \ge 1$, that is, its overhead on $\kappa$-SJ should not be larger than that on $(\kappa+1)$-SJ.
 
 \vgap
 
@@ -630,7 +630,7 @@ We conclude that $\J_2$ --- the set of type-2 result tuples $(r_1, ..., r_{k-2},
 
 \section{Settling $k$-SJ} \label{sec:ksj}
 
-This section will tackle the $k$-SJ problem in its general form, where the input comprises $k$ sets of rectangles $R_1, R_2, ..., R_k$. The join result $\J(R_1, R_2, ..., R_k)$ is the set of $k$-tuples $\bm{t} = (r_1, r_2, ..., r_k) \in R_1 \times R_2 \times ... \times R_k$ satisfying the condition that $B_\bm{t}$ --- which is $\bigcap_{i=1}^k r_i \ne \emptyset$ (see \eqref{eqn:B_t}) --- is non-empty. 
+This section will tackle the $k$-SJ problem in its general form, where the input comprises $k \ge 3$ sets of rectangles $R_1, R_2, ..., R_k$. The join result $\J(R_1, R_2, ..., R_k)$ is the set of $k$-tuples $\bm{t} = (r_1, r_2, ..., r_k) \in R_1 \times R_2 \times ... \times R_k$ satisfying the condition that $B_\bm{t}$ --- which is $\bigcap_{i=1}^k r_i \ne \emptyset$ (see \eqref{eqn:B_t}) --- is non-empty.
 
 \vgap 
 
