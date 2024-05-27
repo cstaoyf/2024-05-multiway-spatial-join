@@ -332,6 +332,27 @@ Figure~\ref{fig:hv:types} illustrates a result tuple of each type, assuming $k =
 \end{figure}
 
 
+\begin{figure*}
+    \begin{tabular}{cccc}
+        \hspace{-5mm}
+        \includegraphics[height=45mm]{./artwork/alg-ex1-a} &
+        \hspace{-4mm}
+        \includegraphics[height=45mm]{./artwork/alg-ex1-b} & 
+        \hspace{-4mm}
+        \includegraphics[height=45mm]{./artwork/alg-ex1-c} &
+        \hspace{-4mm}
+        \includegraphics[height=45mm]{./artwork/alg-ex1-d} \\ 
+        \hspace{-5mm} (a) Input ($k$=4) &
+        \hspace{-4mm} (b) $R_1'$ and $R_2'$ &
+        \hspace{-4mm} (c) $R_1'$, $R_2'$, $H$, and $V$ &
+        \hspace{-4mm} (d) $R_1^*$ ($= \emptyset$), $R_2^*$, $H$, and $V$
+    \end{tabular}
+    \figcapup 
+    \caption{Finding H-V $k$-SJ result tuples of type 1} 
+    \label{fig:hv:type1:ex}
+    \figcapdown 
+\end{figure*}
+
 \section{H-V $k$-SJ: Result Tuples of Type 1} \label{sec:hv:type1}
 
 As before, let $R_1, ..., R_{k-2}, H$, and $V$ be the input sets of the H-V $k$-SJ problem. Denote by $\J_1$ the set of type-1 result tuples defined in Section~\ref{sec:hv}. In this section, we aim to compute a set $\J^*$ satisfying
@@ -473,6 +494,20 @@ Finding the $\cross_H(r^*)$ sets of all $r^* \in R^*_i$ is an instance of the fi
 \vgap 
 
 We conclude that $\J_1$ --- the set of type-1 result tuples --- can be computed in $F_{k-2}(n, \out) + O(kn \log n +  k \cdot \out)$ time.
+
+\begin{figure*}
+    \begin{tabular}{cccc}
+        \hspace{-3mm}
+        \includegraphics[height=43mm]{./artwork/alg-ex1} &
+        \hspace{-3mm}
+        \includegraphics[height=43mm]{./artwork/alg-ex1} & 
+        \hspace{-3mm}
+        \includegraphics[height=43mm]{./artwork/alg-ex1} &
+        \hspace{-3mm}
+        \includegraphics[height=43mm]{./artwork/alg-ex1}
+    \end{tabular}
+\end{figure*}
+
 
 \section{H-V $k$-SJ: Result Tuples of Type 2} \label{sec:hv:type2}
 
