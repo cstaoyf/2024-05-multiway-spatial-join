@@ -483,7 +483,7 @@ Still, denote by $R_1, ..., R_{k-2}, H$, and $V$ the input sets of the H-V $k$-S
 As mentioned before, for a result tuple $(r_1, ..., r_{k-2}, h, v)$ of this type, a rectangle $r_i$, for some $i \in [k-2]$, covers an endpoint of $h$ or $v$ or both. As (i) there are $k-2$ choices for $i$ and (ii) $h$ and $v$ together have four endpoints, we can divide Type 2 further into $4(k-2)$ ``sub-types'': in subtype 1 (resp., 2), $r_1$ covers the left (resp., right) endpoint of $h$, in subtype 3 (resp., 4), $r_1$ covers the bottom (resp., top) endpoint of $v$, in subtype 5 (resp., 6), $r_2$ covers the left (resp., right) endpoint of $h$, etc. It is possible for the result tuple to belong to multiple sub-types simultaneously. Next, we will focus on producing the result tuples of a particular sub-type:
 \myeqn{
     \J_2  &=& \{(r_1, ..., r_{k-2}, h, v) \in \J(R1, ..., R_{k-2}, H, V) \mid \text{$r_{k-2}$ covers} \nn \\[-1mm]
-    && \text{the left endpoint of $h$}\}. \nn
+    && \text{the left endpoint of $h$}\}. \label{eqn:hv:type2:J2}
 }
 Other sub-types can be found analogously.
 
@@ -598,14 +598,14 @@ The proof can be found in Appendix~\ref{app:hv}.
 Finding the $\contained_{R_{k-2}}(h^*)$ sets of all $h^* \in H^*$ is an instance of the find-all-sorted version of Problem $\mathscr{E}$ (with $H^*$ and $R_{k-2}$ as the input). The cost is $O(n \log n + \out)$ according statement (1) of Lemma~\ref{lmm:hv:type1:cross-r*} and the discussion in Section~\ref{sec:bricks}. Note that, for each $\contained_{R_{k-2}}(h^*)$ computed, the rectangles $r$ therein have been sorted in descending order of $\xright(r)$.
 
 
-\extraspacing {\bf Computing the ``$\bm{\contained_{R_{k-2}}(t)}$'' Sets.} Statement (2) of Lemma~\ref{lmm:hv:type2:contained-h*} allows us to produce $\contained_{R_{k-2}}(h^*)$, defined in \eqref{eqn:type2:contained-t}, for each $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$ as follows. First, fetch the (already computed) minimal segment $h^*$ of $\bm{t}[k-2]$ in $O(1)$ time. Then, scan the rectangles $r$ of $\contained_{R_{k-2}}(h^*)$ in descending order of $\xright(r)$. For each $r$ scanned, check whether $r \in \contained_{R_{k-2}}(\bm{t})$, or equivalently, whether $r$ covers $B_\bm{t}$ (recall that $B_\bm{t}$ is a point); the cost for such a check is $O(1)$. Abort the scan as soon as $r \notin 
+\extraspacing {\bf Computing the ``$\bm{\contained_{R_{k-2}}(t)}$'' Sets.} Statement (2) of Lemma~\ref{lmm:hv:type2:contained-h*} allows us to produce $\contained_{R_{k-2}}(\bm{t})$ --- defined in \eqref{eqn:type2:contained-t} --- for each $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$ as follows. First, fetch the (already computed) minimal segment $h^*$ of $\bm{t}[k-2]$ in $O(1)$ time. Then, scan the rectangles $r$ of $\contained_{R_{k-2}}(h^*)$ in descending order of $\xright(r)$. For each $r$ scanned, check whether $r \in \contained_{R_{k-2}}(\bm{t})$, or equivalently, whether $r$ covers $B_\bm{t}$ (recall that $B_\bm{t}$ is a point); the cost of this inspection is $O(1)$. Abort the scan as soon as $r \notin
 \contained_{R_{k-2}}(\bm{t})$. This way, $\contained_{R_{k-2}}(t)$ can be decided in $O(k + |\contained_{R_{k-2}}(\bm{t})|)$ time. Doing so for all $\bm{t} \in \J(R_1, ..., R_{k-3},$ $H', V)$ takes $O(k \cdot |\J| + \sum_\bm{t} |\contained_{R_{k-2}}(\bm{t})|) = O(k \cdot \out)$ time, where the derivation used Lemma~\ref{lmm:hv:type2:recur-output} and statement (3) of Lemma~\ref{lmm:hv:type2:properties}.
 
 
 
 \vgap 
 
-We conclude that $\J_2$ --- the set of type-2 result tuples $(r_1, ..., r_{k-2},$ $h, v)$ where $r_{k-2}$ covers the left endpoint of $h$ --- can be computed in $F_{k-1}(n, \out) + O(n \log n +  k \cdot \out)$ time. Remember that, to generate the entire type-2 result, we need to repeat the algorithm $4(k-2)$ times (one for each sub-type). The total running time is therefore $O(k) \cdot (F_{k-1}(n, \out) + n \log n +  k \cdot \out)$, as claimed in Lemma~\ref{lmm:hv}.
+We conclude that $\J_2$ --- see \eqref{eqn:hv:type2:J2} --- can be computed in $F_{k-1}(n, \out) + O(n \log n +  k \cdot \out)$ time. Remember that, to generate the entire type-2 result, we need to repeat the algorithm $4(k-2)$ times (one for each sub-type). The total running time is therefore $O(k) \cdot (F_{k-1}(n, \out) + n \log n +  k \cdot \out)$, as claimed in Lemma~\ref{lmm:hv}.
 
 \begin{figure}
     \begin{tabular}{cc}
