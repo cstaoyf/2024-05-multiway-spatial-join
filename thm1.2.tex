@@ -11,13 +11,13 @@ We solve the recurrence by expanding it $k-2$ times. And we get
     F_{k}(n,\out) &=& c \cdot k^3(n\log n + k\cdot \out )+ \nn \\
     && c^2 \cdot k^3(k-1)^3 \cdot (F_{k-2}(n,\out) + n\log n + k\cdot \out)\nn\\
     &\leq& (c+c^2)\cdot k^3(k-1)^3(n\log n + k \cdot\out)+  \nn\\
-    && c^2 \cdot k^3(k-1)^3 \cdot F_{k-2}(n,\out) \nn \\
+    && c^3 \cdot k^3(k-1)^3 \cdot F_{k-2}(n,\out) \nn \\
     &\leq& (c+c^2+c^3)\cdot k^3(k-1)^3(k-2)^3(n\log n + k \cdot\out)+  \nn\\
     && c^3 \cdot k^3(k-1)^3(k-2)^3 \cdot F_{k-3}(n,\out)\nn\\
     &\leq& ... \nn \\
     &\leq& (\sum_{i =1}^{k-2}c^i)\cdot (k!/2)^3\cdot (n\log n + k \cdot\out)+ \nn \\
     && c^{k-2}(k!/2)^3 \cdot F_{2}(n,\out) \nn \\
     &\leq & 2c^{k-1}(k!/2)^3\cdot (n\log n + k \cdot\out) \nn \\
-    &=& O(c^k (k!)^3\cdot (n\log n + k \cdot\out)). \nn
+    &=& O(c^k (k!)^3\cdot (n\log n + k \cdot\out))x. \nn
 }
 As a result, Theorem~\ref{thm:main-alg} holds. 
