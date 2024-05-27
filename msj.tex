@@ -316,7 +316,7 @@ Consider any $k$-tuple $(r_1, ..., r_{k-2}, h, v)$ in the join result $\J(R_1, .
 }
 Figure~\ref{fig:hv:types} illustrates a result tuple of each type, assuming $k = 4$. In Section~\ref{sec:hv:type1} (resp., \ref{sec:hv:type2}), we will explain how to produce the result tuples of Type 1 (resp., 2) in the time complexity claimed in Lemma~\ref{lmm:hv}.
 
-\extraspacing {\bf Remark.} In \cite{rdr+11}, Rahul et al.\ studied the problem of storing a set $H$ of horizontal segments and a set $V$ of vertical segments in a data structure such that, given a query rectangle $r$, all the pairs $(h, v) \in H \times V$ satisfying $h \cap v \cap r \ne \emptyset$ can be reported efficiently. They developed a structure of $O(n \log n)$ space that can be built in $O(n \log n)$ time, and can be used to answer a query in $O(\log n + K)$ time, where $n = |H| + |V|$ and $K$ is the number of pairs reported. Their structure can be utilized to solve H-V 3-SJ in $O(n \log n + \out)$ time. We are unaware of a way to extend their solution to handle H-V $k$-SJ of $k > 3$. Our method for proving Lemma~\ref{lmm:hv} is based on fundamentally different ideas. 
+\extraspacing {\bf Remark.} In \cite{rdr+11}, Rahul et al.\ studied the problem of storing a set $H$ of horizontal segments and a set $V$ of vertical segments in a data structure such that, given a query rectangle $r$, all the pairs $(h, v) \in H \times V$ satisfying $h \cap v \cap r \ne \emptyset$ can be reported efficiently. They developed a structure of $O(n \log n)$ space that can be built in $O(n \log n)$ time, and can be used to answer a query in $O(\log n + K)$ time, where $n = |H| + |V|$ and $K$ is the number of pairs reported. Their structure can be utilized to solve H-V 3-SJ in $O(n \log n + \out)$ time. We are unaware of a way to extend their solution to handle H-V $k$-SJ of $k > 3$. Our method for proving Lemma~\ref{lmm:hv} is based on fundamentally different ideas even for $k = 3$.
 
 \begin{figure}
     \begin{tabular}{cc}
@@ -343,7 +343,7 @@ As before, let $R_1, ..., R_{k-2}, H$, and $V$ be the input sets of the H-V $k$-
     \subseteq
     \J(R_1, ..., R_{k-2}, H, V) \label{eqn:hv:type1:J*}
 }
-where $\J(R_1, ..., R_{k-2}, H, V)$, let us recall, is the join result of the (whole) H-V $k$-SJ. Remember that the output size $\out$ is defined to $|\J(R_1, ..., R_{k-2}, H, V)|$. From $\J^*$, we will report only those $k$-tuples belonging to $\J_1$ and ignore the rest. 
+where $\J(R_1, ..., R_{k-2}, H, V)$, let us recall, is the join result of the (whole) H-V $k$-SJ. Remember that the output size $\out$ is defined as $|\J(R_1, ..., R_{k-2}, H, V)|$. From $\J^*$, we will report only those $k$-tuples belonging to $\J_1$ and ignore the rest.
 
 \extraspacing {\bf Sets $\bm{R_1', R_2', ..., R'_{k-2}}$.} Fix any $i \in [k-2]$. For each rectangle $r \in R_i$, we compute four segments:
 \myitems{
@@ -361,17 +361,17 @@ Construct
 \myeqn{
     R_i' &=& \set{r' \mid r \in R_i \text{ and its trimmed rectangle $r'$ exists}}. \nn
 }
-Computing the ``segment $h_1$'' for each $r \in R_i$ is an instance of Problem $\mathscr{D}$ (the find-lowest version, with $H$ and $R_i$ as the input). By symmetry, so is the computation of $h_2, v_1$, and $v_2$ segments for each $r \in R_i$. It thus follows from Section~\ref{sec:bricks} that $R_1', R_2', ..., R_{k-2}'$ can be produced in $O(n \log n)$ total time.
+Computing the ``segment $h_1$'' for each $r \in R_i$ is an instance of Problem $\mathscr{D}$ (the find-lowest version, with $H$ and $R_i$ as the input). By symmetry, so is the computation of $h_2, v_1$, and $v_2$ segments for each $r \in R_i$. It thus follows from Section~\ref{sec:bricks} that $R_1', R_2', ..., R_{k-2}'$ can be produced in $O(kn \log n)$ total time.
 
 \vgap
 
-We now solve a $(k-2)$-SJ problem with $R_1', R_2', ..., R_{k-2}'$ as the input using the algorithm $\A$ supplied (see Lemma~\ref{lmm:hv}). This $(k-2)$-SJ clearly has an input size at most $n$, and let us represent its result as $\J(R'_1, R'_2, ..., R'_{k-2})$. We prove in Appendix~\ref{app:hv}:
+We now solve a $(k-2)$-SJ problem on the input $\set{R_1', R_2', ..., R_{k-2}'}$ using the algorithm $\A$ supplied (see Lemma~\ref{lmm:hv}). This $(k-2)$-SJ clearly has an input size at most $n$, and let us represent its result as $\J(R'_1, R'_2, ..., R'_{k-2})$. We prove in Appendix~\ref{app:hv}:
 
 \begin{lemma} \label{lmm:hv:type1:recur-output}
     $|\J(R_1', R'_2, ..., R'_{k-2})| \le \out$.
 \end{lemma}
 
-We remind the reader that $\out$ is the output size of the original H-V $k$-SJ problem. As a corollary of Lemma~\ref{lmm:hv:type1:recur-output}, the $(k-2)$-SJ can be settled in $F_{k-2}(n, \out)$ time.
+As a corollary of Lemma~\ref{lmm:hv:type1:recur-output}, the $(k-2)$-SJ can be settled in $F_{k-2}(n, \out)$ time.
 
 \yf{example}
 
@@ -473,7 +473,7 @@ Finding the $\cross_H(r^*)$ sets of all $r^* \in R^*_i$ is an instance of the fi
 
 \vgap 
 
-We conclude that $\J_1$ --- the set of type-1 result tuples --- can be computed in $F_{k-2}(n, \out) + O(n \log n +  k \cdot \out)$ time.
+We conclude that $\J_1$ --- the set of type-1 result tuples --- can be computed in $F_{k-2}(n, \out) + O(kn \log n +  k \cdot \out)$ time.
 
 \section{H-V $k$-SJ: Result Tuples of Type 2} \label{sec:hv:type2}
 
