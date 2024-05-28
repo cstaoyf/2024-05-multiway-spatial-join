@@ -2,7 +2,7 @@ The input to the 3-SJ problem in 3D space comprises
  three sets of axis-parallel boxes $S_1$, $S_2$, and $S_3$. 
 % A box $s_i \in S_i$, for $i \in [3]$, is of the form $s_i = [x_1,x_2]\times[y_1,y_2]\times[z_1,z_2]$. 
 The goal is to report the set of tuples $(s_1,s_2,s_3)$ such that $s_i \in S_i$ for $i \in [3]$ and $s_1 \cap s_2 \cap s_3 \neq \emptyset$. Denote the output set as $\J(S_1,S_2,S_3)$.
-Let $n:=|S_1|+|S_2|+|S_3|$ be the input size, and let $\out = |\J(S_1,S_2,S_3)|$.
+Let $n=|S_1|+|S_2|+|S_3|$ be the input size, and let $\out = |\J(S_1,S_2,S_3)|$.
 
 The triangle detection problem is defined as follows. Given a graph $G = (V,E)$, where $m=|E|$, we want to find out whether there exists a triangle in the graph. We will reduce this problem to an instance of the 3-SJ problem in 3D space with input size $6m=O(m)$. First, we represent each node in $G$ as a unique integer in $[|V|]$, and create three empty sets of 3D boxes $S_1$, $S_2$, $S_3$. For each edge $\set{u,v}\in E$, we add the following boxes to the sets $S_1$:
 \begin{itemize}
