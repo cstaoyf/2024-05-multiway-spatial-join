@@ -566,7 +566,8 @@ Now, solve a $(k-1)$-SJ problem on the input $\set{R_1, ..., R_{k-3}, H', V}$ us
     $|\J(R_1, ..., R_{k-3}, H', V)| \le \out$.
 \end{lemma}
 
-\noindent {\underline{\em Example 5.2.}} To illustrate our algorithm, we will utilize the running example in Figure~\ref{fig:hv:type2:ex}a, where $k = 4$, and $R_1 = \set{\alpha}$, $R_2 = \set{\beta_2, \beta_2, \beta_3}$, $H$ $=$ $\set{h_1,$ $h_2,$ $h_3}$, and $V = \set{v_1, v_2}$. The set $\J_2$ contains the following tuples: $(\alpha, \beta_1, h_2, v_1)$, $(\alpha, \beta_1, h_3, v_1)$, $(\alpha, \beta_1, h_3, v_2)$, $(\alpha, \beta_2, h_3, v_1)$, $(\alpha, \beta_2, h_3, v_2)$, $(\alpha, \beta_3, h_3, v_1)$, and $(\alpha, \beta_3, h_3, v_2)$. \qed
+\noindent {\underline{\em Example 5.2.}} Segment $h_1$ has no left-covering rectangle in $R_2$ and thus has no trimmed segment. Segment $h_2$ has $\beta_2$ and $\beta_3$ as its left-covering rectangles. As the entire $h_2$ is covered by $\beta_2$
+\qed
 
 \extraspacing {\bf Generating $\bm{\J_2}$.} Take any $(k-1)$-tuple $\bm{t} = (r_1, ..., r_{k-3}, h', v) \in \J(R_1, ..., R_{k-3}, H', V)$. Note that $B_\bm{t}$ --- defined in \eqref{eqn:B_t} --- is a point (due to $h'$ and $v$). Suppose $h' = [x_1, x_2] \times y$ and $B_\bm{t} = (x, y)$, we define the {\em effective horizontal segment} of $\bm{t}$ as the horizontal segment $[x_1, x] \times y$. This allows us to define
 \myeqn{
