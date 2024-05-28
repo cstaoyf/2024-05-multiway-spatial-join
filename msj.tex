@@ -381,7 +381,7 @@ Construct
 \myeqn{
     R_i' &=& \set{r' \mid r \in R_i \text{ and its trimmed rectangle $r'$ exists}}. \nn
 }
-Computing the ``segment $h_1$'' for each $r \in R_i$ is an instance of Problem $\mathscr{D}$ (the find-lowest version, with $H$ and $R_i$ as the input). By symmetry, so is the computation of $h_2, v_1$, and $v_2$ segments for each $r \in R_i$. It thus follows from Section~\ref{sec:bricks} that $R_1', R_2', ..., R_{k-2}'$ can be produced in $O(kn \log n)$ total time.
+Computing the ``segment $h_\bot$'' for each $r \in R_i$ is an instance of Problem $\mathscr{D}$ (the find-lowest version, with $H$ and $R_i$ as the input). By symmetry, so is the computation of $h_\top, v_\vdash$, and $v_\dashv$ segments for each $r \in R_i$. It thus follows from Section~\ref{sec:bricks} that $R_1', R_2', ..., R_{k-2}'$ can be produced in $O(kn \log n)$ total time.
 
 \vgap
 
@@ -430,7 +430,7 @@ The prefix ``d-'' stands for ``double''. These sets have important properties as
     }
 \end{lemma}
 
-\noindent {\underline{\em Example 4.3.} Let us examine, in turn, the two 2-tuples $\bm{t}_1 = (\alpha', \beta_1')$ and $\bm{t}_2 = (\alpha', \beta_2')$ in $\J(R_1', R_2')$. For $\bm{t}_1$, $B_{\bm{t}_1}$ is the rectangle \ttt{ABCD} in Figure~\ref{fig:hv:type1:ex}c, and $\gleft(\bm{t}_1) = \gbot(\bm{t}_1) = \alpha'$. Accordingly, $\dcross_H(\bm{t}_1) = \set{h_2}$ and $\dcross_V(\bm{t}_1) = \set{v_3}$. For $\bm{t}_2$, $B_{\bm{t}_2}$ is the rectangle \ttt{AEFG}, and $\gleft(\bm{t}_1) = \gbot(\bm{t}_1) = \alpha'$. Accordingly, $\dcross_H(\bm{t}_2) = \set{h_2, h_4, h_5}$ and $\dcross_V(\bm{t}_1) = \set{v_3, v_4, v_5}$.
+\noindent {\underline{\em Example 4.3.} Let us examine, in turn, the two 2-tuples $\bm{t}_1 = (\alpha', \beta_1')$ and $\bm{t}_2 = (\alpha', \beta_2')$ in $\J(R_1', R_2')$. For $\bm{t}_1$, $B_{\bm{t}_1}$ is the rectangle \ttt{ABCD} in Figure~\ref{fig:hv:type1:ex}c, and $\gleft(\bm{t}_1) = \gbot(\bm{t}_1) = \alpha'$. Accordingly, $\dcross_H(\bm{t}_1) = \set{h_2}$ and $\dcross_V(\bm{t}_1) = \set{v_3}$. For $\bm{t}_2$, $B_{\bm{t}_2}$ is the rectangle \ttt{AEFG}, and $\gleft(\bm{t}_2) = \gbot(\bm{t}_2) = \alpha'$. Accordingly, $\dcross_H(\bm{t}_2) = \set{h_2, h_4, h_5}$ and $\dcross_V(\bm{t}_2) = \set{v_3, v_5}$.
 \qed
 
 \vgap 
@@ -453,7 +453,7 @@ By statements (1) and (2) of Lemma~\ref{lmm:hv:type1:properties}, the set $\J^*$
 
 The rest of the section will focus on how to prepare the sets $\dcross_H(\bm{t})$ of all $\bm{t} \in \J(R_1', ..., R_{k-2}')$ in $O(n \log n + k \cdot \out)$ time. An analogous method can be used to compute the sets $\dcross_V(\bm{t})$ of all $\bm{t}$ within the same time complexity.
 
-\extraspacing {\underline{\em Example 4.4.} In our running example, the $\J^*$ computed includes 10 tuples: $(\alpha, \beta_1, h_2, v_3)$, and $\{\alpha\} \times \{\beta_2\} \times \set{h_2, h_4, h_5} \times \set{v_3, v_4, v_5}$. All these 10 tuples belong to $\J(R_1, R_2, H, V)$ and include the 4 tuples in $\J_1$ (see Example 4.1).
+\extraspacing {\underline{\em Example 4.4.} In our running example, the $\J^*$ computed includes 7 tuples: $(\alpha, \beta_1, h_2, v_3)$, and $\{\alpha\} \times \{\beta_2\} \times \set{h_2, h_4, h_5} \times \set{v_3, v_5}$. All these 7 tuples belong to $\J(R_1, R_2, H, V)$ and include the 4 tuples in $\J_1$ (see Example 4.1).
 \qed
 
 \extraspacing {\bf Sets $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} Fix any $i \in [k-2]$. Define for each $r' \in R_i'$:
