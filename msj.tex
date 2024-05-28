@@ -173,7 +173,7 @@ The theorem implies a recursive nature of $k$-SJ. Indeed, we will see that an $k
     %and $O(k \cdot n + \out)$ space, where $c > 1$ is a positive constant.
 \end{theorem}
 
-When $k = O(1)$, the time complexity becomes $O(n \log n$ $+ \out)$, as promised; the space consumption of our algorithm is $O(n + \out)$. Now that Theorem~\ref{thm:main-alg} offers a satisfactory $k$-SJ result for $k = O(1)$ in 2D space, it is natural to wonder whether the constraint on dimensionality 2 is necessary. Interestingly, the answer is ``yes'' as far as $k \ge 3$ is concerned, subject to the absence of breakthroughs on a classical problem in graph theory. Specifically, if the 3D version of the 3-SJ problem (which we will formally define in Appendix~\ref{app:lb-cond}) could be solved in $O(n \polylog n + \out)$ time, we would obtain an algorithm that detects the presence of a triangle (i.e., 3-clique) in a graph of $m$ edges in $O(m \polylog m)$ time, which would make a truly remarkable breakthrough because the state of the art needs $O(m^{1.41})$ time \cite{ayz97}. This reduction can be inferred from an argument in \cite{kcko22} used to prove a more generic result. We simplify the argument for 3D 3-SJ and present the full reduction in Appendix~\ref{app:lb-cond}.
+When $k = O(1)$, the time complexity becomes $O(n \log n$ $+ \out)$, as promised; the space consumption of our algorithm is $O(n + \out)$. Now that Theorem~\ref{thm:main-alg} offers a satisfactory $k$-SJ result for $k = O(1)$ in 2D space, it is natural to wonder whether the constraint on dimensionality 2 is necessary. Interestingly, the answer is ``yes'' as far as $k \ge 3$ is concerned, subject to the absence of breakthroughs on a classical problem in graph theory. Specifically, if the 3D version of the 3-SJ problem (which we will formally define in Appendix~\ref{app:lb-cond}) could be solved in $O((n + \out) \cdot \polylog n)$ time, we would obtain an algorithm that detects the presence of a triangle (i.e., 3-clique) in a graph of $m$ edges in $O(m \polylog m)$ time, which would make a truly remarkable breakthrough because the state of the art needs $O(m^{1.41})$ time \cite{ayz97}. This reduction can be inferred from an argument in \cite{kcko22} used to prove a more generic result. We simplify the argument for 3D 3-SJ and present the full reduction in Appendix~\ref{app:lb-cond}.
 
 \begin{figure}
     \includegraphics[height=27mm]{./artwork/guard}
@@ -567,7 +567,7 @@ Now, solve a $(k-1)$-SJ problem on the input $\set{R_1, ..., R_{k-3}, H', V}$ us
     $|\J(R_1, ..., R_{k-3}, H', V)| \le \out$.
 \end{lemma}
 
-\noindent {\underline{\em Example 5.2.}} Segment $h_1$ has no left-covering rectangle in $R_2$ (see Figure~\ref{fig:guard}a) and thus has no trimmed segment. Segment $h_2$ has one left-covering rectangle in $R_2$, which is $\beta_1$. As the entire $h_2$ is covered by $\beta_1$, it is equivalent to its trimmed segment $h_2'$; see Figure~\ref{fig:hv:type2:ex}b. Segment $h_3$ has two left-covering rectangles in $R_2$, which are $\beta_2$ and $\beta_3$. The right endpoint of its trimmed segment $h_3'$, as shown in Figure~\ref{fig:guard}b, is decided by the right edge of $\beta_3$. Therefore, $H' = \set{h_2', h_3'}$. It is clear from Figure~\ref{fig:guard}b that $\J(R_1, H', V)$ has 3 tuples: $\bm{t}_1 = (\alpha, h_2', v_1), \bm{t}_2 = (\alpha, h_3', v_1)$, and $\bm{t}_3 = (\alpha, h_3', v_2)$.
+\noindent {\underline{\em Example 5.2.}} Segment $h_1$ has no left-covering rectangle in $R_2$ (see Figure~\ref{fig:hv:type2:ex}a) and thus has no trimmed segment. Segment $h_2$ has one left-covering rectangle in $R_2$, which is $\beta_1$. As the entire $h_2$ is covered by $\beta_1$, it is equivalent to its trimmed segment $h_2'$; see Figure~\ref{fig:hv:type2:ex}b. Segment $h_3$ has two left-covering rectangles in $R_2$, which are $\beta_2$ and $\beta_3$. The right endpoint of its trimmed segment $h_3'$, as shown in Figure~\ref{fig:hv:type2:ex}b, is decided by the right edge of $\beta_3$. Therefore, $H' = \set{h_2', h_3'}$. It is clear from Figure~\ref{fig:hv:type2:ex}b that $\J(R_1, H', V)$ has 3 tuples: $\bm{t}_1 = (\alpha, h_2', v_1), \bm{t}_2 = (\alpha, h_3', v_1)$, and $\bm{t}_3 = (\alpha, h_3', v_2)$.
 \qed
 
 \extraspacing {\bf Generating $\bm{\J_2}$.} Take any $(k-1)$-tuple $\bm{t} = (r_1, ..., r_{k-3}, h', v) \in \J(R_1, ..., R_{k-3}, H', V)$. Note that $B_\bm{t}$ --- defined in \eqref{eqn:B_t} --- is a point (due to $h'$ and $v$). Suppose $h' = [x_1, x_2] \times y$ and $B_\bm{t} = (x, y)$, we define the {\em effective horizontal segment} of $\bm{t}$ as the horizontal segment $[x_1, x] \times y$. This allows us to define
@@ -820,7 +820,48 @@ which completes the proof of Theorem~\ref{thm:main-alg}.
 
 \section{Hardness of 3-SJ in 3D Space} \label{app:lb-cond}
 
-\input{hard-3d}
+An axis-parallel rectangle in 3D has the form $r = [x_1, x_2] \times [y_1, y_2] \times [z_1, z_2]$. We will refer to $[x_1, x_2]$ as the {\em x-projection} of $r$, and define its {\em y-} and {\em z-projections} analogously.
+
+
+\vgap
+
+In the 3D 3-SJ problem, the input comprises three sets of axis-parallel rectangles in $\real^3$: $R_1, R_2$, and $R_3$. The goal is to report all 3-tuples $(r_1, r_2, r_3) \in R_1 \times R_2 \times R_3$ such that $r_1 \cap r_2 \cap r_3 \neq \emptyset$. Denote by $\J(R_1, R_2, R_3)$ the set of those 3-tuples. Define the input size as $n = |R_1| + |R_2| + |R_3|$ and the output size as $\out = |\J(R_1, R_2, R_3)|$.
+
+\vgap
+
+In the {\em triangle detection}, we are given an undirected graph $G = (V, E)$ and need to determine whether $G$ has a triangle (a.k.a.\, 3-clique). Set $m = |E|$. We consider that $G$ has no isolated vertices (namely, vertices with degree 0), and therefore $|V| \le 2m$.
+
+\vgap
+
+Next, we will prove that if the 3D 3-SJ problem can be solved in $O((n + \out) \cdot \polylog n)$ time, then the triangle detection problem can be solved in $O(m \polylog m)$ time. This would be truly surprising because as mentioned in Section~\ref{sec:intro:ours} the state of the art algorithm for triangle detection runs in $O(m^{1.41})$ time \cite{ayz97}. Thus, in the absence of such a breakthrough, no $O((n + \out) \cdot \polylog n)$ time algorithms can exist for the 3D 3-SJ problem.
+
+\vgap
+
+Given a graph $G = (V,E)$ for triangle detection, we will construct an instance of the 3D 3-SJ problem with input size $3m$. W.l.o.g., let us assume that each vertex of $V$ is represented as a unique integer in $[|V|]$. Initialize 3 empty sets of rectangles: $R_1, R_2$, and $R_3$. For each edge $\set{u, v}\in E$ where $u < v$, we add rectangles
+\begin{itemize}
+    \item $(-\infty, \infty) \times [u,u] \times [v,v]$ to $R_1$;
+    \item $[v,v] \times(-\infty, \infty)\times [u,u]$ to $R_2$;
+    \item $[v,v] \times [u,u] \times(-\infty, \infty) $ to $R_3$.
+\end{itemize}
+Note that every rectangle in $R_1$ (resp., $R_2$ and $R_3$) has $(-\infty, \infty)$ as the x- (resp., y- and z-) projection.
+
+\vgap
+
+The construction has the property that $G$ has a triangle if and only if $\J(R_1, R_2, R_3) \neq \emptyset$. We can prove this with the following argument.
+\myitems{
+    \item Suppose that $G$ with triangle with vertices $u$, $v$, and $w$ such that $u < v  < w$. Then, by our construction, $r_1 = (-\infty, \infty) \times [u,u] \times [v,v] \in R_1$, $r_2 = [w, w] \times (-\infty, \infty) \times[v,v] \in R_2$, and $r_3 = [w,w] \times [u, u] \times (-\infty, \infty) \in r_3$. It is clear that $(r_1, r_2, r_3)$ is a result tuple in $\J(R_1, R_2, R_3)$.
+
+    \item Conversely, consider that $\J(R_1, R_2, R_3)$ is non-empty. Consider an arbitrary result tuple $(r_1, r_2, r_3) \in \J(R_1, R_2, R_3)$. Assume, w.l.o.g., that $r_1 = (-\infty, \infty) \times [u, u] \times [v, v]$.
+    Because the z-projection of $r_2$ must match that of $r_1$, we assert that $r_2$ must have the form $[w, w] \times (-\infty, \infty) \times [v, v]$ where $w > u$. Because the x-projection of $r_3$ must match that of $r_2$ and the y-projection of $r_3$ must match that of $r_1$, it follows that $r_3$ must have the form $[w, w] \times [u, u] \times (-\infty, \infty)$. This means that the edges $\set{u,v}$, $\set{v,w}$, and $\set{u,w}$ must all exist in $G$, and thus form a triangle.
+}
+
+Now, assume that there exists an algorithm $\A$ capable of solving the 3D 3-SJ problem in $O((n + \out) \cdot \polylog n)$ time. For $\out = 0$, this algorithm must perform at most $c \cdot n \polylog n$ steps when executed on an input with input size $n$. We run $\A$ on the 3D 3-SJ instance $R_1, R_2, R_3$ constructed earlier in a {\em cost-monitoring manner}:
+\myitems{
+    \item If $\A$ terminates within $c \cdot (3m) \polylog (3m)$ steps, we check whether it finds any result tuple in $\J(R_1, R_2, R_3)$. If so, a triangle has been found in $G$; otherwise, we declare that $G$ has no triangles.
+
+    \item If $\A$ has performed $1 + c \cdot (3m) \polylog (3m)$ steps, we manually terminate the algorithm and declare that $\J(R_1, R_2, R_3) \ne \empty$, meaning that $G$ must have at least one triangle.
+}
+The above strategy thus settles the triangle detection problem in $O(m\polylog m)$ time.
 
 %\end{sloppy}
 \end{document}
