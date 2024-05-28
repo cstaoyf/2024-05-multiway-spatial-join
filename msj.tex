@@ -544,6 +544,9 @@ Other sub-types can be found analogously.
 
 A remark is in order about duplicate removal. By finding each sub-type separately, we may see the same result tuple multiple times (precisely, up to $4(k-2)$ times) in the whole algorithm. However, this does not mean that the tuple needs to be reported multiple times. Whenever a type-2 result tuple is found, we can immediately decide in $O(k)$ time all the sub-types it belongs to. To avoid outputting the tuple more than once, we can enforce a policy to designate a specific sub-type for outputting. One such policy is the following: among all sub-types that the tuple belongs to, identify the one with the smallest sub-type number $t$ (an integer from 1 to $4(k-2)$); report the tuple only when we are computing the particular sub-type $t$.
 
+\extraspacing {\underline{\em Example 5.1.}} To illustrate our algorithm, we will utilize the running example in Figure~\ref{fig:hv:type2:ex}a, where $k = 4$, and $R_1 = \set{\alpha}$, $R_2 = \set{\beta_2, \beta_2, \beta_3}$, $H$ $=$ $\set{h_1,$ $h_2,$ $h_3}$, and $V = \set{v_1, v_2}$. The set $\J_2$ contains the following tuples: $(\alpha, \beta_1, h_2, v_1)$, $(\alpha, \beta_1, h_3, v_1)$, $(\alpha, \beta_1, h_3, v_2)$, $(\alpha, \beta_2, h_3, v_1)$, $(\alpha, \beta_2, h_3, v_2)$, $(\alpha, \beta_3, h_3, v_1)$, and $(\alpha, \beta_3, h_3, v_2)$. \qed
+
+
 \extraspacing {\bf Set $\bm{H'}$.} Take any horizontal segment $h = [x_1, x_2] \times y \in H$. Recall from Section~\ref{sec:bricks} that a left-end covering rectangle of $h$ is a rectangle covering the left endpoint of $h$. 
 Let $p$ be the rightmost point on $h$ such that at least one left-end covering rectangle of $h$ in $R_{k-2}$ covers $p$. This $p$ exists if and only if $h$ has at least one left-end covering rectangle in $R_{k-2}$. If $p$ exists and has coordinates $(x, y)$, we refer to the segment $h' = [x_1, x] \times y$ as the {\em trimmed segment} of $h$; conversely, we call $h$ the {\em full segment} of $h'$.
 
@@ -563,9 +566,7 @@ Now, solve a $(k-1)$-SJ problem on the input $\set{R_1, ..., R_{k-3}, H', V}$ us
     $|\J(R_1, ..., R_{k-3}, H', V)| \le \out$.
 \end{lemma}
 
-
-
-\yf{example}
+\noindent {\underline{\em Example 5.2.}} To illustrate our algorithm, we will utilize the running example in Figure~\ref{fig:hv:type2:ex}a, where $k = 4$, and $R_1 = \set{\alpha}$, $R_2 = \set{\beta_2, \beta_2, \beta_3}$, $H$ $=$ $\set{h_1,$ $h_2,$ $h_3}$, and $V = \set{v_1, v_2}$. The set $\J_2$ contains the following tuples: $(\alpha, \beta_1, h_2, v_1)$, $(\alpha, \beta_1, h_3, v_1)$, $(\alpha, \beta_1, h_3, v_2)$, $(\alpha, \beta_2, h_3, v_1)$, $(\alpha, \beta_2, h_3, v_2)$, $(\alpha, \beta_3, h_3, v_1)$, and $(\alpha, \beta_3, h_3, v_2)$. \qed
 
 \extraspacing {\bf Generating $\bm{\J_2}$.} Take any $(k-1)$-tuple $\bm{t} = (r_1, ..., r_{k-3}, h', v) \in \J(R_1, ..., R_{k-3}, H', V)$. Note that $B_\bm{t}$ --- defined in \eqref{eqn:B_t} --- is a point (due to $h'$ and $v$). Suppose $h' = [x_1, x_2] \times y$ and $B_\bm{t} = (x, y)$, we define the {\em effective horizontal segment} of $\bm{t}$ as the horizontal segment $[x_1, x] \times y$. This allows us to define
 \myeqn{
@@ -661,19 +662,6 @@ Finding the $\contained_{R_{k-2}}(h^*)$ sets of all $h^* \in H^*$ is an instance
 
 We conclude that $\J_2$ --- see \eqref{eqn:hv:type2:J2} --- can be computed in $F_{k-1}(n, \out) + O(n \log n +  k \cdot \out)$ time. Remember that, to generate the entire type-2 result, we need to repeat the algorithm $4(k-2)$ times (one for each sub-type). The total running time is therefore $O(k) \cdot (F_{k-1}(n, \out) + n \log n +  k \cdot \out)$, as claimed in Lemma~\ref{lmm:hv}.
 
-\begin{figure}
-    \begin{tabular}{cc}
-        \includegraphics[height=27mm]{./artwork/cat1} &
-        \hspace{5mm} \includegraphics[height=27mm]{./artwork/cat2} \\
-        (a) Category 1 &
-        (b) Category 2
-    \end{tabular}
-
-    \figcapup
-    \caption{Classifying $k$-SJ result tuples ($k$ = 4)}
-    \label{fig:ksj:cats}
-    \figcapdown
-\end{figure}
 
 \section{Settling $k$-SJ} \label{sec:ksj}
 
@@ -716,6 +704,21 @@ we add $(r_1, ..., r_{k-1}, r)$ to $\J^\cat_k$. Performing the above for all $p 
 \vgap 
 
 Therefore, the total time of computing all of $\J^\cat_1, ..., \J^\cat_k$ is $O(k) \cdot (kn \log n + k \cdot \out)$. A category-1 result tuple $\bm{t}$ may be seen more than once (this happens if the top-left corner of $B_\bm{t}$ is the top-left corner of more than one rectangle in $\bm{t}$). Duplicate removal can be implemented at no extra cost asymptotically, following the ideas explained in Section~\ref{sec:hv:type2}.
+
+
+\begin{figure}
+    \begin{tabular}{cc}
+        \includegraphics[height=27mm]{./artwork/cat1} &
+        \hspace{5mm} \includegraphics[height=27mm]{./artwork/cat2} \\
+        (a) Category 1 &
+        (b) Category 2
+    \end{tabular}
+
+    \figcapup
+    \caption{Classifying $k$-SJ result tuples ($k$ = 4)}
+    \label{fig:ksj:cats}
+    \figcapdown
+\end{figure}
 
 \extraspacing {\bf Category 2.} Given $i, j \in [k]$ with $i \ne j$, we denote by $\J^\catt_{i,j}$ the set of $k$-tuples $\bm{t} = (r_1, ..., r_k) \in \J(R_1, ..., R_k)$ such that the top-left corner of $B_\bm{t}$ is the intersection between the top edge of $r_i$ and the left edge of $r_j$. The Category 2 of result tuples is the union of the $\J^\catt_{i,j}$ of all possible $i, j$. 
 
