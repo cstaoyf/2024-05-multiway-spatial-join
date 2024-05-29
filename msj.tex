@@ -798,9 +798,22 @@ It remains to prove that no two distinct tuples $\bm{t}_1, \bm{t}_2 \in \J(R_1',
 \vgap
 
 
-\extraspacing {\bf Computing $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.}
+\extraspacing {\bf Computing $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} We consider, w.l.o.g., that each rectangle $r$ in the input $R_1 \cup ... \cup R_{k-2}$ is given a distinct integer ID in $[n]$. This allows us to create an array $A$ of size $n$ and store in $A[i]$ ($i \in [n]$) a constant amount of information for each $r$.
 
-\input{4-comp.tex}
+\vgap
+
+To compute $R^*_1, R^*_2, ..., R^*_{k-2}$, we start by deriving $\maxtop(r')$ for each rectangle $r'$ in $R'_1 \cup  ... \cup R'_{k-2}$. For this purpose, first initialize $\maxtop(r') = -\infty$ for each such $r'$. Recall that $r'$ is the trimmed rectangle of some rectangle $r$ in $R_1 \cup ... \cup R_{k-2}$. We store $\maxtop(r')$ in the cell of array $A$ corresponding to $r$; the cell can be accessed in $O(1)$ time using the ID of $r$.
+
+\vgap
+
+Then, we scan $\J(R_1',...,R_{k-2}')$. For each tuple $\bm{t}$ therein, use $O(k)$ time to identify the rectangle $r' = \gbot(\bm{t})$, and then update $\maxtop(r')$ to the maximum between its current value and $\ytop(r')$. The scan requires $O(n + k \cdot \out)$ time.
+
+\vgap
+
+Finally, we can construct the set $R_i^*$ for every $i \in [k-2]$ by collecting the top-sliced rectangles of all rectangles $r_i' \in R_i'$ satisfying that $\maxtop(r_i')\neq -\infty$. This step takes $O(n)$ additional time. The overall time complexity is $O(n + k\cdot \out)$.
+
+
+
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:cross-r*}.}
 
