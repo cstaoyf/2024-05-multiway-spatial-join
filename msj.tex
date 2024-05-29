@@ -486,7 +486,7 @@ Our focus lies specifically on the sets $\cross_H(r^*)$ of the rectangles $r^*$ 
 \begin{lemma} \label{lmm:hv:type1:cross-r*}
     Both statements below are true: 
     \myenums{
-        \item $\sum_{i=1}^k \sum_{r^* \in R^*_i} |\cross_H(r^*)| \le \out$.
+        \item $\sum_{i=1}^{k-2} \sum_{r^* \in R^*_i} |\cross_H(r^*)| \le \out$.
         
         \item Consider any tuple $\bm{t} \in \J(R'_1, ..., R'_{k-2})$. Let $r' = \gbot(\bm{t})$ and $r^*$ be the top-sliced rectangle of $r'$. Then, we have $\dcross_H(\bm{t})$ $\subseteq \cross_H(r^*)$. Furthermore, if the (horizontal) segments of $\cross_H(r^*)$ are sorted in ascending order of y-coordinate, then $\dcross_H(\bm{t})$ includes a prefix of the sorted order.
     }
@@ -750,6 +750,8 @@ We now complete the proof of Theorem~\ref{thm:main-recur}.
 
 \appendix 
 
+\def\vgap{\vspace{2mm}}
+
 \section*{Appendix}
 
 \section{Building Brick Algorithms} \label{app:bricks}
@@ -767,9 +769,28 @@ We now complete the proof of Theorem~\ref{thm:main-recur}.
 
 \section{Completing the Proof of Lemma~\ref{lmm:hv}} \label{app:hv} 
 
-\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:recur-output}.}
+\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:recur-output}.} We will prove the lemma by providing a way to map each $(k-2)$-tuple $\J(R_1',...,R_{k-2}')$ to a unique $k$-tuple in the H-V $k$-SJ result $\J(R_1,...,R_{k-2},H,V)$.
 
-\input{4.1.tex}
+\vgap
+
+To explain the mapping, consider any tuple $\bm{t} \in \J(R_1',...,R_{k-2}')$. Recall that $B_\bm{t}$ is the intersection of the $k-2$ rectangles $\bm{t}[1], ..., \bm{t}[k-2]$. Let $p$ be the bottom-left corner of $B_\bm{t}$. Define $i$ and $j$ to be values in $[k-2]$ such that $\bm{t}[i] = \gbot(\bm{t})$ and $\bm{t}[j] = \gleft(\bm{t})$; note that the values of $i$ and $j$ can be the same. Point $p$ is the intersection of the bottom edge of $\bm{t}[i]$ and the left edge of $\bm{t}[j]$.
+
+\vgap
+
+Recall that each $\bm{t}[z]$ (for $z \in [1, k-2]$) is a trimmed rectangle; let us denote by $r_z$ the full rectangle of $\bm{t}[z]$. Regarding the values $i, j$ decided earlier, let
+\myitems{
+    \item $h$ be the lowest segment in $H$ that crosses $r_i$;
+    \item $v$ be the leftmost segment in $V$ that crosses $r_j$.
+}
+By the way trimmed rectangles are computed, we know that $h$ must contain the bottom edge of rectangle $\bm{t}[i]$, and $v$ must contain the left edge of rectangle $\bm{t}[j]$. This means that point $p$ must be the intersection point of $h$ and $v$.
+
+\vgap
+
+We argue that the $k$-tuple $(r_1, ..., r_{k-2}, h, v)$ belongs to $\J(R_1,...,$ $R_{k-2},H,V)$. Clearly, $r_z$ covers $\bm{t}[z]$ for all $z \in [k-2]$. Thus, $\bigcap_{z=1}^{k-2} r_z$ covers $\bigcap_{z=1}^{k-2} \bm{t}[z]$, which is $B_\bm{t}$. Hence, point $p$ --- which is the intersection point of $h$ and $v$ and a corner of $B_\bm{t}$ --- falls in $\bigcap_{z=1}^{k-2} r_z$, indicating that $h \cap v \cap \bigcap_{z=1}^{k-2} r_z \ne \emptyset$. We now map $\bm{t}$ to $(r_1, ..., r_{k-2}, h, v)$.
+
+\vgap
+
+s
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:properties}.}
 
