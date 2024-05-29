@@ -797,8 +797,9 @@ It remains to prove that no two distinct tuples $\bm{t}_1, \bm{t}_2 \in \J(R_1',
 
 \vgap
 
+\input{4.2}
 
-\extraspacing {\bf Computing $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} We consider, w.l.o.g., that each rectangle $r$ in the input $R_1 \cup ... \cup R_{k-2}$ is given a distinct integer ID in $[n]$. This allows us to create an array $A$ of size $n$ and store in $A[i]$ ($i \in [n]$) a constant amount of information for each $r$.
+\extraspacing {\bf Computing $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} We consider, w.l.o.g., that each rectangle in the input $R_1 \cup ... \cup R_{k-2}$ is given a distinct integer ID in $[n]$. This allows us to create an array $A$ of size $n$ and allocate a cell of $A$ to each $r \in R_1 \cup ... \cup R_{k-2}$. The cell can be accessed by the ID of $r$ in constant time.
 
 \vgap
 
