@@ -462,7 +462,7 @@ The rest of the section will focus on how to prepare the sets $\dcross_H(\bm{t})
 }
 We set $\maxtop(r')$ to $-\infty$, if no $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ has $r'$ as the $\gbot(\bm{t})$. When $\maxtop(r') \ne -\infty$, assuming $r' = [x_1, x_2] \times [y_1, y_2]$, we introduce a rectangle
 \myeqn{
-    r^* &=& [x_1, x_2] \times [y_1, \maxtop(r')]. \nn
+    r^* &=& [x_1, x_2] \times [y_1, \maxtop(r')]. \label{eqn:hv:type1:topsliced}
 }
 and call it the {\em top-sliced rectangle} of $r'$.
 
@@ -750,7 +750,7 @@ We now complete the proof of Theorem~\ref{thm:main-recur}.
 
 \appendix 
 
-\def\vgap{\vspace{2mm}}
+\def\vgap{\vspace{1mm}}
 
 \section*{Appendix}
 
@@ -797,10 +797,24 @@ It remains to prove that no two distinct tuples $\bm{t}_1, \bm{t}_2 \in \J(R_1',
 
 \vgap
 
+\input{4.2}
 
-\extraspacing {\bf Computing $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.}
+\extraspacing {\bf Computing $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} We consider, w.l.o.g., that each rectangle in the input $R_1 \cup ... \cup R_{k-2}$ is given a distinct integer ID in $[n]$. This allows us to create an array $A$ of size $n$ and allocate a cell of $A$ to each $r \in R_1 \cup ... \cup R_{k-2}$. The cell can be accessed by the ID of $r$ in constant time.
 
-\input{4-comp.tex}
+\vgap
+
+To compute $R^*_1, R^*_2, ..., R^*_{k-2}$, we start by deriving $\maxtop(r')$ for each rectangle $r'$ in $R'_1 \cup  ... \cup R'_{k-2}$. For this purpose, first initialize $\maxtop(r') = -\infty$ for each such $r'$. Recall that $r'$ is the trimmed rectangle of some rectangle $r$ in $R_1 \cup ... \cup R_{k-2}$. We store $\maxtop(r')$ in the cell of array $A$ allocated to $r$; the cell can be accessed in $O(1)$ time using the ID of $r$.
+
+\vgap
+
+Then, we scan $\J(R_1',...,R_{k-2}')$. For each tuple $\bm{t}$ therein, use $O(k)$ time to identify the rectangle $r' = \gbot(\bm{t})$, and then update in constant time $\maxtop(r')$ to the maximum between its current value and $\ytop(r')$. The scan requires $O(n + k \cdot \out)$ time.
+
+\vgap
+
+Finally, for each $i \in [k-2]$, we construct $R_i^*$ by collecting the top-sliced rectangle (see definition in \eqref{eqn:hv:type1:topsliced}) of every rectangle $r' \in R_i'$ with $\maxtop(r') \neq -\infty$. This step takes $O(|R_i'|)$ time for each $i \in [k-2]$, or $O(n)$ total time for all $i$.
+
+
+
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:cross-r*}.}
 
