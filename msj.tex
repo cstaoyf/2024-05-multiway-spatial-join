@@ -462,7 +462,7 @@ The rest of the section will focus on how to prepare the sets $\dcross_H(\bm{t})
 }
 We set $\maxtop(r')$ to $-\infty$, if no $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ has $r'$ as the $\gbot(\bm{t})$. When $\maxtop(r') \ne -\infty$, assuming $r' = [x_1, x_2] \times [y_1, y_2]$, we introduce a rectangle
 \myeqn{
-    r^* &=& [x_1, x_2] \times [y_1, \maxtop(r')]. \nn
+    r^* &=& [x_1, x_2] \times [y_1, \maxtop(r')]. \label{eqn:hv:type1:topsliced}
 }
 and call it the {\em top-sliced rectangle} of $r'$.
 
@@ -810,7 +810,7 @@ Then, we scan $\J(R_1',...,R_{k-2}')$. For each tuple $\bm{t}$ therein, use $O(k
 
 \vgap
 
-Finally, we can construct the set $R_i^*$ for every $i \in [k-2]$ by collecting the top-sliced rectangles of all rectangles $r_i' \in R_i'$ satisfying that $\maxtop(r_i')\neq -\infty$. This step takes $O(n)$ additional time. The overall time complexity is $O(n + k\cdot \out)$.
+Finally, for each $i \in [k-2]$, we construct $R_i^*$ by collecting the top-sliced rectangle of every rectangle $r' \in R_i'$ (see definition in \eqref{eqn:hv:type1:topsliced}) with $\maxtop(r') \neq -\infty$. This step takes $O(|R_i'|)$ time for each $i \in [k-2]$, or $O(n)$ total time for all $i$.
 
 
 
