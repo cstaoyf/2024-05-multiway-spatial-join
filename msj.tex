@@ -793,11 +793,23 @@ We argue that the $k$-tuple $(r_1, ..., r_{k-2}, h, v)$ belongs to $\J(R_1,...,$
 It remains to prove that no two distinct tuples $\bm{t}_1, \bm{t}_2 \in \J(R_1',...,$ $R_{k-2}')$ can be mapped to the same tuple in $\J(R_1,..., R_{k-2},$ $H, V)$. Assume that this is not true, namely, both $\bm{t}_1$ and $\bm{t}_2$ are mapped to $(r_1, ..., r_{k-2}, h, v) \in \J(R_1,..., R_{k-2}, H, V)$. However, in this case, $\bm{t}_1[z]$ is the trimmed rectangle of $r_z$ for all $z \in [k-2]$ and, at the same time, $\bm{t}_2[z]$ is the trimmed rectangle of $r_z$ for all $z \in [k-2]$. We thus have $\bm{t}_1 = \bm{t}_2$, giving a contradiction.
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:properties}.} \\
-\underline{\em Proof of Statement (1).} By the definitions of $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$, both segments $h$ and $v$ cross $B_\bm{t}$. Thus, the intersection of $h$ and $v$ is a point $p$ in $B_\bm{t}$. As $r_i$ (for each $i \in [k-2]$) is the full rectangle of $\bm{t}[i]$, we know that $\bigcap_{i=1}^{k-2} r_i$ covers $\bigcap_{i=1}^{k-2} \bm{t}[i]$, which is $B_\bm{t}$. Hence, point $p$ falls in $\bigcap_{i=1}^{k-2} r_i$, indicating that $h\cap v \cap \bigcap_{i = 1}^{k-2}r_i \neq \emptyset$. It follows that $(r_1,...,r_{k-2},h,v)$ is a result tuple in $\J(R_1,...,R_{k-2},H,V)$.
+\underline{\em Proof of Statement (1).} As $h \in \dcross_H(\bm{t})$ and $v \in \dcross_V(\bm{t})$, the two segments both cross $B_\bm{t}$, as can be verified from the definitions of $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$. Thus, the intersection of $h$ and $v$ is a point $p$ in $B_\bm{t}$. As $r_i$ (for each $i \in [k-2]$) is the full rectangle of $\bm{t}[i]$, we know that $\bigcap_{i=1}^{k-2} r_i$ covers $B_\bm{t} = \bigcap_{i=1}^{k-2} \bm{t}[i]$. Hence, point $p$ falls in $\bigcap_{i=1}^{k-2} r_i$, indicating that $h\cap v \cap \bigcap_{i = 1}^{k-2}r_i \neq \emptyset$. It follows that $(r_1,...,r_{k-2},h,v)$ is a result tuple in $\J(R_1,...,R_{k-2},H,V)$.
 
 \vgap
 
-\input{4.2}
+\noindent \underline{\em Proof of Statement (2).} Fix any rectangle $r \in R_1 \cup ... \cup R_{k-2}$ and any horizontal segment $h = [x_1, x_2] \times y$ from $H$ that crosses $r$. We will show that $h$ must also cross the trimmed rectangle $r'$ of $r$. From the fact of $h$ crossing $r$, it is clear that $[x_1, x_2]$ contains the x-range of $r$. As the x-range of $r$ contains that of $r'$, we can assert that $[x_1, x_2]$ contains the x-range of $r'$. To prove that $h$ crosses $r'$, we still need to show $y \in [\ybot(r'), \ytop(r')]$. Recall that $\ybot(r')$ is the y-coordinate of the lowest segment in $H$ crossing $r$. This implies $y \ge \ybot(r')$ because $h$ itself is a segment in $H$ crossing $r$. Analogously, it also holds that $y \le \ytop(r')$. We can now conclude that $h$ crosses $r'$. 
+
+\vgap
+
+Fix any rectangle $r \in R_1 \cup ... \cup R_{k-2}$ and any vertical segment $v$ from $V$ that crosses $r$. An argument symmetric to the above shows that $v \in V$ must also cross $r'$.
+
+\vgap
+
+Next, we prove the first bullet of statement (2), namely, $\bm{t}\in \J(R_1',...,R_{k-2}')$. Consider the $k$-tuple $(r_1,...,r_{k-2},h,v)\in \J_1$ given in statement (2). By definition of $\J_1$, segments $h$ and $v$ both cross each of the rectangles $r_1,..., r_{k-2}$. By the earlier discussion, $h$ and $v$ also both cross each of the trimmed rectangles $r_1',..., r_{k-2}'$. This means that the intersection of $h$ and $v$ must be a point in each of $r_1',..., r_{k-2}'$, suggesting $\bigcap_{i = 1}^{k-2}r_i' \neq \emptyset$. It thus holds that $\bm{t} = (r_1', ..., r_{k-2}')$ is a result tuple in $\J(R_1',...,R_{k-2}')$. 
+
+\vgap 
+
+Finally, we prove the second bullet of Statement (2). As we proved that $h$ and $v$ cross $r_i'$ for all $i \in [k-2]$, they must cross $\gbot(\bm{t})$ and $\gleft(\bm{t})$ as well. Hence, it suffices to show that both $h$ and $v$ cross $B_\bm{t}$. As proved in the last paragraph, the point $p = h \cap v$ is in $B_\bm{t}$. So, $h\cap B_\bm{t}$ and $v \cap B_\bm{t}$ are non-empty. Since $h$ (resp. $v$) crosses $r_i'$ for some $i \in [k-2]$, $r_i'$ does not cover any of the endpoints of $h$ (resp. $v$). Additonally, $B_\bm{t}$ is a subset of $r_i'$, so $B_\bm{t}$ does not cover any of the endpoints of $h$ or $v$. Therefore, $h$ and $v$ cross $B_\bm{t}$. 
 
 \extraspacing {\bf Computing $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} We consider, w.l.o.g., that each rectangle in the input $R_1 \cup ... \cup R_{k-2}$ is given a distinct integer ID in $[n]$. This allows us to create an array of size $n$ and allocate an array cell to each $r \in R_1 \cup ... \cup R_{k-2}$, with the property that the cell can be accessed by the ID of $r$ in constant time.
 

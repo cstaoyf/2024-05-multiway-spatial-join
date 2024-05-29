@@ -1,16 +1,6 @@
 
 
-\noindent \underline{\em Proof of Statement (2).} 
-First, we deviate a little to prove the following statement. For any rectangle $r\in \bigcup_{i = 1}^{k-2}$, if a segment $h\in H$ crosses $r$, then $h$ also crosses the trimmed rectangle of $r$, denoted as $r'$. Since the x-range of $r'$ is a subset of the x-range of $r$, it suffices to show that the y-coordinate of $h$ is in the range $[\ybot(r'), \ytop(r')]$. Let $h = [x_1,x_2]\times y$. Since $\ybot(r')$ is the y-coordinate of the lowest segment in $H$ that crosses $r$, and $h$ crosses $r$, we have $\ybot(r') \leq y$. Moreover, since $\ytop(r')$ is the y-coordinate of the highest segment in $H$ that crosses $r$, and $h$ crosses $r$, we have $y \leq \ytop(r')$. Therefore, $y \in [\ybot(r'), \ytop(r')]$ and $h$ crosses $r'$.  Analogously, we can prove that if a segment $v\in V$ crosses $r$, then $v$ also crosses the trimmed rectangle of $r$.
 
-\vgap
-
-Now, we prove the first bullet of Statement (2). Since $(r_1,...,r_{k-2},h,v)\in \J_1$, both segments $h$ and $v$ cross all of the rectangles $r_1,..., r_{k-2}$. By the discussion above, $h$ and $v$ also cross the trimmed rectangles $r_1',..., r_{k-2}'$. Let $h = [x_1,x_2]\times y$, $v = x \times [y_1,y_2]$, and $p = (x,y)$ be the intersection point of $h$ and $v$. 
-Since $h$ crosses $r_i'$, we have $y \in [\ybot(r_i'), \ytop(r_i')]$, and since $v$ crosses $r_i'$, we have $x \in [\xleft(r_i'), \xright(r_i')]$. Hence, the point $p$ in $r_i'$, for each $i \in [k-2]$. This implies that $\bigcap_{i = 1}^{k-2}r_i' \neq \emptyset$, and $\bm{t}\in \J(R_1',...,R_{k-2}')$. 
-
-\vgap 
-
-Finally, we prove the second bullet of Statement (2). As we proved that $h$ and $v$ cross $r_i'$ for all $i \in [k-2]$, they must cross $\gbot(\bm{t})$ and $\gleft(\bm{t})$ as well. Hence, it suffices to show that both $h$ and $v$ cross $B_\bm{t}$. As proved in the last paragraph, the point $p = h \cap v$ is in $B_\bm{t}$. So, $h\cap B_\bm{t}$ and $v \cap B_\bm{t}$ are non-empty. Since $h$ (resp. $v$) crosses $r_i'$ for some $i \in [k-2]$, $r_i'$ does not cover any of the endpoints of $h$ (resp. $v$). Additonally, $B_\bm{t}$ is a subset of $r_i'$, so $B_\bm{t}$ does not cover any of the endpoints of $h$ or $v$. Therefore, $h$ and $v$ cross $B_\bm{t}$. 
 
 \vgap 
 
