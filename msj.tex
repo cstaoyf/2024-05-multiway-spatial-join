@@ -811,7 +811,43 @@ We now prove the first bullet of statement (2), namely, $\bm{t}\in \J(R_1',...,R
 
 Next, we prove the second bullet, namely, $h \in \dcross_H(\bm{t})$ and $v \in \dcross_V(\bm{t})$. It suffices to show only the former due to symmetry. To prove $h \in \dcross_H(\bm{t})$, we need to argue that $h$ crosses $\gbot(\bm{t})$ and $B_\bm{t}$. The first part, $h$ crossing $\gbot(\bm{t})$, is done because, as already explained, $h$ crosses each of $r_1', ..., r_{k-2}'$, and $\gbot(\bm{t})$ is one of those $k-2$ rectangles. To prove that $h$ crosses $B_\bm{t}$, first note that $B_\bm{t}$ (which is the intersection of $r_1', ..., r_{k-2}'$) is covered by $\gbot(\bm{t})$. The fact that $h$ crosses $\gbot(\bm{t})$ indicates that the y-range of $h$ contains that of $B_\bm{t}$. Hence, either $h$ is disjoint with $B_\bm{t}$ or $h$ crosses $B_\bm{t}$. However, $h$ cannot be disjoint with $B_\bm{t}$ because, as shown earlier, the intersection of $h$ and $v$ falls in $B_\bm{t}$. It thus follows that $h$ crosses $B_\bm{t}$.
 
-\input{4.2.tex}
+\vgap 
+
+\noindent \underline{\em Proof of Statement (3).} Our discussion will focus on explaining why $\sum_{\bm{t}\in \J(R_1',...,R_{k-2}')} |\dcross_H(\bm{t})|$ $\le \out$ because a similar argument can then used to prove $\sum_{\bm{t} \in \J(R_1',...,R_{k-2}')}$ $|\dcross_V(\bm{t})| \le \out$. 
+ 
+\vgap 
+
+We will provide a way to map each pair $(\bm{t},h)$ in $\J(R_1',...,R_{k-2}')\times \dcross_H(\bm{t})$ to a unique tuple in the H-V $k$-SJ result $\J(R_1,...,R_{k-2},H,V)$.
+
+\vgap 
+
+To explain the mapping, consider any pair $(\bm{t},h) \in \J(R_1',...,R_{k-2}')\times \dcross_H(\bm{t})$. Recall that $B_\bm{t}$ is the intersection of the $k-2$ rectangles $\bm{t}[1], ..., \bm{t}[k-2]$. Since $h \in \dcross_H(\bm{t})$ (see definition~\eqref{eqn:dcross-H}), $h$ crosses $B_\bm{t}$. Let $p$ be the intersection point of $h$ and the left edge of $B_\bm{t}$. Define $i$ to be the value in $[k-2]$ such that $\bm{t}[i] = \gleft(\bm{t})$. 
+
+\vgap
+
+Recall that each $\bm{t}[j]$ (for $j \in [k-2]$) is a trimmed rectangle; let us denote by $r_j$ the full rectangle of $\bm{t}[j]$. Regarding the value $i$ decided earlier, let $v$ be the leftmost segment in $V$ that crosses $r_i$. By the way trimmed rectangles are computed, we know that $v$ must contain the left edge of rectangle $\bm{t}[i]$. This means that point $p$ must be the intersection point of $h$ and $v$.
+
+\vgap 
+
+We argue that the $k$-tuple $(r_1, ..., r_{k-2}, h, v)\in \J(R_1,..., R_{k-2},H,V)$. Clearly, $r_j$ covers $\bm{t}[j]$ for all $j \in [k-2]$. Thus, $\bigcap_{j=1}^{k-2} r_j$ covers $\bigcap_{j=1}^{k-2} \bm{t}[j]$, which is $B_\bm{t}$. Hence, point $p$ --- which is the intersection point of $h$ and the left edge of $B_\bm{t}$ --- falls in $\bigcap_{j=1}^{k-2} r_j$, indicating $h \cap v \cap \bigcap_{j=1}^{k-2} r_j \ne \emptyset$. We map $(\bm{t},h)$ to $(r_1, ..., r_{k-2}, h, v)$.
+
+\vgap
+
+It remains to prove that no two distinct pairs $(\bm{t}_1, h_1), (\bm{t}_2, h_2) \in \J(R_1',...,R_{k-2}')\times \dcross_H(\bm{t})$ can be mapped to the same tuple in $\J(R_1,..., R_{k-2},H,V)$. Assume that this is not true, namely, both $(\bm{t}_1, h_1)$ and $(\bm{t}_2, h_2)$ are mapped to the tuple $(r_1, ..., r_{k-2}, h, v) \in \J(R_1,..., R_{k-2}, H, V)$. However, in this case, $\bm{t}_1[j]$ is the trimmed rectangle of $r_j$, and $\bm{t}[k-1] = h_1$. At the same time, $\bm{t}_2[j]$ is the trimmed rectangle of $r_j$, and $\bm{t}[k-1] = h_2$. We thus have $\bm{t}_1 = \bm{t}_2$ and $h_1 = h_2$, giving a contradiction. Therefore, we have $\sum_{\bm{t}\in \J(R_1',...,R_{k-2}')}  |\dcross_H(\bm{t})| \leq |\out|$.
+
+\vgap 
+
+Analogously, we can map each pair $(\bm{t},v)$ in $\J(R_1',...,R_{k-2}')\times \dcross_V(\bm{t})$ to a unique tuple $(r_1,...,r_{k-2},h,v)$, where 
+\begin{itemize}
+    \item $r_j$ is the full rectangle of $\bm{t}[j]$ for all $j \in [k-2]$,
+    \item $h$ is the lowest segment in $H$ that crosses $r_i$, where $i$ is the value in $[k-2]$ such that $\bm{t}[i] = \gbot(\bm{t})$.
+\end{itemize}
+Let $p$ be the intersection of $v$ and the bottom edge of $B_\bm{t}$. We argue that the $k$-tuple $(r_1, ..., r_{k-2}, h, v)\in \J(R_1,..., R_{k-2},H,V)$. By the way trimmed rectangles are computed, we know that $h$ must contain the bottom edge of rectangle $\bm{t}[i]$, which is a superset of the bottom edge of $B_\bm{t}$. This means that point $p$ must be the intersection point of $h$ and $v$. As shown before, $r_j$ covers $B_\bm{t}$. Hence, point $p$ falls in $\bigcap_{j=1}^{k-2} r_j$, indicating $h \cap v \cap \bigcap_{j=1}^{k-2} r_j \ne \emptyset$. 
+
+\vgap 
+
+It suffices to show that no two distinct pairs $(\bm{t}_1, v_1), (\bm{t}_2, v_2) \in \J(R_1',...,R_{k-2}')\times \dcross_V(\bm{t})$ can be mapped to the same tuple in $\J(R_1,..., R_{k-2},H,V)$. Assume the contrary, namely, both $(\bm{t}_1, v_1)$ and $(\bm{t}_2, v_2)$ are mapped to the tuple $(r_1, ..., r_{k-2}, h, v) \in \J(R_1,..., R_{k-2}, H, V)$. However, in this case, $\bm{t}_1[j]$ is the trimmed rectangle of $r_j$, and $\bm{t}[k-2] = v_1$. At the same time, $\bm{t}_2[j]$ is the trimmed rectangle of $r_j$, and $\bm{t}[k-2] = v_2$. We thus have $\bm{t}_1 = \bm{t}_2$ and $v_1 = v_2$, giving a contradiction.
+Therefore, we have $\sum_{\bm{t}\in \J(R_1',...,R_{k-2}')}  |\dcross_V(\bm{t})| \leq |\out|$.
 
 
 \extraspacing {\bf Computing $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} We consider, w.l.o.g., that each rectangle in the input $R_1 \cup ... \cup R_{k-2}$ is given a distinct integer ID in $[n]$. This allows us to create an array of size $n$ and allocate an array cell to each $r \in R_1 \cup ... \cup R_{k-2}$, with the property that the cell can be accessed by the ID of $r$ in constant time.
