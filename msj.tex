@@ -793,21 +793,10 @@ We argue that the $k$-tuple $(r_1, ..., r_{k-2}, h, v)$ belongs to $\J(R_1,...,$
 It remains to prove that no two distinct tuples $\bm{t}_1, \bm{t}_2 \in \J(R_1',...,$ $R_{k-2}')$ can be mapped to the same tuple in $\J(R_1,..., R_{k-2},$ $H, V)$. Assume that this is not true, namely, both $\bm{t}_1$ and $\bm{t}_2$ are mapped to $(r_1, ..., r_{k-2}, h, v) \in \J(R_1,..., R_{k-2}, H, V)$. However, in this case, $\bm{t}_1[z]$ is the trimmed rectangle of $r_z$ for all $z \in [k-2]$ and, at the same time, $\bm{t}_2[z]$ is the trimmed rectangle of $r_z$ for all $z \in [k-2]$. We thus have $\bm{t}_1 = \bm{t}_2$, giving a contradiction.
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:properties}.} \\
-\underline{\em Proof of Statement (1).} By the definitions of $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$, both segments $h$ and $v$ cross $B_\bm{t}$. Thus, the intersection of $h$ and $v$ is a point $p$ in $B_\bm{t}$. As $r_i$ (for each $i \in [k-2]$) is the full rectangle of $\bm{t}[i]$, we know $\bigcap_{i=1}^{k-2} r_i$ covers $\bigcap_{i=1}^{k-2} \bm{t}[i]$, which is $B_\bm{t}$. Hence, point $p$ falls in $\bigcap_{i=1}^{k-2} r_i$, indicating that $h\cap v \cap \bigcap_{i = 1}^{k-2}r_i \neq \emptyset$. It follows that $(r_1,...,r_{k-2},h,v)$ is a result tuple in $\J(R_1,...,R_{k-2},H,V)$.
+\underline{\em Proof of Statement (1).} By the definitions of $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$, both segments $h$ and $v$ cross $B_\bm{t}$. Thus, the intersection of $h$ and $v$ is a point $p$ in $B_\bm{t}$. As $r_i$ (for each $i \in [k-2]$) is the full rectangle of $\bm{t}[i]$, we know that $\bigcap_{i=1}^{k-2} r_i$ covers $\bigcap_{i=1}^{k-2} \bm{t}[i]$, which is $B_\bm{t}$. Hence, point $p$ falls in $\bigcap_{i=1}^{k-2} r_i$, indicating that $h\cap v \cap \bigcap_{i = 1}^{k-2}r_i \neq \emptyset$. It follows that $(r_1,...,r_{k-2},h,v)$ is a result tuple in $\J(R_1,...,R_{k-2},H,V)$.
 
 \vgap
 
-\noindent \underline{\em Proof of Statement (2).} The fact $(r_1,...,r_{k-2},h,v)\in \J_1$ indicates that both segments $h$ and $v$ cross all of the rectangles $r_1,..., r_{k-2}$ which means that for $i\in[k-2]$, the y-coorninate of $h$ is in the range $[\ybot(r_i'), \ytop(r_i')]$ and the x-coordinate of $v$ is in $[\xleft(r_i'), \xright(r_i')]$. Additionally, for each $i\in[k-2]$, the x-range (resp. y-range) of $r_i'$ is a subset of the x-range (resp. y-range) of $r_i$, so $h$ (resp. $v$) crosses the rectangles $r_i'$. Hence, the point $h \cap v$ is in $B_\bm{t} = \bigcap_{i = 1}^{k-2}r_i'$, and $h, v$ cross $B_{\bm{t}}$. The former implies that $\bm{t} \in \J(R_1',...,R_{k-2}')$, and the latter implies that $h \in \dcross_H(\bm{t})$ and $v \in \dcross_V(\bm{t})$.
-
-\vgap
-
-\noindent \underline{\em Proof of Statement (3).}
-For each $\bm{t'}\in  \J(R_1',...,R_{k-2}')$ and each $h \in \dcross_H(\bm{t'})$, we will identify a unique tuple $\bm{t}$ in $\J(R_1,...,R_{k-2},H,V)$ defined as follows. Let $r_i$ be the full rectangle of $r_i'$ for $i \in [k]$, and $v$ be the segment $v_\vdash$ of $\gleft(\bm{t'})$. Let $\bm{t} = (r_1,...,r_{k-2},h,v)$. Since $h$ crosses $B_{\bm{t'}}$ by the definition of $\dcross_H(\bm{t'})$, the $h\cap v$ is a point in $B_{\bm{t'}}$.
-Therefore, $h\cap v \in B_{\bm{t'}} \subseteq B_{\bm{t}}$, and $\bm{t}\in \J(R_1,...,R_{k-2},H,V)$. he result tuple is unique because for any two distinct tuples $\bm{t'_1}$ and $\bm{t'_2}$ in $\J(R_1',...,R_{k-2}')$, there exists an integer $i \in [k-2]$ s.t. the full rectangles of $\bm{t'_1}[i]$ and $\bm{t'_2}[i]$ are different, which means the $i$-th components of their associating tuples $\bm{t_1}, \bm{t_2} \in \J(R_1,...,R_{k-2},H,V)$ are different. As a result, $\sum_{\bm{t}\in \J(R_1',...,R_{k-2}')}  |\dcross_H(\bm{t})| \leq \out$.
-
-\vgap
-
-Similarly, for each $\bm{t'}\in  \J(R_1',...,R_{k-2}')$ and each $v \in \dcross_V(\bm{t'})$, we can identify a unique tuple $\bm{t}$ in $\J(R_1,...,R_{k-2},H,V)$ defined as follows. Let $r_i$ be the full rectangle of $r_i'$ for $i \in [k]$, and $h$ be the segment $h_\bot$ of $\gbot(\bm{t'})$. Let $\bm{t} = (r_1,...,r_{k-2},h,v)$. Since $v$ crosses $B_{\bm{t'}}$, $h\cap v \in B_{\bm{t'}} \subseteq B_{\bm{t}}$, and $\bm{t}\in \J(R_1,...,R_{k-2},H,V)$. As a result, $\sum_{\bm{t}\in \J(R_1',...,R_{k-2}')}  |\dcross_V(\bm{t})| \leq \out$.
 
 \extraspacing {\bf Computing $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.}
 
