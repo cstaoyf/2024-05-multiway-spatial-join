@@ -462,7 +462,7 @@ The rest of the section will focus on how to prepare the sets $\dcross_H(\bm{t})
 }
 We set $\maxtop(r')$ to $-\infty$, if no $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ has $r'$ as the $\gbot(\bm{t})$. When $\maxtop(r') \ne -\infty$, assuming $r' = [x_1, x_2] \times [y_1, y_2]$, we introduce a rectangle
 \myeqn{
-    r^* &=& [x_1, x_2] \times [y_1, \maxtop(r')]. \nn
+    r^* &=& [x_1, x_2] \times [y_1, \maxtop(r')]. \label{eqn:hv:type1:topsliced}
 }
 and call it the {\em top-sliced rectangle} of $r'$.
 
@@ -486,7 +486,7 @@ Our focus lies specifically on the sets $\cross_H(r^*)$ of the rectangles $r^*$ 
 \begin{lemma} \label{lmm:hv:type1:cross-r*}
     Both statements below are true: 
     \myenums{
-        \item $\sum_{i=1}^k \sum_{r^* \in R^*_i} |\cross_H(r^*)| \le \out$.
+        \item $\sum_{i=1}^{k-2} \sum_{r^* \in R^*_i} |\cross_H(r^*)| \le \out$.
         
         \item Consider any tuple $\bm{t} \in \J(R'_1, ..., R'_{k-2})$. Let $r' = \gbot(\bm{t})$ and $r^*$ be the top-sliced rectangle of $r'$. Then, we have $\dcross_H(\bm{t})$ $\subseteq \cross_H(r^*)$. Furthermore, if the (horizontal) segments of $\cross_H(r^*)$ are sorted in ascending order of y-coordinate, then $\dcross_H(\bm{t})$ includes a prefix of the sorted order.
     }
@@ -750,6 +750,8 @@ We now complete the proof of Theorem~\ref{thm:main-recur}.
 
 \appendix 
 
+\def\vgap{\vspace{1mm}}
+
 \section*{Appendix}
 
 \section{Building Brick Algorithms} \label{app:bricks}
@@ -767,17 +769,52 @@ We now complete the proof of Theorem~\ref{thm:main-recur}.
 
 \section{Completing the Proof of Lemma~\ref{lmm:hv}} \label{app:hv} 
 
-\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:recur-output}.}
+\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:recur-output}.} We will prove the lemma by providing a way to map each $(k-2)$-tuple $\J(R_1',...,R_{k-2}')$ to a unique $k$-tuple in the H-V $k$-SJ result $\J(R_1,...,R_{k-2},H,V)$.
 
-\input{4.1.tex}
+\vgap
 
-\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:properties}.}
+To explain the mapping, consider any tuple $\bm{t} \in \J(R_1',...,R_{k-2}')$. Recall that $B_\bm{t}$ is the intersection of the $k-2$ rectangles $\bm{t}[1], ..., \bm{t}[k-2]$. Let $p$ be the bottom-left corner of $B_\bm{t}$. Define $i$ and $j$ to be values in $[k-2]$ such that $\bm{t}[i] = \gbot(\bm{t})$ and $\bm{t}[j] = \gleft(\bm{t})$; note that the values of $i$ and $j$ can be the same. Point $p$ is the intersection of the bottom edge of $\bm{t}[i]$ and the left edge of $\bm{t}[j]$.
 
-\input{4.2.tex}
+\vgap
 
-\extraspacing {\bf Computing $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.}
+Recall that each $\bm{t}[z]$ (for $z \in [k-2]$) is a trimmed rectangle; let us denote by $r_z$ the full rectangle of $\bm{t}[z]$. Regarding the values $i, j$ decided earlier, let
+\myitems{
+    \item $h$ be the lowest segment in $H$ that crosses $r_i$;
+    \item $v$ be the leftmost segment in $V$ that crosses $r_j$.
+}
+By the way trimmed rectangles are computed, we know that $h$ must contain the bottom edge of rectangle $\bm{t}[i]$, and $v$ must contain the left edge of rectangle $\bm{t}[j]$. This means that point $p$ must be the intersection point of $h$ and $v$.
 
-\input{4-comp.tex}
+\vgap
+
+We argue that the $k$-tuple $(r_1, ..., r_{k-2}, h, v)$ belongs to $\J(R_1,...,$ $R_{k-2},H,V)$. Clearly, $r_z$ covers $\bm{t}[z]$ for all $z \in [k-2]$. Thus, $\bigcap_{z=1}^{k-2} r_z$ covers $\bigcap_{z=1}^{k-2} \bm{t}[z]$, which is $B_\bm{t}$. Hence, point $p$ --- which is the intersection point of $h$ and $v$, and also a corner of $B_\bm{t}$ --- falls in $\bigcap_{z=1}^{k-2} r_z$, indicating $h \cap v \cap \bigcap_{z=1}^{k-2} r_z \ne \emptyset$. We map $\bm{t}$ to $(r_1, ..., r_{k-2}, h, v)$.
+
+\vgap
+
+It remains to prove that no two distinct tuples $\bm{t}_1, \bm{t}_2 \in \J(R_1',...,$ $R_{k-2}')$ can be mapped to the same tuple in $\J(R_1,..., R_{k-2},$ $H, V)$. Assume that this is not true, namely, both $\bm{t}_1$ and $\bm{t}_2$ are mapped to $(r_1, ..., r_{k-2}, h, v) \in \J(R_1,..., R_{k-2}, H, V)$. However, in this case, $\bm{t}_1[z]$ is the trimmed rectangle of $r_z$ for all $z \in [k-2]$ and, at the same time, $\bm{t}_2[z]$ is the trimmed rectangle of $r_z$ for all $z \in [k-2]$. We thus have $\bm{t}_1 = \bm{t}_2$, giving a contradiction.
+
+\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:properties}.} \\
+\underline{\em Proof of Statement (1).} By the definitions of $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$, both segments $h$ and $v$ cross $B_\bm{t}$. Thus, the intersection of $h$ and $v$ is a point $p$ in $B_\bm{t}$. As $r_i$ (for each $i \in [k-2]$) is the full rectangle of $\bm{t}[i]$, we know that $\bigcap_{i=1}^{k-2} r_i$ covers $\bigcap_{i=1}^{k-2} \bm{t}[i]$, which is $B_\bm{t}$. Hence, point $p$ falls in $\bigcap_{i=1}^{k-2} r_i$, indicating that $h\cap v \cap \bigcap_{i = 1}^{k-2}r_i \neq \emptyset$. It follows that $(r_1,...,r_{k-2},h,v)$ is a result tuple in $\J(R_1,...,R_{k-2},H,V)$.
+
+\vgap
+
+\input{4.2}
+
+\extraspacing {\bf Computing $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} We consider, w.l.o.g., that each rectangle in the input $R_1 \cup ... \cup R_{k-2}$ is given a distinct integer ID in $[n]$. This allows us to create an array of size $n$ and allocate an array cell to each $r \in R_1 \cup ... \cup R_{k-2}$, with the property that the cell can be accessed by the ID of $r$ in constant time.
+
+\vgap
+
+To compute $R^*_1, R^*_2, ..., R^*_{k-2}$, we start by deriving $\maxtop(r')$ for each rectangle $r'$ in $R'_1 \cup  ... \cup R'_{k-2}$. For this purpose, first initialize $\maxtop(r') = -\infty$ for each such $r'$. Recall that $r'$ is the trimmed rectangle of some rectangle $r$ in $R_1 \cup ... \cup R_{k-2}$. We store $\maxtop(r')$ in the array cell allocated to $r$.
+
+\vgap
+
+Then, we scan $\J(R_1',...,R_{k-2}')$. For each tuple $\bm{t}$ therein, use $O(k)$ time to identify the rectangle $r' = \gbot(\bm{t})$, and then update in constant time $\maxtop(r')$ to the maximum between its current value and $\ytop(r')$. The scan requires $O(n + k \cdot \out)$ time.
+
+\vgap
+
+Finally, for each $i \in [k-2]$, we construct $R_i^*$ by collecting the top-sliced rectangle (see definition in \eqref{eqn:hv:type1:topsliced}) of every rectangle $r' \in R_i'$ with $\maxtop(r') \neq -\infty$. This step takes $O(|R_i'|)$ time for each $i \in [k-2]$, or $O(n)$ total time for all $i$.
+
+
+
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:cross-r*}.}
 
