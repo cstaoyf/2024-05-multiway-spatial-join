@@ -799,11 +799,11 @@ It remains to prove that no two distinct tuples $\bm{t}_1, \bm{t}_2 \in \J(R_1',
 
 \input{4.2}
 
-\extraspacing {\bf Computing $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} We consider, w.l.o.g., that each rectangle in the input $R_1 \cup ... \cup R_{k-2}$ is given a distinct integer ID in $[n]$. This allows us to create an array $A$ of size $n$ and allocate a cell of $A$ to each $r \in R_1 \cup ... \cup R_{k-2}$. The cell can be accessed by the ID of $r$ in constant time.
+\extraspacing {\bf Computing $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} We consider, w.l.o.g., that each rectangle in the input $R_1 \cup ... \cup R_{k-2}$ is given a distinct integer ID in $[n]$. This allows us to create an array of size $n$ and allocate an array cell to each $r \in R_1 \cup ... \cup R_{k-2}$, with the property that the cell can be accessed by the ID of $r$ in constant time.
 
 \vgap
 
-To compute $R^*_1, R^*_2, ..., R^*_{k-2}$, we start by deriving $\maxtop(r')$ for each rectangle $r'$ in $R'_1 \cup  ... \cup R'_{k-2}$. For this purpose, first initialize $\maxtop(r') = -\infty$ for each such $r'$. Recall that $r'$ is the trimmed rectangle of some rectangle $r$ in $R_1 \cup ... \cup R_{k-2}$. We store $\maxtop(r')$ in the cell of array $A$ allocated to $r$; the cell can be accessed in $O(1)$ time using the ID of $r$.
+To compute $R^*_1, R^*_2, ..., R^*_{k-2}$, we start by deriving $\maxtop(r')$ for each rectangle $r'$ in $R'_1 \cup  ... \cup R'_{k-2}$. For this purpose, first initialize $\maxtop(r') = -\infty$ for each such $r'$. Recall that $r'$ is the trimmed rectangle of some rectangle $r$ in $R_1 \cup ... \cup R_{k-2}$. We store $\maxtop(r')$ in the array cell allocated to $r$.
 
 \vgap
 
