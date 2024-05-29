@@ -1,6 +1,13 @@
 
 
-\noindent \underline{\em Proof of Statement (2).} The fact $(r_1,...,r_{k-2},h,v)\in \J_1$ indicates that both segments $h$ and $v$ cross all of the rectangles $r_1,..., r_{k-2}$ which means that for $i\in[k-2]$, the y-coorninate of $h$ is in the range $[\ybot(r_i'), \ytop(r_i')]$ and the x-coordinate of $v$ is in $[\xleft(r_i'), \xright(r_i')]$. Additionally, for each $i\in[k-2]$, the x-range (resp. y-range) of $r_i'$ is a subset of the x-range (resp. y-range) of $r_i$, so $h$ (resp. $v$) crosses the rectangles $r_i'$. Hence, the point $h \cap v$ is in $B_\bm{t} = \bigcap_{i = 1}^{k-2}r_i'$, and $h, v$ cross $B_{\bm{t}}$. The former implies that $\bm{t} \in \J(R_1',...,R_{k-2}')$, and the latter implies that $h \in \dcross_H(\bm{t})$ and $v \in \dcross_V(\bm{t})$.
+\noindent \underline{\em Proof of Statement (2).} 
+First, we deviate a little to prove the following statement. For any rectangle $r\in \bigcup_{i = 1}^{k-2}$, if a segment $h\in H$ crosses $r$, then $h$ also crosses the trimmed rectangle of $r$, denoted as $r'$. Since the x-range of $r'$ is a subset of the x-range of $r$, it suffices to show that the y-coordinate of $h$ is in the range $[\ybot(r'), \ytop(r')]$. Since $\ybot(r')$ is the y-coordinate of the lowest segment in $H$ that crosses $r$, and $h$ crosses $r$, we have $\ybot(r') \leq \ybot(h)$. Moreover, since $\ytop(r')$ is the y-coordinate of the highest segment in $H$ that crosses $r$, and $h$ crosses $r$, we have $\ytop(h) \leq \ytop(r')$. Therefore, $h$ crosses $r'$. We can prove that if a segment $v\in V$ crosses $r$, then $v$ also crosses the trimmed rectangle of $r$ analogously.
+
+\vgap
+ 
+Now, we prove Statement (2). Since $(r_1,...,r_{k-2},h,v)\in \J_1$, both segments $h$ and $v$ cross all of the rectangles $r_1,..., r_{k-2}$. By the discussion above, $h$ and $v$ also cross the trimmed rectangles $r_1',..., r_{k-2}'$. Therefore, the point $h \cap v$ is in $r_i'$, for each $i \in [k-2]$. This implies that $\bigcap_{i = 1}^{k-2}r_i' \neq \emptyset$, and $(r_1',..., r_{k-2}')\in \J(R_1',...,R_{k-2}')$.
+ 
+% The fact $(r_1,...,r_{k-2},h,v)\in \J_1$ indicates that both segments $h$ and $v$ cross all of the rectangles $r_1,..., r_{k-2}$ which means that for $i\in[k-2]$, the y-coorninate of $h$ is in the range $[\ybot(r_i'), \ytop(r_i')]$ and the x-coordinate of $v$ is in $[\xleft(r_i'), \xright(r_i')]$. Additionally, for each $i\in[k-2]$, the x-range (resp. y-range) of $r_i'$ is a subset of the x-range (resp. y-range) of $r_i$, so $h$ (resp. $v$) crosses the rectangles $r_i'$. Hence, the point $h \cap v$ is in $B_\bm{t} = \bigcap_{i = 1}^{k-2}r_i'$, and $h, v$ cross $B_{\bm{t}}$. The former implies that $\bm{t} \in \J(R_1',...,R_{k-2}')$, and the latter implies that $h \in \dcross_H(\bm{t})$ and $v \in \dcross_V(\bm{t})$.
 
 \vgap
 
