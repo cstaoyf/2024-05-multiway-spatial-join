@@ -856,7 +856,11 @@ Next, we will prove that a segment $h \in \cross_H(r^*)$ if and only if $h \in \
 
     \vgap
 
-    Since $\gbot(\bm{t}) = r'$, the bottom segment of $B_{\bm{t}}$ must be contained in $r'$. Thus, $\xleft(B_{\bm{t}})\in [x_1,x_2]$. As proved earlier, $\xleft(h) < x_1 < x_2 < \xright(h)$, which leads to $\xleft(B_{\bm{t}}) \in [\xleft(h), \xright(h)]$, suggesting $p \in h$. To prove $p \in B_{\bm{t}}$, it remains to show $y_h \in [\ybot(B_{\bm{t}}), \ytop(B_{\bm{t}})]$. Since $h$ intersects $r^*$ and $[y_1, \maxtop(r')]$ is the y-range of $r^*$, we know $y_h \in [y_1 , \maxtop(r')]$. Because $\gbot(\bm{t}) = r'$ and $\maxtop(r') = \ytop(B_\bm{t})$, the y-range of $B_\bm{t}$ is $[y_1, \maxtop(r')]$. Therefore, $y_h \in [y_1 , \maxtop(r')]$ tells us that the point $p$ --- which is $(\xleft(B_{\bm{t}}), y_h)$ --- must fall in $B_{\bm{t}}$.
+    Since $\gbot(\bm{t}) = r'$, the bottom edge of $B_{\bm{t}}$ must be contained in $r'$. Thus, $\xleft(B_{\bm{t}})\in [x_1,x_2]$. As proved earlier, $\xleft(h) < x_1 < x_2 < \xright(h)$, which leads to $\xleft(B_{\bm{t}}) \in [\xleft(h), \xright(h)]$, suggesting $p \in h$.
+
+    \vgap
+
+    Because $\gbot(\bm{t}) = r'$ and $\maxtop(r') = \ytop(B_\bm{t})$, the y-range of $B_\bm{t}$ is $[y_1, \maxtop(r')]$. To prove $p \in B_{\bm{t}}$, it remains to show $y_h \in [y_1, \maxtop(r')]$. This is true because $h$ intersects $r^*$ and $[y_1, \maxtop(r')]$ is the y-range of $r^*$.
 }
 
 Conversely, let $h\in \dcross_H(\bm{t})$, which means that $h$ crosses $r'$ and $B_{\bm{t}}$. Thus, $r'$ does not contain any endpoints of $h$. Since $r^*\subseteq r'$, $r^*$ does not contain any endpoints of $h$ neither.
