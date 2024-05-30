@@ -898,7 +898,23 @@ Our argument now proceeds to prove the ``if direction'': assuming $h \in \dcross
 
 It remains to show that no two distinct rectangles $r_1^*, r_2^* \in \bigcup_{i = 1}^{k-2}R_i^*$ can be mapped to the same tuple in $\J(R_1',...,R_{k-2}')$. Assume, on the contrary, that $r_1^*$ and $r_2^*$ are mapped to the same tuple $\bm{t}\in \J(R_1',...,R_{k-2}')$. Suppose that $r_1^*$ (resp., $r_2^*$) is the top-sliced rectangle of $r_1'$ (resp., $r_2'$). Under our mapping, it must be true that  $r_1' = r_2' = \gbot(B_{\bm{t}})$. However, the distinctness of $r_1^*$ and $r_2^*$ requires $r_1' \ne r_2'$, thus giving a contradiction.
 
-\input{4.3.tex}
+\extraspacing \underline{\em Proof of Statement (2).}
+Let $r' = [x_1,x_2] \times [y_1,y_2]$. Then, $r^* = [x_1,x_2]\times [y_1, \maxtop(r')]$. Let $h$ be an arbitrary segment in $\dcross_H(\bm{t})$, whose y-coordinate is $y_h$.  We will prove that $h$ crosses $r^*$, which leads to $\dcross_H(\bm{t})\subseteq \cross_H(r^*)$. It suffies to show that $\xleft(h) < x_1 \le x_2 < \xright(h)$ and $y_h \in [y_1, \maxtop(r')]$.
+\begin{itemize}
+    \item Since $h$ crosses $r' = [x_1,x_2]\times [y_1,y_2]$, we have $\xleft(h) < x_1 \le x_2 < \xright(h)$.
+    \item Since $h$ crosses $B_{\bm{t}}$, we have $y_h \in [y_1, \ytop(B_{\bm{t}})]$. By the definition of $\maxtop(r')$ (see Definition \eqref{eqn:hv:type1:maxtop}), and the fact that $r' = \gbot(B_{\bm{t}})$, we have $\ytop(B_{\bm{t}}) \leq \maxtop(r')$. Therefore, $y_h \in [y_1, \maxtop(r')]$.
+\end{itemize}
+
+Then, we will prove that each segment $h \in \cross_H(r^*)$ satisfying that the y-coordinate $h$ is no more than $\ytop(B_{\bm{t}})$ is in $\dcross_H(\bm{t})$. This claim leads to the last sentence of Statement (3). Consider an arbitrary $h\in \cross_H(r^*)$, whose y-coordinate $y_h$ satisfies that $y_h \le \ytop(B_{\bm{t}})$. We will prove that $h$ crosses $r'$ and $B_{\bm{t}}$, and therefore $h \in \dcross_H(\bm{t})$.
+
+\vgap
+
+First, we prove that $h$ crosses $r'$. It suffices to show that $\xleft(h)  < x_1 \leq x_2 < \xright(h)$ and $y_h \in [y_1, y_2]$. Both conditions are satisfied since $h$ crosses $r^* = [x_1,x_2]\times [y_1, \maxtop(r')]$, and $\maxtop(r')\leq y_2$. Then, we prove that $h$ crosses $B_{\bm{t}}$. It suffices to show that $\xleft(h) < \xleft(B_{\bm{t}}) \le \xright(B_{\bm{t}}) < \xright(h)$ and $y_h \in [y_1, \ytop(B_{\bm{t}})]$.
+\begin{itemize}
+    \item Since $h$ crosses $r'$, we have $\xleft(h) < x_1 \leq x_2 < \xright(h)$. Since $r' = \gbot(B_{\bm{t}})$, we have the x-range of $B_{\bm{t}}$ is contained in $[x_1,x_2]$. Therefore, $\xleft(h) < \xleft(B_{\bm{t}}) \le \xright(B_{\bm{t}}) < \xright(h)$.
+    \item Since $h$ crosses $r^*$, we have $y_h \in [y_1, \maxtop(r')]$. By the definition of $h$, we have $y_h \leq \ytop(B_{\bm{t}})$. Therefore, $y_h \in [y_1, \ytop(B_{\bm{t}})]$.
+\end{itemize}
+
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type2:recur-output}.}
 
