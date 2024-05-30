@@ -761,7 +761,7 @@ We now complete the proof of Theorem~\ref{thm:main-recur}.
 
 \vgap
 
-Let us first consider the detection version of Problem $\mathscr{A}$. Each point $p = (x, y)$ of $P$ is said to {\em define} the y-coordinate $y$, and each rectangle $r = [x_1, x_2] \times [y_1, y_2]$ is said to {\em define} two y-coordinates $y_1$ and $y_2$. We start by sorting the set of y-coordinates defined by all the points and rectangles.
+Let us first consider the detection version of Problem $\mathscr{A}$. Each point $p = (x, y)$ of $P$ is said to {\em define} the y-coordinate $y$, and each rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$ is said to {\em define} two y-coordinates $y_1$ and $y_2$. We start by sorting the set of y-coordinates defined by all the points and rectangles.
 
 \vgap
 
@@ -771,13 +771,21 @@ Next, sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \
 
 The algorithm for the reporting version of Problem $\mathscr{A}$ is similar. The only difference is that, when $\ell$ hits a point $p = (x, y)$ of $P$, we use $\T$ to report all the intervals in $S_\ell$ that contain $x$; the cost is $O(n \log n + K_p)$, where $K_p$ is the number of such intervals. Every interval corresponds to a rectangle in $R$ that contains $p$. The total running time is $O(n \log n + \sum_p K_p) = O(n \log n + \out)$.
 
-\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{B}}$.} Each horizontal segment $h = [x_1, x_2] \times y$ of $H$ is said to {\em define} the y-coordinate $y$, and each vertical segment $v = x \times [y_1, y_2]$ is said to {\em define} two y-coordinates $y_1$ and $y_2$. We start by sorting the set of y-coordinates defined by all the horizontal and vertical segments.
+\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{B}}$.} Each horizontal segment $h = [x_1, x_2] \times y$ of $H$ is said to {\em define} the y-coordinate $y$, and each vertical segment $v = x \times [y_1, y_2]$ of $V$ is said to {\em define} two y-coordinates $y_1$ and $y_2$. We start by sorting the set of y-coordinates defined by all the horizontal and vertical segments.
 
 \vgap
 
 Next, sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, maintain the set $V_\ell$ of rectangles in $R$ that intersect with $\ell$. Let $S_\ell$ be the set of x-coordinates of the segments in $V_\ell$; we store $S_\ell$ in a binary search tree (BST) $\T$. Specifically, when $\ell$ hits the lower  (resp., upper) endpoint of a vertical segment $v = x \times [y_1, y_2]$ of $V$, we insert (resp., delete) the value $x$ into (resp., from) $\T$, which can be done in $O(\log n)$ time. When $\ell$ hits a horizontal segment $h = [x_1, x_2] \times y$ of $H$, search $\T$ to determine if the successor $x'$ of $x_1$ in $S_\ell$. If $x' \le x_2$, then then we output a pair $(h, p)$, where $p$ is the point $(x', y)$. The overall running time is $O(n \log n)$.
 
-\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{C}}$.} Let $S$ be a set of $N$ intervals in $\real$.
+\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{C}}$.} Let $S$ be a set of $N$ intervals in $\real$, each of which is associated with a real-valued {\em weight}. Given a search value $q$, a {\em stabbing max} query returns the maximum weight of all the intervals in $S$ covering $q$ (if no such intervals exist, the query returns $-\infty$). We can store $S$ in a structure of \cite{aak+12} using $O(N)$ space that can answer every query in $O(\log N)$ time. The structure also supports an insertion or deletion on $S$ in $O(\log N)$ amortized time.
+
+\vgap
+
+For Problem $\mathscr{C}$, each horizontal segment $h = [x_1, x_2] \times y$ of $H$ is said to {\em define} the y-coordinate $y$, and each rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$ is said to {\em define} two y-coordinates $y_1$ and $y_2$. We start by sorting the set of y-coordinates defined by all the horizontal segments and rectangles.
+
+\vgap
+
+Next, sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, maintain the set $R_\ell$ of rectangles in $R$ that intersect with $\ell$. Let $S_\ell$ be the set of x-ranges of the rectangles in $R_\ell$; we store $S_\ell$ in a structure $\T$ of \cite{aak+12}. Specifically, when $\ell$ hits the bottom (resp., top) edge of a rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$, we insert (resp., delete) $[x_1, x_2]$ with {\em weight} $x_2$ into (resp., from) $\T$, which can be done in $O(\log n)$ time. When $\ell$ hits a horizontal segment $h = [x_1, x_2] \times y$ of $P$, search $\T$ to determine if any interval in $S_\ell$ contains the value $x$. If so, point $p$ is covered by at least one rectangle in $R$; otherwise, it is not. The overall running time is $O(n \log n)$.
 
 \extraspacing {\bf Algorithm for Problem $\bm{\mathscr{D}}$.}
 
