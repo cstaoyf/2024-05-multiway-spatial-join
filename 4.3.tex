@@ -37,4 +37,6 @@ It remains to show that we will not map two distinct rectangle $r_1^*, r_2^*\in 
  
 \noindent \underline{\em Proof of Statement (2).} 
 
-% Next, we prove (2). Let $r' = [x_1,x_2]\times [y_1,y_2]$, and $r^* = [x_1,x_2] \times [y_1,\maxtop(r')]$. Since $\gbot(\bm{t}) = r'$, $\dcross_H(\bm{t})$ contains exactly the set of segments segment $h \in H$ that cross the rectangle $[x_1,x_2]\times [y_1, \ytop(B_\bm{t})]$, where $\ytop(B_{\bm{t}})\leq \maxtop(r')$. Therefore, $\dcross_H(\bm{t})$ $\subseteq \cross_H(r^*)$. Furthermore, if the (horizontal) segments of $\cross_H(r^*)$ are sorted in ascending order of y-coordinate, then $\dcross_H(\bm{t})$ includes a prefix of the sorted order.
+% Next, we prove (2).  Since $\gbot(\bm{t}) = r'$, $\dcross_H(\bm{t})$ contains exactly the set of segments segment $h \in H$ that cross the rectangle $[x_1,x_2]\times [y_1, \ytop(B_\bm{t})]$, where $\ytop(B_{\bm{t}})\leq \maxtop(r')$. Therefore, $\dcross_H(\bm{t})$ $\subseteq \cross_H(r^*)$. Furthermore, if the (horizontal) segments of $\cross_H(r^*)$ are sorted in ascending order of y-coordinate, then $\dcross_H(\bm{t})$ includes a prefix of the sorted order.
+
+Let $r' = [x_1,x_2]\times [y_1,y_2]$, and $r^* = [x_1,x_2] \times [y_1,\maxtop(r')]$. We will prove that $\dcross_H(\bm{t})$ contains exactly the set of segments $h\in H$ that cross the rectangle $[x_1,x_2]\times [y_1,\ytop(B_\bm{t})]$.
