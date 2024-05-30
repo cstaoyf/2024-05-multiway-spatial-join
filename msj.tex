@@ -757,7 +757,7 @@ We now complete the proof of Theorem~\ref{thm:main-recur}.
 
 \section{Building Brick Algorithms} \label{app:bricks}
 
-\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{A}}$.} The {\em interval tree} \cite{bcko08} stores a set $S$ of $N$ intervals in $O(N)$ space such that, given any real value $q$, the intervals of $S$ containing $q$ can be found in $O(\log N + K)$ time, where $K$ is the number of intervals reported. It can also be used to detect whether $S$ has at least one interval containing $q$ in $O(\log N)$ time. Each interval insertion or deletion on $S$ can be supported in $O(\log N)$ time.
+\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{A}}$.} The {\em interval tree} \cite{bcko08} stores a set $S$ of $N$ intervals in $\real$ using $O(N)$ space such that, given any real value $q$, the intervals of $S$ containing $q$ can be found in $O(\log N + K)$ time, where $K$ is the number of intervals reported. It can also be used to detect whether $S$ has at least one interval containing $q$ in $O(\log N)$ time. Each interval insertion or deletion on $S$ can be supported in $O(\log N)$ time.
 
 \vgap
 
@@ -765,15 +765,19 @@ Let us first consider the detection version of Problem $\mathscr{A}$. Each point
 
 \vgap
 
-Next, scan (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, maintain the set $R_\ell$ of rectangles in $R$ that intersect with $\ell$. Let $S_\ell$ be the set of x-ranges of the rectangles in $R_\ell$; we store $S_\ell$ in an interval tree $\T$. Specifically, when $\ell$ hits the bottom (resp., top) edge of a rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$, we insert (resp., delete) $[x_1, x_2]$ into (resp., from) $\T$, which can be done in $O(\log n)$ time. When $\ell$ hits a point $p = (x, y)$ of $P$, search $\T$ to determine if any interval in $S_\ell$ contains the value $x$. If so, point $p$ is covered by at least one rectangle in $R$; otherwise, it is not. The overall running time is $O(n \log n)$.
+Next, sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, maintain the set $R_\ell$ of rectangles in $R$ that intersect with $\ell$. Let $S_\ell$ be the set of x-ranges of the rectangles in $R_\ell$; we store $S_\ell$ in an interval tree $\T$. Specifically, when $\ell$ hits the bottom (resp., top) edge of a rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$, we insert (resp., delete) $[x_1, x_2]$ into (resp., from) $\T$, which can be done in $O(\log n)$ time. When $\ell$ hits a point $p = (x, y)$ of $P$, search $\T$ to determine if any interval in $S_\ell$ contains the value $x$. If so, point $p$ is covered by at least one rectangle in $R$; otherwise, it is not. The overall running time is $O(n \log n)$.
 
 \vgap
 
 The algorithm for the reporting version of Problem $\mathscr{A}$ is similar. The only difference is that, when $\ell$ hits a point $p = (x, y)$ of $P$, we use $\T$ to report all the intervals in $S_\ell$ that contain $x$; the cost is $O(n \log n + K_p)$, where $K_p$ is the number of such intervals. Every interval corresponds to a rectangle in $R$ that contains $p$. The total running time is $O(n \log n + \sum_p K_p) = O(n \log n + \out)$.
 
-\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{B}}$.}
+\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{B}}$.} Each horizontal segment $h = [x_1, x_2] \times y$ of $H$ is said to {\em define} the y-coordinate $y$, and each vertical segment $v = x \times [y_1, y_2]$ is said to {\em define} two y-coordinates $y_1$ and $y_2$. We start by sorting the set of y-coordinates defined by all the horizontal and vertical segments.
 
-\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{C}}$.}
+\vgap
+
+Next, sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, maintain the set $V_\ell$ of rectangles in $R$ that intersect with $\ell$. Let $S_\ell$ be the set of x-coordinates of the segments in $V_\ell$; we store $S_\ell$ in a binary search tree (BST) $\T$. Specifically, when $\ell$ hits the lower  (resp., upper) endpoint of a vertical segment $v = x \times [y_1, y_2]$ of $V$, we insert (resp., delete) the value $x$ into (resp., from) $\T$, which can be done in $O(\log n)$ time. When $\ell$ hits a horizontal segment $h = [x_1, x_2] \times y$ of $H$, search $\T$ to determine if the successor $x'$ of $x_1$ in $S_\ell$. If $x' \le x_2$, then then we output a pair $(h, p)$, where $p$ is the point $(x', y)$. The overall running time is $O(n \log n)$.
+
+\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{C}}$.} Let $S$ be a set of $N$ intervals in $\real$.
 
 \extraspacing {\bf Algorithm for Problem $\bm{\mathscr{D}}$.}
 
