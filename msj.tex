@@ -863,10 +863,12 @@ Next, we will prove that a segment $h \in \cross_H(r^*)$ if and only if $h \in \
     Because $\gbot(\bm{t}) = r'$ and $\maxtop(r') = \ytop(B_\bm{t})$, the y-range of $B_\bm{t}$ is $[y_1, \maxtop(r')]$. To prove $p \in B_{\bm{t}}$, it remains to show $y_h \in [y_1, \maxtop(r')]$. This is true because $h$ intersects $r^*$ and $[y_1, \maxtop(r')]$ is the y-range of $r^*$.
 }
 
-Conversely, let $h\in \dcross_H(\bm{t})$, which means that $h$ crosses $r'$ and $B_{\bm{t}}$. Thus, $r'$ does not contain any endpoints of $h$. Since $r^*\subseteq r'$, $r^*$ does not contain any endpoints of $h$ neither.
-Next, we prove that $B_{\bm{t}} \subseteq r^*$. Since $h \cap B_{\bm{t}}\neq \emptyset$, this statement leads to $h \cap r^* \neq \emptyset$ and $h$ crosses $r^*$. Recall that $r^* = [x_1,x_2], [y_1, \maxtop(r')]$, and $B_{\bm{t}} = [\xleft(B_{\bm{t}}), \xright(B_{\bm{t}})]\times [y_1,\maxtop(r')]$. Since $B_{\bm{t}}$ is a subset of $r'$, we have $\xleft(B_{\bm{t}}) \subseteq [x_1,x_2]$. Therefore, $B_{\bm{t}} \subseteq r^*$, and $h\in \cross_H(r^*)$.
+Our argument now proceeds to prove the ``if direction'': assuming $h \in \dcross_H(\bm{t})$, we aim to show $h \in \cross_H(r^*)$. Recall that $r^* = [x_1,x_2] \times [y_1, \maxtop(r')]$. To prove that $h$ crosses $r^*$, we will show $\xleft(h) \le x_1 \le x_2 \le \xright(h)$ and $y_h \in [y_1, \maxtop(r')]$, where $y_h$ is the y-coordinate of $h$.
+\myitems{
+    \item The fact $h \in \dcross_H(\bm{t})$ tells us that $h$ crosses $r'$. As $[x_1, x_2]$ is the x-range of $r'$, we know $\xleft(h) \le x_1 \le x_2 \le \xright(h)$.
 
-\vgap
+    \item The fact $h \in \dcross_H(\bm{t})$ also tells us that $h$ crosses $B_{\bm{t}}$. As $[y_1, \maxtop(r')]$ is the y-range of $B_\bm{t}$ (because $\gbot(\bm{t}) = r'$ and $\maxtop(r') = \ytop(B_\bm{t})$), we know $y_h \in [y_1, \maxtop(r')]$.
+}
 
 It remains to show that we will not map two distinct rectangle $r_1^*, r_2^*\in \bigcup_{i = 1}^{k-2}R_i^*$ to the same tuple $\bm{t}\in \J(R_1',...,R_{k-2}')$. Suppose to the contrary that $r_1^*, r_2^*$ are mapped to the same tuple $\bm{t}$. Let $r_1^*, r_2^*$ be the top-sliced rectangles of $r_1'$ and $r_2'$ respectively. Since $r_1^*$ and $r_2^*$ are disinct, $r_1'$ is not the same as $r_2'$. By our mapping, $\gbot(B_{\bm{t}})$ is $r_1'$ and $r_2'$. Since $\gbot(B_{\bm{t}})$ is unique for each tuple $\bm{t}$, we have a contradiction. Therefore, each rectangle $r^*\in \bigcup_{i = 1}^{k-2}R_i^*$ is mapped to a unique tuple $\bm{t}\in \J(R_1',...,R_{k-2}')$.
 
