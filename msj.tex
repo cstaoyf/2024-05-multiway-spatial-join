@@ -757,7 +757,7 @@ We now complete the proof of Theorem~\ref{thm:main-recur}.
 
 \section{Building Brick Algorithms} \label{app:bricks}
 
-\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{A}}$.} The {\em interval tree} \cite{bcko08} stores a set $S$ of $N$ intervals in $\real$ using $O(N)$ space such that, given any real value $q$, the intervals of $S$ containing $q$ can be found in $O(\log N + K)$ time, where $K$ is the number of intervals reported. It can also be used to detect whether $S$ has at least one interval containing $q$ in $O(\log N)$ time. Each interval insertion or deletion on $S$ can be supported in $O(\log N)$ time.
+\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{A}}$.} The {\em interval tree} \cite{bcko08} stores a set $S$ of intervals in $\real$ using $O(|S|)$ space such that, given any real value $q$, the intervals of $S$ containing $q$ can be found in $O(\log |S| + K)$ time, where $K$ is the number of intervals reported. It can also be used to detect whether $S$ has at least one interval containing $q$ in $O(\log |S|)$ time. Each interval insertion or deletion on $S$ can be supported in $O(\log |S|)$ time.
 
 \vgap
 
@@ -777,7 +777,7 @@ The algorithm for the reporting version of Problem $\mathscr{A}$ is similar. The
 
 Next, sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, maintain the set $V_\ell$ of rectangles in $R$ that intersect with $\ell$. Let $S_\ell$ be the set of x-coordinates of the segments in $V_\ell$; we store $S_\ell$ in a binary search tree (BST) $\T$. Specifically, when $\ell$ hits the lower  (resp., upper) endpoint of a vertical segment $v = x \times [y_1, y_2]$ of $V$, we insert (resp., delete) the value $x$ into (resp., from) $\T$, which can be done in $O(\log n)$ time. When $\ell$ hits a horizontal segment $h = [x_1, x_2] \times y$ of $H$, search $\T$ to determine if the successor $x'$ of $x_1$ in $S_\ell$. If $x' \le x_2$, then then we output a pair $(h, p)$, where $p$ is the point $(x', y)$. The overall running time is $O(n \log n)$.
 
-\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{C}}$.} Let $S$ be a set of $N$ intervals in $\real$, each of which is associated with a real-valued {\em weight}. Given a search value $q$, a {\em stabbing max} query returns the maximum weight of all the intervals in $S$ covering $q$ (if no such intervals exist, the query returns $-\infty$). We can store $S$ in a structure of \cite{aak+12} using $O(N)$ space that can answer every query in $O(\log N)$ time. The structure also supports an insertion or deletion on $S$ in $O(\log N)$ amortized time.
+\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{C}}$.} Let $S$ be a set of intervals in $\real$, each of which is associated with a real-valued {\em weight}. Given a real value $q$, a {\em stabbing max} query returns the maximum weight of all the intervals in $S$ covering $q$ (if no such intervals exist, the query returns $-\infty$). We can store $S$ in a structure of \cite{aak+12} using $O(|S|)$ space that can answer every query in $O(\log |S|)$ time. The structure also supports an insertion or deletion on $S$ in $O(\log |S|)$ amortized time.
 
 \vgap
 
