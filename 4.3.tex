@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-% First, we prove (1). For any $i \in [k-2]$, $r_i^*\in R_i^*$, and $h \in \cross_H(r_i^*)$, we will identify a unique tuple $\bm{t} \in \J(R_1,...,R_{k-2},H,V)$ such that $\bm{t}[k-1] = h$, and $\bm{t}[i]$ is the full rectangle of $r_i'$, whose top-sliced rectangle is $r_i^*$. Let $\maxtop(r_i') = \ytop(B_\bm{t'})$ for some tuple $\bm{t'} \in \J(R_1',...,R_{k-2}')$. Let $\bm{t'} = (r'_1,...,r'_{k-2})$, and let $r_i$ be the full rectangle of $r_i'$ for $i \in [k-2]$. Since $h$ crosses $r_i^*$, and $B_\bm{t'} \subseteq r_i^*$, $h$ crosses $B_{\bm{t'}}$. Let $v$ be the segment $v_\vdash$ of $\gleft(\bm{t'})$. The intersection of $h$ and $v$ is a point on the left boundary of $B_{\bm{t'}}$, which means that $h\cap v \in B_{\bm{t'}} \subseteq \cap_{i = 1}^{k-2}r_i$. Therefore, $\bm{t} = (r_1,...,r_{k-2},h,v)\in \J(R_1,...,R_{k-2},H,V)$ is the desired tuple, and we have $\sum_{i \in [k-2]}\sum_{r_i^*\in R_i^*} |\cross_H(r_i^*)| \leq \out$.
-
-% Next, we prove (2). Let $r' = [x_1,x_2]\times [y_1,y_2]$, and $r^* = [x_1,x_2] \times [y_1,\maxtop(r')]$. Since $\gbot(\bm{t}) = r'$, $\dcross_H(\bm{t})$ contains exactly the set of segments segment $h \in H$ that cross the rectangle $[x_1,x_2]\times [y_1, \ytop(B_\bm{t})]$, where $\ytop(B_{\bm{t}})\leq \maxtop(r')$. Therefore, $\dcross_H(\bm{t})$ $\subseteq \cross_H(r^*)$. Furthermore, if the (horizontal) segments of $\cross_H(r^*)$ are sorted in ascending order of y-coordinate, then $\dcross_H(\bm{t})$ includes a prefix of the sorted order.
-
-
-=======
 \noindent \underline{\em Proof of Statement (1).}
 We will map each $r^*\in \bigcup_{i = 1}^{k-2} R_i^*$ to a unique tuple $\bm{t}\in \J(R_1',...,R_{k-2}')$ such that $\dcross_H(\bm{t}) = \cross_H(r^*)$. Then, by Lemma~\ref{lmm:hv:type1:properties} (3), we have $\sum_{i\in[k-2]}\sum_{r^*\in R_i^*} |\cross_H(r^*)| \leq \sum_{\bm{t}\in \J(R_1',...,R_{k-2}')}|\dcross_H(\bm{t})|\leq \out$.
 
@@ -34,21 +27,10 @@ $\xleft(B_{\bm{t}})\in [x_1,x_2]$. We proved in the last paragraph that $\xleft(
 \vgap 
 
 Conversely, let $h\in \dcross_H(\bm{t})$, which means that $h$ crosses $r'$ and $B_{\bm{t}}$. Thus, $r'$ does not contain any endpoints of $h$. Since $r^*\subseteq r'$, $r^*$ does not contain any endpoints of $h$ neither. 
-Next, we prove that $B_{\bm{t}} \subseteq r^*$. Since $h \cap B_{\bm{t}}\neq \emptyset$, this statement leads to $h \cap r^* \neq \emptyset$ and $h$ crosses $r^*$. Recall that $r^* = [x_1,x_2], [y_1, \maxtop(r')]$, and $B_{\bm{t}} = [\xleft(B_{\bm{t}}), \xright(B_{\bm{t}})]\times [y_1,\maxtop(r')]$. Since $B_{\bm{t}}$ is a subset of $r'$, we have $\xleft(B_{\bm{t}}) \subseteq [x_1,x_2]$. Therefore, $B_{\bm{t}} \subseteq r^*$, and $h\in \cross_H(r^*)$. 
+Next, we prove that $B_{\bm{t}} \subseteq r^*$. Since $h \cap B_{\bm{t}}\neq \emptyset$, this statement leads to $h \cap r^* \neq \emptyset$ and $h$ crosses $r^*$. Recall that $r^* = [x_1,x_2], [y_1, \maxtop(r')]$, and $B_{\bm{t}} = [\xleft(B_{\bm{t}}), \xright(B_{\bm{t}})]\times [y_1,\maxtop(r')]$. Since $B_{\bm{t}}$ is a subset of $r'$, we have $[\xleft(B_{\bm{t}}), \xright(B_{\bm{t}})] \subseteq [x_1,x_2]$. Therefore, $B_{\bm{t}} \subseteq r^*$, and $h\in \cross_H(r^*)$. 
 
 \vgap 
->>>>>>> 4b540a0e220d934a24e26c2f624815c59364ca4c
 
 It remains to show that we will not map two distinct rectangle $r_1^*, r_2^*\in \bigcup_{i = 1}^{k-2}R_i^*$ to the same tuple $\bm{t}\in \J(R_1',...,R_{k-2}')$. Suppose to the contrary that $r_1^*, r_2^*$ are mapped to the same tuple $\bm{t}$. Let $r_1^*, r_2^*$ be the top-sliced rectangles of $r_1'$ and $r_2'$ respectively. Since $r_1^*$ and $r_2^*$ are disinct, $r_1'$ is not the same as $r_2'$. By our mapping, $\gbot(B_{\bm{t}})$ is $r_1'$ and $r_2'$. Since $\gbot(B_{\bm{t}})$ is unique for each tuple $\bm{t}$, we have a contradiction. Therefore, each rectangle $r^*\in \bigcup_{i = 1}^{k-2}R_i^*$ is mapped to a unique tuple $\bm{t}\in \J(R_1',...,R_{k-2}')$.
 
-<<<<<<< HEAD
 \noindent \underline{\em Proof of Statement (2).} 
-=======
-\vgap
- 
-\noindent \underline{\em Proof of Statement (2).} 
-
-% Next, we prove (2).  Since $\gbot(\bm{t}) = r'$, $\dcross_H(\bm{t})$ contains exactly the set of segments segment $h \in H$ that cross the rectangle $[x_1,x_2]\times [y_1, \ytop(B_\bm{t})]$, where $\ytop(B_{\bm{t}})\leq \maxtop(r')$. Therefore, $\dcross_H(\bm{t})$ $\subseteq \cross_H(r^*)$. Furthermore, if the (horizontal) segments of $\cross_H(r^*)$ are sorted in ascending order of y-coordinate, then $\dcross_H(\bm{t})$ includes a prefix of the sorted order.
-
-Let $r' = [x_1,x_2]\times [y_1,y_2]$, and $r^* = [x_1,x_2] \times [y_1,\maxtop(r')]$. We will prove that $\dcross_H(\bm{t})$ contains exactly the set of segments $h\in H$ that cross the rectangle $[x_1,x_2]\times [y_1,\ytop(B_\bm{t})]$.
->>>>>>> 4b540a0e220d934a24e26c2f624815c59364ca4c
