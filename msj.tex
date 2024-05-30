@@ -923,13 +923,13 @@ we will prove that $\dcross_H(\bm{t})$ includes a prefix of the sorted order. It
 
 \vgap
 
-First, we prove that $h$ crosses $r'$. It suffices to show that $\xleft(h)  < x_1 \leq x_2 < \xright(h)$ and $y_h \in [y_1, y_2]$. Both conditions are satisfied since $h$ crosses $r^* = [x_1,x_2]\times [y_1, \maxtop(r')]$, and $\maxtop(r')\leq y_2$.
+We first show that $h$ crosses $r'$, or equivalently: $\xleft(h)  < x_1 \leq x_2 < \xright(h)$ and $y_h \in [y_1, y_2]$. These conditions hold true because $h$ crosses $r^* = [x_1,x_2]\times [y_1, \maxtop(r')]$, and $\maxtop(r')\leq y_2$ (due to the definition of top-sliced rectangle in \eqref{eqn:hv:type1:topsliced}).
 
 \vgap
 
-Then, we prove that $h$ crosses $B_{\bm{t}}$. It suffices to show that $\xleft(h) < \xleft(B_{\bm{t}}) \le \xright(B_{\bm{t}}) < \xright(h)$ and $y_h \in [y_1, \ytop(B_{\bm{t}})]$.
+Finally, we show that $h$ crosses $B_{\bm{t}}$, or equivalently: $\xleft(h) < \xleft(B_{\bm{t}}) \le \xright(B_{\bm{t}}) < \xright(h)$ and $y_h \in [\ybot(B_\bm{t}), \ytop(B_{\bm{t}})] = [y_1, \ytop(B_{\bm{t}})]$.
 \begin{itemize}
-    \item Since $h$ crosses $r'$, we have $\xleft(h) < x_1 \leq x_2 < \xright(h)$. Since $r' = \gbot(B_{\bm{t}})$, we have the x-range of $B_{\bm{t}}$ is contained in $[x_1,x_2]$. Therefore, $\xleft(h) < \xleft(B_{\bm{t}}) \le \xright(B_{\bm{t}}) < \xright(h)$.
+    \item The fact of $h$ crossing $r'$ tells us $\xleft(h) < x_1 \leq x_2 < \xright(h)$. Since $r' = \gbot(B_{\bm{t}})$, we have the x-range of $B_{\bm{t}}$ is contained in $[x_1,x_2]$. Therefore, $\xleft(h) < \xleft(B_{\bm{t}}) \le \xright(B_{\bm{t}}) < \xright(h)$.
     \item Since $h$ crosses $r^*$, we have $y_h \in [y_1, \maxtop(r')]$. By the definition of $h$, we have $y_h \leq \ytop(B_{\bm{t}})$. Therefore, $y_h \in [y_1, \ytop(B_{\bm{t}})]$.
 \end{itemize}
 
