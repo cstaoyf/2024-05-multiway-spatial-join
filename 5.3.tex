@@ -1,0 +1,38 @@
+\noindent \underline{\em Proof of Statement (1).} We will map each segment $h^* \in H^*$ to a unique tuple in $\J(R_1,...,R_{k-3},H',V)$ satisfying $\cross_{R_{k-2}}(\bm{t}) = \cross_{R_{k-2}}(h^*)$. We can then derive that 
+\myeqn{
+    \sum_{h^* \in H^*} |\cross_{R_{k-2}}(h^*)| \le \sum_{\bm{t} \in \J(R_1,...,R_{k-3},H',V)} |\cross_{R_{k-2}}(\bm{t})| \leq \out, \nn
+} where the last inequality is due to Statement (3) of Lemma~\ref{lmm:hv:type2:properties}.
+
+\vgap 
+
+Now, we explain the mapping. Consider an arbitrary $h^* \in H^*$. Recall that $h^*$ is the minimal segment of some segment $h' \in H'$. Specifically, if $h' = [x_1,x_2]\times y$, then $h^* = [x_1,\minleft(h')]\times y$. By the definition of $\minleft(h')$ in \eqref{eqn:hv:type2:H*}, there exists a tuple $\bm{t}\in \J(R_1',...,R_{k-2}')$ satisfying $\bm{t}[k-2] = h'$ and $\minleft(h') = \text{$x$-coordinate of $\bm{t}[k-1]$}$. We map $h^*$ to $\bm{t}$.
+
+\vgap
+
+Next, we will prove that a rectangle $r_{k-2} \in \cross_{R_{k-2}}(h^*)$ if and only if $r_{k-2} \in \cross_{R_{k-2}}(\bm{t})$. By the definition of $\cross_{R_{k-2}}(h^*)$ and $\cross_{R_{k-2}}(\bm{t})$ (see Definition~\eqref{eqn:contained} and \eqref{eqn:type2:contained-t}), it suffices to show that $h^*$ is the same as the effective horizontal segment of $\bm{t}$. Let $x$ be the $x$-coordinate of the vertical segment $\bm{t}[k-1]$. Then, $B_\bm{t}$, which is the intersection of $h'$ and $v$, is $(x,y)$, where $y$ is the $y$-coordinate of $h'$. The effective horizontal segment of $\bm{t}$ is therefore $[x_1,x]\times y$. Recall that $h^* = [x_1,\minleft(h')]\times y$, where $\minleft(h') = \text{$x$-coordinate of $\bm{t}[k-1]$} = x$. Therefore, $h^*$ is the same as the effective horizontal segment of $\bm{t}$.
+
+
+
+It remains to show that no two distinct rectangles $h_1^*, h_2^* \in H^*$ can be mapped to the same tuple in $\J(R_1,...,R_{k-3}, H',V)$. Assume, on the contrary, that $h_1^*$ and $h_2^*$ are mapped to the same tuple $\bm{t}\in \J(R_1,...,R_{k-3}, H',V)$. Suppose that $h_1^*$ (resp., $h_2^*$) is the minimal segment of $r_1'$ (resp., $r_2'$). Under our mapping, it must be true that  $h_1' = h_2' = \bm{t}[k-2]$. However, the distinctness of $h_1^*$ and $h_2^*$ requires $h_1' \ne h_2'$, which yields a contradiction.
+
+\extraspacing \underline{\em Proof of Statement (2).}
+Let $h', h^*$, and $\bm{t}$ be as defined in statement (2). Let us represent $h'$ as $[x_1,x_2] \times y$. Accordingly, $h^*$ can be written as $[x_1, \minleft(h')] \times y$. Additionally, let $x$ be the x-coordinate of the vertical segment $\bm{t}[k-1]$. Then, $B_\bm{t}$, which is the intersection of $h'$ and $v$, is $(x,y)$. The effective horizontal segment of $\bm{t}$ can be denoted as $[x_1,x] \times y$. 
+
+\vgap
+
+We will first prove $\contained_{R_{k-2}}(\bm{t})\subseteq \cross_{R_{k-2}}(r^*)$. For this purpose, we will show that any rectangle $r_{k-2} \in \contained_{R_{k-2}}(\bm{t})$ also covers $h^*$. It suffices to show that $h^*$ is contained in the effective horizontal segment of $\bm{t}$. Combining the definition of $\minleft(h')$ (see \eqref{eqn:minleft}), and the fact that $x$ is the x-coordinate of $\bm{t}[k-1]$, where $\bm{t} \in \J(R_1,...,R_{k-3},H',V)$, we have $\minleft(h') \le x$. This implies that $h^* = [x_1, \minleft(h')] \times y$ is contained in $[x_1, x] \times y$, i.e. the effective horizontal segment of $\bm{t}$. 
+
+\vgap
+
+Next, assuming that the rectangles $r$ in $\contained_{R_{k-2}}(h^*)$ are sorted in descending order of $\xright(r)$, then we will prove that $\contained_{R_{k-2}}(\bm{t})$ includes a prefix of the sorted order. It suffices to establish the following equivalent statement:
+
+\vgap
+
+\minipg{0.8\linewidth} {
+    If a rectangle $r \in \contained_{R_{k-2}}(h^*)$ satisfies that $\xright(r)$ is no less than the x-coordinate of $\bm{t}[k-1]$, then $r$ must be in $\contained_{R_{k-2}}(\bm{t})$.
+}
+
+\vgap
+
+\noindent To prove the above, we must explain why $r$ contains the effective horizontal segment of $\bm{t}$. Since $r \in \contained_{R_{k-2}}(h^*)$, $r$ covers the segment $[x_1, \minleft(h')] \times y$. Therefore, $[x_1, \minleft(h')] \subseteq [\xleft(r), \xright(r)]$ and $y \in [\ybot(r), \ytop(r)]$.
+As $\xright(r)$ is no less than the x-coordinate of $\bm{t}[k-1]$, which we denote as $x$, $[x_1, x] \subseteq [\xleft(r), \xright(r)]$. This implies that $[x_1, x] \times y$, i.e. the effective horizontal segment of $\bm{t}$, is contained in $r$. 
