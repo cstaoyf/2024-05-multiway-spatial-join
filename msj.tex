@@ -815,7 +815,7 @@ Overall, each rectangle of $R$ necessitates one insertion and one deletion in $\
 
 \vgap
 
-Next, we consider the find-all-sorted version of Problem $\mathscr{D}$. Again, initialize an array $A$ of size $|R|$, where each rectangle of $R$ is allocated a cell. For each $r \in R$, we keep a linked list, which at the end of our algorithm will store the horizontal segments of $\cross_H(r)$ in ascending order of their y-coordinates. A pointer referencing the linked list is stored in the array cell of $r$. In the outset, all the linked lists are empty. Unlike the detection version, we do not need to record whether a rectangle is active or not.
+Next, we consider the find-all-sorted version of Problem $\mathscr{D}$. Again, initialize an array $A$ of size $|R|$, where each rectangle of $R$ is allocated a cell. For each $r \in R$, we keep a linked list, which at the end of our algorithm will store the horizontal segments of $\cross_H(r)$ in ascending order of their y-coordinates. A pointer referencing the linked list is stored in the cell of $A$ allocated to $r$. In the outset, all linked lists are empty. Unlike the detection version, we will not need to keep the active status for the rectangles.
 
 \vgap
 
@@ -823,11 +823,11 @@ Again, sweep a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all
 
 \vgap
 
-When $\ell$ hits a horizontal segment $h = [z_1, z_2] \times y$ of $P$, perform a containment query on $\T$ to find all the intervals in $S_\ell$ that are contained by $[z_1, z_2]$; the query cost is $O(\log n + K_h)$, where $K_h$ is the number of intervals reported. For each retrieved interval $[x_1, x_2]$, we also obtain its host rectangle $r$. It is clear that $h$ is a segment crossing $r$ and is thus appended to the linked list of $r$. Note that $h$ is higher than all the segments already existing in that linked list.
+When $\ell$ hits a horizontal segment $h = [z_1, z_2] \times y$ of $P$, perform a containment query on $\T$ to find all the intervals in $S_\ell$ that are contained by $[z_1, z_2]$; the query cost is $O(\log n + K_h)$, where $K_h$ is the number of intervals reported. For each retrieved interval $[x_1, x_2]$, we also obtain its host rectangle $r$. It is clear that $h$ is a segment crossing $r$ and is thus appended to the linked list of $r$. Note that $h$ is higher than all the segments already in that linked list.
 
 \vgap
 
-Overall, each rectangle of $R$ necessitates one insertion and one deletion in $\T$. All these insertions and deletions take $O(n \log n)$ time in total. Each segment $h$ of $H$ performs a containment query on $\T$, which has a cost of $O(\log n + K_h)$. All these queries demand a total cost of $O(n \log n + \sum_h K_h)$. Recall that the x-range of a rectangle in $R$ can be retrieved by at most one containment query. Hence, $\sum_h K_h \le n$ and the runtime of our algorithm is $O(n \log n)$.
+Overall, each rectangle of $R$ necessitates one insertion and one deletion in $\T$. All these insertions and deletions take $O(n \log n)$ time in total. Each segment $h$ of $H$ performs a containment query on $\T$, which has a cost of $O(\log n + K_h)$. All these queries demand a total cost of $O(n \log n + \sum_h K_h)$. However, unlike the detection version, the sum $\sum_h K_h$ is equal to the total size of $\cross_H(r)$ for all the $r \in R$. The total size is equivalent to $\out$.
 
 
 \extraspacing {\bf Algorithm for Problem $\bm{\mathscr{E}}$.}
