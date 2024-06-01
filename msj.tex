@@ -751,7 +751,8 @@ We now complete the proof of Theorem~\ref{thm:main-recur}.
 
 \appendix 
 
-\def\vgap{\vspace{1mm}}
+\def\vgap{\vspace{2mm}}
+\def\extraspacing{\vspace{2mm}}
 
 \section*{Appendix}
 
@@ -759,45 +760,39 @@ We now complete the proof of Theorem~\ref{thm:main-recur}.
 
 \section{Building Brick Algorithms} \label{app:bricks}
 
-\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{A}}$.} The {\em interval tree} \cite{bcko08} stores a set $S$ of intervals in $\real$ using $O(|S|)$ space such that, given any real value $q$, the intervals of $S$ containing $q$ can be found in $O(\log |S| + K)$ time, where $K$ is the number of intervals reported. It can also be used to detect whether $S$ has at least one interval containing $q$ in $O(\log |S|)$ time. Each interval insertion or deletion on $S$ can be supported in $O(\log |S|)$ time.
+\extraspacing {\bf Terminology.} Each point $(x, y)$ is said to {\em define} a y-coordinate $y$, a horizontal segment $[x_1, x_2] \times y$ is said to {\em define} a y-coordinate $y$, and each rectangle $r = [x_1, x_2] \times [y_1, y_2]$ is said to {\em define} two y-coordinates $y_1$ and $y_2$. These definitions permit us to convenient specify a set of y-coordinates using expressions like ``the set of four y-coordinates defined by point $p$, horizontal segment $h$, and rectangle $r$''.
+
+\extraspacing {\bf Fundamental Data Structures.} The {\em interval tree} \cite{bcko08} stores a set $S$ of intervals in $\real$ using $O(|S|)$ space such that, given any real value $q$, the intervals of $S$ containing $q$ can be found in $O(\log |S| + K)$ time, where $K$ is the number of intervals reported. It can also be used to detect whether $S$ has at least one interval containing $q$ in $O(\log |S|)$ time. The structure supports an insertion or deletion on $S$ in $O(\log |S|)$ time.
 
 \vgap
 
-Let us first consider the detection version of Problem $\mathscr{A}$. Each point $p = (x, y)$ of $P$ is said to {\em define} the y-coordinate $y$, and each rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$ is said to {\em define} two y-coordinates $y_1$ and $y_2$. We start by sorting the set of y-coordinates defined by all the points and rectangles.
+Now, let us assume that each interval of $S$ is associated with a real-valued {\em weight}. Given a real value $q$, a {\em stabbing max} query returns the maximum weight of all the intervals in $S$ covering $q$ (if no such intervals exist, the query returns $-\infty$). We can store $S$ in a structure of \cite{aak+12} using $O(|S|)$ space that can answer such a query in $O(\log |S|)$ time. The structure supports an insertion or deletion on $S$ in $O(\log |S|)$ amortized time.
 
 \vgap
 
-Next, sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, maintain the set $R_\ell$ of rectangles in $R$ that intersect with $\ell$. Let $S_\ell$ be the set of x-ranges of the rectangles in $R_\ell$; we store $S_\ell$ in an interval tree $\T$. Specifically, when $\ell$ hits the bottom (resp., top) edge of a rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$, we insert (resp., delete) $[x_1, x_2]$ into (resp., from) $\T$, which can be done in $O(\log n)$ time. When $\ell$ hits a point $p = (x, y)$ of $P$, search $\T$ to determine if any interval in $S_\ell$ contains the value $x$. If so, point $p$ is covered by at least one rectangle in $R$; otherwise, it is not. The overall running time is $O(n \log n)$.
+The {\em priority search tree} (PST) \cite{m85} stores a set $P$ of points using $O(|P|)$ space such that, given a 3-sided rectangle $q = [x_1, x_2] \times [y, \infty)$, the points of $S$ covered by $q$ can be found in $O(\log |P| + K)$ time, where $K$ is the number of points reported. The structure supports an insertion or deletion on $S$ in $O(\log |S|)$ time.
+
+\vgap
+
+The PST can be deployed to answer queries on intervals. Let $S$ be a set of intervals in $\real$. Given an interval $q = [z_1, z_2]$, a {\em containment query} reports all the intervals of $S$ that are contained in $q$. We can store $S$ in a PST of $O(|S|)$ space that solves such a query in $O(\log |S| + K)$ time, where $K$ is the number of intervals reported. To see why, observe that an interval $[z_1, z_2]$ is contained by another $[x, y]$ if and only if the point $(x, y)$ is covered by the 3-sided rectangle $[z_1, \infty) \times (-\infty, z_2]$. Thus, we create from $S$ a point set $P = \set{(x, y) \mid [x, y] \in S}$ and store $P$ in a PST. Given an interval $q = [z_1, z_2]$, we can answer the containment query by using the PST to find all the points in $P$ covered by $[z_1, \infty) \times (-\infty, z_2]$ and, for each such point $(x, y)$, report $[x, y]$.
+
+\vgap
+
+Another closely related query is the {\em reverse-containment query}, which, given an interval $q = [z_1, z_2]$, finds all the intervals of $S$ that contain $q$ (rather than ``being contained by $q$''). Again, we can store $S$ in a PST using $O(|S|)$ space such that any such query can be answered in $O(\log |S| + K)$ time, where $K$ is the number of intervals reported. In general, an interval $[z_1, z_2]$ contains another $[x, y]$ if and only if the point $(x, y)$ is covered by the 3-sided rectangle $(-\infty, z_1] \times [z_2, \infty)$. Thus, we create from $S$ a point set $P = \set{(x, y) \mid [x, y] \in S}$ and store $P$ in a PST. Given an interval $q = [z_1, z_2]$, we use the PST to find all the points in $P$ covered by $(-\infty, z_1] \times [z_2, \infty)$ and, for each such point $(x, y)$, report $[x, y]$.
+
+\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{A}}$.} Consider first the detection version. Sort the set of y-coordinates defined by the points of $P$ and the rectangles of $R$. Next, sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, maintain the set $R_\ell$ of rectangles in $R$ that intersect with $\ell$. Let $S_\ell$ be the set of x-ranges of the rectangles in $R_\ell$; we store $S_\ell$ in an interval tree $\T$. Specifically, when $\ell$ hits the bottom (resp., top) edge of a rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$, we insert (resp., delete) $[x_1, x_2]$ into (resp., from) $\T$, which can be done in $O(\log n)$ time. When $\ell$ hits a point $p = (x, y)$ of $P$, search $\T$ to determine if any interval in $S_\ell$ contains the value $x$. If so, point $p$ is covered by at least one rectangle in $R$; otherwise, it is not. The overall running time is $O(n \log n)$.
 
 \vgap
 
 The algorithm for the reporting version of Problem $\mathscr{A}$ is similar. The only difference is that, when $\ell$ hits a point $p = (x, y)$ of $P$, we use $\T$ to report all the intervals in $S_\ell$ that contain $x$; the cost is $O(n \log n + K_p)$, where $K_p$ is the number of such intervals. Every interval corresponds to a rectangle in $R$ that contains $p$. The total running time is $O(n \log n + \sum_p K_p) = O(n \log n + \out)$.
 
-\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{B}}$.} Each horizontal segment $h = [x_1, x_2] \times y$ of $H$ is said to {\em define} the y-coordinate $y$, and each vertical segment $v = x \times [y_1, y_2]$ of $V$ is said to {\em define} two y-coordinates $y_1$ and $y_2$. We start by sorting the set of y-coordinates defined by all the horizontal and vertical segments.
+\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{B}}$.} Sort the set of y-coordinates defined by all the segments of $H$ and $V$. Next, sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, maintain the set $V_\ell$ of segments in $V$ that intersect with $\ell$. Let $S_\ell$ be the set of x-coordinates of the segments in $V_\ell$; we store $S_\ell$ in a binary search tree (BST) $\T$. Specifically, when $\ell$ hits the lower  (resp., upper) endpoint of a vertical segment $v = x \times [y_1, y_2]$ of $V$, we insert (resp., delete) the value $x$ into (resp., from) $\T$, which can be done in $O(\log n)$ amortized time. When $\ell$ hits a horizontal segment $h = [x_1, x_2] \times y$ of $H$, search $\T$ to determine if the successor $x'$ of $x_1$ in $S_\ell$. If $x' \le x_2$, then we output a pair $(h, p)$, where $p$ is the point $(x', y)$; otherwise, output nothing for $h$. The overall running time is $O(n \log n)$.
 
-\vgap
+\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{C}}$.} Sort the set of y-coordinates defined by all the segments in $H$ and all the rectangles in $R$. Next, sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, maintain the set $R_\ell$ of rectangles in $R$ that intersect with $\ell$. Let $S_\ell$ be the set of x-ranges of the rectangles in $R_\ell$; we store $S_\ell$ in a structure $\T$ of \cite{aak+12}. Specifically, when $\ell$ hits the bottom (resp., top) edge of a rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$, we insert (resp., delete) $[x_1, x_2]$ with {\em weight} $x_2$ into (resp., from) $\T$, which can be done in $O(\log n)$ time. When $\ell$ hits a horizontal segment $h = [x_1, x_2] \times y$ of $P$, search $\T$ to determine the maximum weight $w$ of all the intervals in $S_\ell$ containing the value $x_1$. If $w \ne -\infty$, we output $(h, p)$ where the point $p$ is defined in a way depending on $w$: if $w \le x_2$, then $p = (w, y)$; otherwise $p = (x_2, y)$. The overall running time is $O(n \log n)$.
 
-Next, sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, maintain the set $V_\ell$ of segments in $V$ that intersect with $\ell$. Let $S_\ell$ be the set of x-coordinates of the segments in $V_\ell$; we store $S_\ell$ in a binary search tree (BST) $\T$. Specifically, when $\ell$ hits the lower  (resp., upper) endpoint of a vertical segment $v = x \times [y_1, y_2]$ of $V$, we insert (resp., delete) the value $x$ into (resp., from) $\T$, which can be done in $O(\log n)$ amortized time. When $\ell$ hits a horizontal segment $h = [x_1, x_2] \times y$ of $H$, search $\T$ to determine if the successor $x'$ of $x_1$ in $S_\ell$. If $x' \le x_2$, then we output a pair $(h, p)$, where $p$ is the point $(x', y)$. The overall running time is $O(n \log n)$.
+\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{D}}$.} Consider first the find-lowest version. Sort the set of y-coordinates defined by all the horizontal segments and rectangles. In the outset, all rectangles of $R$ are marked as inactive. During our algorithm, the status of each rectangle will turn from inactive to active at some point, turn from active back to inactive at a later point, and then stay that way forever.
 
-\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{C}}$.} Let $S$ be a set of intervals in $\real$, each of which is associated with a real-valued {\em weight}. Given a real value $q$, a {\em stabbing max} query returns the maximum weight of all the intervals in $S$ covering $q$ (if no such intervals exist, the query returns $-\infty$). We can store $S$ in a structure of \cite{aak+12} using $O(|S|)$ space that can answer every query in $O(\log |S|)$ time. The structure also supports an insertion or deletion on $S$ in $O(\log |S|)$ amortized time.
-
-\vgap
-
-For Problem $\mathscr{C}$, each horizontal segment $h = [x_1, x_2] \times y$ of $H$ is said to {\em define} the y-coordinate $y$, and each rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$ is said to {\em define} two y-coordinates $y_1$ and $y_2$. We start by sorting the set of y-coordinates defined by all the horizontal segments and rectangles.
-
-\vgap
-
-Next, sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, maintain the set $R_\ell$ of rectangles in $R$ that intersect with $\ell$. Let $S_\ell$ be the set of x-ranges of the rectangles in $R_\ell$; we store $S_\ell$ in a structure $\T$ of \cite{aak+12}. Specifically, when $\ell$ hits the bottom (resp., top) edge of a rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$, we insert (resp., delete) $[x_1, x_2]$ with {\em weight} $x_2$ into (resp., from) $\T$, which can be done in $O(\log n)$ time. When $\ell$ hits a horizontal segment $h = [x_1, x_2] \times y$ of $P$, search $\T$ to determine the maximum weight $w$ of all the intervals in $S_\ell$ containing the value $x_1$. If $w \ne -\infty$, we output $(h, p)$ where the point $p$ is defined in a way depending on $w$: if $w \le x_2$, then $p = (w, y)$; otherwise $p = (x_2, y)$. The overall running time is $O(n \log n)$.
-
-\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{D}}$.} The {\em priority search tree} (PST) \cite{m85} stores a set $P$ of points using $O(|P|)$ space such that, given any 3-sided rectangle $q = [x_1, x_2] \times [y, \infty)$, the points of $S$ covered by $q$ can be found in $O(\log |P| + K)$ time, where $K$ is the number of points reported. This structure can be used to answer the following {\em containment query} on intervals: store a set $S$ of intervals in $\real$ using $O(|S|)$ space such that, given any interval $q' = [z_1, z_2]$, the intervals of $S$ that are contained in $q'$ can be found in $O(\log |S| + K)$ time, where $K$ is the number of intervals reported. To see why, observe that an interval $[z_1, z_2]$ contains another $[x, y]$ if and only if the point $(x, y)$ is covered by the 3-sided rectangle $[z_1, \infty) \times (-\infty, z_2]$. Thus, we can create from $S$ a set of points $P = \set{(x, y) \mid [x, y] \in S}$ and store $P$ in a PST. Given an interval $q' = [z_1, z_2]$, we use the PST to find all the points in $P$ covered by $q = [z_1, \infty) \times (-\infty, z_2]$ and, for each such point $(x, y)$, report $[x, y]$.
-
-\vgap
-
-Let us now return to the context of Problem $\mathscr{D}$. Let us first consider the detection version. Each horizontal segment $h = [x_1, x_2] \times y$ of $H$ is said to {\em define} the y-coordinate $y$, and each rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$ is said to {\em define} two y-coordinates $y_1$ and $y_2$. We start by sorting the set of y-coordinates defined by all the horizontal segments and rectangles.
-
-\vgap
-
-We assume, w.l.o.g., that each rectangle of $R$ is given a distinct ID in $[n]$. Initialize an array $A$ of size $|R|$, where cell $A[i]$, $i \in [|R|]$, is allocated to the rectangle $r$ with ID $i$ and will be used to store a constant amount of information for $r$. In the outset, all rectangles of $R$ are marked as inactive (in $A$). During our algorithm, the status of each rectangle will turn from inactive to active at some point, turn from active back to inactive at a later point, and then stay that way forever.
+%We assume, w.l.o.g., that each rectangle of $R$ is given a distinct ID in $[n]$. Initialize an array $A$ of size $|R|$, where cell $A[i]$, $i \in [|R|]$, is allocated to the rectangle $r$ with ID $i$ and will be used to store a constant amount of information for $r$.
 
 \vgap
 
@@ -805,7 +800,7 @@ Sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$
 
 \vgap
 
-When $\ell$ hits a horizontal segment $h = [z_1, z_2] \times y$ of $P$, perform a containment query on $\T$ to find all the intervals in $S_\ell$ that are contained by $[z_1, z_2]$; if $K_h$ is the number of such intervals, this retrieval takes $O(\log n + K_h)$ time. For each retrieved interval $[x_1, x_2]$, we also obtain its host rectangle $r$ (stored along with $[x_1, x_2]$ in $\T$). Observe that $h$ is the lowest segment in $H$ that crosses $r$. We store $h$ in the cell of array $A$ allocated to $r$, after which $r$ is marked as inactive, and accordingly, its x-range $[x_1, x_2]$ is deleted from $T$ in $O(\log n)$ time. As $r$ will remain inactive in the rest of the execution, its x-range will not be retrieved again by another containment query in the future.
+When $\ell$ hits a horizontal segment $h = [z_1, z_2] \times y$ of $P$, perform a containment query on $\T$ to find all the intervals in $S_\ell$ that are contained by $[z_1, z_2]$; if $K_h$ is the number of such intervals, this retrieval takes $O(\log n + K_h)$ time. For each retrieved interval $[x_1, x_2]$, we also obtain its host rectangle $r$ (stored along with $[x_1, x_2]$ in $\T$). As can be verified shortly, $h$ is the lowest segment in $H$ that crosses $r$; we therefore output $(r, h)$. After that, $r$ is marked as inactive, and accordingly, its x-range $[x_1, x_2]$ is deleted from $T$ in $O(\log n)$ time. As $r$ will remain inactive in the rest of the execution, its x-range will not be retrieved again by another containment query in the future. This implies that $h$ is indeed the lowest segment in $H$ crossing $r$.
 
 \vgap
 
@@ -817,7 +812,7 @@ Overall, each rectangle of $R$ necessitates one insertion and one deletion in $\
 
 \vgap
 
-Next, we consider the find-all-sorted version of Problem $\mathscr{D}$. Again, initialize an array $A$ of size $|R|$, where each rectangle of $R$ is allocated a cell. For each $r \in R$, we keep a linked list, which at the end of our algorithm will store the horizontal segments of $\cross_H(r)$ in ascending order of their y-coordinates. A pointer referencing the linked list is stored in the cell of $A$ allocated to $r$. In the outset, all linked lists are empty. Unlike the detection version, we will not need to keep the active status for the rectangles.
+Next, we consider the find-all-sorted version of Problem $\mathscr{D}$. Again, initialize an array $A$ of size $|R|$, where each rectangle of $R$ is allocated a cell. For each $r \in R$, we keep a linked list, which at the end of our algorithm will store the horizontal segments of $\cross_H(r)$ in ascending order of their y-coordinates. In the outset, all linked lists are empty. Unlike the detection version, we will not need to keep the active status for the rectangles.
 
 \vgap
 
@@ -832,19 +827,13 @@ When $\ell$ hits a horizontal segment $h = [z_1, z_2] \times y$ of $P$, perform 
 Overall, each rectangle of $R$ necessitates one insertion and one deletion in $\T$. All these insertions and deletions take $O(n \log n)$ time in total. Each segment $h$ of $H$ performs a containment query on $\T$, which has a cost of $O(\log n + K_h)$. All these queries demand a total cost of $O(n \log n + \sum_h K_h)$. However, unlike the detection version, the sum $\sum_h K_h$ here is equal to the total size of $\cross_H(r)$ for all the $r \in R$. The total size is equivalent to $\out$.
 
 
-\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{E}}$.} The PST introduced earlier in Problem $\mathscr{D}$ can be used to answer the following {\em reverse-containment query} on intervals: store a set $S$ of intervals in $\real$ using $O(|S|)$ space such that, given any interval $q' = [z_1, z_2]$, the intervals of $S$ that contain  $q'$ (rather than ``being contained by $q'$'') can be found in $O(\log |S| + K)$ time, where $K$ is the number of intervals reported. To see why, observe that an interval $[z_1, z_2]$ contains another $[x, y]$ if and only if the point $(x, y)$ is covered by the 3-sided rectangle $(-\infty, z_1] \times [z_2, \infty)$. Thus, we create from $S$ a set of points $P = \set{(x, y) \mid [x, y] \in S}$ and store $P$ in a PST. Given an interval $q' = [z_1, z_2]$, we use the PST to find all the points in $P$ covered by $(-\infty, z_1] \times [z_2, \infty)$ and, for each such point $(x, y)$, report $[x, y]$.
+\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{E}}$.} Sort all the rectangles $r \in R$ in ascending order of $\xright(r)$ (namely, the x-coordinate of the right edge of $r$). Assign the ID $i \in [R]$ to $r$ if $r$ is at the $i$-th position in the sorted list.
+
+%We create an array $A$ and assign the $i$-th ($i \in [R]$) cell of $A$ to the rectangle $r \in R$ with ID $i$.
 
 \vgap
 
-Let us now return to the context of Problem $\mathscr{E}$. We sort all the rectangles $r \in R$ in ascending order of $\xright(r)$ (namely, the x-coordinate of the right edge of $r$). Assign the ID $i \in [R]$ to $r$ if $r$ is at the $i$-th position in the sorted list. We create an array $A$ and assign the $i$-th ($i \in [R]$) cell of $A$ to the rectangle $r \in R$ with ID $i$.
-
-\vgap
-
-Next, we aim to compute, for each pair $(h, r) \in H \times r$, we output a pair $(h, \lambda)$ where $\lambda$ is the ID of $r$. These pairs may be output in an arbitrary order.
-
-\vgap
-
-Each horizontal segment $h = [x_1, x_2] \times y$ of $H$ is said to {\em define} the y-coordinate $y$, and each rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$ is said to {\em define} two y-coordinates $y_1$ and $y_2$. We sort the set of y-coordinates defined by all the horizontal segments and rectangles. Then, sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, we maintain the set $R_\ell$ of rectangles in $R$ that intersect with $\ell$. Let $S_\ell$ be the set of x-ranges of the rectangles in $R_\ell$; we store $S_\ell$ in a PST $\T$. Specifically, when $\ell$ hits the bottom (resp., top) edge of a rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$, we insert (resp., delete) $[x_1, x_2]$ into (resp., from) $\T$, which can be done in $O(\log n)$ time. We call the rectangle $r$ the {\em host} of $[x_1, x_2]$ and store its ID together with $[x_1, x_2]$ in $\T$. When $\ell$ hits a horizontal segment $h = [z_1, z_2] \times y$ of $P$, perform a reverse-containment query on $\T$ to find all the intervals in $S_\ell$ that contain $[z_1, z_2]$; the query cost is $O(\log n + K_h)$, where $K_h$ is the number of intervals reported. For each retrieved interval $[x_1, x_2]$, we also obtain the ID $\lambda$ of its host rectangle $r$, and output the pair $(h, \lambda)$.
+Next, we aim to produce, for each pair $(h, r) \in H \times r$, a pair $(h, \lambda)$ where $\lambda$ is the ID of $r$. These pairs may be output in an arbitrary order. Sort the set of y-coordinates defined by all the horizontal segments and rectangles. Sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, we maintain the set $R_\ell$ of rectangles in $R$ that intersect with $\ell$. Let $S_\ell$ be the set of x-ranges of the rectangles in $R_\ell$; we store $S_\ell$ in a PST $\T$. Specifically, when $\ell$ hits the bottom (resp., top) edge of a rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$, we insert (resp., delete) $[x_1, x_2]$ into (resp., from) $\T$, which can be done in $O(\log n)$ time. We call the rectangle $r$ the {\em host} of $[x_1, x_2]$ and store its ID together with $[x_1, x_2]$ in $\T$. When $\ell$ hits a horizontal segment $h = [z_1, z_2] \times y$ of $P$, perform a reverse-containment query on $\T$ to find all the intervals in $S_\ell$ that contain $[z_1, z_2]$; the query cost is $O(\log n + K_h)$, where $K_h$ is the number of intervals reported. For each retrieved interval $[x_1, x_2]$, we also obtain the ID $\lambda$ of its host rectangle $r$, and output the pair $(h, \lambda)$.
 
 \vgap
 
