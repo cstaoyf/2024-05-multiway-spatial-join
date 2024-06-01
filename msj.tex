@@ -122,7 +122,7 @@ In \cite{kcko22}, Khamis et al.\ investigated a type of joins that extends the c
 
 \vgap 
 
-It is worth noting that $\Omega(n \log n)$ is a lower bound on the runtime of any comparison-based algorithm solving the $k$-SJ problem, even for $k = 2$. This can be established via a reduction from the {\em element distinctness} (ED) problem; see \cite{dl79}.
+It is worth noting that $\Omega(n \log n)$ is a lower bound on the runtime of any comparison-based algorithm  solving the $k$-SJ problem (see Appendix~\ref{app:comp-class} for a formal definition of such algorithms), even for $k = 2$. This can be established via a reduction from the {\em element distinctness} (ED) problem; see \cite{dl79}.
 
 %where we are given $n$ real values $e_1, e_2, ..., e_n$ and need to decide whether there are distinct $i, j \in [n]$ satisfying $e_i = e_j$. The ED problem demands $\Omega(n \log n)$ comparisons to solve \cite{dl79}.
 
@@ -148,7 +148,7 @@ It is worth noting that $\Omega(n \log n)$ is a lower bound on the runtime of an
 
 \subsection{Our Results} \label{sec:intro:ours} 
 
-In this paper, we solve the $k$-SJ problem with a comparison-based algorithm that runs in $O(n \log n + \out)$ time regardless of the constant $k$. The time complexity is asymptotically optimal.
+In this paper, we solve the $k$-SJ problem with a comparison-based algorithm that runs in $O(n \log n + \out)$ time regardless of the constant $k$. The time complexity is asymptotically optimal in the class of comparison-based algorithms.
 
 \vgap 
 
@@ -755,6 +755,8 @@ We now complete the proof of Theorem~\ref{thm:main-recur}.
 
 \section*{Appendix}
 
+\section{The Comparison-Based Class for $k$-SJ} \label{app:comp-class}
+
 \section{Building Brick Algorithms} \label{app:bricks}
 
 \extraspacing {\bf Algorithm for Problem $\bm{\mathscr{A}}$.} The {\em interval tree} \cite{bcko08} stores a set $S$ of intervals in $\real$ using $O(|S|)$ space such that, given any real value $q$, the intervals of $S$ containing $q$ can be found in $O(\log |S| + K)$ time, where $K$ is the number of intervals reported. It can also be used to detect whether $S$ has at least one interval containing $q$ in $O(\log |S|)$ time. Each interval insertion or deletion on $S$ can be supported in $O(\log |S|)$ time.
@@ -789,13 +791,13 @@ Next, sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \
 
 \extraspacing {\bf Algorithm for Problem $\bm{\mathscr{D}}$.} The {\em priority search tree} (PST) \cite{m85} stores a set $P$ of points using $O(|P|)$ space such that, given any 3-sided rectangle $q = [x_1, x_2] \times [y, \infty)$, the points of $S$ covered by $q$ can be found in $O(\log |P| + K)$ time, where $K$ is the number of points reported. This structure can be used to answer the following {\em containment query} on intervals: store a set $S$ of intervals in $\real$ using $O(|S|)$ space such that, given any interval $q' = [z_1, z_2]$, the intervals of $S$ that are contained in $q'$ can be found in $O(\log |S| + K)$ time, where $K$ is the number of intervals reported. To see why, observe that an interval $[z_1, z_2]$ contains another $[x, y]$ if and only if the point $(x, y)$ is covered by the 3-sided rectangle $[z_1, \infty) \times (-\infty, z_2]$. Thus, we can create from $S$ a set of points $P = \set{(x, y) \mid [x, y] \in S}$ and store $P$ in a PST. Given an interval $q' = [z_1, z_2]$, we use the PST to find all the points in $P$ covered by $q = [z_1, \infty) \times (-\infty, z_2]$ and, for each such point $(x, y)$, report $[x, y]$.
 
-%\vgap
+\vgap
 
-%A PST built on a set $P$ of points can also answer the following detection query in $O(\log |P|)$ time: given any 3-sided rectangle $q = [x_1, x_2] \times [y, \infty)$, decide whether $P$ contains at least one point covered by $q$. Accordingly, a PST built on a set $S$ of intervals can also answer the detection version of the containment query in $O(\log |S|)$ time: specifically, given any interval $q' = [z_1, z_2]$, decide whether $S$ has at least one interval that is contained in $q'$.
+Let us now return to the context of Problem $\mathscr{D}$. Let us first consider the detection version. Each horizontal segment $h = [x_1, x_2] \times y$ of $H$ is said to {\em define} the y-coordinate $y$, and each rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$ is said to {\em define} two y-coordinates $y_1$ and $y_2$. We start by sorting the set of y-coordinates defined by all the horizontal segments and rectangles.
 
 \vgap
 
-Let us now return to the context of $\mathscr{D}$. We assume, w.l.o.g., that each rectangle of $R$ is given a distinct ID in $[n]$. Let us first consider the detection version. Initialize an array $A$ of size $|R|$, where cell $A[i]$, $i \in [|R|]$, is allocated to the rectangle $r$ with ID $i$ and will be used to store a constant amount of information for $r$. In the outset, all rectangles of $R$ are marked as inactive (in $A$). During our algorithm, the status of each rectangle will turn from inactive to active at some point, turn from active back to inactive at a later point, and then stay that way forever.
+We assume, w.l.o.g., that each rectangle of $R$ is given a distinct ID in $[n]$. Initialize an array $A$ of size $|R|$, where cell $A[i]$, $i \in [|R|]$, is allocated to the rectangle $r$ with ID $i$ and will be used to store a constant amount of information for $r$. In the outset, all rectangles of $R$ are marked as inactive (in $A$). During our algorithm, the status of each rectangle will turn from inactive to active at some point, turn from active back to inactive at a later point, and then stay that way forever.
 
 \vgap
 
@@ -830,7 +832,23 @@ When $\ell$ hits a horizontal segment $h = [z_1, z_2] \times y$ of $P$, perform 
 Overall, each rectangle of $R$ necessitates one insertion and one deletion in $\T$. All these insertions and deletions take $O(n \log n)$ time in total. Each segment $h$ of $H$ performs a containment query on $\T$, which has a cost of $O(\log n + K_h)$. All these queries demand a total cost of $O(n \log n + \sum_h K_h)$. However, unlike the detection version, the sum $\sum_h K_h$ here is equal to the total size of $\cross_H(r)$ for all the $r \in R$. The total size is equivalent to $\out$.
 
 
-\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{E}}$.}
+\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{E}}$.} The PST introduced earlier in Problem $\mathscr{D}$ can be used to answer the following {\em reverse-containment query} on intervals: store a set $S$ of intervals in $\real$ using $O(|S|)$ space such that, given any interval $q' = [z_1, z_2]$, the intervals of $S$ that contain  $q'$ (rather than ``being contained by $q'$'') can be found in $O(\log |S| + K)$ time, where $K$ is the number of intervals reported. To see why, observe that an interval $[z_1, z_2]$ contains another $[x, y]$ if and only if the point $(x, y)$ is covered by the 3-sided rectangle $(-\infty, z_1] \times [z_2, \infty)$. Thus, we create from $S$ a set of points $P = \set{(x, y) \mid [x, y] \in S}$ and store $P$ in a PST. Given an interval $q' = [z_1, z_2]$, we use the PST to find all the points in $P$ covered by $(-\infty, z_1] \times [z_2, \infty)$ and, for each such point $(x, y)$, report $[x, y]$.
+
+\vgap
+
+Let us now return to the context of Problem $\mathscr{E}$. We sort all the rectangles $r \in R$ in ascending order of $\xright(r)$ (namely, the x-coordinate of the right edge of $r$). Assign the ID $i \in [R]$ to $r$ if $r$ is at the $i$-th position in the sorted list. We create an array $A$ and assign the $i$-th ($i \in [R]$) cell of $A$ to the rectangle $r \in R$ with ID $i$.
+
+\vgap
+
+Next, we aim to compute, for each pair $(h, r) \in H \times r$, we output a pair $(h, \lambda)$ where $\lambda$ is the ID of $r$. These pairs may be output in an arbitrary order.
+
+\vgap
+
+Each horizontal segment $h = [x_1, x_2] \times y$ of $H$ is said to {\em define} the y-coordinate $y$, and each rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$ is said to {\em define} two y-coordinates $y_1$ and $y_2$. We sort the set of y-coordinates defined by all the horizontal segments and rectangles. Then, sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, we maintain the set $R_\ell$ of rectangles in $R$ that intersect with $\ell$. Let $S_\ell$ be the set of x-ranges of the rectangles in $R_\ell$; we store $S_\ell$ in a PST $\T$. Specifically, when $\ell$ hits the bottom (resp., top) edge of a rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$, we insert (resp., delete) $[x_1, x_2]$ into (resp., from) $\T$, which can be done in $O(\log n)$ time. We call the rectangle $r$ the {\em host} of $[x_1, x_2]$ and store its ID together with $[x_1, x_2]$ in $\T$. When $\ell$ hits a horizontal segment $h = [z_1, z_2] \times y$ of $P$, perform a reverse-containment query on $\T$ to find all the intervals in $S_\ell$ that contain $[z_1, z_2]$; the query cost is $O(\log n + K_h)$, where $K_h$ is the number of intervals reported. For each retrieved interval $[x_1, x_2]$, we also obtain the ID $\lambda$ of its host rectangle $r$, and output the pair $(h, \lambda)$.
+
+\vgap
+
+Each rectangle of $R$ necessitates one insertion and one deletion in $\T$. All these insertions and deletions take $O(n \log n)$ time in total. Each segment $h$ of $H$ performs a containment query on $\T$, which has a cost of $O(\log n + K_h)$. All these queries demand a total cost of $O(n \log n + \sum_h K_h)$. The sum $\sum_h K_h$ here is equal to the total size of $\contained_R(h)$ for all the $h \in H$. The total size is equivalent to $\out$. The cost so far is therefore $O(n \log n + \out)$.
 
 
 \section{Completing the Proof of Lemma~\ref{lmm:hv}} \label{app:hv} 
