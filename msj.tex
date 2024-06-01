@@ -776,7 +776,7 @@ Each leaf is associated with an {\em result}, which is defined to be a subset of
 Given an $(n_1, n_2, ..., n_k)$-input $\set{R_1, R_2, ..., R_k}$, we execute the algorithm by traversing a root-to-leaf path in $\T$. In general, at an internal node with the instruction $(i, \lambda, \side; i', \lambda', \side')$, we first identify
 \myitems{
     \item $r$ as the rectangle with ID $\lambda$ in $R_i$;
-    \item $r'$ as the rectangle with ID $\lambda'$ in $R_i'$.
+    \item $r'$ as the rectangle with ID $\lambda'$ in $R_{i'}$.
 }
 Then, we compare $\side(r)$ to $\side'(r')$ (e.g., if $\side = \xright$ and $\side = \ybot$, then the comparison is between $\xright(r)$ to $\ybot(r')$). We branch to
 \myitems{
@@ -784,16 +784,12 @@ Then, we compare $\side(r)$ to $\side'(r')$ (e.g., if $\side = \xright$ and $\si
     \item the middle child if $\side(r) = \side'(r')$;
     \item the right child if $\side(r) > \side'(r')$.
 }
-At a leaf, we look at its associated result and, for each $(\lambda_1, \lambda_2, ..., \lambda_k)$ in the result, output $(r_1, r_2, ..., r_k)$ where $r_i$ ($i \in [k]$) is the rectangle with ID $\lambda_i$ in $R_i$.
-
-\vgap
-
-The algorithm is {\em correct} if it produces the correct output on all $(n_1, n_2, ..., n_k)$-inputs. Its {\em worst-case cost} is the height of $\T$.
+At a leaf, we look at its associated result and, for each $(\lambda_1, \lambda_2, ..., \lambda_k)$ in that result, output $(r_1, r_2, ..., r_k)$ where $r_i$ ($i \in [k]$) is the rectangle with ID $\lambda_i$ in $R_i$. The algorithm is {\em correct} if it produces the correct output on all $(n_1, n_2, ..., n_k)$-inputs. Its {\em worst-case cost} is the height of $\T$.
 
 
 \vgap
 
-As mentioned in Section~\ref{sec:intro:prev}, through a reduction from the element distinctness problem \cite{dl79}, one can show that when $k = 2$, any comparison-based algorithm capable of solving all $(n/2, n/2)$-inputs must have a worst-case cost of $\Omega(n \log n)$.
+Through a reduction from the element distinctness problem \cite{dl79}, one can show that, for $k = 2$, any comparison-based algorithm capable of solving $(n/2, n/2)$-inputs must have a worst-case cost of $\Omega(n \log n)$.
 
 
 
