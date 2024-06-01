@@ -763,7 +763,7 @@ Fix an integer $k \ge 3$, as well as $k$ integers $n_1, n_2, ..., n_k$ at least 
 
 \vgap
 
-A {\em comparison-based $k$-SJ} algorithm for solving $(n_1, n_2, ..., n_k)$-inputs is a decision tree $\T$ defined as follows. Each internal node $u$ of $\T$ has three child nodes, referred as the {\em left}, {\em middle}, and {\em right} child, respectively. Each node is associated with an {\em instruction} of the form $(i, \lambda, \side; i', \lambda', \side')$ where
+A {\em comparison-based $k$-SJ} algorithm for solving $(n_1, n_2, ..., n_k)$-inputs is a tree $\T$ defined as follows. Each internal node $u$ of $\T$ has three child nodes, referred as the {\em left}, {\em middle}, and {\em right} child, respectively. Each node is associated with an {\em instruction} of the form $(i, \lambda, \side; i', \lambda', \side')$ where
 \myitems{
     \item $i, i' \in [1, k]$;
     \item $\lambda \in [n_i], \lambda' \in [n_{i'}]$;
@@ -1051,9 +1051,23 @@ Finally, we show that $h$ crosses $B_{\bm{t}}$, or equivalently: $\xleft(h) < \x
 
 \section{Supplementary Proofs for Section~\ref{sec:hv:type2}} \label{app:hv:type2}
 
-\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type2:recur-output}.}
+\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type2:recur-output}.} We will prove the lemma by mapping each tuple of $\J(R_1,...,R_{k-3},H',V)$ to a unique tuple in $\J_2$.
 
-\input{5.1.tex}
+\vgap
+
+To describe the mapping, consider an arbitrary $(k-1)$-tuple $\bm{t} = (r_1,...,$ $r_{k-3},$ $h', v) \in \J(R_1,...,$ $R_{k-3},H',V)$. Let $h$ be the full segment of $h'$. By the definition of trimmed segments (see Section~\ref{sec:hv:type2}), at least one rectangle $r_{k-2} \in R_{k-2}$ covers both the left endpoint of $h$ and the right endpoint of $h'$. We map $\bm{t}$ to the $k$-tuple $(r_1,...,r_{k-3}, r_{k-2},h,v)$. It is worth noting that $r_{k-2}$ definitely contains the entire $h'$ (which has the same left point as $h$, implying that $r_{k-2}$ covers both endpoints of $h'$).
+
+\vgap
+
+We argue that $(r_1,...,r_{k-3}, r_{k-2},h,v)$ belongs to $\J_2$. Let $p$ be the intersection point of $h'$ and $v$. As $h'$ is contained in $h$, the intersection point between $h$ and $v$ is also $p$. Since $(r_1,...,r_{k-3}, h', v) \in \J(R_1,...,R_{k-3},H',V)$, it must hold that $p$ falls in $r_i$ for $i \in [k-3]$. From our earlier discussion, we already know that $r_{k-2}$ contains $h'$; hence, $p$ falls in $r_{k-2}$ as well. Thus, $h \cap v \cap \bigcap_{i = 1}^{k-2}r_i$ is non-empty, indicating that $(r_1,...,r_{k-3}, r_{k-2},h,v) \in \J(R_1,...,R_{k-2},H,V)$. This, together with the fact that $r_{k-2}$ covers the left endpoint of $h$, tells us $(r_1,...,r_{k-3}, r_{k-2},h,v) \in \J_2$.
+
+\vgap
+
+It remains to show that no two distinct $(k-1)$-tuples $\bm{t}_1$ and $\bm{t}_2$ can be mapped to the same tuple in $\J_2$. Assume, on the contrary, that $\bm{t}_1$ and $\bm{t}_2$ are mapped to $(r_1,...,r_{k-3}, r_{k-2},h,v) \in \J_2$. Then, $\bm{t}_1[i] = \bm{t}_2[i] = r_i$ for each $i \in [k-3]$, and $\bm{t}_1[k-1] = \bm{t}_2[k-1] = v$. Moreover, $\bm{t}_1[k-2]$ and $\bm{t}_2[k-2]$ are both the trimmed segment of $h$. But then this means $\bm{t}_1 = \bm{t}_2$, giving a contradiction.
+
+\vgap
+
+We can now conclude that $|\J(R_1,...,R_{k-3},H',V)| \le |\J_2| \le \out$, where the second inequality used the definition in \eqref{eqn:hv:type2:J2}.
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type2:properties}.}
 
