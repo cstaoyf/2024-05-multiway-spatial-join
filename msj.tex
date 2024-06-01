@@ -1055,7 +1055,7 @@ Finally, we show that $h$ crosses $B_{\bm{t}}$, or equivalently: $\xleft(h) < \x
 
 \vgap
 
-To describe the mapping, consider an arbitrary $(k-1)$-tuple $\bm{t} = (r_1,...,$ $r_{k-3},$ $h', v) \in \J(R_1,...,$ $R_{k-3},H',V)$. Let $h$ be the full segment of $h'$. By the definition of trimmed segments (see Section~\ref{sec:hv:type2}), at least one rectangle $r_{k-2} \in R_{k-2}$ covers both the left endpoint of $h$ and the right endpoint of $h'$. We map $\bm{t}$ to the $k$-tuple $(r_1,...,r_{k-3}, r_{k-2},h,v)$. It is worth noting that $r_{k-2}$ definitely contains the entire $h'$ (which has the same left point as $h$, implying that $r_{k-2}$ covers both endpoints of $h'$).
+To describe the mapping, consider an arbitrary $(k-1)$-tuple $\bm{t} = (r_1,...,$ $r_{k-3},$ $h', v) \in \J(R_1,...,$ $R_{k-3},H',V)$. Let $h$ be the full segment of $h'$. By the definition of a trimmed segment (see Section~\ref{sec:hv:type2}), at least one rectangle $r_{k-2} \in R_{k-2}$ covers both the left endpoint of $h$ and the right endpoint of $h'$. We map $\bm{t}$ to the $k$-tuple $(r_1,...,r_{k-3}, r_{k-2},h,v)$. It is worth noting that $r_{k-2}$ definitely contains the entire $h'$ (which has the same left point as $h$, implying that $r_{k-2}$ covers both endpoints of $h'$).
 
 \vgap
 
@@ -1075,29 +1075,38 @@ We can now conclude that $|\J(R_1,...,R_{k-3},H',V)| \le |\J_2| \le \out$, where
 
 \vgap
 
-Let $r_{k-2}$ be an arbitrary rectangle in the set $\contained_{R_{k-2}}(\bm{t})$. The definition of $\contained_{R_{k-2}}(\bm{t})$ tells us that $r_{k-2}$ covers the effective horizontal segment of $h'$ (see Section~\ref{sec:hv:type2} for the definition of ``effective horizontal segment''), whose right endpoint is $B_{\bm{t}}$. This means that $B_\bm{t}$ falls in $r_{k-2}$ as well.
+Let $r_{k-2}$ be an arbitrary rectangle in the set $\contained_{R_{k-2}}(\bm{t})$. The definition of $\contained_{R_{k-2}}(\bm{t})$ tells us that $r_{k-2}$ covers the effective horizontal segment of $h'$ (see Section~\ref{sec:hv:type2} for the definition of an effective horizontal segment), whose right endpoint is $B_{\bm{t}}$. This means that $B_\bm{t}$ falls in $r_{k-2}$ as well.
 
 \vgap
 
 Now we know that $h \cap v \cap \bigcap_{i = 1}^{k-2} r_i$ contains $B_\bm{t}$ and is thus non-empty. Hence,
 $(r_1,...,r_{k-3}, r_{k-2}, h, v) \in \J(R_1,...,R_{k-2},H,V)$. To show $(r_1,...,r_{k-3}, r_{k-2}, h, v) \in \J_2$, we still need to prove that $r_{k-2}$ covers the left endpoint of $h$. This follows immediately from the fact that $r_{k-2}$ covers the effective horizontal segment of $h'$ (which shares the same left endpoint as $h$).
 
-\extraspacing \underline{\em Proof of Statement (2).} Let $(r_1,...,r_{k-2},h,v)$, $h'$, $\bm{t}$ be as defined in the statement. First, we prove that $\bm{t}\in \J(R_1,...,R_{k-3}, H', V)$. It suffices to show that the intersection of $h'$ and $v$ is contained in $r_1,...,r_{k-3}$. We will prove this by showing that $h'\cap v$ is the same as $h\cap v$, which is covered by $r_1,...,r_{k-2}$, because $\bm{t} \in \J(R_1,...,R_{k-2},H,V)$.
+\extraspacing \underline{\em Proof of Statement (2).} Let $(r_1,...,r_{k-2},h,v)$, $h'$, and $\bm{t}$ be as defined in statement (2). Firstly, we will argue that the $(k-1)$-tuple $\bm{t}$ belongs to $\J(R_1,...,R_{k-3}, H', V)$, which is equivalent to saying that that the point $h' \cap v$ falls in all of $r_1,...,r_{k-3}$. The subsequent discussion will prove that $h' \cap v$ is in fact the same point as $h \cap v$. From $(r_1,...,r_{k-2},h,v) \in \J(R_1,...,R_{k-2},H,V)$, we already know that $h \cap v$ falls in all of $r_1,...,r_{k-2}$. Therefore, obtaining $h' \cap v = h \cap v$ will allow us to assert that $r_1,...,r_{k-3}$ all cover $h' \cap v$.
 
 \vgap
 
-Let $p$ be the intersection of $h$ and $v$. Since $h' \subseteq h$, the intersection of $h'$ and $v$ is either empty or the same as $p$.
-Therefore, to prove that $h' \cap v = p$, we only need to show that $p \in h'$. Let $h = [x_1,x_2]\times y$ and $p = (x,y)$. Since $h' \subseteq h$, we can denote $h'$ as $[x_1, x_2'] \times y$, where $x_1 \le x_2' \le x_2$. Then, $p \in h'$ is equivalent to $x \in [x_1, x_2']$. Since $p \in h$, we have $x \ge x_1$. By the definition of trimmed segmemt, $(x_2',y)$ is the rightmost point on $h$ satisfying that a left-end covering rectangle of $h$ in $R_{k-2}$ covers it. As $(r_1,...,r_{k-2},h,v) \in \J_2$, the point $p \in h$ is covered by the rectangle $r_{k-2}$, which is a left-end covering rectangle of $h$. Therefore, the x-coordinate of $p$ should not exceed $x_2'$. As a result, we have $x \in [x_1, x_2']$, and $p \in h'$.
+Denote by $p$ the intersection point of $h$ and $v$. As $h'$ is contained in $h$, to prove $h' \cap v = p$, it suffices to explain why $p$ is on $h'$. Let us represent $h$ as $[x_1,x_2] \times y$ and $p$ as $(x, y)$ for some $x \in [x_1, x_2]$. Accordingly, we can represent $h'$ as $[x_1, x_2'] \times y$ for some $x_2' \in [x_1, x_2]$. By the definition of a trimmed segment, we know that $(x_2',y)$ is the rightmost point on $h$ that falls in a left-end covering rectangle of $h$ in $R_{k-2}$. From statement (2), we have $(r_1,...,r_{k-2},h,v) \in \J_2$, meaning that $r_{k-2}$ (i) is a left-end covering rectangle of $h$, and (ii) covers $p$ ($= h \cap v$). Therefore, the x-coordinate of $p$ cannot exceed $x_2'$, allowing us to assert that $p$ is on $h'$.
 
 \vgap
 
-Next, we aim at proving $r_{k-2}\in \contained_{R_{k-2}}(\bm{t})$. As proven above, $h'\cap v= p$. In another word, $B_\bm{t} = p$. Recall that we defind $p = (x,y)$, and $h' = [x_1,x_2']\times y$. Thus, we can denote the effective horizontal segment of $\bm{t}$ as $[x_1, x] \times y$. For our goal, we only need to show that $[x_1,x] \subseteq [\xleft(r_2), \xright(r_2)]$ and $y \in [\ybot(r_2), \ytop(r_2)]$.
+%This tells us $B_\bm{t} = p$.
+
+Secondly, we will argue that $r_{k-2}\in \contained_{R_{k-2}}(\bm{t})$. The above discussion has shown that $h \cap v = h' \cap v = p$. If (as before) we write $h = [x_1,x_2] \times y$, $h' = [x_1,x_2'] \times y$, and $p = (x,y)$, then the effective horizontal segment of $\bm{t}$ can be written as $[x_1, x] \times y$ (due to the definition of an effective horizontal segment). To prove $r_{k-2} \in \contained_{R_{k-2}}(\bm{t})$, we need to explain why $r_{k-2}$ covers the entire segment $[x_1, x] \times y$. We do so in two steps:
+
+% $[x_1,x] \subseteq [\xleft(r_2), \xright(r_2)]$ and $y \in [\ybot(r_2), \ytop(r_2)]$.
+
 \begin{itemize}
-    \item Since $r_{k-2}$ is a left-end covering rectangle of $h$, we have  $x_1 \in [\xleft(r_2), \xright(r_2)]$. As we show in the last paragrah, $r_{k-2}$ also covers $p$, whose x-coordinate, denoted as $x$, satisfies $x_1 \le x$. Therefore, $x \in [\xleft(r_2), \xright(r_2)]$, and $[x_1,x] \subseteq [\xleft(r_2), \xright(r_2)]$.
-    \item The y-coordinate of $h$ is $y$. Since $r_{k-2}$ intersects $h$, $y \in [\ybot(r_2), \ytop(r_2)]$.
+    \item As $r_{k-2}$ is a left-end covering rectangle of $h$, we must have $x_1 \in [\xleft(r_2), \xright(r_2)]$. On the other hand, the fact $r_{k-2}$ covering $p$ gives $x \in [\xleft(r_2), \xright(r_2)]$. It thus follows that $[x_1,x] \subseteq [\xleft(r_2), \xright(r_2)]$.
+
+    \vgap
+
+    \item The fact $h$ intersecting with $r_{k-2}$ gives $y \in [\ybot(r_2), \ytop(r_2)]$.
 \end{itemize}
 
-\noindent \underline{\em Proof of Statement (3).}
+\noindent Combining the above tells us that  $r_{k-2}$ covers $[x_1, x] \times y$.
+
+\extraspacing \underline{\em Proof of Statement (3).}
 We will provide a way to map each pair $(\bm{t'}, r)$ satisfyint that $\bm{t'}\in \J(R_1,...,R_{k-3},H',V)$ and $r \in \contained_{R_{k-2}}(\bm{t})$ to a unique tuple in $\J_2$. Consider an arbitrary such pair $(\bm{t'}, r)$. Let $h$ be the full segment of $\bm{t'}[k-2]$. We map $(\bm{t'}, r)$ to the tuple $\bm{t} = (\bm{t}'[1],...,\bm{t}'[k-3], r, h, \bm{t}'[k-1])$. By Statement (1) and the fact that $r\in \contained_{R_{k-2}}(\bm{t'})$, the $k$-tuple $\bm{t}$ belongs to $\J_2$.
 
 \vgap
