@@ -814,7 +814,7 @@ The PST can be deployed to answer queries on intervals. Let $S$ be a set of inte
 
 \vgap
 
-Another closely related query is the {\em reverse-containment query}, which, given an interval $q = [z_1, z_2]$, finds all the intervals of $S$ that contain $q$ (rather than ``being contained by $q$''). Again, we can store $S$ in a PST using $O(|S|)$ space such that any such query can be answered in $O(\log |S| + K)$ time, where $K$ is the number of intervals reported. In general, an interval $[z_1, z_2]$ contains another $[x, y]$ if and only if the point $(x, y)$ is covered by the 3-sided rectangle $(-\infty, z_1] \times [z_2, \infty)$. Thus, we create from $S$ a point set $P = \set{(x, y) \mid [x, y] \in S}$ and store $P$ in a PST. Given an interval $q = [z_1, z_2]$, we use the PST to find all the points in $P$ covered by $(-\infty, z_1] \times [z_2, \infty)$ and, for each such point $(x, y)$, report $[x, y]$.
+Another closely related query is the {\em reverse-containment query}, which, given an interval $q = [z_1, z_2]$, finds all the intervals of $S$ that contain $q$ (rather than ``being contained by $q$''). Again, we can store $S$ in a PST using $O(|S|)$ space such that any such query can be answered in $O(\log |S| + K)$ time, where $K$ is the number of intervals reported. In general, an interval $[x, y]$ contains another $[z_1, z_2]$ if and only if the point $(x, y)$ is covered by the 3-sided rectangle $(-\infty, z_1] \times [z_2, \infty)$. Thus, we create from $S$ a point set $P = \set{(x, y) \mid [x, y] \in S}$ and store $P$ in a PST. Given an interval $q = [z_1, z_2]$, we use the PST to find all the points in $P$ covered by $(-\infty, z_1] \times [z_2, \infty)$ and, for each such point $(x, y)$, report $[x, y]$.
 
 \extraspacing {\bf Algorithm for Problem $\bm{\mathscr{A}}$.} Consider first the detection version. Sort the set of y-coordinates defined by the points of $P$ and the rectangles of $R$. Next, sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, maintain the set $R_\ell$ of rectangles in $R$ that intersect with $\ell$. Let $S_\ell$ be the set of x-ranges of the rectangles in $R_\ell$; we store $S_\ell$ in an interval tree $\T$. Specifically, when $\ell$ hits the bottom (resp., top) edge of a rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$, we insert (resp., delete) $[x_1, x_2]$ into (resp., from) $\T$, which can be done in $O(\log n)$ time. When $\ell$ hits a point $p = (x, y)$ of $P$, search $\T$ to determine if any interval in $S_\ell$ contains the value $x$. If so, point $p$ is covered by at least one rectangle in $R$; otherwise, it is not. The overall running time is $O(n \log n)$.
 
@@ -863,13 +863,13 @@ When $\ell$ hits a horizontal segment $h = [z_1, z_2] \times y$ of $P$, perform 
 Overall, each rectangle of $R$ necessitates one insertion and one deletion in $\T$. All these insertions and deletions take $O(n \log n)$ time in total. Each segment $h$ of $H$ performs a containment query on $\T$, which has a cost of $O(\log n + K_h)$. All these queries demand a total cost of $O(n \log n + \sum_h K_h)$. However, unlike the detection version, the sum $\sum_h K_h$ here is equal to the total size of $\cross_H(r)$ for all the $r \in R$. The total size is equivalent to $\out$.
 
 
-\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{E}}$.} Sort all the rectangles $r \in R$ in ascending order of $\xright(r)$ (namely, the x-coordinate of the right edge of $r$). To each $r \in R$, we assign an ID $i \in [R]$ if $r$ is at the $i$-th position of the sorted list.
+\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{E}}$.} Sort all the rectangles $r \in R$ in ascending order of $\xright(r)$ (namely, the x-coordinate of the right edge of $r$). To each $r \in R$, we assign an ID $i \in [|R|]$ if $r$ is at the $i$-th position of the sorted list.
 
 %We create an array $A$ and assign the $i$-th ($i \in [R]$) cell of $A$ to the rectangle $r \in R$ with ID $i$.
 
 \vgap
 
-Next, we aim to produce, for each pair $(h, r) \in H \times r$, a pair $(h, \lambda)$ where $\lambda$ is the ID of $r$. These pairs may be output in an arbitrary order. Sort the set of y-coordinates defined by all the horizontal segments and rectangles. Sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, we maintain the set $R_\ell$ of rectangles in $R$ that intersect with $\ell$. Let $S_\ell$ be the set of x-ranges of the rectangles in $R_\ell$; we store $S_\ell$ in a PST $\T$. Specifically, when $\ell$ hits the bottom (resp., top) edge of a rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$, we insert (resp., delete) $[x_1, x_2]$ into (resp., from) $\T$, which can be done in $O(\log n)$ time. We call the rectangle $r$ the {\em host} of $[x_1, x_2]$ and store its ID together with $[x_1, x_2]$ in $\T$. When $\ell$ hits a horizontal segment $h = [z_1, z_2] \times y$ of $P$, perform a reverse-containment query on $\T$ to find all the intervals in $S_\ell$ that contain $[z_1, z_2]$; the query cost is $O(\log n + K_h)$, where $K_h$ is the number of intervals reported. For each retrieved interval $[x_1, x_2]$, we also obtain the ID $\lambda$ of its host rectangle $r$, and output the pair $(h, \lambda)$.
+Next, we aim to produce, for each pair $(h, r) \in H \times r$ such that $r$ crosses $h$, a pair $(h, \lambda)$ where $\lambda$ is the ID of $r$. These pairs may be output in an arbitrary order. Sort the set of y-coordinates defined by all the horizontal segments and rectangles. Sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, we maintain the set $R_\ell$ of rectangles in $R$ that intersect with $\ell$. Let $S_\ell$ be the set of x-ranges of the rectangles in $R_\ell$; we store $S_\ell$ in a PST $\T$. Specifically, when $\ell$ hits the bottom (resp., top) edge of a rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$, we insert (resp., delete) $[x_1, x_2]$ into (resp., from) $\T$, which can be done in $O(\log n)$ time. We call the rectangle $r$ the {\em host} of $[x_1, x_2]$ and store its ID together with $[x_1, x_2]$ in $\T$. When $\ell$ hits a horizontal segment $h = [z_1, z_2] \times y$ of $P$, perform a reverse-containment query on $\T$ to find all the intervals in $S_\ell$ that contain $[z_1, z_2]$; the query cost is $O(\log n + K_h)$, where $K_h$ is the number of intervals reported. For each retrieved interval $[x_1, x_2]$, we also obtain the ID $\lambda$ of its host rectangle $r$, and output the pair $(h, \lambda)$.
 
 \vgap
 
@@ -884,7 +884,8 @@ Let $L$ be the list of $(h, \lambda)$ pairs produced (the size of $L$ is $\out$)
 Finally, we generate, for each $h$, its set $\contained_R(h)$ (i.e., the set of rectangles covering $h$), where the rectangles $r$ are sorted by $\xright(r)$. To start with, initialize an empty linked list for every $h \in H$. Inspect the pairs $(h, \lambda) \in L$ in ascending order of the ID-field $\lambda$. For each pair $(h, \lambda)$ examined, identify the rectangle $r$ whose ID is $\lambda$ and add $r$ to the linked list of $h$. By the way the rectangle IDs were generated, it is clear that $\xright(r)$ is larger than or equal to the x-coordinates of the right edges of the rectangles already in the linked list. The whole scan over $L$ finishes in $O(1 + \out)$ time, and produces the correct output for Problem $\mathscr{E}$.
 
 
-\section{Completing the Proof of Lemma~\ref{lmm:hv}} \label{app:hv} 
+\section{Supplementary Proofs for Section~\ref{sec:hv:type1}} \label{app:hv:type1}
+
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:recur-output}.} We will prove the lemma by providing a way to map each $(k-2)$-tuple $\J(R_1',...,R_{k-2}')$ to a unique $k$-tuple in the H-V $k$-SJ result $\J(R_1,...,R_{k-2},H,V)$.
 
@@ -1046,6 +1047,7 @@ Finally, we show that $h$ crosses $B_{\bm{t}}$, or equivalently: $\xleft(h) < \x
     \item The fact of $h$ crossing $r^*$ also tells us that $y_h \in [y_1, \maxtop(r')]$. Moreover, by the definition of $h$, we have $y_h \leq \ytop(B_{\bm{t}})$. It thus follows that $y_h \in [y_1, \ytop(B_{\bm{t}})]$.
 \end{itemize}
 
+\section{Supplementary Proofs for Section~\ref{sec:hv:type2}} \label{app:hv:type2}
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type2:recur-output}.}
 
