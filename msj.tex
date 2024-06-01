@@ -1106,12 +1106,18 @@ Secondly, we will argue that $r_{k-2}\in \contained_{R_{k-2}}(\bm{t})$. The abov
 
 \noindent Combining the above tells us that  $r_{k-2}$ covers $[x_1, x] \times y$.
 
-\extraspacing \underline{\em Proof of Statement (3).}
-We will provide a way to map each pair $(\bm{t'}, r)$ satisfyint that $\bm{t'}\in \J(R_1,...,R_{k-3},H',V)$ and $r \in \contained_{R_{k-2}}(\bm{t})$ to a unique tuple in $\J_2$. Consider an arbitrary such pair $(\bm{t'}, r)$. Let $h$ be the full segment of $\bm{t'}[k-2]$. We map $(\bm{t'}, r)$ to the tuple $\bm{t} = (\bm{t}'[1],...,\bm{t}'[k-3], r, h, \bm{t}'[k-1])$. By Statement (1) and the fact that $r\in \contained_{R_{k-2}}(\bm{t'})$, the $k$-tuple $\bm{t}$ belongs to $\J_2$.
+\extraspacing \underline{\em Proof of Statement (3).} Our proof resorts to the algorithm generate-$\J_2$ (see Section~\ref{sec:hv:type2}). This algorithm adds to $\J_2$ exactly
+\myeqn{
+    \sum_{\bm{t} \in \J(R_1, ..., R_3, H', V)} |\contained_{R_{k-2}}(\bm{t})| \nn
+}
+tuples. By statement (2), the $\J_2$ produced must be a subset of $\J(R_1,...,R_{k-2},H,V)$, whose size is $\out$.
+Therefore, the above expression is at most $\out$, as claimed in statement (3).
 
-\vgap
-
-It remains to prove that no two distinct pair $(\bm{t}_1, r_1)$ and $(\bm{t}_2, r_2)$ will be mapped to the same tuple in $\J_2$. Assume, on the contrary, $(\bm{t}_1, r_1)$ and $(\bm{t}_2, r_2)$ are mapped to the same tuple $\bm{t} \in \J_2$. Then, $r_1 = \bm{t}[k-2] = r_2$, and $\bm{t}_1[i] = \bm{t}[i] = \bm{t}_2[i]$ for $i \in [k-3]$. Moreover, both $\bm{t}_1[k-2]$ and $\bm{t}_2[k-2]$ are the trimmed segment of $\bm{t}[k-1]$. Since the trimmed segment is unique, $\bm{t}_1[k-2] = \bm{t}_2[k-2]$. Hence, $\bm{t}_1 = \bm{t}_2$, which contradicts the assumption. Therefore, we have $|\J(R_1,...,R_{k-3},H',V)| \le |\J_2| \le \out$, where the second inequality is due to Definition \eqref{eqn:hv:type2:J2}.
+% We will provide a way to map each pair $(\bm{t'}, r)$ satisfyint that $\bm{t'}\in \J(R_1,...,R_{k-3},H',V)$ and $r \in \contained_{R_{k-2}}(\bm{t})$ to a unique tuple in $\J_2$. Consider an arbitrary such pair $(\bm{t'}, r)$. Let $h$ be the full segment of $\bm{t'}[k-2]$. We map $(\bm{t'}, r)$ to the tuple $\bm{t} = (\bm{t}'[1],...,\bm{t}'[k-3], r, h, \bm{t}'[k-1])$. By Statement (1) and the fact that $r\in \contained_{R_{k-2}}(\bm{t'})$, the $k$-tuple $\bm{t}$ belongs to $\J_2$.
+%
+% \vgap
+%
+% It remains to prove that no two distinct pair $(\bm{t}_1, r_1)$ and $(\bm{t}_2, r_2)$ will be mapped to the same tuple in $\J_2$. Assume, on the contrary, $(\bm{t}_1, r_1)$ and $(\bm{t}_2, r_2)$ are mapped to the same tuple $\bm{t} \in \J_2$. Then, $r_1 = \bm{t}[k-2] = r_2$, and $\bm{t}_1[i] = \bm{t}[i] = \bm{t}_2[i]$ for $i \in [k-3]$. Moreover, both $\bm{t}_1[k-2]$ and $\bm{t}_2[k-2]$ are the trimmed segment of $\bm{t}[k-1]$. Since the trimmed segment is unique, $\bm{t}_1[k-2] = \bm{t}_2[k-2]$. Hence, $\bm{t}_1 = \bm{t}_2$, which contradicts the assumption. Therefore, we have $|\J(R_1,...,R_{k-3},H',V)| \le |\J_2| \le \out$, where the second inequality is due to Definition \eqref{eqn:hv:type2:J2}.
 
 \extraspacing {\bf Computing $\bm{H^*}$.}
 
