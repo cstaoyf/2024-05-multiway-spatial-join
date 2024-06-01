@@ -1,8 +1,8 @@
-\extraspacing {\bf Computing $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} We consider, w.l.o.g., that each segment in the input $H$ is given a distinct integer ID in $[|H|]$. This allows us to create an array of size $|H|$ and allocate an array cell to each $h \in H$, with the property that the cell can be accessed by the ID of $h$ in constant time.
+W.l.o.g., we assume that each segment in the input $H$ is given a distinct integer ID in $[|H|]$. This allows us to create an array of size $|H|$ and allocate an array cell to each $h \in H$, with the property that the cell can be accessed by the ID of $h$ in constant time.
 
 \vgap
 
-To compute $H*$, we start by deriving $\minleft(h')$ for each segment $h'$ in $H'$. For this purpose, first initialize $\minleft(h') = \infty$ for each such $h'$. Recall that $h'$ is the trimmed segment of some segment $h$ in $H$. We store $\minleft(h')$ in the array cell allocated to $h$.
+To compute $H^*$, we start by deriving $\minleft(h')$ for each segment $h'$ in $H'$. For this purpose, first initialize $\minleft(h') = \infty$ for each such $h'$. Recall that $h'$ is the trimmed segment of some segment $h$ in $H$. We store $\minleft(h')$ in the array cell allocated to $h$.
 
 \vgap
 
