@@ -6,7 +6,7 @@ To compute $H^*$, we start by deriving $\minleft(h')$ for each segment $h'$ in $
 
 \vgap
 
-Then, we scan $\J(R_1,...,R_{k-3},H',V)$. For each tuple $\bm{t}$ therein, update in constant time $\minleft(h')$ to the minimum between its current value and the x-coordinate of $\bm{t}[k-1]$. The scan requires $O(n + \out)$ time.
+Then, we scan $\J(R_1,...,R_{k-3},H',V)$. For each tuple $\bm{t}$ therein, update in constant time $\minleft(h')$ to the minimum between its current value and the x-coordinate of $\bm{t}[k-1]$. The scan requires $O(n + k \cdot \out)$ time.
 
 \vgap
 
