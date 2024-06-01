@@ -850,6 +850,11 @@ Each horizontal segment $h = [x_1, x_2] \times y$ of $H$ is said to {\em define}
 
 Each rectangle of $R$ necessitates one insertion and one deletion in $\T$. All these insertions and deletions take $O(n \log n)$ time in total. Each segment $h$ of $H$ performs a containment query on $\T$, which has a cost of $O(\log n + K_h)$. All these queries demand a total cost of $O(n \log n + \sum_h K_h)$. The sum $\sum_h K_h$ here is equal to the total size of $\contained_R(h)$ for all the $h \in H$. The total size is equivalent to $\out$. The cost so far is therefore $O(n \log n + \out)$.
 
+\vgap
+
+Let $L$ be the list of $(h, \lambda)$ pairs produced.
+
+
 
 \section{Completing the Proof of Lemma~\ref{lmm:hv}} \label{app:hv} 
 
