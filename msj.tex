@@ -752,7 +752,7 @@ We now complete the proof of Theorem~\ref{thm:main-recur}.
 \appendix 
 
 \def\vgap{\vspace{2mm}}
-\def\extraspacing{\vspace{2mm}}
+\def\extraspacing{\vspace{2mm} \noindent}
 
 \section*{Appendix}
 
@@ -812,7 +812,7 @@ Overall, each rectangle of $R$ necessitates one insertion and one deletion in $\
 
 \vgap
 
-Next, we consider the find-all-sorted version of Problem $\mathscr{D}$. Again, initialize an array $A$ of size $|R|$, where each rectangle of $R$ is allocated a cell. For each $r \in R$, we keep a linked list, which at the end of our algorithm will store the horizontal segments of $\cross_H(r)$ in ascending order of their y-coordinates. In the outset, all linked lists are empty. Unlike the detection version, we will not need to keep the active status for the rectangles.
+Next, we consider the find-all-sorted version of Problem $\mathscr{D}$. For each $r \in R$, we keep a linked list, which at the end of our algorithm will store the horizontal segments of $\cross_H(r)$ in ascending order of their y-coordinates. In the outset, all linked lists are empty. Unlike the detection version, we will not need to keep the active status for the rectangles.
 
 \vgap
 
@@ -827,7 +827,7 @@ When $\ell$ hits a horizontal segment $h = [z_1, z_2] \times y$ of $P$, perform 
 Overall, each rectangle of $R$ necessitates one insertion and one deletion in $\T$. All these insertions and deletions take $O(n \log n)$ time in total. Each segment $h$ of $H$ performs a containment query on $\T$, which has a cost of $O(\log n + K_h)$. All these queries demand a total cost of $O(n \log n + \sum_h K_h)$. However, unlike the detection version, the sum $\sum_h K_h$ here is equal to the total size of $\cross_H(r)$ for all the $r \in R$. The total size is equivalent to $\out$.
 
 
-\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{E}}$.} Sort all the rectangles $r \in R$ in ascending order of $\xright(r)$ (namely, the x-coordinate of the right edge of $r$). Assign the ID $i \in [R]$ to $r$ if $r$ is at the $i$-th position in the sorted list.
+\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{E}}$.} Sort all the rectangles $r \in R$ in ascending order of $\xright(r)$ (namely, the x-coordinate of the right edge of $r$). Assign the ID $i \in [R]$ to $r$ if $r$ is at the $i$-th position of the sorted list.
 
 %We create an array $A$ and assign the $i$-th ($i \in [R]$) cell of $A$ to the rectangle $r \in R$ with ID $i$.
 
