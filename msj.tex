@@ -759,6 +759,26 @@ We now complete the proof of Theorem~\ref{thm:main-recur}.
 
 \section{Building Brick Algorithms} \label{app:bricks}
 
+\extraspacing {\bf Terminology.} Each point $(x, y)$ is said to {\em define} a y-coordinate $y$, a horizontal segment $[x_1, x_2] \times y$ is said to {\em define} a y-coordinate $y$, and each rectangle $r = [x_1, x_2] \times [y_1, y_2]$ is said to {\em define} two y-coordinates $y_1$ and $y_2$. These definitions permit us to convenient specify a set of y-coordinates using expressions like ``the set of four y-coordinates defined by point $p$, horizontal segment $h$, and rectangle $r$''.
+
+\extraspacing {\bf Fundamental Data Structures.} The {\em interval tree} \cite{bcko08} stores a set $S$ of intervals in $\real$ using $O(|S|)$ space such that, given any real value $q$, the intervals of $S$ containing $q$ can be found in $O(\log |S| + K)$ time, where $K$ is the number of intervals reported. It can also be used to detect whether $S$ has at least one interval containing $q$ in $O(\log |S|)$ time. The structure supports an insertion or deletion on $S$ in $O(\log |S|)$ time.
+
+\vgap
+
+Now, suppose that each interval of $S$ is associated with a real-valued {\em weight}. Given a real value $q$, a {\em stabbing max} query returns the maximum weight of all the intervals in $S$ covering $q$ (if no such intervals exist, the query returns $-\infty$). We can store $S$ in a structure of \cite{aak+12} using $O(|S|)$ space that can answer such a query in $O(\log |S|)$ time. The structure supports an insertion or deletion on $S$ in $O(\log |S|)$ amortized time.
+
+\vgap
+
+The {\em priority search tree} (PST) \cite{m85} stores a set $P$ of points using $O(|P|)$ space such that, given a 3-sided rectangle $q = [x_1, x_2] \times [y, \infty)$, the points of $S$ covered by $q$ can be found in $O(\log |P| + K)$ time, where $K$ is the number of points reported. The structure supports an insertion or deletion on $S$ in $O(\log |S|)$ time.
+
+\vgap
+
+The PST can be deployed to answer queries on intervals. Let $S$ be a set of intervals in $\real$. Given an interval $q = [z_1, z_2]$, a {\em containment query} reports all the intervals of $S$ that are contained in $q$. We can store $S$ in a PST of $O(|S|)$ space that solves such a query in $O(\log |S| + K)$ time, where $K$ is the number of intervals reported. To see why, observe that an interval $[z_1, z_2]$ is contained by another $[x, y]$ if and only if the point $(x, y)$ is covered by the 3-sided rectangle $[z_1, \infty) \times (-\infty, z_2]$. Thus, we create from $S$ a point set $P = \set{(x, y) \mid [x, y] \in S}$ and store $P$ in a PST. Given an interval $q = [z_1, z_2]$, we can answer the containment query by using the PST to find all the points in $P$ covered by $[z_1, \infty) \times (-\infty, z_2]$ and, for each such point $(x, y)$, report $[x, y]$.
+
+\vgap
+
+Another closely related query is the {\em reverse-containment query}, which, given an interval $q = [z_1, z_2]$, finds all the intervals of $S$ that contain $q$ (rather than ``being contained by $q$''). Again, we can store $S$ in a PST using $O(|S|)$ space such that any such query can be answered in $O(\log |S| + K)$ time, where $K$ is the number of intervals reported. In general, an interval $[z_1, z_2]$ contains another $[x, y]$ if and only if the point $(x, y)$ is covered by the 3-sided rectangle $(-\infty, z_1] \times [z_2, \infty)$. Thus, we create from $S$ a point set $P = \set{(x, y) \mid [x, y] \in S}$ and store $P$ in a PST. Given an interval $q = [z_1, z_2]$, we use the PST to find all the points in $P$ covered by $(-\infty, z_1] \times [z_2, \infty)$ and, for each such point $(x, y)$, report $[x, y]$.
+
 \extraspacing {\bf Algorithm for Problem $\bm{\mathscr{A}}$.} The {\em interval tree} \cite{bcko08} stores a set $S$ of intervals in $\real$ using $O(|S|)$ space such that, given any real value $q$, the intervals of $S$ containing $q$ can be found in $O(\log |S| + K)$ time, where $K$ is the number of intervals reported. It can also be used to detect whether $S$ has at least one interval containing $q$ in $O(\log |S|)$ time. Each interval insertion or deletion on $S$ can be supported in $O(\log |S|)$ time.
 
 \vgap
@@ -779,7 +799,7 @@ The algorithm for the reporting version of Problem $\mathscr{A}$ is similar. The
 
 Next, sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, maintain the set $V_\ell$ of segments in $V$ that intersect with $\ell$. Let $S_\ell$ be the set of x-coordinates of the segments in $V_\ell$; we store $S_\ell$ in a binary search tree (BST) $\T$. Specifically, when $\ell$ hits the lower  (resp., upper) endpoint of a vertical segment $v = x \times [y_1, y_2]$ of $V$, we insert (resp., delete) the value $x$ into (resp., from) $\T$, which can be done in $O(\log n)$ amortized time. When $\ell$ hits a horizontal segment $h = [x_1, x_2] \times y$ of $H$, search $\T$ to determine if the successor $x'$ of $x_1$ in $S_\ell$. If $x' \le x_2$, then we output a pair $(h, p)$, where $p$ is the point $(x', y)$. The overall running time is $O(n \log n)$.
 
-\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{C}}$.} Let $S$ be a set of intervals in $\real$, each of which is associated with a real-valued {\em weight}. Given a real value $q$, a {\em stabbing max} query returns the maximum weight of all the intervals in $S$ covering $q$ (if no such intervals exist, the query returns $-\infty$). We can store $S$ in a structure of \cite{aak+12} using $O(|S|)$ space that can answer every query in $O(\log |S|)$ time. The structure also supports an insertion or deletion on $S$ in $O(\log |S|)$ amortized time.
+\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{C}}$.}
 
 \vgap
 
@@ -789,7 +809,7 @@ For Problem $\mathscr{C}$, each horizontal segment $h = [x_1, x_2] \times y$ of 
 
 Next, sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, maintain the set $R_\ell$ of rectangles in $R$ that intersect with $\ell$. Let $S_\ell$ be the set of x-ranges of the rectangles in $R_\ell$; we store $S_\ell$ in a structure $\T$ of \cite{aak+12}. Specifically, when $\ell$ hits the bottom (resp., top) edge of a rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$, we insert (resp., delete) $[x_1, x_2]$ with {\em weight} $x_2$ into (resp., from) $\T$, which can be done in $O(\log n)$ time. When $\ell$ hits a horizontal segment $h = [x_1, x_2] \times y$ of $P$, search $\T$ to determine the maximum weight $w$ of all the intervals in $S_\ell$ containing the value $x_1$. If $w \ne -\infty$, we output $(h, p)$ where the point $p$ is defined in a way depending on $w$: if $w \le x_2$, then $p = (w, y)$; otherwise $p = (x_2, y)$. The overall running time is $O(n \log n)$.
 
-\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{D}}$.} The {\em priority search tree} (PST) \cite{m85} stores a set $P$ of points using $O(|P|)$ space such that, given any 3-sided rectangle $q = [x_1, x_2] \times [y, \infty)$, the points of $S$ covered by $q$ can be found in $O(\log |P| + K)$ time, where $K$ is the number of points reported. This structure can be used to answer the following {\em containment query} on intervals: store a set $S$ of intervals in $\real$ using $O(|S|)$ space such that, given any interval $q' = [z_1, z_2]$, the intervals of $S$ that are contained in $q'$ can be found in $O(\log |S| + K)$ time, where $K$ is the number of intervals reported. To see why, observe that an interval $[z_1, z_2]$ contains another $[x, y]$ if and only if the point $(x, y)$ is covered by the 3-sided rectangle $[z_1, \infty) \times (-\infty, z_2]$. Thus, we can create from $S$ a set of points $P = \set{(x, y) \mid [x, y] \in S}$ and store $P$ in a PST. Given an interval $q' = [z_1, z_2]$, we use the PST to find all the points in $P$ covered by $q = [z_1, \infty) \times (-\infty, z_2]$ and, for each such point $(x, y)$, report $[x, y]$.
+\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{D}}$.}
 
 \vgap
 
@@ -832,7 +852,7 @@ When $\ell$ hits a horizontal segment $h = [z_1, z_2] \times y$ of $P$, perform 
 Overall, each rectangle of $R$ necessitates one insertion and one deletion in $\T$. All these insertions and deletions take $O(n \log n)$ time in total. Each segment $h$ of $H$ performs a containment query on $\T$, which has a cost of $O(\log n + K_h)$. All these queries demand a total cost of $O(n \log n + \sum_h K_h)$. However, unlike the detection version, the sum $\sum_h K_h$ here is equal to the total size of $\cross_H(r)$ for all the $r \in R$. The total size is equivalent to $\out$.
 
 
-\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{E}}$.} The PST introduced earlier in Problem $\mathscr{D}$ can be used to answer the following {\em reverse-containment query} on intervals: store a set $S$ of intervals in $\real$ using $O(|S|)$ space such that, given any interval $q' = [z_1, z_2]$, the intervals of $S$ that contain  $q'$ (rather than ``being contained by $q'$'') can be found in $O(\log |S| + K)$ time, where $K$ is the number of intervals reported. To see why, observe that an interval $[z_1, z_2]$ contains another $[x, y]$ if and only if the point $(x, y)$ is covered by the 3-sided rectangle $(-\infty, z_1] \times [z_2, \infty)$. Thus, we create from $S$ a set of points $P = \set{(x, y) \mid [x, y] \in S}$ and store $P$ in a PST. Given an interval $q' = [z_1, z_2]$, we use the PST to find all the points in $P$ covered by $(-\infty, z_1] \times [z_2, \infty)$ and, for each such point $(x, y)$, report $[x, y]$.
+\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{E}}$.}
 
 \vgap
 
