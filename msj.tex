@@ -910,12 +910,11 @@ We argue that the $k$-tuple $(r_1, ..., r_{k-2}, h, v)$ belongs to $\J(R_1,...,$
 
 It remains to prove that no two distinct tuples $\bm{t}_1, \bm{t}_2 \in \J(R_1',...,$ $R_{k-2}')$ can be mapped to the same tuple in $\J(R_1,..., R_{k-2},$ $H, V)$. Assume that this is not true, namely, both $\bm{t}_1$ and $\bm{t}_2$ are mapped to $(r_1, ..., r_{k-2}, h, v) \in \J(R_1,..., R_{k-2}, H, V)$. However, in this case, $\bm{t}_1[z]$ is the trimmed rectangle of $r_z$ for all $z \in [k-2]$ and, at the same time, $\bm{t}_2[z]$ is the trimmed rectangle of $r_z$ for all $z \in [k-2]$. We thus have $\bm{t}_1 = \bm{t}_2$, giving a contradiction.
 
-\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:properties}.}
-\underline{\em Proof of Statement (1).} As $h \in \dcross_H(\bm{t})$ and $v \in \dcross_V(\bm{t})$, the two segments both cross $B_\bm{t}$, as can be verified from the definitions of $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$. Thus, the intersection of $h$ and $v$ is a point $p$ in $B_\bm{t}$. As $r_i$ (for each $i \in [k-2]$) is the full rectangle of $\bm{t}[i]$, we know that $\bigcap_{i=1}^{k-2} r_i$ covers $B_\bm{t} = \bigcap_{i=1}^{k-2} \bm{t}[i]$. Hence, point $p$ falls in $\bigcap_{i=1}^{k-2} r_i$, indicating that $h\cap v \cap \bigcap_{i = 1}^{k-2}r_i \neq \emptyset$. It follows that $(r_1,...,r_{k-2},h,v)$ is a result tuple in $\J(R_1,...,R_{k-2},H,V)$.
+\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:properties}.} We will prove each statement in turn.
 
-\vgap
+\extraspacing \underline{\em Proof of Statement (1).} As $h \in \dcross_H(\bm{t})$ and $v \in \dcross_V(\bm{t})$, the two segments both cross $B_\bm{t}$, as can be verified from the definitions of $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$. Thus, the intersection of $h$ and $v$ is a point $p$ in $B_\bm{t}$. As $r_i$ (for each $i \in [k-2]$) is the full rectangle of $\bm{t}[i]$, we know that $\bigcap_{i=1}^{k-2} r_i$ covers $B_\bm{t} = \bigcap_{i=1}^{k-2} \bm{t}[i]$. Hence, point $p$ falls in $\bigcap_{i=1}^{k-2} r_i$, indicating that $h\cap v \cap \bigcap_{i = 1}^{k-2}r_i \neq \emptyset$. It follows that $(r_1,...,r_{k-2},h,v)$ is a result tuple in $\J(R_1,...,R_{k-2},H,V)$.
 
-\noindent \underline{\em Proof of Statement (2).} Fix any rectangle $r \in R_1 \cup ... \cup R_{k-2}$ and any horizontal segment $h = [x_1, x_2] \times y$ from $H$ that crosses $r$. We will show that $h$ must also cross the trimmed rectangle $r'$ of $r$. From the fact of $h$ crossing $r$, it is clear that $[x_1, x_2]$ contains the x-range of $r$. As the x-range of $r$ contains that of $r'$, we can assert that $[x_1, x_2]$ contains the x-range of $r'$. To prove that $h$ crosses $r'$, we still need to show $y \in [\ybot(r'), \ytop(r')]$. Recall that $\ybot(r')$ is the y-coordinate of the lowest segment in $H$ crossing $r$. This implies $y \ge \ybot(r')$ because $h$ itself is a segment in $H$ crossing $r$. Analogously, it also holds that $y \le \ytop(r')$. We can thus conclude that $h$ crosses $r'$. 
+\extraspacing \underline{\em Proof of Statement (2).} Fix any rectangle $r \in R_1 \cup ... \cup R_{k-2}$ and any horizontal segment $h = [x_1, x_2] \times y$ from $H$ that crosses $r$. We will show that $h$ must also cross the trimmed rectangle $r'$ of $r$. From the fact of $h$ crossing $r$, it is clear that $[x_1, x_2]$ contains the x-range of $r$. As the x-range of $r$ contains that of $r'$, we can assert that $[x_1, x_2]$ contains the x-range of $r'$. To prove that $h$ crosses $r'$, we still need to show $y \in [\ybot(r'), \ytop(r')]$. Recall that $\ybot(r')$ is the y-coordinate of the lowest segment in $H$ crossing $r$. This implies $y \ge \ybot(r')$ because $h$ itself is a segment in $H$ crossing $r$. Analogously, it also holds that $y \le \ytop(r')$. We can thus conclude that $h$ crosses $r'$.
 
 \vgap
 
@@ -929,9 +928,7 @@ We now prove the first bullet of statement (2), namely, $\bm{t}\in \J(R_1',...,R
 
 Next, we prove the second bullet, namely, $h \in \dcross_H(\bm{t})$ and $v \in \dcross_V(\bm{t})$. It suffices to show only the former due to symmetry. To prove $h \in \dcross_H(\bm{t})$, we need to argue that $h$ crosses $\gbot(\bm{t})$ and $B_\bm{t}$. The first part, $h$ crossing $\gbot(\bm{t})$, is done because, as already explained, $h$ crosses each of $r_1', ..., r_{k-2}'$, and $\gbot(\bm{t})$ is one of those $k-2$ rectangles. To prove that $h$ crosses $B_\bm{t}$, first note that $B_\bm{t}$ (which is the intersection of $r_1', ..., r_{k-2}'$) is covered by $\gbot(\bm{t})$. The fact that $h$ crosses $\gbot(\bm{t})$ indicates that the y-range of $h$ contains that of $B_\bm{t}$. Hence, either $h$ is disjoint with $B_\bm{t}$ or $h$ crosses $B_\bm{t}$. However, $h$ cannot be disjoint with $B_\bm{t}$ because, as shown earlier, the intersection of $h$ and $v$ falls in $B_\bm{t}$. It thus follows that $h$ crosses $B_\bm{t}$.
 
-\vgap 
-
-\noindent \underline{\em Proof of Statement (3).} We first prove that $\dcross_H(\bm{t}) \neq \emptyset$ for any $\bm{t} \in \J(R_1',...,R_{k-2}')$. Set $r' = \gbot(\bm{t})$, and let $r$ be the full rectangle of $r'$. Define $h$ as the lowest segment crossing $r$ (note that $h$ definitely exists because otherwise $r$ has no trimmed rectangle). We will show that $h \in \dcross_H(\bm{t})$, and hence $\dcross_H(\bm{t})$ cannot be empty. For this purpose, we should explain why $h$ crosses both $B_{\bm{t}}$ and $r'$. However, $h$ crossing $r$ implies $h$ crossing $r'$, as has already been argued in our proof of statement (2). It remains to show that $h$ crosses $B_\bm{t}$.
+\extraspacing \underline{\em Proof of Statement (3).} We first prove that $\dcross_H(\bm{t}) \neq \emptyset$ for any $\bm{t} \in \J(R_1',...,R_{k-2}')$. Set $r' = \gbot(\bm{t})$, and let $r$ be the full rectangle of $r'$. Define $h$ as the lowest segment crossing $r$ (note that $h$ definitely exists because otherwise $r$ has no trimmed rectangle). We will show that $h \in \dcross_H(\bm{t})$, and hence $\dcross_H(\bm{t})$ cannot be empty. For this purpose, we should explain why $h$ crosses both $B_{\bm{t}}$ and $r'$. However, $h$ crossing $r$ implies $h$ crossing $r'$, as has already been argued in our proof of statement (2). It remains to show that $h$ crosses $B_\bm{t}$.
 
 \vgap
 
@@ -965,8 +962,9 @@ Then, we scan $\J(R_1',...,R_{k-2}')$. For each tuple $\bm{t}$ therein, use $O(k
 
 Finally, for each $i \in [k-2]$, we construct $R_i^*$ by collecting the top-sliced rectangle (see definition in \eqref{eqn:hv:type1:topsliced}) of every rectangle $r' \in R_i'$ with $\maxtop(r') \neq -\infty$. This step takes $O(|R_i'|)$ time for each $i \in [k-2]$, or $O(n)$ total time for all $i$.
 
-\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:cross-r*}.}
-\underline{\em Proof of Statement (1).} We will map each $r^*$ of $\bigcup_{i = 1}^{k-2} R_i^*$ to a unique tuple $\bm{t}$ in $\J(R_1',...,R_{k-2}')$ satisfying $\dcross_H(\bm{t})$ $= \cross_H(r^*)$. After this, we can then derive
+\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:cross-r*}.} We will prove each statement in turn.
+
+\extraspacing{\em Proof of Statement (1).} We will map each $r^*$ of $\bigcup_{i = 1}^{k-2} R_i^*$ to a unique tuple $\bm{t}$ in $\J(R_1',...,R_{k-2}')$ satisfying $\dcross_H(\bm{t})$ $= \cross_H(r^*)$. After this, we can then derive
 \myeqn{
     \sum_{i\in[k-2]}\sum_{r^*\in R_i^*} |\cross_H(r^*)| \leq \sum_{\bm{t}\in \J(R_1',...,R_{k-2}')}|\dcross_H(\bm{t})|\leq \out \nn
 }
