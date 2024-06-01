@@ -123,7 +123,7 @@ In \cite{kcko22}, Khamis et al.\ investigated a type of joins that extends the c
 
 \vgap 
 
-It is worth noting that $\Omega(n \log n)$ is a lower bound on the runtime of any comparison-based algorithm  solving the $k$-SJ problem (see Appendix~\ref{app:comp-class} for a formal definition of such algorithms), even for $k = 2$. This can be established via a reduction from the {\em element distinctness} (ED) problem; see \cite{dl79}.
+It is worth noting that $\Omega(n \log n)$ is a lower bound on the runtime of any comparison-based algorithm  solving the $k$-SJ problem (see Appendix~\ref{app:comp-class} for a formal definition of such algorithms), even for $k = 2$. This can be established via a reduction from the {\em element distinctness} problem; see \cite{dl79}.
 
 %where we are given $n$ real values $e_1, e_2, ..., e_n$ and need to decide whether there are distinct $i, j \in [n]$ satisfying $e_i = e_j$. The ED problem demands $\Omega(n \log n)$ comparisons to solve \cite{dl79}.
 
@@ -788,7 +788,12 @@ At a leaf, we look at its associated result and, for each $(\lambda_1, \lambda_2
 
 \vgap
 
-An algorithm is {\em correct} if it produces the correct output on all $(n_1, n_2, ..., n_k)$-inputs. Its {\em worst-case cost} is the height of $\T$.
+The algorithm is {\em correct} if it produces the correct output on all $(n_1, n_2, ..., n_k)$-inputs. Its {\em worst-case cost} is the height of $\T$.
+
+
+\vgap
+
+As mentioned in Section~\ref{sec:intro:prev}, through a reduction from the element distinctness problem \cite{dl79}, one can show that when $k = 2$, any comparison-based algorithm capable of solving all $(n/2, n/2)$-inputs must have a worst-case cost of $\Omega(n \log n)$.
 
 
 
