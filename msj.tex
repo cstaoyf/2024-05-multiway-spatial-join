@@ -386,7 +386,7 @@ Computing the ``segment $h_\bot$'' for each $r \in R_i$ is an instance of Proble
 
 \vgap
 
-We now solve a $(k-2)$-SJ problem on the input $\set{R_1', R_2', ..., R_{k-2}'}$ using the algorithm $\A$ supplied (see Lemma~\ref{lmm:hv}). This $(k-2)$-SJ clearly has an input size at most $n$, and let us represent its result as $\J(R'_1, R'_2, ..., R'_{k-2})$. We prove in Appendix~\ref{app:hv}:
+We now solve a $(k-2)$-SJ problem on the input $\set{R_1', R_2', ..., R_{k-2}'}$ using the algorithm $\A$ supplied (see Lemma~\ref{lmm:hv}). This $(k-2)$-SJ clearly has an input size at most $n$, and let us represent its result as $\J(R'_1, R'_2, ..., R'_{k-2})$. We prove in Appendix~\ref{app:hv:type1}:
 
 \begin{lemma} \label{lmm:hv:type1:recur-output}
     $|\J(R_1', R'_2, ..., R'_{k-2})| \le \out$.
@@ -411,7 +411,7 @@ We now introduce:
     \dcross_V(\bm{t}) = \set{v \in V \mid \text{$v$ crosses both $B_\bm{t}$ and $\gleft(\bm{t})$}}. \nn
     %\label{eqn:dcross-H} 
 }
-The prefix ``d-'' stands for ``double''. These sets have important properties as stated in the next lemma, whose proof can be found in Appendix~\ref{app:hv}:
+The prefix ``d-'' stands for ``double''. These sets have important properties as stated in the next lemma, whose proof can be found in Appendix~\ref{app:hv:type1}:
 
 \begin{lemma} \label{lmm:hv:type1:properties}
     %Let $r_i$ be the full rectangle of $r_i'$ for each $i \in [k-2]$.
@@ -479,11 +479,11 @@ Next, we construct from $R_i'$ a new set of rectangles:
 \myeqn{
     R^*_i = \set{r^* \mid r' \in R_i' \text{ and its top-sliced rectangle $r^*$ exists}}. \label{eqn:hv:type1:R*}
 }
-In Appendix~\ref{app:hv}, we show how to compute produce $R^*_1, ..., R^*_{k-2}$ together in $O(n + k \cdot \out)$ total time.
+In Appendix~\ref{app:hv:type1}, we show how to compute produce $R^*_1, ..., R^*_{k-2}$ together in $O(n + k \cdot \out)$ total time.
 
 \vgap 
 
-Our focus lies specifically on the sets $\cross_H(r^*)$ of the rectangles $r^*$ in $R^*_i$, where $\cross_H(r^*)$ --- defined in \eqref{eqn:cross} --- is the set of segments in $H$ crossing $r^*$. The following lemma, proven in Appendix~\ref{app:hv}, presents some useful properties of these sets. 
+Our focus lies specifically on the sets $\cross_H(r^*)$ of the rectangles $r^*$ in $R^*_i$, where $\cross_H(r^*)$ --- defined in \eqref{eqn:cross} --- is the set of segments in $H$ crossing $r^*$. The following lemma, proven in Appendix~\ref{app:hv:type1}, presents some useful properties of these sets.
 
 \begin{lemma} \label{lmm:hv:type1:cross-r*}
     Both statements below are true: 
@@ -563,7 +563,7 @@ The construction is an instance of Problem $\mathscr{C}$ (with $H$ and $R_{k-2}$
 
 \vgap 
 
-Now, solve a $(k-1)$-SJ problem on the input $\set{R_1, ..., R_{k-3}, H', V}$ using the algorithm $\A$ supplied (by Lemma~\ref{lmm:hv}). Let $\J(R_1, ...,$ $R_{k-3}, H', V)$ represent the result of this $(k-1)$-SJ, whose input size is at most $n$. Given the lemma below (which is proved in Appendix~\ref{app:hv}), we assert that $\J(R_1, ..., R_{k-3}, H', V)$ can be computed in $F_{k-1}(n, \out)$ time.
+Now, solve a $(k-1)$-SJ problem on the input $\set{R_1, ..., R_{k-3}, H', V}$ using the algorithm $\A$ supplied (by Lemma~\ref{lmm:hv}). Let $\J(R_1, ...,$ $R_{k-3}, H', V)$ represent the result of this $(k-1)$-SJ, whose input size is at most $n$. Given the lemma below (which is proved in Appendix~\ref{app:hv:type2}), we assert that $\J(R_1, ..., R_{k-3}, H', V)$ can be computed in $F_{k-1}(n, \out)$ time.
 
 \begin{lemma} \label{lmm:hv:type2:recur-output}
     $|\J(R_1, ..., R_{k-3}, H', V)| \le \out$.
@@ -586,7 +586,7 @@ $\contained_{R_{k-2}}(\bm{t}_1) = \contained_{R_2}(\bm{t}_1) = \set{\beta_1}$, $
 
 \vgap 
 
-We prove the next lemma in Appendix~\ref{app:hv} (to avoid confusion, the reader may want to be reminded that, for each $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$, $\bm{t}[k-2]$ is a horizontal segment and $\bm{t}[k-1]$ is a vertical segment).
+We prove the next lemma in Appendix~\ref{app:hv:type2} (to avoid confusion, the reader may want to be reminded that, for each $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$, $\bm{t}[k-2]$ is a horizontal segment and $\bm{t}[k-1]$ is a vertical segment).
 
 \begin{lemma} \label{lmm:hv:type2:properties}
     All the following statements are true:
@@ -638,7 +638,7 @@ Next, we construct a new set of horizontal segments:
 \myeqn{
     H^* = \set{h^* \mid h' \in H' \text{ and its minimal segment $h^*$ exists}}. \label{eqn:hv:type2:H*}
 }
-This can be done in $O(n + k \cdot \out)$ time, as shown in Appendix~\ref{app:hv}. 
+This can be done in $O(n + k \cdot \out)$ time, as shown in Appendix~\ref{app:hv:type2}.
 
 %Computing $H^*$ from $H'$ and $V$ is an instance of Problem $\mathscr{B}$, and can be achieved in $O(n \log n)$ as per the discussion from Section~\ref{sec:bricks}. 
 
@@ -655,7 +655,7 @@ We will utilize the sets $\contained_{R_{k-2}}(h^*)$ of the segments $h^*$ in $H
     }
 \end{lemma}
 
-The proof can be found in Appendix~\ref{app:hv}. 
+The proof can be found in Appendix~\ref{app:hv:type2}.
 
 \extraspacing {\underline{\em Example 5.6.}} It is clear from Figure~\ref{fig:hv:type2:ex}(d) that $\contained_{R_2}(h_3^*)$ has rectangles $\beta_3, \beta_2$, $\beta_1$, sorted in descending order of their right boundaries' x-coordinates. Consider $\bm{t}_2 = (\alpha, h_3', v_1)$ and $\bm{t}_3 = (\alpha, h_3', v_2)$. Segment $h_3^*$ is the minimal segment of $h_3'$. As stated in Lemma~\ref{lmm:hv:type2:contained-h*}, both $\contained_{R_2}(\bm{t}_2) = \set{\beta_1, \beta_2, \beta_3}$ and $\contained_{R_2}(\bm{t}_3) = \set{\beta_1}$ are prefixes of the sorted order of $\contained_{R_2}(h_3^*)$. Regarding $h_2^*$, it is the minimal segment of $h_2'$, and $\contained_{R_2}(h_2^*)$ contains only  $\beta_1$. For $\bm{t}_1 = (\alpha, h_2', v_1)$, $\contained_{R_2}(\bm{t}_1) = \set{\beta_1}$ is a (trivial) prefix of $\contained_{R_2}(h_2^*)$, as is consistent with the lemma.
 \qed
@@ -910,7 +910,7 @@ We argue that the $k$-tuple $(r_1, ..., r_{k-2}, h, v)$ belongs to $\J(R_1,...,$
 
 It remains to prove that no two distinct tuples $\bm{t}_1, \bm{t}_2 \in \J(R_1',...,$ $R_{k-2}')$ can be mapped to the same tuple in $\J(R_1,..., R_{k-2},$ $H, V)$. Assume that this is not true, namely, both $\bm{t}_1$ and $\bm{t}_2$ are mapped to $(r_1, ..., r_{k-2}, h, v) \in \J(R_1,..., R_{k-2}, H, V)$. However, in this case, $\bm{t}_1[z]$ is the trimmed rectangle of $r_z$ for all $z \in [k-2]$ and, at the same time, $\bm{t}_2[z]$ is the trimmed rectangle of $r_z$ for all $z \in [k-2]$. We thus have $\bm{t}_1 = \bm{t}_2$, giving a contradiction.
 
-\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:properties}.} \\
+\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:properties}.}
 \underline{\em Proof of Statement (1).} As $h \in \dcross_H(\bm{t})$ and $v \in \dcross_V(\bm{t})$, the two segments both cross $B_\bm{t}$, as can be verified from the definitions of $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$. Thus, the intersection of $h$ and $v$ is a point $p$ in $B_\bm{t}$. As $r_i$ (for each $i \in [k-2]$) is the full rectangle of $\bm{t}[i]$, we know that $\bigcap_{i=1}^{k-2} r_i$ covers $B_\bm{t} = \bigcap_{i=1}^{k-2} \bm{t}[i]$. Hence, point $p$ falls in $\bigcap_{i=1}^{k-2} r_i$, indicating that $h\cap v \cap \bigcap_{i = 1}^{k-2}r_i \neq \emptyset$. It follows that $(r_1,...,r_{k-2},h,v)$ is a result tuple in $\J(R_1,...,R_{k-2},H,V)$.
 
 \vgap
@@ -965,8 +965,12 @@ Then, we scan $\J(R_1',...,R_{k-2}')$. For each tuple $\bm{t}$ therein, use $O(k
 
 Finally, for each $i \in [k-2]$, we construct $R_i^*$ by collecting the top-sliced rectangle (see definition in \eqref{eqn:hv:type1:topsliced}) of every rectangle $r' \in R_i'$ with $\maxtop(r') \neq -\infty$. This step takes $O(|R_i'|)$ time for each $i \in [k-2]$, or $O(n)$ total time for all $i$.
 
-\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:cross-r*}.} \\
-\underline{\em Proof of Statement (1).} We will map each $r^*\in \bigcup_{i = 1}^{k-2} R_i^*$ to a unique tuple $\bm{t}\in \J(R_1',...,R_{k-2}')$ satisfying $\dcross_H(\bm{t}) = \cross_H(r^*)$. After this, we can then derive $\sum_{i\in[k-2]}\sum_{r^*\in R_i^*} |\cross_H(r^*)| \leq \sum_{\bm{t}\in \J(R_1',...,R_{k-2}')}|\dcross_H(\bm{t})|\leq \out$, where the last step used  statement (3) of Lemma~\ref{lmm:hv:type1:properties}.
+\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:cross-r*}.}
+\underline{\em Proof of Statement (1).} We will map each $r^*$ of $\bigcup_{i = 1}^{k-2} R_i^*$ to a unique tuple $\bm{t}$ in $\J(R_1',...,R_{k-2}')$ satisfying $\dcross_H(\bm{t})$ $= \cross_H(r^*)$. After this, we can then derive
+\myeqn{
+    \sum_{i\in[k-2]}\sum_{r^*\in R_i^*} |\cross_H(r^*)| \leq \sum_{\bm{t}\in \J(R_1',...,R_{k-2}')}|\dcross_H(\bm{t})|\leq \out \nn
+}
+where the last step used  statement (3) of Lemma~\ref{lmm:hv:type1:properties}.
 
 \vgap
 
