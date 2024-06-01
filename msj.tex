@@ -938,8 +938,6 @@ By the way $r'$ is defined, the bottom edge of $r'$ must be contained in $h$. Be
 
 A symmetric argument assures us that $\dcross_V(\bm{t}) \ne \emptyset$ for any $\bm{t} \in \J(R_1',...,R_{k-2}')$. 
 
-%In other words, both $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$ must have size at least 1.
-
 \vgap 
 
 Next, we will prove 
@@ -952,11 +950,7 @@ which implies statement (3) because, for any $\bm{t}$ in the summation, $|\dcros
 
 \vgap
 
-To compute $R^*_1, R^*_2, ..., R^*_{k-2}$, we start by deriving $\maxtop(r')$ for each rectangle $r'$ in $R'_1 \cup  ... \cup R'_{k-2}$. For this purpose, first initialize $\maxtop(r') = -\infty$ for each such $r'$. Recall that $r'$ is the trimmed rectangle of some rectangle $r$ in $R_1 \cup ... \cup R_{k-2}$. We store $\maxtop(r')$ in the array cell allocated to $r$.
-
-\vgap
-
-Then, we scan $\J(R_1',...,R_{k-2}')$. For each tuple $\bm{t}$ therein, use $O(k)$ time to identify the rectangle $r' = \gbot(\bm{t})$, and then update in constant time $\maxtop(r')$ to the maximum between its current value and $\ytop(r')$. The scan requires $O(n + k \cdot \out)$ time.
+To compute $R^*_1, R^*_2, ..., R^*_{k-2}$, we start by deriving $\maxtop(r')$ for each rectangle $r'$ in $R'_1 \cup  ... \cup R'_{k-2}$. For this purpose, first initialize $\maxtop(r') = -\infty$ for each such $r'$. Recall that $r'$ is the trimmed rectangle of some rectangle $r$ in $R_1 \cup ... \cup R_{k-2}$. We store $\maxtop(r')$ in the array cell allocated to $r$. Then, we scan $\J(R_1',...,R_{k-2}')$. For each tuple $\bm{t}$ therein, use $O(k)$ time to identify the rectangle $r' = \gbot(\bm{t})$, and then update in constant time $\maxtop(r')$ to the maximum between its current value and $\ytop(r')$. The scan requires $O(n + k \cdot \out)$ time.
 
 \vgap
 
@@ -1113,21 +1107,11 @@ Secondly, we will argue that $r_{k-2}\in \contained_{R_{k-2}}(\bm{t})$. The abov
 tuples. By statement (2), the $\J_2$ produced must be a subset of $\J(R_1,...,R_{k-2},H,V)$, whose size is $\out$.
 Therefore, the above expression is at most $\out$, as claimed in statement (3).
 
-% We will provide a way to map each pair $(\bm{t'}, r)$ satisfyint that $\bm{t'}\in \J(R_1,...,R_{k-3},H',V)$ and $r \in \contained_{R_{k-2}}(\bm{t})$ to a unique tuple in $\J_2$. Consider an arbitrary such pair $(\bm{t'}, r)$. Let $h$ be the full segment of $\bm{t'}[k-2]$. We map $(\bm{t'}, r)$ to the tuple $\bm{t} = (\bm{t}'[1],...,\bm{t}'[k-3], r, h, \bm{t}'[k-1])$. By Statement (1) and the fact that $r\in \contained_{R_{k-2}}(\bm{t'})$, the $k$-tuple $\bm{t}$ belongs to $\J_2$.
-%
-% \vgap
-%
-% It remains to prove that no two distinct pair $(\bm{t}_1, r_1)$ and $(\bm{t}_2, r_2)$ will be mapped to the same tuple in $\J_2$. Assume, on the contrary, $(\bm{t}_1, r_1)$ and $(\bm{t}_2, r_2)$ are mapped to the same tuple $\bm{t} \in \J_2$. Then, $r_1 = \bm{t}[k-2] = r_2$, and $\bm{t}_1[i] = \bm{t}[i] = \bm{t}_2[i]$ for $i \in [k-3]$. Moreover, both $\bm{t}_1[k-2]$ and $\bm{t}_2[k-2]$ are the trimmed segment of $\bm{t}[k-1]$. Since the trimmed segment is unique, $\bm{t}_1[k-2] = \bm{t}_2[k-2]$. Hence, $\bm{t}_1 = \bm{t}_2$, which contradicts the assumption. Therefore, we have $|\J(R_1,...,R_{k-3},H',V)| \le |\J_2| \le \out$, where the second inequality is due to Definition \eqref{eqn:hv:type2:J2}.
-
-\extraspacing {\bf Computing $\bm{H^*}$.} W.l.o.g., we assume that each segment in the input $H$ is given a distinct integer ID in $[|H|]$. This allows us to create an array of size $|H| < n$ and allocate an array cell to each $h \in H$, with the property that the cell can be accessed by the ID of $h$ in constant time.
+\extraspacing {\bf Computing $\bm{H^*}$.} We assume, w.l.o.g., that each segment in the input $H$ is given a distinct integer ID in $[|H|]$. This allows us to create an array of size $|H| < n$ and allocate an array cell to each $h \in H$, with the property that the cell can be accessed by the ID of $h$ in constant time.
 
 \vgap
 
-To compute $H^*$, we start by deriving $\minleft(h')$ for each segment $h'$ in $H'$. For this purpose, first initialize $\minleft(h') = \infty$ for each such $h'$. Recall that $h'$ is the trimmed segment of some segment $h$ in $H$. We store $\minleft(h')$ in the array cell allocated to $h$.
-
-\vgap
-
-Then, we scan $\J(R_1,...,R_{k-3},H',V)$. For each tuple $\bm{t}$ therein, update in constant time $\minleft(h')$ to the minimum between its current value and the x-coordinate of $\bm{t}[k-1]$. The scan requires $O(n + k \cdot \out)$ time.
+To compute $H^*$, we start by deriving $\minleft(h')$ for each segment $h'$ in $H'$. For this purpose, first initialize $\minleft(h') = \infty$ for each such $h'$. Recall that $h'$ is the trimmed segment of some segment $h$ in $H$. We store $\minleft(h')$ in the array cell allocated to $h$. Then, we scan $\J(R_1,...,R_{k-3},H',V)$. For each tuple $\bm{t}$ therein, update in constant time $\minleft(h')$ to the minimum between its current value and the x-coordinate of $\bm{t}[k-1]$. The scan requires $O(n + k \cdot \out)$ time.
 
 \vgap
 
