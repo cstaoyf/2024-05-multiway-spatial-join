@@ -3,9 +3,12 @@ $\bm{t} \in \J(R_1,...,R_{k-2},H,V)$. To show that $\bm{t} \in \J_2$, we only ne
 
 \vgap 
 
-\noindent \underline{\em Proof of Statement (2).} Let $(r_1,...,r_{k-2},h,v)$, $h'$, $\bm{t}$ be as defined in the statement. First, we prove that $\bm{t}\in \J(R_1,...,R_{k-3}, H', V)$.
-Let $p$ be the intersection of $h$ and $v$. Since $(r_1,...,r_{k-2},h,v)\in \J_2$, $p$ is in $r_i$ for $i \in [k-2]$.
-We argue that $p$ is also the intersection of $h'$ and $v$, which implies that $h'\cap v$ is covered by $r_i$, $i \in [k-3]$ and $\bm{t} \in \J(R_1,...,R_{k-3},H',V)$. Since $p \in v$, it suffices to show that $p \in h'$. Let $h = [x_1,x_2]\times y$ and $p = (x,y)$. Since $h' \subseteq h$, we can denote $h'$ as $[x_1, x_2'] \times y$, where $x_1 \le x_2' \le x_2$. Then, we only need to show that $x \in [x_1, x_2']$. Since $p \in h$, $x \ge x_1$. Since $(r_1,...,r_{k-2},h,v) \in \J_2$, $r_{k-2}$ is a left-end covering rectangle of $h$ in $R_{k-2}$, that also covers the point $p \in h$. By the definition of trimmed segment (see Secton~\ref{sec:hv:type2}), the x-coordinate of $p$ should not exceed $x_2'$. Hence, $x \in [x_1, x_2']$, and $p \in h'$.
+\noindent \underline{\em Proof of Statement (2).} Let $(r_1,...,r_{k-2},h,v)$, $h'$, $\bm{t}$ be as defined in the statement. First, we prove that $\bm{t}\in \J(R_1,...,R_{k-3}, H', V)$. It suffices to show that the intersection of $h'$ and $v$ is contained in $r_1,...,r_{k-3}$. We will prove this by showing that $h'\cap v$ is the same as $h\cap v$, which is covered by $r_1,...,r_{k-2}$, because $\bm{t} \in \J(R_1,...,R_{k-2},H,V)$.
+
+\vgap 
+
+Let $p$ be the intersection of $h$ and $v$. Since $h' \subseteq h$, the intersection of $h'$ and $v$ is either empty or the same as $p$.
+Therefore, to prove that $h' \cap v = p$, we only need to show that $p \in h'$. Let $h = [x_1,x_2]\times y$ and $p = (x,y)$. Since $h' \subseteq h$, we can denote $h'$ as $[x_1, x_2'] \times y$, where $x_1 \le x_2' \le x_2$. Then, $p \in h'$ is equivalent to $x \in [x_1, x_2']$. Since $p \in h$, we have $x \ge x_1$. By the definition of trimmed segmemt, $(x_2',y)$ is the rightmost point on $h$ satisfying that a left-end covering rectangle of $h$ in $R_{k-2}$ covers it. As $(r_1,...,r_{k-2},h,v) \in \J_2$, the point $p \in h$ is covered by the rectangle $r_{k-2}$, which is a left-end covering rectangle of $h$. Therefore, the x-coordinate of $p$ should not exceed $x_2'$. As a result, we have $x \in [x_1, x_2']$, and $p \in h'$.
 
 \vgap 
 
