@@ -876,30 +876,8 @@ Finally, we generate, for each $h$, its set $\contained_R(h)$ (i.e., the set of 
 
 
 \section{Supplementary Proofs for Section~\ref{sec:hv:type1}} \label{app:hv:type1}
-We defer the proof of Lemma~\ref{lmm:hv:type1:recur-output} to the paragraph following the proof of Lemma~\ref{lmm:hv:type1:properties}, as the latter proof requires results in the former.
 
-% \noindent {\bf Proof of Lemma~\ref{lmm:hv:type1:recur-output}.} We will prove the lemma by providing a way to map each $(k-2)$-tuple $\J(R_1',...,R_{k-2}')$ to a unique $k$-tuple in the H-V $k$-SJ result $\J(R_1,...,R_{k-2},H,V)$.
-
-% \vgap
-
-% To explain the mapping, consider any tuple $\bm{t} \in \J(R_1',...,R_{k-2}')$. Recall that $B_\bm{t}$ is the intersection of the $k-2$ rectangles $\bm{t}[1], ..., \bm{t}[k-2]$. Let $p$ be the bottom-left corner of $B_\bm{t}$. Define $i$ and $j$ to be values in $[k-2]$ such that $\bm{t}[i] = \gbot(\bm{t})$ and $\bm{t}[j] = \gleft(\bm{t})$; note that $i$ and $j$ can be the same. Point $p$ is the intersection of the bottom edge of $\bm{t}[i]$ and the left edge of $\bm{t}[j]$.
-
-% \vgap
-
-% Recall that each $\bm{t}[z]$ (for $z \in [k-2]$) is a trimmed rectangle; let us denote by $r_z$ the full rectangle of $\bm{t}[z]$. Regarding the values $i, j$ decided earlier, let
-% \myitems{
-%     \item $h$ be the lowest segment in $H$ that crosses $r_i$;
-%     \item $v$ be the leftmost segment in $V$ that crosses $r_j$.
-% }
-% By the way trimmed rectangles are computed, we know that $h$ must contain the bottom edge of rectangle $\bm{t}[i]$, and $v$ must contain the left edge of rectangle $\bm{t}[j]$. This means that point $p$ must be the intersection point of $h$ and $v$.
-
-% \vgap
-
-% We argue that the $k$-tuple $(r_1, ..., r_{k-2}, h, v)$ belongs to $\J(R_1,...,$ $R_{k-2},H,V)$. Clearly, $r_z$ covers $\bm{t}[z]$ for all $z \in [k-2]$. Thus, $\bigcap_{z=1}^{k-2} r_z$ covers $\bigcap_{z=1}^{k-2} \bm{t}[z]$, which is $B_\bm{t}$. Hence, point $p$ --- which is the intersection point of $h$ and $v$, and also a corner of $B_\bm{t}$ --- falls in $\bigcap_{z=1}^{k-2} r_z$, indicating $h \cap v \cap \bigcap_{z=1}^{k-2} r_z \ne \emptyset$. We map $\bm{t}$ to $(r_1, ..., r_{k-2}, h, v)$.
-
-% \vgap
-
-% It remains to prove that no two distinct tuples $\bm{t}_1, \bm{t}_2 \in \J(R_1',...,$ $R_{k-2}')$ can be mapped to the same tuple in $\J(R_1,..., R_{k-2},$ $H, V)$. Assume that this is not true, namely, both $\bm{t}_1$ and $\bm{t}_2$ are mapped to $(r_1, ..., r_{k-2}, h, v) \in \J(R_1,..., R_{k-2}, H, V)$. However, in this case, $\bm{t}_1[z]$ is the trimmed rectangle of $r_z$ for all $z \in [k-2]$ and, at the same time, $\bm{t}_2[z]$ is the trimmed rectangle of $r_z$ for all $z \in [k-2]$. We thus have $\bm{t}_1 = \bm{t}_2$, giving a contradiction.
+This section supplies the proofs postponed from Section~\ref{sec:hv:type1}. The order of the proofs here will not strictly follow the sequence in which they are referenced in Section~\ref{sec:hv:type1}. In particular, we will prove Lemma~\ref{lmm:hv:type1:recur-output} before Lemma~\ref{lmm:hv:type1:properties}, because the claims of the former lemma can be used to construct a simple argument for the latter.
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:properties}.} We will prove each statement in turn.
 
@@ -935,10 +913,9 @@ Next, we will prove
 \myeqn{
     \sum_{\bm{t}\in \J(R_1',...,R_{k-2}')} |\dcross_H(\bm{t})| \cdot |\dcross_V(\bm{t})| \leq \out. \label{eqn:hv:type1:properties:proof-help1}
 } 
-which implies statement (3) because, for any $\bm{t}$ in the summation, $|\dcross_H(\bm{t})| \ge 1$ and $|\dcross_V(\bm{t})| \ge 1$. Our proof resorts to the algorithm generate-$\J^*$ (see Section~\ref{sec:hv:type1}). This algorithm adds to $\J^*$ exactly as many tuples as calculated by the left hand side of \eqref{eqn:hv:type1:properties:proof-help1}. By statement (2), the $\J^*$ produced must be a subset of $\J(R_1,...,R_{k-2},H,V)$, whose size is $\out$. This establishes the inequality in \eqref{eqn:hv:type1:properties:proof-help1}, which completes the proof of statement (3).
+which implies statement (3) because, for any $\bm{t}$ in the summation, $|\dcross_H(\bm{t})| \ge 1$ and $|\dcross_V(\bm{t})| \ge 1$. Our proof resorts to the algorithm generate-$\J^*$ (see Section~\ref{sec:hv:type1}). This algorithm adds to $\J^*$ exactly as many tuples as calculated by the left hand side of \eqref{eqn:hv:type1:properties:proof-help1}. By statement (1) of Lemma~\ref{lmm:hv:type2:properties}, the $\J^*$ produced must be a subset of $\J(R_1,...,R_{k-2},H,V)$, whose size is $\out$. This establishes the inequality in \eqref{eqn:hv:type1:properties:proof-help1}, which completes the proof of statement (3).
 
-\extraspacing \noindent {\bf Proof of Lemma~\ref{lmm:hv:type1:recur-output}.} Our proof resorts to the algorithm generate-$\J^*$ (see Section~\ref{sec:hv:type1}). As we proved in Statement (3) of Lemma~\ref{lmm:hv:type1:properties}, both $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$ are non-empty. Therefore, for each $\bm{t} \in \J(R_1',...,R_{k-2}')$, the algorithm generate-$\J^*$ will add to $\J^*$ at least one distinct tuple. This implies that $|\J(R_1',...,R_{k-2}')| \le |\J^*|\le \out$, where the second inequality follows from Statement (1) of Lemma~\ref{lmm:hv:type1:properties}.
-
+\extraspacing \noindent {\bf Proof of Lemma~\ref{lmm:hv:type1:recur-output}.} Our proof again resorts to the algorithm generate-$\J^*$ (see Section~\ref{sec:hv:type1}). As argued in Statement (3) of Lemma~\ref{lmm:hv:type1:properties}, both $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$ are non-empty for any $\bm{t} \in \J(R_1',$ $...,R_{k-2}')$. Therefore, in processing this $\bm{t}$, the algorithm adds at least a new tuple to $\J^*$. Hence, $|\J(R_1',...,R_{k-2}')| \le |\J^*|\le \out$, where the second inequality follows from Statement (1) of Lemma~\ref{lmm:hv:type1:properties}.
 
 \extraspacing {\bf Computing $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} We consider, w.l.o.g., that each rectangle in the input $R_1 \cup ... \cup R_{k-2}$ is given a distinct integer ID in $[n]$. This allows us to create an array of size $n$ and allocate an array cell to each $r \in R_1 \cup ... \cup R_{k-2}$, with the property that the cell can be accessed by the ID of $r$ in constant time.
 
@@ -1038,25 +1015,7 @@ Finally, we show that $h$ crosses $B_{\bm{t}}$, or equivalently: $\xleft(h) < \x
 
 \section{Supplementary Proofs for Section~\ref{sec:hv:type2}} \label{app:hv:type2}
 
-We first prove Lemma~\ref{lmm:hv:type2:properties} and then proceed to prove Lemma~\ref{lmm:hv:type2:recur-output}, because the latter proof requires results in the former.
-
-% \noindent {\bf Proof of Lemma~\ref{lmm:hv:type2:recur-output}.} We will prove the lemma by mapping each tuple of $\J(R_1,...,R_{k-3},H',V)$ to a unique tuple in $\J_2$.
-
-% \vgap
-
-% To describe the mapping, consider an arbitrary $(k-1)$-tuple $\bm{t} = (r_1,...,$ $r_{k-3},$ $h', v) \in \J(R_1,...,$ $R_{k-3},H',V)$. Let $h$ be the full segment of $h'$. By the definition of a trimmed segment (see Section~\ref{sec:hv:type2}), at least one rectangle $r_{k-2} \in R_{k-2}$ covers both the left endpoint of $h$ and the right endpoint of $h'$. We map $\bm{t}$ to the $k$-tuple $(r_1,...,r_{k-3}, r_{k-2},h,v)$. It is worth noting that $r_{k-2}$ definitely contains the entire $h'$ (which has the same left point as $h$, implying that $r_{k-2}$ covers both endpoints of $h'$).
-
-% \vgap
-
-% We argue that $(r_1,...,r_{k-3}, r_{k-2},h,v)$ belongs to $\J_2$. Let $p$ be $h' \cap v$ (the intersection point of $h'$ and $v$). As $h'$ is contained in $h$, it must hold that $h \cap v = p$. Since $(r_1,...,r_{k-3}, h', v) \in \J(R_1,...,R_{k-3},H',V)$, we know that $p$ falls in all of $r_1, ..., r_{k-3}$. Our earlier discussion already shows that $r_{k-2}$ contains $h'$; this means that $p$ falls in $r_{k-2}$. Thus, $h \cap v \cap \bigcap_{i = 1}^{k-2}r_i$ cannot be empty as it equals $p$. We can now conclude that $(r_1,...,r_{k-3}, r_{k-2},h,v) \in \J(R_1,...,R_{k-2},H,V)$. This, together with the fact that $r_{k-2}$ covers the left endpoint of $h$, tells us $(r_1,...,r_{k-3}, r_{k-2},h,v) \in \J_2$.
-
-% \vgap
-
-% It remains to show that no two distinct $(k-1)$-tuples $\bm{t}_1$ and $\bm{t}_2$ can be mapped to the same tuple in $\J_2$. Assume, on the contrary, that $\bm{t}_1$ and $\bm{t}_2$ are mapped to $(r_1,...,r_{k-3}, r_{k-2},h,v) \in \J_2$. Then, $\bm{t}_1[i] = \bm{t}_2[i] = r_i$ for each $i \in [k-3]$, and $\bm{t}_1[k-1] = \bm{t}_2[k-1] = v$. Moreover, $\bm{t}_1[k-2]$ and $\bm{t}_2[k-2]$ are both the trimmed segment of $h$. But then this means $\bm{t}_1 = \bm{t}_2$, giving a contradiction.
-
-% \vgap
-
-% We can now conclude that $|\J(R_1,...,R_{k-3},H',V)| \le |\J_2| \le \out$, where the second inequality used the definition in \eqref{eqn:hv:type2:J2}.
+This section supplies the proofs postponed from Section~\ref{sec:hv:type2}. The order of the proofs here will not strictly follow the sequence in which they are referenced in Section~\ref{sec:hv:type2}. In particular, we will prove Lemma~\ref{lmm:hv:type2:recur-output} before Lemma~\ref{lmm:hv:type2:properties}, because the claims of the former lemma can be used to construct a simple argument for the latter.
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type2:properties}.} We will prove each statement in turn.
 
@@ -1102,8 +1061,7 @@ Secondly, we will argue that $r_{k-2}\in \contained_{R_{k-2}}(\bm{t})$. The abov
 tuples. By statement (2), the $\J_2$ produced must be a subset of $\J(R_1,...,R_{k-2},H,V)$, whose size is $\out$.
 Therefore, the above expression is at most $\out$, as claimed in statement (3).
 
-\extraspacing \noindent {\bf Proof of Lemma~\ref{lmm:hv:type2:recur-output}.}
-First, we prove that $\cross_{R_{k-2}}(\bm{t})$ is non-empty for each tuple $\bm{t} \in \J(R_1,...,R_{k-3},H',V)$. Let $h$ be the full segment of $\bm{t}[k-2]$. By the definition of a trimmed segment, there exists a rectangle $r_{k-2} \in R_{k-2}$ that covers both the left endpoint of $h$ and the right endpoint of $h'$. Thus, $r_{k-2}$ contains $h'$, because $h'$ shares the same left endpoint as $h$. Since the effective horizontal segment of $\bm{t}$ is contained in $h'$, it is also covered by $r_{k-2}$. This implies that $\cross_{R_{k-2}}(\bm{t})$ includes $r_{k-2}$, and is therefore non-empty. 
+\extraspacing \noindent {\bf Proof of Lemma~\ref{lmm:hv:type2:recur-output}.} First, we prove that $\cross_{R_{k-2}}(\bm{t})$ is non-empty for each tuple $\bm{t} \in \J(R_1,...,R_{k-3},H',V)$. Let $h$ be the full segment of $\bm{t}[k-2]$. By the definition of a trimmed segment, there exists a rectangle $r_{k-2} \in R_{k-2}$ that covers both the left endpoint of $h$ and the right endpoint of $h'$. Thus, $r_{k-2}$ contains $h'$, because $h'$ shares the same left endpoint as $h$. Since the effective horizontal segment of $\bm{t}$ is contained in $h'$, it is also covered by $r_{k-2}$. This implies that $\cross_{R_{k-2}}(\bm{t})$ includes $r_{k-2}$, and is therefore non-empty. 
 
 \vgap 
 
