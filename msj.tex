@@ -1065,7 +1065,7 @@ Therefore, the above expression is at most $\out$, as claimed in statement (3).
 
 \vgap 
 
-With the above fact, next we prove Lemma~\ref{lmm:hv:type1:recur-output} by resorting to the algorithm generate-$\J_2$ (see Section~\ref{sec:hv:type2}). For each tuple $\bm{t} \in \J(R_1,...,R_{k-3},H',V)$, this algorithm adds $|\contained_{R_{k-2}}(\bm{t})|\geq 1$ tuples to $\J_2$. Therefore, $|\J(R_1,...,R_{k-3},H',V)| \le |\J_2| \le \out$, where the last inequality used the definition of $\J_2$; see \eqref{eqn:hv:type2:J2}.
+With the above fact, next we prove Lemma~\ref{lmm:hv:type2:recur-output} by resorting to the algorithm generate-$\J_2$ (see Section~\ref{sec:hv:type2}). For each tuple $\bm{t} \in \J(R_1,...,R_{k-3},H',V)$, this algorithm adds $|\contained_{R_{k-2}}(\bm{t})|\geq 1$ tuples to $\J_2$. Therefore, $|\J(R_1,...,R_{k-3},H',V)| \le |\J_2| \le \out$, where the last inequality used the definition of $\J_2$; see \eqref{eqn:hv:type2:J2}.
 
 \extraspacing {\bf Computing $\bm{H^*}$.} We assume, w.l.o.g., that each segment in the input $H$ is given a distinct integer ID in $[|H|]$. This allows us to create an array of size $|H| < n$ and allocate an array cell to each $h \in H$, with the property that the cell can be accessed by the ID of $h$ in constant time.
 
