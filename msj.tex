@@ -1107,7 +1107,8 @@ First, we prove that $\cross_{R_{k-2}}(\bm{t})$ is non-empty for each tuple $\bm
 
 \vgap 
 
-Then, we resorts to the algorithm generate-$\J_2$ (see Section~\ref{sec:hv:type2}). For each tuple $\bm{t} \in \J(R_1,...,R_{k-3},H',V)$, this algorithm adds to $\J_2$ exactly $|\cross_{R_{k-2}}(\bm{t})|\geq 1$ tuples. Therefore, $|\J(R_1, ..., R_{k-3}, H', V)| \le |\J_2| \le \out$, where the last inequality follows from the definition of $\J_2$ (see \eqref{eqn:hv:type2:J2}).
+Then, we resorts to the algorithm generate-$\J_2$ (see Section~\ref{sec:hv:type2}). For each tuple $\bm{t} \in \J(R_1,...,R_{k-3},H',V)$, this algorithm adds to $\J_2$ exactly $|\cross_{R_{k-2}}(\bm{t})|\geq 1$ tuples. 
+By the correctness of the algorithm, we have $|\J(R_1,...,R_{k-3},H',V)| \le |\J_2| \le \out$, where the last inequality follows from the definition of $\J_2$ (see \eqref{eqn:hv:type2:J2}).
 
 \extraspacing {\bf Computing $\bm{H^*}$.} We assume, w.l.o.g., that each segment in the input $H$ is given a distinct integer ID in $[|H|]$. This allows us to create an array of size $|H| < n$ and allocate an array cell to each $h \in H$, with the property that the cell can be accessed by the ID of $h$ in constant time.
 
