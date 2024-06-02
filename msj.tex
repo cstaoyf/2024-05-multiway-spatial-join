@@ -140,7 +140,7 @@ It is worth noting that $\Omega(n \log n)$ is a lower bound on the runtime of an
         $\ge 3$ & ours & $O(n \log n + \out)$ & optimal
     \end{tabular}
     
-    \vspace{3mm}
+    \vspace{2mm}
     \figcapup 
     \caption{Result comparison on $k$-SJ problem for a constant $k$}
     \label{tab:results-com}
@@ -163,8 +163,6 @@ In terms of techniques, our primary contribution is the revelation of a new prop
         \label{eqn:main:reccurrence}
     }
     where $n$ (resp., $\out$) is the input (resp., output) size of the problem. Furthermore, if $\A$ is comparison-based, so is the $k$-SJ algorithm.
-
-%     time using $O(n + \out)$ space, plus the worst-case space of $\A$ on any $(k-1)$-SJ instance with input size $n$ and output size $\out$.
 \end{theorem}
 
 The theorem implies a recursive nature of $k$-SJ. Indeed, we will see that an $k$-SJ instance with input size $n$ and output size $\out$ can be converted to $O(k^3)$ instances of the $(k-1)$-SJ problem --- all having input size at most $n$ and output size at most $\out$ --- plus an additional processing cost of $O(n \log n + \out)$. For 2-SJ, we can set $\A$  to the ``folklore algorithm'' mentioned in Section~\ref{sec:intro:prev}, which ensures $F_2(n, \out) = O(n \log n + \out)$. Combining this with \eqref{eqn:main:reccurrence} gives a recurrence that relates the time complexity of $k$-SJ to that of $(k-1)$-SJ. Solving the recurrence yields:
@@ -419,14 +417,8 @@ The prefix ``d-'' stands for ``double''. These sets have important properties as
     \myenums{
         \item Consider any $(k-2)$-tuple $\bm{t} \in \J(R_1', R'_2, ..., R'_{k-2})$. Let $r_i$ ($i$ $\in$  $[k-2]$) be the full rectangle of $\bm{t}[i]$. Then, for any $h \in \dcross_H(\bm{t})$ and any $v \in \dcross_V(\bm{t})$, the $k$-tuple $(r_1, r_2,$ $...,$ $r_{k-2}, h, v)$ must belong to $\J(R_1, ..., R_{k-2}, H, V)$.
         
-        \item Consider any a $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v) \in \J_1$. Let $r'_i$ ($i \in [k-2])$ be the trimmed rectangle of $r_i$, and set $\bm{t} = (r'_1, r'_2, ...,$ $r'_{k-2})$. Then, we must have 
-        \myitems{
-            \item $\bm{t} \in \J(R_1', R'_2, ..., R'_{k-2})$;
-            \item $h \in \dcross_H(\bm{t})$ and $v \in \dcross_V(\bm{t})$. 
-        }
-        
-        \vspace{2mm}
-        
+        \item Consider any a $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v) \in \J_1$. Let $r'_i$ ($i \in [k-2])$ be the trimmed rectangle of $r_i$, and set $\bm{t} = (r'_1, r'_2, ...,$ $r'_{k-2})$. Then, we must have (i) $\bm{t} \in \J(R_1', R'_2, ..., R'_{k-2})$, and (ii) $h \in \dcross_H(\bm{t})$ and $v \in \dcross_V(\bm{t})$.
+
         \item $\sum_{\bm{t}} |\dcross_H(\bm{t})| \le \out$ and $\sum_{\bm{t}} |\dcross_V(\bm{t})| \le \out$, where the two summations are over all $\bm{t} \in \J(R_1', R'_2, ..., R'_{k-2})$.
     }
 \end{lemma}
@@ -446,7 +438,6 @@ Equipped with Lemma~\ref{lmm:hv:type1:properties}, we generate our target $\J^*$
     \> 4.\>\> {\bf for} each $(h, v) \in \dcross_H(\bm{t}) \times \dcross_V(\bm{t})$ {\bf do} \\
     \> 5.\>\>\> add $(r_1, ..., r_{k-2}, h, v)$ to $\J^*$
 }
-
 
 By statements (1) and (2) of Lemma~\ref{lmm:hv:type1:properties}, the set $\J^*$ thus computed indeed satisfies \eqref{eqn:hv:type1:J*}. Furthermore, if we are given $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$ for each $\bm{t}$, the above algorithm runs in $O(1 + |\J(R'_1, ..., R'_{k-2})| + k \cdot |\J^*|) = O(1 + k \cdot \out)$ time, where the derivation used \eqref{eqn:hv:type1:J*} and Lemma~\ref{lmm:hv:type1:recur-output}.
 
