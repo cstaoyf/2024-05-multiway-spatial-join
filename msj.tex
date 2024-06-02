@@ -1061,12 +1061,11 @@ Secondly, we will argue that $r_{k-2}\in \contained_{R_{k-2}}(\bm{t})$. The abov
 tuples. By statement (2), the $\J_2$ produced must be a subset of $\J(R_1,...,R_{k-2},H,V)$, whose size is $\out$.
 Therefore, the above expression is at most $\out$, as claimed in statement (3).
 
-\extraspacing \noindent {\bf Proof of Lemma~\ref{lmm:hv:type2:recur-output}.} First, we prove that $\cross_{R_{k-2}}(\bm{t})$ is non-empty for each tuple $\bm{t} \in \J(R_1,...,R_{k-3},H',V)$. Let $h$ be the full segment of $\bm{t}[k-2]$. By the definition of a trimmed segment, there exists a rectangle $r_{k-2} \in R_{k-2}$ that covers both the left endpoint of $h$ and the right endpoint of $h'$. Thus, $r_{k-2}$ contains $h'$, because $h'$ shares the same left endpoint as $h$. Since the effective horizontal segment of $\bm{t}$ is contained in $h'$, it is also covered by $r_{k-2}$. This implies that $\cross_{R_{k-2}}(\bm{t})$ includes $r_{k-2}$, and is therefore non-empty. 
+\extraspacing \noindent {\bf Proof of Lemma~\ref{lmm:hv:type2:recur-output}.} Before proving the lemma, let us prove a fact that will be useful later: the set $\contained_{R_{k-2}}(\bm{t})$ is non-empty for each tuple $\bm{t} \in \J(R_1,...,R_{k-3},H',V)$. Let $h$ be the full segment of $\bm{t}[k-2]$. By the definition of a trimmed segment, there exists a rectangle $r_{k-2} \in R_{k-2}$ that covers both endpoints of $h$. Thus, the effective horizontal segment of $\bm{t}$, which is contained in $h'$, must also covered by $r_{k-2}$. This implies that $\cross_{R_{k-2}}(\bm{t})$ cannot be empty (as it includes at least $r_{k-2}$). 
 
 \vgap 
 
-Then, we resorts to the algorithm generate-$\J_2$ (see Section~\ref{sec:hv:type2}). For each tuple $\bm{t} \in \J(R_1,...,R_{k-3},H',V)$, this algorithm adds to $\J_2$ exactly $|\cross_{R_{k-2}}(\bm{t})|\geq 1$ tuples. 
-By the correctness of the algorithm, we have $|\J(R_1,...,R_{k-3},H',V)| \le |\J_2| \le \out$, where the last inequality follows from the definition of $\J_2$ (see \eqref{eqn:hv:type2:J2}).
+With the above fact, next we prove Lemma~\ref{lmm:hv:type1:recur-output} by resorting to the algorithm generate-$\J_2$ (see Section~\ref{sec:hv:type2}). For each tuple $\bm{t} \in \J(R_1,...,R_{k-3},H',V)$, this algorithm adds $|\contained_{R_{k-2}}(\bm{t})|\geq 1$ tuples to $\J_2$. Therefore, $|\J(R_1,...,R_{k-3},H',V)| \le |\J_2| \le \out$, where the last inequality used the definition of $\J_2$; see \eqref{eqn:hv:type2:J2}.
 
 \extraspacing {\bf Computing $\bm{H^*}$.} We assume, w.l.o.g., that each segment in the input $H$ is given a distinct integer ID in $[|H|]$. This allows us to create an array of size $|H| < n$ and allocate an array cell to each $h \in H$, with the property that the cell can be accessed by the ID of $h$ in constant time.
 
