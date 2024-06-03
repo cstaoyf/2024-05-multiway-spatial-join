@@ -848,7 +848,7 @@ When $\ell$ hits the bottom edge of a rectangle $r = [x_1, x_2] \times [y_1, y_2
 
 \vgap
 
-Overall, each rectangle of $R$ necessitates one insertion and one deletion in $\T$. All these insertions and deletions take $O(n \log n)$ time in total. Each segment $h$ of $H$ performs a containment query on $\T$, which has a cost of $O(\log n + K_h)$. All these queries demand a total cost of $O(n \log n + \sum_h K_h)$. Recall that the x-range of a rectangle in $R$ can be retrieved by at most one containment query. Hence, $\sum_h K_h \le n$ and the runtime of our algorithm is $O(n \log n)$.
+Overall, each rectangle of $R$ necessitates one insertion and one deletion in $\T$. All these insertions and deletions take $O(n \log n)$ time in total. Each segment $h$ of $H$ performs a containment query on $\T$, which has a cost of $O(\log n + K_h)$. All these queries demand a total cost of $O(n \log n + \sum_h K_h)$. Recall that the x-range of a rectangle in $R$ can be retrieved by at most one containment query. Hence, $\sum_h K_h \le |R| \le n$ and the runtime of our algorithm is $O(n \log n)$.
 
 \vgap
 
@@ -881,7 +881,7 @@ Each rectangle of $R$ necessitates one insertion and one deletion in $\T$. All t
 
 \vgap
 
-Let $L$ be the list of $(h, \lambda)$ pairs produced (the size of $L$ is $\out$). We now proceed to sort $L$ in ascending order of the $\lambda$-field (which is a rectangle ID). Because the IDs are integers created by the algorithm, we are permitted to sort $L$ using {\em counting sort} without violating the requirements of the comparison-based class (see Appendix~\ref{app:comp-class}). The counting sort finishes in $O(|R| + |L|) = O(n + \out)$ time, recalling that all the IDs are in $[|R|]$.
+Let $L$ be the list of $(h, \lambda)$ pairs produced (the size of $L$ is $\out$). We now proceed to sort $L$ in ascending order of the $\lambda$-field (which is a rectangle ID), breaking ties arbitrarily. Because the IDs are integers created by the algorithm, we are permitted to sort $L$ using {\em counting sort} without violating the comparison-based requirements (see Appendix~\ref{app:comp-class}). The counting sort finishes in $O(|R| + |L|) = O(n + \out)$ time, recalling that all the IDs are in $[|R|]$.
 
 \vgap
 
