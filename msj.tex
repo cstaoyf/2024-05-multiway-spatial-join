@@ -338,7 +338,7 @@ As before, let $R_1, ..., R_{k-2}, H$, and $V$ be the input sets of the H-V $k$-
 }
 where $\J(R_1, ..., R_{k-2}, H, V)$, let us recall, is the join result of the (whole) H-V $k$-SJ. Remember that the output size $\out$ is defined as $|\J(R_1, ..., R_{k-2}, H, V)|$. From $\J^*$, we will report only those $k$-tuples belonging to $\J_1$ and ignore the rest.
 
-\extraspacing {\underline{\em Example 4.1.}} To illustrate our algorithm, we will utilize the running example in Figure~\ref{fig:hv:type1:ex}a, where $k = 4$, and $R_1 = \set{\alpha}$, $R_2 = \set{\beta_2, \beta_2}$, $H$ $=$ $\set{h_1,$ $h_2,$ $..., h_6}$, and $V = \set{v_1, v_2, ..., v_5}$. The set $\J_1$ contains the following tuples: $(\alpha, \beta_2, h_2, v_3)$, $(\alpha, \beta_2, h_2, v_5)$, $(\alpha, \beta_2, h_5, v_3)$, and $(\alpha,$ $\beta_2, h_5, v_6)$. \qed
+\extraspacing {\underline{\em Example 4.1.}} To illustrate our algorithm, we will utilize the running example in Figure~\ref{fig:hv:type1:ex}a, where $k = 4$, and $R_1 = \set{\alpha}$, $R_2 = \set{\beta_2, \beta_2}$, $H$ $=$ $\set{h_1,$ $h_2,$ $..., h_6}$, and $V = \set{v_1, v_2, ..., v_5}$. The set $\J_1$ contains the following tuples: $(\alpha, \beta_2, h_2, v_3)$, $(\alpha, \beta_2, h_2, v_5)$, $(\alpha, \beta_2, h_5, v_3)$, and $(\alpha,$ $\beta_2, h_5, v_6)$. \done
 
 \extraspacing {\bf Sets $\bm{R_1', R_2', ..., R'_{k-2}}$.} Fix any $i \in [k-2]$. For each rectangle $r \in R_i$, we compute four segments:
 \myitems{
@@ -369,7 +369,7 @@ We now solve a $(k-2)$-SJ problem on the input $\set{R_1', R_2', ..., R_{k-2}'}$
 As a corollary of Lemma~\ref{lmm:hv:type1:recur-output}, the $(k-2)$-SJ can be settled in $F_{k-2}(n, \out)$ time.
 
 \extraspacing {\underline{\em Example 4.2.}} Figure~\ref{fig:hv:type1:ex}b shows the rectangles in $R'_1 = \set{\alpha'}$ and $R'_2$ $=$ $\{\beta'_1,$ $\beta'_2\}$. For instance, $\alpha'$, which is trimmed from rectangle $\alpha$, is decided by $h_\bot$ $=$ $h_2$, $h_\top$ $=$ $h_6$, $v_\vdash = v_3$, and $v_\dashv = v_5$. The $(k-2)$-SJ on $R'_1$ and $R'_2$ returns $\J(R_1', R'_2, ..., R'_{k-2}) = \set{(\alpha', \beta_1'), (\alpha', \beta_2')}$.
-\qed
+\done
 
 
 \begin{figure*}
@@ -422,7 +422,7 @@ The prefix ``d-'' stands for ``double''. These sets have important properties as
 \end{lemma}
 
 \noindent {\underline{\em Example 4.3.} Let us examine, in turn, the two 2-tuples $\bm{t}_1 = (\alpha', \beta_1')$ and $\bm{t}_2 = (\alpha', \beta_2')$ in $\J(R_1', R_2')$. For $\bm{t}_1$, $B_{\bm{t}_1}$ is the rectangle \ttt{ABCD} in Figure~\ref{fig:hv:type1:ex}c, and $\gleft(\bm{t}_1) = \gbot(\bm{t}_1) = \alpha'$. Accordingly, $\dcross_H(\bm{t}_1) = \set{h_2}$ and $\dcross_V(\bm{t}_1) = \set{v_3}$. For $\bm{t}_2$, $B_{\bm{t}_2}$ is the rectangle \ttt{AEFG}, and $\gleft(\bm{t}_2) = \gbot(\bm{t}_2) = \alpha'$. Accordingly, $\dcross_H(\bm{t}_2) = \set{h_2, h_4, h_5}$ and $\dcross_V(\bm{t}_2) = \set{v_3, v_5}$.
-\qed
+\done
 
 \vgap 
 
@@ -444,7 +444,7 @@ By statements (1) and (2) of Lemma~\ref{lmm:hv:type1:properties}, the set $\J^*$
 The rest of the section will focus on how to prepare the sets $\dcross_H(\bm{t})$ of all $\bm{t} \in \J(R_1', ..., R_{k-2}')$ in $O(n \log n + k \cdot \out)$ time. An analogous method can be used to compute the sets $\dcross_V(\bm{t})$ of all $\bm{t}$ within the same time complexity.
 
 \extraspacing {\underline{\em Example 4.4.} In our running example, the $\J^*$ computed includes 7 tuples: $(\alpha, \beta_1, h_2, v_3)$, and $\{\alpha\} \times \{\beta_2\} \times \set{h_2, h_4, h_5} \times \set{v_3, v_5}$. All these 7 tuples belong to $\J(R_1, R_2, H, V)$ and include the 4 tuples in $\J_1$ (see Example 4.1).
-\qed
+\done
 
 \extraspacing {\bf Sets $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} Fix any $i \in [k-2]$. Define for each $r' \in R_i'$:
 \myeqn{
@@ -460,7 +460,7 @@ and call it the {\em top-sliced rectangle} of $r'$.
 %\vgap
 
 \extraspacing {\underline{\em Example 4.5.} Recall from Example 4.3 that rectangle $\alpha'$ is both $\gbot(\bm{t}_1)$ and $\gbot(\bm{t}_2)$. Thus, $\maxtop(\alpha') = \max\{\ytop(B_{\bm{t}_1}),$ $\ytop(B_{\bm{t}_2})\} = \max\{6, 9.5\} = 9.5$. The top-sliced rectangle of $\alpha'$ is the rectangle $\alpha^*$ in Figure~\ref{fig:hv:type1:ex}d. Rectangles $\beta'_1$ and $\beta'_2$ do not have top-sliced rectangles.
-\qed
+\done
 
 \vgap 
 
@@ -485,7 +485,7 @@ Our focus lies specifically on the sets $\cross_H(r^*)$ of the rectangles $r^*$ 
 
 \extraspacing {\underline{\em Example 4.6.}} It is clear from Figure~\ref{fig:hv:type1:ex}d that $\cross_H(\alpha^*)$ contains $h_2, h_4$, and $h_5$, sorted in ascending order of y-coordinate. Recall that 
 $\gbot(\bm{t}_1) = \gbot(\bm{t}_2) = \alpha'$. Both $\dcross_H(\bm{t}_1) = \set{h_2}$ and $\dcross_H(\bm{t}_2) = \set{h_2, h_4, h_5}$ are prefixes of the sorted list, as is consistent with Lemma~\ref{lmm:hv:type1:cross-r*}.
-\qed
+\done
 
 Finding the $\cross_H(r^*)$ sets of all $r^* \in R^*_i$ is an instance of the find-all-sorted version of Problem $\mathscr{D}$ (with $H$ and $R^*_i$ as the input). Statement (1) of Lemma~\ref{lmm:hv:type1:cross-r*}, as well as the discussion in Section~\ref{sec:bricks}, assures us that the total time to do so for all $R^*_1, ..., R^*_{k-2}$ is bounded by $O(k n \log n + \out)$. Note that, for each $\cross_H(r^*)$ computed, the (horizontal) segments therein have been sorted in ascending order of y-coordinate.
 
@@ -538,7 +538,7 @@ The other sub-types can be found analogously.
 
 A remark is in order about duplicate removal. By finding each sub-type separately, we may see the same result tuple multiple times (precisely, up to $4(k-2)$ times) in the whole algorithm. However, this does not mean that the tuple needs to be reported multiple times. Whenever a type-2 result tuple is found, we can immediately decide in $O(k)$ time all the sub-types it belongs to. To avoid outputting the tuple more than once, we can enforce a policy to designate a specific sub-type for outputting. One such policy is the following: among all sub-types that the tuple belongs to, identify the one with the smallest sub-type number $t$ (an integer from 1 to $4(k-2)$); report the tuple only when we are computing the particular sub-type $t$.
 
-\extraspacing {\underline{\em Example 5.1.}} To illustrate our algorithm, we will utilize the running example in Figure~\ref{fig:hv:type2:ex}a, where $k = 4$, and $R_1 = \set{\alpha}$, $R_2 = \set{\beta_2, \beta_2, \beta_3}$, $H$ $=$ $\set{h_1,$ $h_2,$ $h_3}$, and $V = \set{v_1, v_2}$. The set $\J_2$ contains the following tuples: $(\alpha, \beta_1, h_2, v_1)$, $(\alpha, \beta_1, h_3, v_1)$, $(\alpha, \beta_2, h_3, v_1)$, $(\alpha, \beta_3, h_3, v_1)$, and $(\alpha, \beta_3, h_3, v_2)$. \qed
+\extraspacing {\underline{\em Example 5.1.}} To illustrate our algorithm, we will utilize the running example in Figure~\ref{fig:hv:type2:ex}a, where $k = 4$, and $R_1 = \set{\alpha}$, $R_2 = \set{\beta_2, \beta_2, \beta_3}$, $H$ $=$ $\set{h_1,$ $h_2,$ $h_3}$, and $V = \set{v_1, v_2}$. The set $\J_2$ contains the following tuples: $(\alpha, \beta_1, h_2, v_1)$, $(\alpha, \beta_1, h_3, v_1)$, $(\alpha, \beta_2, h_3, v_1)$, $(\alpha, \beta_3, h_3, v_1)$, and $(\alpha, \beta_3, h_3, v_2)$. \done
 
 
 \extraspacing {\bf Set $\bm{H'}$.} Take any horizontal segment $h = [x_1, x_2] \times y \in H$. Recall from Section~\ref{sec:bricks} that a left-end covering rectangle of $h$ is a rectangle covering the left endpoint of $h$. 
@@ -561,7 +561,7 @@ Now, solve a $(k-1)$-SJ problem on the input $\set{R_1, ..., R_{k-3}, H', V}$ us
 \end{lemma}
 
 \noindent {\underline{\em Example 5.2.}} Segment $h_1$ has no left-covering rectangle in $R_2$ (see Figure~\ref{fig:hv:type2:ex}a) and thus has no trimmed segment. Segment $h_2$ has one left-covering rectangle in $R_2$, which is $\beta_1$. As the entire $h_2$ is covered by $\beta_1$, it is equivalent to its trimmed segment $h_2'$; see Figure~\ref{fig:hv:type2:ex}b. Segment $h_3$ has two left-covering rectangles in $R_2$, which are $\beta_2$ and $\beta_3$. The right endpoint of its trimmed segment $h_3'$, as shown in Figure~\ref{fig:hv:type2:ex}b, is decided by the right edge of $\beta_3$. Therefore, $H' = \set{h_2', h_3'}$. It is clear from Figure~\ref{fig:hv:type2:ex}b that $\J(R_1, H', V)$ has 3 tuples: $\bm{t}_1 = (\alpha, h_2', v_1), \bm{t}_2 = (\alpha, h_3', v_1)$, and $\bm{t}_3 = (\alpha, h_3', v_2)$.
-\qed
+\done
 
 \extraspacing {\bf Generating $\bm{\J_2}$.} Take any $(k-1)$-tuple $\bm{t} = (r_1, ..., r_{k-3}, h', v) \in \J(R_1, ..., R_{k-3}, H', V)$. Note that $B_\bm{t}$ --- defined in \eqref{eqn:B_t} --- is a point (due to $h'$ and $v$). Suppose $h' = [x_1, x_2] \times y$ and $B_\bm{t} = (x, y)$, we define the {\em effective horizontal segment} of $\bm{t}$ as the horizontal segment $[x_1, x] \times y$. This allows us to define
 \myeqn{
@@ -573,7 +573,7 @@ The above should not be confused with \eqref{eqn:contained}, where the ``$\conta
 
 \extraspacing {\underline{\em Example 5.3.}} Consider the tuples $\bm{t}_1$, $\bm{t}_2$, and $\bm{t}_3$ of $ \J(R_1, H', V)$ given in Example 5.2. For $\bm{t}_1 = (\alpha, h_2', v_1)$, its effective horizontal segment is $\texttt{DC}$ (see Figure~\ref{fig:hv:type2:ex}b). For $\bm{t}_2 = (\alpha, h_3', v_1)$, its effective horizontal segment is \texttt{EB}. For $\bm{t}_3 = (\alpha, h_3', v_2) \in \J(R_1, H', V)$, its effective horizontal segment is \texttt{EA}. Accordingly, as can be seen from Figure~\ref{fig:hv:type2:ex}c,
 $\contained_{R_{k-2}}(\bm{t}_1) = \contained_{R_2}(\bm{t}_1) = \set{\beta_1}$, $\contained_{R_2}(\bm{t}_2) = \set{\beta_1, \beta_2, \beta_3}$, and $\contained_{R_2}(\bm{t}_3) = \set{\beta_3}$.
-\qed
+\done
 
 \vgap 
 
@@ -606,7 +606,7 @@ The correctness of the algorithm follows from statements (1) and (2) of Lemma~\r
 assures us that the algorithm runs in $O(1 + |\J(R_1, ..., R_{k-3}, H', V)| + k \sum_\bm{t} |\contained_{R_{k-2}}(\bm{t})|) = O(1 + k \cdot \out)$ time, where the derivation used Lemma~\ref{lmm:hv:type2:recur-output} and statement (3) of Lemma~\ref{lmm:hv:type2:properties}.
 
 \extraspacing {\underline{\em Example 5.4.}} For $\bm{t}_1 = (\alpha, h_2', v_1)$, first find the full segment of $h_2'$, which is $h_2$. As $\beta_1$ is the only rectangle in $\contained_{R_2}(\bm{t}_1)$, Line 5 of the algorithm adds tuple $(\alpha, \beta_1, h_2, v_1)$ to $\J_2$. For $\bm{t}_2 = (\alpha, h_3', v_1)$, the full segment of $h_3'$ is $h_3$. As $\contained_{R_2}(\bm{t}_2) = \set{\beta_1, \beta_2, \beta_3}$, Line 5 adds $(\alpha, \beta_1, h_3, v_1)$, $(\alpha, \beta_2, h_3, v_1)$, and $(\alpha, \beta_3, h_3, v_1)$ to $\J_2$. Finally, the processing of $\bm{t}_3 = (\alpha, h_3', v_2)$ adds $(\alpha, \beta_3, h_3, v_2)$ to $\J_2$.
-\qed
+\done
 
 \extraspacing {\bf Set $\bm{H^*}$.} 
 For each segment $h' \in H'$, define
@@ -621,7 +621,7 @@ We set $\minleft(h')$ to $\infty$, if no $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V
 and call it the {\em minimal segment} of $h'$.
 
 \extraspacing {\underline{\em Example 5.5.}} As mentioned, $\J(R_1, H', V)$ has 3 tuples $\bm{t}_1$, $\bm{t}_2$, and $\bm{t}_3$. Both $\bm{t}_2 = (\alpha, h_3', v_1)$ and $\bm{t}_3 = (\alpha, h_3', v_2)$ have $h_3'$ as the horizontal segment. Therefore, $\minleft(h_3')$ equals the smaller between the x-coordinate of $v_1$ and that of $v_2$. The minimal segment $h_3^*$ of $h_3'$ is shown in Figure~\ref{fig:hv:type2:ex}(c). On the other hand, it is easy to verify that $\minleft(h_2')$ is the x-coordinate of $v_1$. The minimal segment $h_2^*$ of $h_2'$ is also shown in Figure~\ref{fig:hv:type2:ex}(c).
-\qed
+\done
 
 \vgap 
 
@@ -649,7 +649,7 @@ We will utilize the sets $\contained_{R_{k-2}}(h^*)$ of the segments $h^*$ in $H
 The proof can be found in Appendix~\ref{app:hv:type2}.
 
 \extraspacing {\underline{\em Example 5.6.}} It is clear from Figure~\ref{fig:hv:type2:ex}(d) that $\contained_{R_2}(h_3^*)$ has rectangles $\beta_3, \beta_2$, $\beta_1$, sorted in descending order of their right boundaries' x-coordinates. Consider $\bm{t}_2 = (\alpha, h_3', v_1)$ and $\bm{t}_3 = (\alpha, h_3', v_2)$. Segment $h_3^*$ is the minimal segment of $h_3'$. As stated in Lemma~\ref{lmm:hv:type2:contained-h*}, both $\contained_{R_2}(\bm{t}_2) = \set{\beta_1, \beta_2, \beta_3}$ and $\contained_{R_2}(\bm{t}_3) = \set{\beta_1}$ are prefixes of the sorted order of $\contained_{R_2}(h_3^*)$. Regarding $h_2^*$, it is the minimal segment of $h_2'$, and $\contained_{R_2}(h_2^*)$ contains only  $\beta_1$. For $\bm{t}_1 = (\alpha, h_2', v_1)$, $\contained_{R_2}(\bm{t}_1) = \set{\beta_1}$ is a (trivial) prefix of $\contained_{R_2}(h_2^*)$, as is consistent with the lemma.
-\qed
+\done
 
 Finding the $\contained_{R_{k-2}}(h^*)$ sets of all $h^* \in H^*$ is an instance of the find-all-sorted version of Problem $\mathscr{E}$ (with $H^*$ and $R_{k-2}$ as the input). The cost is $O(n \log n + \out)$ according statement (1) of Lemma~\ref{lmm:hv:type1:cross-r*} and the discussion in Section~\ref{sec:bricks}. Note that, for each $\contained_{R_{k-2}}(h^*)$ computed, the rectangles $r$ therein have been sorted in descending order of $\xright(r)$.
 
