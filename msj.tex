@@ -800,7 +800,7 @@ Through a reduction from element distinctness \cite{dl79}, one can show that, fo
 
 \section{Building Brick Algorithms} \label{app:bricks}
 
-\extraspacing {\bf Terminology.} Each point $(x, y)$ is said to {\em define} a y-coordinate $y$, a horizontal segment $[x_1, x_2] \times y$ is said to {\em define} a y-coordinate $y$, and each rectangle $r = [x_1, x_2] \times [y_1, y_2]$ is said to {\em define} two y-coordinates $y_1$ and $y_2$. These definitions permit us to convenient specify a set of y-coordinates using expressions like ``the set of four y-coordinates defined by point $p$, horizontal segment $h$, and rectangle $r$''.
+\extraspacing {\bf Terminology.} Each point $(x, y)$ is said to {\em define} a y-coordinate $y$, a horizontal segment $[x_1, x_2] \times y$ is said to {\em define} a y-coordinate $y$, and each rectangle $r = [x_1, x_2] \times [y_1, y_2]$ is said to {\em define} two y-coordinates $y_1$ and $y_2$. These definitions permit us to conveniently specify a set of y-coordinates using expressions like ``the set of four y-coordinates defined by point $p$, horizontal segment $h$, and rectangle $r$''.
 
 \extraspacing {\bf Fundamental Data Structures.} The {\em interval tree} \cite{bcko08} stores a set $S$ of intervals in $\real$ using $O(|S|)$ space such that, given any real value $q$, the intervals of $S$ containing $q$ can be found in $O(\log |S| + K)$ time, where $K$ is the number of intervals reported. It can also be used to detect whether $S$ has at least one interval containing $q$ in $O(\log |S|)$ time. The structure supports an insertion or deletion on $S$ in $O(\log |S|)$ time.
 
