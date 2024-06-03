@@ -14,7 +14,7 @@
 \def\vgap{\vspace{1mm}}
 \def\extraspacing{\vspace{2mm} \noindent}
 \def\figcapup{\vspace{-2mm}}
-\def\figcapdown{\vspace{-3mm}}
+\def\figcapdown{\vspace{-4mm}}
 
 \def\A{\mathcal{A}}
 %\def\B{\mathcal{B}}
@@ -434,6 +434,8 @@ The prefix ``d-'' stands for ``double''. These sets have important properties as
 
 Equipped with Lemma~\ref{lmm:hv:type1:properties}, we generate our target $\J^*$ as follows:
 
+\vgap
+
 \mytab{
     \> {\bf algorithm generate-$\J^*$} \\
     \> 1.\> $\J^* = \emptyset$ \\
@@ -442,6 +444,8 @@ Equipped with Lemma~\ref{lmm:hv:type1:properties}, we generate our target $\J^*$
     \> 4.\>\> {\bf for} each $(h, v) \in \dcross_H(\bm{t}) \times \dcross_V(\bm{t})$ {\bf do} \\
     \> 5.\>\>\> add $(r_1, ..., r_{k-2}, h, v)$ to $\J^*$
 }
+
+\vgap
 
 By statements (1) and (2) of Lemma~\ref{lmm:hv:type1:properties}, the set $\J^*$ thus computed indeed satisfies \eqref{eqn:hv:type1:J*}. Furthermore, if we are given $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$ for each $\bm{t}$, the above algorithm runs in $O(1 + |\J(R'_1, ..., R'_{k-2})| + k \cdot |\J^*|) = O(1 + k \cdot \out)$ time, where the derivation used \eqref{eqn:hv:type1:J*} and Lemma~\ref{lmm:hv:type1:recur-output}.
 
@@ -597,6 +601,8 @@ We prove the next lemma in Appendix~\ref{app:hv:type2} (to avoid confusion, the 
 
 Equipped with Lemma~\ref{lmm:hv:type2:properties}, we generate our target $\J_2$ as follows:
 
+\vgap
+
 \mytab{
     \> {\bf algorithm generate-$\J_2$} \\
     \> 1.\> $\J_2 = \emptyset$ \\
@@ -605,6 +611,8 @@ Equipped with Lemma~\ref{lmm:hv:type2:properties}, we generate our target $\J_2$
     \> 4.\>\> {\bf for} each $r \in \contained_{R_{k-2}}(\bm{t})$ {\bf do} \\
     \> 5.\>\>\> add $(\bm{t}[1], ..., \bm{t}[k-3], r, h, \bm{t}[k-1])$ to $\J_2$
 }
+
+\vgap
 
 The correctness of the algorithm follows from statements (1) and (2) of Lemma~\ref{lmm:hv:type2:properties}. Furthermore, if we are given $\contained_{R_{k-2}}(\bm{t})$ for each $\bm{t}$, statement (3) of Lemma~\ref{lmm:hv:type2:properties}
 assures us that the algorithm runs in $O(1 + |\J(R_1, ..., R_{k-3}, H', V)| + k \sum_\bm{t} |\contained_{R_{k-2}}(\bm{t})|) = O(1 + k \cdot \out)$ time, where the derivation used Lemma~\ref{lmm:hv:type2:recur-output} and statement (3) of Lemma~\ref{lmm:hv:type2:properties}.
