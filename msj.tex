@@ -128,33 +128,13 @@ It is worth noting that $\Omega(n \log n)$ is a lower bound on the runtime of an
 
 %where we are given $n$ real values $e_1, e_2, ..., e_n$ and need to decide whether there are distinct $i, j \in [n]$ satisfying $e_i = e_j$. The ED problem demands $\Omega(n \log n)$ comparisons to solve \cite{dl79}.
 
-\begin{table} 
-    \begin{tabular}{c|c|c|c} 
-        $\bm{k}$ & {\bf method} & {\bf runtime} & {\bf remark} \\
-        \hline\hline 
-        2 & folklore & $O(n \log n + \out)$ & optimal \\ 
-        \hline
-        $\ge 3$ & before 2022 & $O(n^k)$ &  \\
-        $\ge 3$ & \cite{ty22} & $O((n + \out) \cdot \polylog n)$ & \\
-        $\ge 3$ & \cite{kcko22} & $O(n \log^{2k} n + \out)$ & \\
-        \hline
-        $\ge 3$ & ours & $O(n \log n + \out)$ & optimal
-    \end{tabular}
-    
-    \vspace{4mm}
-    \figcapup 
-    \caption{Result comparison on $k$-SJ problem for a constant $k$}
-    \label{tab:results-com}
-    \figcapdown \vspace{-5mm}
-\end{table}
-
 \subsection{Our Results} \label{sec:intro:ours} 
 
 In this paper, we solve the $k$-SJ problem with a comparison-based algorithm that runs in $O(n \log n + \out)$ time regardless of the constant $k$. The time complexity is asymptotically optimal in the class of comparison-based algorithms.
 
 \vgap 
 
-In terms of techniques, our primary contribution is the revelation of a new property on the problem's mathematical structure. Fix any $k \ge 3$ and an {\em arbitrary} algorithm $\A$ for the $(k-1)$-SJ problem. Define function $F_{k-1}(n, \out)$ to return the worst-case running time of $\A$ on any instance of the $(k-1)$-SJ problem having input size at most $n$ and output size at most $\out$. Our core technical contribution is to establish:
+Our primary technical contribution is the revelation of a new property on the problem's mathematical structure. Fix any $k \ge 3$ and an {\em arbitrary} algorithm $\A$ for the $(k-1)$-SJ problem. Define function $F_{k-1}(n, \out)$ to return the worst-case running time of $\A$ on any instance of the $(k-1)$-SJ problem having input size at most $n$ and output size at most $\out$. We will establish:
 
 \begin{theorem} \label{thm:main-recur}
     Equipped with the algorithm $\A$ as described above, the $k$-SJ problem with $k \ge 3$ can be solved in time
@@ -163,17 +143,44 @@ In terms of techniques, our primary contribution is the revelation of a new prop
         %\nn
         \label{eqn:main:reccurrence}
     }
-    where $n$ (resp., $\out$) is the input (resp., output) size of the problem. Furthermore, if $\A$ is comparison-based, so is the $k$-SJ algorithm.
+    where $n$ (resp., $\out$) is the input (resp., output) size of the problem. Furthermore, if $\A$ is comparison-based, the obtained $k$-SJ algorithm is also comparison-based.
 \end{theorem}
 
-The theorem implies a recursive nature of $k$-SJ. Indeed, we will see that an $k$-SJ instance with input size $n$ and output size $\out$ can be converted to $O(k^3)$ instances of the $(k-1)$-SJ problem --- all having input size at most $n$ and output size at most $\out$ --- plus an additional processing cost of $O(n \log n + \out)$. For 2-SJ, we can set $\A$  to the ``folklore algorithm'' mentioned in Section~\ref{sec:intro:prev}, which ensures $F_2(n, \out) = O(n \log n + \out)$. Combining this with \eqref{eqn:main:reccurrence} gives a recurrence that relates the time complexity of $k$-SJ to that of $(k-1)$-SJ. Solving the recurrence yields:
+The theorem implies a recursive nature of $k$-SJ. Indeed, we will see that an $k$-SJ instance with input size $n$ and output size $\out$ can be converted to $O(k^3)$ instances of the $(k-1)$-SJ problem --- all having input size at most $n$ and output size at most $\out$ --- plus an additional processing cost of $O(n \log n + k \cdot \out)$. For 2-SJ, we can set $\A$  to the ``folklore algorithm'' mentioned in Section~\ref{sec:intro:prev}, which ensures $F_2(n, \out) = O(n \log n + \out)$. Combining this with \eqref{eqn:main:reccurrence} gives a recurrence that relates the time complexity of $k$-SJ to that of $(k-1)$-SJ. Solving the recurrence yields:
 
 \begin{theorem} \label{thm:main-alg}
-    For $k \ge 3$, we can settle $k$-SJ with a comparison-based algorithm in $O( c^k \cdot (k!)^3 \cdot (n \log n + k \cdot \out))$ time, where $c > 1$ is a positive constant.
+    For $k \ge 3$, we can settle $k$-SJ with a comparison-based algorithm in
+    \myeqn{
+        O( c^k \cdot (k!)^3 \cdot (n \log n + k \cdot \out))
+        \nn
+    }
+    time, where $c > 1$ is a positive constant.
     %and $O(k \cdot n + \out)$ space,
 \end{theorem}
 
-When $k = O(1)$, the time complexity becomes $O(n \log n$ $+ \out)$, as promised; the space consumption of our algorithm is $O(n + \out)$. Now that Theorem~\ref{thm:main-alg} offers a satisfactory $k$-SJ result for $k = O(1)$ in 2D space, it is natural to wonder whether the constraint on dimensionality 2 is necessary. Interestingly, the answer is ``yes'' as far as $k \ge 3$ is concerned, subject to the absence of breakthroughs on a classical problem in graph theory. Specifically, if the 3D version of the 3-SJ problem (which we will formally define in Appendix~\ref{app:lb-cond}) could be solved in $O((n + \out) \cdot \polylog n)$ time, we would obtain an algorithm that detects the presence of a triangle (i.e., 3-clique) in a graph of $m$ edges in $O(m \polylog m)$ time, which would make a truly remarkable breakthrough because the state of the art needs $O(m^{1.41})$ time \cite{ayz97}. This reduction can be inferred from an argument in \cite{kcko22} used to prove a more generic result. We simplify the argument for 3D 3-SJ and present the full reduction in Appendix~\ref{app:lb-cond}.
+
+\begin{table}
+    \begin{tabular}{c|c|c|c}
+        $\bm{k}$ & {\bf method} & {\bf runtime} & {\bf remark} \\
+        \hline\hline
+        2 & folklore & $O(n \log n + \out)$ & optimal \\
+        \hline
+        $\ge 3$ & before 2022 & $O(n^k)$ &  \\
+        $\ge 3$ & \cite{ty22} & $O((n + \out) \cdot \polylog n)$ & \\
+        $\ge 3$ & \cite{kcko22} & $O(n \log^{2k} n + \out)$ & \\
+        \hline
+        $\ge 3$ & ours & $O(n \log n + \out)$ & optimal
+    \end{tabular}
+
+    \vspace{4mm}
+    \figcapup
+    \caption{Result comparison on $k$-SJ problem for a constant $k$}
+    \label{tab:results-com}
+    \figcapdown \vspace{-5mm}
+\end{table}
+
+When $k = O(1)$, the time complexity becomes $O(n \log n$ $+ \out)$, as promised; the space consumption of our algorithm is $O(n + \out)$. Now that Theorem~\ref{thm:main-alg} offers a satisfactory $k$-SJ result for $k = O(1)$ in 2D space, it is natural to wonder whether the constraint on dimensionality 2 is necessary. Interestingly, the answer is ``yes'' as far as $k \ge 3$ is concerned, subject to the absence of breakthroughs on a classical problem in graph theory. Specifically, if the 3D version of the 3-SJ problem (which we will formally define in Appendix~\ref{app:lb-cond}) could be solved in $O((n + \out) \cdot \polylog n)$ time, we would be able to detect the presence of a triangle (i.e., 3-clique) in a graph of $m$ edges in $O(m \polylog m)$ time, which would make a remarkable breakthrough because the state of the art needs $O(m^{1.41})$ time \cite{ayz97}. This reduction can be inferred from an argument in \cite{kcko22} used to prove a more generic result. We simplify the argument for 3D 3-SJ and present the full reduction in Appendix~\ref{app:lb-cond}.
+
 \section{Preliminaries in Geometry} \label{sec:bricks}
 
 This section will first define some notions frequently used in our presentation and then introduce several  geometry problems, whose solutions will serve as building bricks for our $k$-SJ algorithm.
