@@ -699,7 +699,7 @@ The rest of this section serves as a proof of Theorem~\ref{thm:main-recur}. Theo
 
 \vgap 
 
-For every $\bm{t} = (r_1, r_2, ..., r_k) \in \J^\cat_k$, the top-left corner of $r_k$ must be covered by all of $r_1, ..., r_{k-1}$. This observation motivates us to find $\J^\cat_i$ as follows. First, collect the set $P$ of top-left corners of all the rectangles in $R_k$. Remove from $P$ every point $p$ with the property that, there exists at least one $j \in [k-1]$ such that $p$ is covered by no rectangle in $R_j$. This requires solving $k-1$ instances of the detection version of Problem $\mathscr{A}$ (in each instance, the input includes $P$ together with a different $R_j$, $j \in [k-1]$); the cost is $O(k n \log n)$ by the discussion in Section~\ref{sec:bricks}.
+For every $\bm{t} = (r_1, r_2, ..., r_k) \in \J^\cat_k$, the top-left corner of $r_k$ must be covered by all of $r_1, ..., r_{k-1}$. This observation motivates us to find $\J^\cat_k$ as follows. First, collect the set $P$ of top-left corners of all the rectangles in $R_k$. Remove from $P$ every point $p$ with the property that, there exists at least one $j \in [k-1]$ such that $p$ is covered by no rectangle in $R_j$. This requires solving $k-1$ instances of the detection version of Problem $\mathscr{A}$ (in each instance, the input includes $P$ together with a different $R_j$, $j \in [k-1]$); the cost is $O(k n \log n)$ by the discussion in Section~\ref{sec:bricks}.
 
 \vgap 
 
@@ -713,7 +713,7 @@ We are ready to generate $\J^\cat_k$. Take any point $p \in P'$, and let $r \in 
     (r_1, ..., r_{k-1}) \in \contained_{R_1}(p) \times ... \times \contained_{R_{k-1}}(p) \nn
     %\label{eqn:ksj:cat1:help2}
 }
-we add $(r_1, ..., r_{k-1}, r)$ to $\J^\cat_k$. Performing the above for all $p \in P'$ generates the whole $\J^\cat_k$ in $O(1 + |\J^\cat_k|)$ time. The way $P'$ is computed ensures that $\contained_{R_j}(p) \ne \emptyset$ for each $j \in [k-1]$. Hence, $\sum_{j \in [k-1]} |\contained_{R_j}(p)| \le \prod_{j \in [k-1]} |\contained_{R_j}(p)|$, which implies that \eqref{eqn:ksj:cat1:help1} is bounded by $O(kn \log n + k \cdot |\J^\cat_k|) = O(kn \log n + k \cdot \out)$ .
+we add $(r_1, ..., r_{k-1}, r)$ to $\J^\cat_k$. Performing the above for all $p \in P'$ generates the whole $\J^\cat_k$ in $O(1 + k \cdot|\J^\cat_k|)$ time. The way $P'$ is computed ensures that $\contained_{R_j}(p) \ne \emptyset$ for each $j \in [k-1]$. Hence, $\sum_{j \in [k-1]} |\contained_{R_j}(p)| \le \prod_{j \in [k-1]} |\contained_{R_j}(p)|$, which implies that \eqref{eqn:ksj:cat1:help1} is bounded by $O(kn \log n + k \cdot |\J^\cat_k|) = O(kn \log n + k \cdot \out)$ .
 
 \vgap 
 
