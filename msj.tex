@@ -202,7 +202,7 @@ Let $S$ be a set of segments where either all segments are horizontal or all are
 namely, $\cross_S(r)$ is the set of segments in $S$ crossing $r$.
 Let $R$ be a set of rectangles. Given a horizontal segment, we define 
 \myeqn{
-    \contained_R(h) = \{r \in R \mid \text{$h$ is contained in $r$} \};
+    \contained_R(h) = \{r \in R \mid \text{$r$ contains $h$} \};
     \label{eqn:contained}
 }
 namely, $\contained_R(h)$ is the set of rectangles in $R$ containing $h$.
@@ -575,9 +575,9 @@ Now, solve a $(k-1)$-SJ problem on the input $\set{R_1, ..., R_{k-3}, H', V}$ us
 \noindent {\underline{\em Example 5.2.}} Segment $h_1$ has no left-covering rectangle in $R_2$ (see Figure~\ref{fig:hv:type2:ex}a) and thus has no trimmed segment. Segment $h_2$ has one left-covering rectangle in $R_2$, which is $\beta_1$. As the entire $h_2$ is covered by $\beta_1$, it is equivalent to its trimmed segment $h_2'$; see Figure~\ref{fig:hv:type2:ex}b. Segment $h_3$ has two left-covering rectangles in $R_2$, which are $\beta_2$ and $\beta_3$. The right endpoint of its trimmed segment $h_3'$, as shown in Figure~\ref{fig:hv:type2:ex}b, is decided by the right edge of $\beta_3$. Therefore, $H' = \set{h_2', h_3'}$. It is clear from Figure~\ref{fig:hv:type2:ex}b that $\J(R_1, H', V)$ has 3 tuples: $\bm{t}_1 = (\alpha, h_2', v_1), \bm{t}_2 = (\alpha, h_3', v_1)$, and $\bm{t}_3 = (\alpha, h_3', v_2)$.
 \done
 
-\extraspacing {\bf Generating $\bm{\J_2}$.} Take any $(k-1)$-tuple $\bm{t} = (r_1, ..., r_{k-3}, h', v) \in \J(R_1, ..., R_{k-3}, H', V)$. Note that $B_\bm{t}$ --- defined in \eqref{eqn:B_t} --- is a point (due to $h'$ and $v$). Suppose $h' = [x_1, x_2] \times y$ and $B_\bm{t} = (x, y)$, we define the {\em effective horizontal segment} of $\bm{t}$ as the horizontal segment $[x_1, x] \times y$. This allows us to define
+\extraspacing {\bf Generating $\bm{\J_2}$.} Take any $(k-1)$-tuple $\bm{t} = (r_1, ..., r_{k-3}, h', v) \in \J(R_1, ..., R_{k-3}, H', V)$. Note that $B_\bm{t}$ --- defined in \eqref{eqn:B_t} --- is the point $h' \cap v$ (the intersection of $h'$ and $v$). Suppose $h' = [x_1, x_2] \times y$ and $B_\bm{t} = (x, y)$, we define the {\em effective horizontal segment} of $\bm{t}$ as the horizontal segment $[x_1, x] \times y$. This allows us to define
 \myeqn{
-    \contained_{R_{k-2}}(\bm{t}) = \{r \in R_{k-2} \mid \text{ the effective horizontal segment of $\bm{t}$ is contained in $r$}   \}
+    \contained_{R_{k-2}}(\bm{t}) = \{r \in R_{k-2} \mid \text{$r$ contains the effective horizontal segment of $\bm{t}$}   \}
     \label{eqn:type2:contained-t}
 }
 The above should not be confused with \eqref{eqn:contained}, where the ``$\contained$'' function takes a segment as the parameter, rather than a tuple.
@@ -588,7 +588,7 @@ $\contained_{R_{k-2}}(\bm{t}_1) = \contained_{R_2}(\bm{t}_1) = \set{\beta_1}$, $
 
 \vgap 
 
-We prove the next lemma in Appendix~\ref{app:hv:type2} (to avoid confusion, the reader may want to be reminded that, for each $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$, $\bm{t}[k-2]$ is a horizontal segment and $\bm{t}[k-1]$ is a vertical segment).
+We prove the next lemma in Appendix~\ref{app:hv:type2} (the reader may want to be reminded that, for each $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$, $\bm{t}[k-2]$ is a horizontal segment and $\bm{t}[k-1]$ is a vertical segment).
 
 \begin{lemma} \label{lmm:hv:type2:properties}
     All the following statements are true:
@@ -629,13 +629,13 @@ For each segment $h' \in H'$, define
     \minleft(h') = \min_{\substack{\text{$\bm{t} \in \J(R_1, ..., R_{k-3}, H', V):$}\\ \text{$\bm{t}[k-2] = h'$}}} \text{$x$-coordinate of $\bm{t}[k-1]$}. 
     \label{eqn:minleft}
 }
-We set $\minleft(h')$ to $\infty$, if no $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$ has $h'$ in its field $\bm{t}[k-2]$. When $\minleft(h') \ne \infty$, assuming $h' = [x_1, x_2] \times y$, we introduce a horizontal segment
+We set $\minleft(h')$ to $\infty$ if no $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$ has $h'$ in its field $\bm{t}[k-2]$. When $\minleft(h') \ne \infty$, assuming $h' = [x_1, x_2] \times y$, we introduce a horizontal segment
 \myeqn{
     h^* &=& [x_1, \minleft(h')] \times y. \nn
 }
 and call it the {\em minimal segment} of $h'$.
 
-\extraspacing {\underline{\em Example 5.5.}} As mentioned, $\J(R_1, H', V)$ has 3 tuples $\bm{t}_1$, $\bm{t}_2$, and $\bm{t}_3$. Both $\bm{t}_2 = (\alpha, h_3', v_1)$ and $\bm{t}_3 = (\alpha, h_3', v_2)$ have $h_3'$ as the horizontal segment. Therefore, $\minleft(h_3')$ equals the smaller between the x-coordinate of $v_1$ and that of $v_2$. The minimal segment $h_3^*$ of $h_3'$ is shown in Figure~\ref{fig:hv:type2:ex}(c). On the other hand, it is easy to verify that $\minleft(h_2')$ is the x-coordinate of $v_1$. The minimal segment $h_2^*$ of $h_2'$ is also shown in Figure~\ref{fig:hv:type2:ex}(c).
+\extraspacing {\underline{\em Example 5.5.}} As mentioned, $\J(R_1, H', V)$ has 3 tuples $\bm{t}_1$, $\bm{t}_2$, and $\bm{t}_3$. Both $\bm{t}_2 = (\alpha, h_3', v_1)$ and $\bm{t}_3 = (\alpha, h_3', v_2)$ have $h_3'$ as the horizontal segment. Therefore, $\minleft(h_3')$ equals 5, which is the smaller between the x-coordinate of $v_1$ and that of $v_2$. The minimal segment $h_3^*$ of $h_3'$ is shown in Figure~\ref{fig:hv:type2:ex}(c). On the other hand, it is easy to verify that $\minleft(h_2')$ is the x-coordinate of $v_1$. The minimal segment $h_2^*$ of $h_2'$ is also shown in Figure~\ref{fig:hv:type2:ex}(c).
 \done
 
 \vgap 
@@ -646,11 +646,9 @@ Next, we construct a new set of horizontal segments:
 }
 This can be done in $O(n + k \cdot \out)$ time, as shown in Appendix~\ref{app:hv:type2}.
 
-%Computing $H^*$ from $H'$ and $V$ is an instance of Problem $\mathscr{B}$, and can be achieved in $O(n \log n)$ as per the discussion from Section~\ref{sec:bricks}. 
-
 \vgap 
 
-We will utilize the sets $\contained_{R_{k-2}}(h^*)$ of the segments $h^*$ in $H^*$, where $\contained_{R_{k-2}}(h^*)$ --- defined in \eqref{eqn:contained} --- is the set of rectangles in $R_{k-2}$ containing $h^*$. These sets have some useful properties:
+We are interested in the sets $\contained_{R_{k-2}}(h^*)$ of the segments $h^*$ in $H^*$, where $\contained_{R_{k-2}}(h^*)$ --- defined in \eqref{eqn:contained} --- is the set of rectangles in $R_{k-2}$ containing $h^*$. These sets have some useful properties:
 
 \begin{lemma} \label{lmm:hv:type2:contained-h*}
     Both statements below are true: 
