@@ -969,16 +969,18 @@ Next, we will prove
 \end{center}
 For this purpose, we need to show that $h$ crosses both $\gbot(\bm{t}) = r'$ and $B_\bm{t}$.
 \myitems {
-    \item First, we explain why $h$ crosses $r'$. Because $r^* \subseteq r'$, the fact of $h$ crossing $r^*$ tells us that $h \cap r' \ne \emptyset$. On the other hand, the fact of $h$ crossing $r^*$ also tells us that $\xleft(h) < x_1 \le x_2 < \xright(h)$ (recall that $[x_1, x_2]$ is the x-range of $r^*$). As $[x_1, x_2]$ is also the x-range of $r'$, the fact of $h \cap r' \ne \emptyset$ indicates that $h$ must cross $r'$.
+    \item First, $h$ crosses $r'$ follows from the facts that (i) $h$ crosses $r^*$, (ii) $r^* \subseteq r'$, and (iii) $r^*$ and $r'$ share the same x-range. 
+    
+    %. Because $r^* \subseteq r'$, the fact of $h$ crossing $r^*$ tells us that $h \cap r' \ne \emptyset$. On the other hand, the fact of $h$ crossing $r^*$ also tells us that $\xleft(h) < x_1 \le x_2 < \xright(h)$ (recall that $[x_1, x_2]$ is the x-range of $r^*$). As $[x_1, x_2]$ is also the x-range of $r'$, the fact of $h \cap r' \ne \emptyset$ indicates that $h$ must cross $r'$.
 
     \vgap
 
-    \item Then, we explain why $h$ crosses $B_{\bm{t}}$. Because $B_{\bm{t}}\subseteq r'$ and $h$ crosses $r'$ (just proved), the rectangle $B_{\bm{t}}$ cannot contain any endpoint of $h$. Let us take the y-coordinate $y_h$ of $h$. We will prove that the point $p = (\xleft(B_{\bm{t}}), y_h)$ is on the segment $h \cap B_{\bm{t}}$, suggesting $h\cap B_{\bm{t}} \neq \emptyset$. Once done, we can then assert that $h$ crosses $B_{\bm{t}}$ (as no endpoint of $h$ falls in $B_\bm{t}$).
+    \item Then, we explain why $h$ crosses $B_{\bm{t}}$. Because $B_{\bm{t}}\subseteq r'$ and $h$ crosses $r'$ (just proved), no endpoint of $h$ can fall in $B_\bm{t}$. Let us take the y-coordinate $y_h$ of $h$. We will prove that the point $p = (\xleft(B_{\bm{t}}), y_h)$ is on the segment $h \cap B_{\bm{t}}$, suggesting $h\cap B_{\bm{t}} \neq \emptyset$. Once this is done, we can assert that $h$ crosses $B_{\bm{t}}$ (as no endpoint of $h$ falls in $B_\bm{t}$).
     
     \vgap
 
     \myitems{
-        \item As $\gbot(\bm{t}) = r'$, the bottom edge of $B_{\bm{t}}$ is contained in $r'$. Thus, $\xleft(B_{\bm{t}})\in [x_1,x_2]$. As proved earlier, $\xleft(h) < x_1 \le x_2 < \xright(h)$, which leads to $\xleft(B_{\bm{t}}) \in [\xleft(h), \xright(h)]$, suggesting that $p \in h$.
+        \item As $\gbot(\bm{t}) = r'$, the bottom edge of $B_{\bm{t}}$ is contained in $r'$. Thus, $\xleft(B_{\bm{t}})\in [x_1,x_2]$. The fact of $h$ crossing $r^*$ tells us that $\xleft(h) < x_1 \le x_2 < \xright(h)$, which leads to $\xleft(B_{\bm{t}}) \in [\xleft(h), \xright(h)]$, suggesting that $p \in h$.
         
         \vgap
 
