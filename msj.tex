@@ -465,7 +465,7 @@ The rest of the section will focus on how to prepare the sets $\dcross_H(\bm{t})
     \maxtop(r') &=& \max_{\bm{t} \in \J(R'_1, ..., R'_{k-2}): \gbot(\bm{t}) = r'} \ytop(B_\bm{t}). 
     \label{eqn:hv:type1:maxtop}
 }
-We set $\maxtop(r')$ to $-\infty$, if no $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ has $r'$ as the $\gbot(\bm{t})$. When $\maxtop(r') \ne -\infty$, assuming $r' = [x_1, x_2] \times [y_1, y_2]$, we introduce a rectangle
+We set $\maxtop(r')$ to $-\infty$ if no $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ has $r'$ as the $\gbot(\bm{t})$. When $\maxtop(r') \ne -\infty$, assuming $r' = [x_1, x_2] \times [y_1, y_2]$, we introduce a rectangle
 \myeqn{
     r^* &=& [x_1, x_2] \times [y_1, \maxtop(r')]. \label{eqn:hv:type1:topsliced}
 }
@@ -482,7 +482,7 @@ Next, we construct from $R_i'$ a new set of rectangles:
 \myeqn{
     R^*_i = \set{r^* \mid r' \in R_i' \text{ and its top-sliced rectangle $r^*$ exists}}. \label{eqn:hv:type1:R*}
 }
-In Appendix~\ref{app:hv:type1}, we show how to compute produce $R^*_1, ..., R^*_{k-2}$ together in $O(n + k \cdot \out)$ total time.
+In Appendix~\ref{app:hv:type1}, we show how to compute $R^*_1, ..., R^*_{k-2}$ altogether in $O(n + k \cdot \out)$ total time.
 
 \vgap 
 
