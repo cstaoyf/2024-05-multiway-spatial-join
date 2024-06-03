@@ -570,8 +570,7 @@ Now, solve a $(k-1)$-SJ problem on the input $\set{R_1, ..., R_{k-3}, H', V}$ us
 
 \extraspacing {\bf Generating $\bm{\J_2}$.} Take any $(k-1)$-tuple $\bm{t} = (r_1, ..., r_{k-3}, h', v) \in \J(R_1, ..., R_{k-3}, H', V)$. Note that $B_\bm{t}$ --- defined in \eqref{eqn:B_t} --- is a point (due to $h'$ and $v$). Suppose $h' = [x_1, x_2] \times y$ and $B_\bm{t} = (x, y)$, we define the {\em effective horizontal segment} of $\bm{t}$ as the horizontal segment $[x_1, x] \times y$. This allows us to define
 \myeqn{
-    \contained_{R_{k-2}}(\bm{t}) &=& \{r \in R_{k-2} \mid \text{ the effective horizontal } \nn \\[-1mm]
-    && \text{segment of $\bm{t}$ is contained in $r$}   \}
+    \contained_{R_{k-2}}(\bm{t}) = \{r \in R_{k-2} \mid \text{ the effective horizontal segment of $\bm{t}$ is contained in $r$}   \}
     \label{eqn:type2:contained-t}
 }
 The above should not be confused with \eqref{eqn:contained}, where the ``$\contained$'' function takes a segment as the parameter, rather than a tuple.
