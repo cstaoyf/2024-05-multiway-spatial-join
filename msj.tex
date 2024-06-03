@@ -929,15 +929,15 @@ Recall that $h \in \dcross_H(\bm{t})$ and $v \in \dcross_V(\bm{t})$. The segment
 
 \vgap 
 
-Next, we prove the second claim, i.e., $h \in \dcross_H(\bm{t})$ and $v \in \dcross_V(\bm{t})$. It suffices to show only the former due to symmetry. To prove $h \in \dcross_H(\bm{t})$, we need to argue that $h$ crosses $\gbot(\bm{t})$ and $B_\bm{t}$. The first part, $h$ crossing $\gbot(\bm{t})$, is done because as mentioned $h$ crosses each of $r_1', ..., r_{k-2}'$, and $\gbot(\bm{t})$ is merely one of those rectangles. To prove that $h$ crosses $B_\bm{t}$, first note that $h \cap B_\bm{t} \ne \emptyset$ because as explained before $B_\bm{t}$ contains $h \cap v$. On the other hand, as $\gbot(\bm{t})$ covers $B_\bm{t}$, the fact of $h$ crossing $\gbot(\bm{t})$ indicates that the x-range of $h$ contains that of $B_\bm{t}$. Combining this with $h \cap B_\bm{t} \ne \emptyset$ shows that $h$ crosses $B_\bm{t}$.
+Next, we prove the second claim, i.e., $h \in \dcross_H(\bm{t})$ and $v \in \dcross_V(\bm{t})$. It suffices to show only the former due to symmetry. For that purpose, we need to argue that $h$ crosses $\gbot(\bm{t})$ and $B_\bm{t}$. The first part, $h$ crossing $\gbot(\bm{t})$, is done because as mentioned $h$ crosses each of $r_1', ..., r_{k-2}'$, and $\gbot(\bm{t})$ is merely one of those rectangles. To prove that $h$ crosses $B_\bm{t}$, first note that $h \cap B_\bm{t} \ne \emptyset$ because as explained before $B_\bm{t}$ contains $h \cap v$. On the other hand, as $\gbot(\bm{t})$ covers $B_\bm{t}$, the fact of $h$ crossing $\gbot(\bm{t})$ indicates that the x-range of $h$ contains that of $B_\bm{t}$. Combining this with $h \cap B_\bm{t} \ne \emptyset$ shows that $h$ crosses $B_\bm{t}$.
 
 \extraspacing \underline{\em Proof of Statement (3).} We will prove 
 \myeqn{
     \sum_{\bm{t}\in \J(R_1',...,R_{k-2}')} |\dcross_H(\bm{t})| \cdot |\dcross_V(\bm{t})| \leq \out \label{eqn:hv:type1:properties:proof-help1}
 } 
-which implies statement (3) because, for any $\bm{t}$ in the summation, $|\dcross_H(\bm{t})| \ge 1$ and $|\dcross_V(\bm{t})| \ge 1$ by Proposition~\ref{prop:app:hv:type1:help2}. Our proof resorts to the algorithm generate-$\J^*$ (see Section~\ref{sec:hv:type1}). This algorithm adds to $\J^*$ exactly as many tuples as calculated by the left hand side of \eqref{eqn:hv:type1:properties:proof-help1}. By statement (1) of Lemma~\ref{lmm:hv:type2:properties}, the $\J^*$ produced must be a subset of $\J(R_1,...,R_{k-2},H,V)$, whereas $\out = |\J(R_1,...,R_{k-2},H,V)|$. This establishes the inequality in \eqref{eqn:hv:type1:properties:proof-help1}, which completes the proof of statement (3).
+which implies statement (3) because, by Proposition~\ref{prop:app:hv:type1:help2}, $|\dcross_H(\bm{t})| \ge 1$ and $|\dcross_V(\bm{t})| \ge 1$  for any $\bm{t}$ in the summation. Our proof resorts to the algorithm generate-$\J^*$ given in Section~\ref{sec:hv:type1}. This algorithm adds to $\J^*$ as many tuples as calculated by the left hand side of \eqref{eqn:hv:type1:properties:proof-help1}. By statement (1) of Lemma~\ref{lmm:hv:type1:properties}, the $\J^*$ produced must be a subset of $\J(R_1,...,R_{k-2},H,V)$, whereas $\out = |\J(R_1,...,R_{k-2},H,V)|$. This establishes the inequality in \eqref{eqn:hv:type1:properties:proof-help1}.
 
-\extraspacing \noindent {\bf Proof of Lemma~\ref{lmm:hv:type1:recur-output}.} Our proof again resorts to the algorithm generate-$\J^*$ (see Section~\ref{sec:hv:type1}). As argued in Statement (3) of Lemma~\ref{lmm:hv:type1:properties}, both $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$ are non-empty for any $\bm{t} \in \J(R_1',$ $...,R_{k-2}')$. Therefore, in processing this $\bm{t}$, the algorithm adds at least a new tuple to $\J^*$. Hence, $|\J(R_1',...,R_{k-2}')| \le |\J^*|\le \out$, where the second inequality follows from Statement (1) of Lemma~\ref{lmm:hv:type1:properties}.
+\extraspacing \noindent {\bf Proof of Lemma~\ref{lmm:hv:type1:recur-output}.} Our proof again resorts to the algorithm generate-$\J^*$ in Section~\ref{sec:hv:type1}. As argued in Statement (3) of Lemma~\ref{lmm:hv:type1:properties}, both $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$ are non-empty for any $\bm{t} \in \J(R_1',$ $...,R_{k-2}')$. Therefore, in processing this $\bm{t}$, the algorithm adds at least one new tuple to $\J^*$. Hence, $|\J(R_1',...,R_{k-2}')| \le |\J^*|\le |\J(R_1,...,R_{k-2},H,V)| = \out$, where the second inequality used Statement (1) of Lemma~\ref{lmm:hv:type1:properties}.
 
 \extraspacing {\bf Computing $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} We consider, w.l.o.g., that each rectangle in the input $R_1 \cup ... \cup R_{k-2}$ is given a distinct integer ID in $[n]$. This allows us to create an array of size $n$ and allocate an array cell to each $r \in R_1 \cup ... \cup R_{k-2}$. The cell can be accessed by the ID of $r$ in constant time.
 
@@ -967,13 +967,13 @@ Next, we will prove
 \begin{center}
     {\bf Claim 1:} If a segment $h \in \cross_H(r^*)$, then $h \in \dcross_H(\bm{t})$.
 \end{center}
-In other words, we must show that $h$ crosses both $\gbot(\bm{t}) = r'$ and $B_\bm{t}$.
+For this purpose, we need to show that $h$ crosses both $\gbot(\bm{t}) = r'$ and $B_\bm{t}$.
 \myitems {
     \item First, we explain why $h$ crosses $r'$. Because $r^* \subseteq r'$, the fact of $h$ crossing $r^*$ tells us that $h \cap r' \ne \emptyset$. On the other hand, the fact of $h$ crossing $r^*$ also tells us that $\xleft(h) < x_1 \le x_2 < \xright(h)$ (recall that $[x_1, x_2]$ is the x-range of $r^*$). As $[x_1, x_2]$ is also the x-range of $r'$, the fact of $h \cap r' \ne \emptyset$ indicates that $h$ must cross $r'$.
 
     \vgap
 
-    \item Then, we explain why $h$ crosses $B_{\bm{t}}$. Because $B_{\bm{t}}\subseteq r'$ and $h$ crosses $r'$ (just proved), the rectangle $B_{\bm{t}}$ cannot contain any endpoint of $h$. Let us take the y-coordinate $y_h$ of $h$. We will prove that the point $p = (\xleft(B_{\bm{t}}), y_h)$ is on the segment $h \cap B_{\bm{t}}$, suggesting $h\cap B_{\bm{t}} \neq \emptyset$. Once done, this will indicate that $h$ crosses $B_{\bm{t}}$ (because no endpoint of $h$ falls in $B_\bm{t}$).
+    \item Then, we explain why $h$ crosses $B_{\bm{t}}$. Because $B_{\bm{t}}\subseteq r'$ and $h$ crosses $r'$ (just proved), the rectangle $B_{\bm{t}}$ cannot contain any endpoint of $h$. Let us take the y-coordinate $y_h$ of $h$. We will prove that the point $p = (\xleft(B_{\bm{t}}), y_h)$ is on the segment $h \cap B_{\bm{t}}$, suggesting $h\cap B_{\bm{t}} \neq \emptyset$. Once done, we can then assert that $h$ crosses $B_{\bm{t}}$ (as no endpoint of $h$ falls in $B_\bm{t}$).
     
     \vgap
 
@@ -982,7 +982,7 @@ In other words, we must show that $h$ crosses both $\gbot(\bm{t}) = r'$ and $B_\
         
         \vgap
 
-        \item As $\gbot(\bm{t}) = r'$ and $\maxtop(r') = \ytop(B_\bm{t})$, the y-range of $B_\bm{t}$ is $[y_1, \maxtop(r')]$. Because $h \cap r^* \ne \emptyset$ (as $h$ crosses $r^*$) and $[y_1, \maxtop(r')]$ is the y-range of $r^*$, we know that $y_h \in [y_1, \maxtop(r')]$, suggesting that $p \in B_{\bm{t}}$.
+        \item As $\gbot(\bm{t}) = r'$ and $\maxtop(r') = \ytop(B_\bm{t})$, the y-range of $B_\bm{t}$ is $[y_1, \maxtop(r')]$. Because $h \cap r^* \ne \emptyset$ (as $h$ crosses $r^*$) and $[y_1, \maxtop(r')]$ is also the y-range of $r^*$, we know that $y_h \in [y_1, \maxtop(r')]$, suggesting that $p \in B_{\bm{t}}$.
     }
 }
 
