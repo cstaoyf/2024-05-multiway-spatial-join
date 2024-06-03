@@ -963,19 +963,19 @@ The mapping is designed as follows. Consider an arbitrary $r^*\in \bigcup_{i = 1
 
 Next, we will prove that a segment $h \in \cross_H(r^*)$ if and only if $h \in \dcross_H(\bm{t})$. Let us start with the ``only-if direction'': assuming $h \in \cross_H(r^*)$, we aim to show $h \in \dcross_H(\bm{t})$, or in other words, $h$ crosses both $\gbot(\bm{t}) = r'$ and $B_\bm{t}$.
 \myitems {
-    \item First, we explain why $h$ crosses $r'$. Because $r'$ covers $r^*$, by the fact of $h$ crossing $r^*$, we know that $h \cap r' \ne \emptyset$. On the other hand, as $h$ crosses $r^*$, it must hold that $\xleft(h) < x_1 \le x_2 < \xright(h)$ (recall that $[x_1, x_2]$ is the x-range of $r^*$). As $[x_1, x_2]$ is also the x-range of $r'$, the fact of $h \cap r' \ne \emptyset$ indicates that $h$ must cross $r'$.
+    \item First, we explain why $h$ crosses $r'$. Because $r^* \subseteq r'$, the fact of $h$ crossing $r^*$ tells us that $h \cap r' \ne \emptyset$. On the other hand, the fact of $h$ crossing $r^*$ also tells us that $\xleft(h) < x_1 \le x_2 < \xright(h)$ (recall that $[x_1, x_2]$ is the x-range of $r^*$). As $[x_1, x_2]$ is also the x-range of $r'$, the fact of $h \cap r' \ne \emptyset$ indicates that $h$ must cross $r'$.
 
     \vgap
 
-    \item Then, we explain why $h$ crosses $B_{\bm{t}}$. Note that because $h$ crosses $r'$ (which we just proved) and $B_{\bm{t}}\subseteq r'$, we know that $B_{\bm{t}}$ cannot contain any endpoint of $h$. Let $y_h$ be the y-coordinate of $h$, and take the point $p = (\xleft(B_{\bm{t}}), y_h)$. We will prove $p \in h \cap B_{\bm{t}}$, suggesting $h\cap B_{\bm{t}} \neq \emptyset$ and, hence, $h$ must cross $B_{\bm{t}}$ (because no endpoint of $h$ falls in $B_\bm{t}$, as mentioned).
+    \item Then, we explain why $h$ crosses $B_{\bm{t}}$. Because $B_{\bm{t}}\subseteq r'$ and $h$ crosses $r'$ (as was just proved), the rectangle $B_{\bm{t}}$ cannot contain any endpoint of $h$. Let us take the y-coordinate $y_h$ of $h$. We will prove that the point $p = (\xleft(B_{\bm{t}}), y_h)$ is on the segment $h \cap B_{\bm{t}}$, suggesting $h\cap B_{\bm{t}} \neq \emptyset$. Once done, this will indicate that $h$ crosses $B_{\bm{t}}$ (because no endpoint of $h$ falls in $B_\bm{t}$).
 
     \vgap
 
-    Since $\gbot(\bm{t}) = r'$, the bottom edge of $B_{\bm{t}}$ must be contained in $r'$. Thus, $\xleft(B_{\bm{t}})\in [x_1,x_2]$. As proved earlier, $\xleft(h) < x_1 \le x_2 < \xright(h)$, which leads to $\xleft(B_{\bm{t}}) \in [\xleft(h), \xright(h)]$, suggesting $p \in h$.
+    As $\gbot(\bm{t}) = r'$, the bottom edge of $B_{\bm{t}}$ is contained in $r'$. Thus, $\xleft(B_{\bm{t}})\in [x_1,x_2]$. As proved earlier, $\xleft(h) < x_1 \le x_2 < \xright(h)$, which leads to $\xleft(B_{\bm{t}}) \in [\xleft(h), \xright(h)]$, suggesting that $p \in h$.
 
     \vgap
 
-    Because $\gbot(\bm{t}) = r'$ and $\maxtop(r') = \ytop(B_\bm{t})$, the y-range of $B_\bm{t}$ is $[y_1, \maxtop(r')]$. To prove $p \in B_{\bm{t}}$, it remains to show $y_h \in [y_1, \maxtop(r')]$. This is true because $h$ intersects $r^*$ and $[y_1, \maxtop(r')]$ is the y-range of $r^*$.
+    As $\gbot(\bm{t}) = r'$ and $\maxtop(r') = \ytop(B_\bm{t})$, the y-range of $B_\bm{t}$ is $[y_1, \maxtop(r')]$. Because $h \cap r^* \ne \emptyset$ (as $h$ crosses $r^*$) and $[y_1, \maxtop(r')]$ is the y-range of $r^*$, we know that $y_h \in [y_1, \maxtop(r')]$, suggesting that $p \in B_{\bm{t}}$.
 }
 
 Our argument now proceeds to prove the ``if direction'': assuming $h \in \dcross_H(\bm{t})$, we aim to show $h \in \cross_H(r^*)$. Recall that $r^* = [x_1,x_2] \times [y_1, \maxtop(r')]$. To prove that $h$ crosses $r^*$, we will show $\xleft(h) < x_1 \le x_2 < \xright(h)$ and $y_h \in [y_1, \maxtop(r')]$, where $y_h$ is the y-coordinate of $h$.
