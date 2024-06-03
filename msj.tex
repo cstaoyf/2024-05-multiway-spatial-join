@@ -763,7 +763,7 @@ We now complete the proof of Theorem~\ref{thm:main-recur}.
 
 \section{Comparison-Based $k$-SJ Algorithms} \label{app:comp-class}
 
-Fix an integer $k \ge 3$, as well as $k$ integers $n_1, n_2, ..., n_k$ at least 1. Define $n = \sum_{i=1}^k n_i$. An {\em $(n_1, n_2, ..., n_k)$-input} to the $k$-SJ problem comprises $k$ sets of rectangles $R_1, R_2, ..., R_k$ in $\real^2$ such that $|R_i| = n_i$ for each $i \in [k]$. We assume that each rectangle in $R_i$ ($i \in [k]$) is given a distinct ID from $[n_i]$.
+Fix an integer $k \ge 3$ and $k$ integers $n_1, n_2, ..., n_k$ at least 1. Define $n = \sum_{i=1}^k n_i$. An {\em $(n_1, n_2, ..., n_k)$-input} to the $k$-SJ problem comprises $k$ sets of rectangles $R_1, R_2, ..., R_k$ in $\real^2$ such that $|R_i| = n_i$ for each $i \in [k]$. We assume that each rectangle in $R_i$ ($i \in [k]$) is given a distinct ID from $[n_i]$.
 
 \vgap
 
@@ -782,7 +782,7 @@ Given an $(n_1, n_2, ..., n_k)$-input $\set{R_1, R_2, ..., R_k}$, we execute the
     \item $r$ as the rectangle with ID $\lambda$ in $R_i$;
     \item $r'$ as the rectangle with ID $\lambda'$ in $R_{i'}$.
 }
-Then, we compare $\side(r)$ to $\side'(r')$ (e.g., if $\side = \xright$ and $\side = \ybot$, then the comparison is between $\xright(r)$ to $\ybot(r')$). We branch to
+Then, we compare $\side(r)$ to $\side'(r')$ (e.g., if $\side = \xright$ and $\side' = \ybot$, then the comparison is between $\xright(r)$ to $\ybot(r')$). We branch to
 \myitems{
     \item the left child if $\side(r) < \side'(r')$;
     \item the middle child if $\side(r) = \side'(r')$;
