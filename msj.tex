@@ -1003,7 +1003,7 @@ It remains to show that no two distinct rectangles $r_1^*, r_2^* \in \bigcup_{i 
 
 \vgap
 
-First, we will prove $\dcross_H(\bm{t})\subseteq \cross_H(r^*)$ or equivalently: if a segment $h \in \dcross_H(\bm{t})$, then $h$ crosses $r^*$. To do so, we need to explain why $\xleft(h) < x_1 \le x_2 < \xright(h)$ and $y_h \in [y_1,$ $\maxtop(r')]$.
+We will first prove $\dcross_H(\bm{t})\subseteq \cross_H(r^*)$ or equivalently: if a segment $h \in \dcross_H(\bm{t})$, then $h$ crosses $r^*$. To do so, we need to explain why $\xleft(h) < x_1 \le x_2 < \xright(h)$ and $y_h \in [y_1,$ $\maxtop(r')]$.
 \begin{itemize}
     \item The fact of $h \in \dcross_H(\bm{t})$ tells us that $h$ crosses $\gbot(\bm{t})$, which is $r'$. As the x-range of $r'$ is $[x_1,x_2]$, it must hold true that $\xleft(h) < x_1 \le x_2 < \xright(h)$.
 
@@ -1012,7 +1012,7 @@ First, we will prove $\dcross_H(\bm{t})\subseteq \cross_H(r^*)$ or equivalently:
     \item The fact of $h \in \dcross_H(\bm{t})$ also tells us that $h$ crosses $B_{\bm{t}}$. Hence, $y_h \in [\ybot(B_\bm{t}), \ytop(B_{\bm{t}})]$. From $r' = \gbot(\bm{t})$, we get $\ybot(B_\bm{t}) = \ybot(r') = y_1$. By the definition of $\maxtop(r')$ in \eqref{eqn:hv:type1:maxtop}, we know $\ytop(B_{\bm{t}}) \leq \maxtop(r')$. It thus follows that $y_h \in [y_1, \maxtop(r')]$.
 \end{itemize}
 
-Second, assuming that the segments of $\cross_H(r^*)$ are sorted in ascending order of their y-coordinates,
+Next, assuming that the segments of $\cross_H(r^*)$ are sorted in ascending order of their y-coordinates,
 we will prove that $\dcross_H(\bm{t})$ includes a prefix of the sorted order. It suffices to establish the following equivalent claim:
 
 \vgap
@@ -1027,7 +1027,7 @@ we will prove that $\dcross_H(\bm{t})$ includes a prefix of the sorted order. It
 
 \myitems{
 
-\item We first show that $h$ crosses $r'$, or equivalently: $\xleft(h)  < x_1 \leq x_2 < \xright(h)$ and $y_h \in [y_1, y_2]$. These conditions hold true because $h$ crosses $r^* = [x_1,x_2]\times [y_1, \maxtop(r')]$, and $\maxtop(r')\leq y_2$ (due to the definition of a top-sliced rectangle in \eqref{eqn:hv:type1:topsliced}).
+\item We first show that $h$ crosses $r'$, or equivalently: $\xleft(h)  < x_1 \leq x_2 < \xright(h)$ and $y_h \in [y_1, y_2]$. These conditions hold true because (i) $h$ crosses $r^* = [x_1,x_2]\times [y_1, \maxtop(r')]$, and (ii) the definition of a top-sliced rectangle in \eqref{eqn:hv:type1:topsliced} tells us $\maxtop(r')\leq y_2$.
 
 \vgap
 
