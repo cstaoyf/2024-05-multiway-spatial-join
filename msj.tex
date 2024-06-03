@@ -1174,8 +1174,8 @@ The subsequent discussion will show that if the 3D 3-SJ problem can be solved in
 Given a graph $G = (V,E)$ for triangle detection, we will construct an instance of the 3D 3-SJ problem with input size $3m$. W.l.o.g., let us assume that each vertex of $V$ is represented as a unique integer in $[|V|]$. Initialize $R_1, R_2$, and $R_3$ as 3 empty sets of rectangles. For each edge $\set{u, v}\in E$ where $u < v$, we add
 \begin{itemize}
     \item a rectangle $(-\infty, \infty) \times [u,u] \times [v,v]$ to $R_1$;
-    \item $[v,v] \times(-\infty, \infty)\times [u,u]$ to $R_2$;
-    \item $[v,v] \times [u,u] \times(-\infty, \infty) $ to $R_3$.
+    \item a rectangle $[v,v] \times(-\infty, \infty)\times [u,u]$ to $R_2$;
+    \item a rectangle $[v,v] \times [u,u] \times(-\infty, \infty) $ to $R_3$.
 \end{itemize}
 Note that every rectangle in $R_1$ (resp., $R_2$ and $R_3$) has $(-\infty, \infty)$ as the x- (resp., y- and z-) projection.
 
@@ -1186,7 +1186,7 @@ The construction has the property that $G$ has a triangle if and only if $\J(R_1
     \item Suppose that $G$ has a triangle with vertices $u$, $v$, and $w$ such that $u < v  < w$. Then, by our construction, $r_1 = (-\infty, \infty) \times [u,u] \times [v,v] \in R_1$, $r_2 = [w, w] \times (-\infty, \infty) \times[v,v] \in R_2$, and $r_3 = [w,w] \times [u, u] \times (-\infty, \infty) \in r_3$. It is clear that $(r_1, r_2, r_3)$ is a result tuple in $\J(R_1, R_2, R_3)$.
 
     \item Conversely, consider that $\J(R_1, R_2, R_3)$ is non-empty. Consider an arbitrary result tuple $(r_1, r_2, r_3) \in \J(R_1, R_2, R_3)$. Assume, w.l.o.g., that $r_1 = (-\infty, \infty) \times [u, u] \times [v, v]$.
-    Because the z-projection of $r_2$ must match that of $r_1$, we assert that $r_2$ must have the form $[w, w] \times (-\infty, \infty) \times [v, v]$ where $w > u$. Because the x-projection of $r_3$ must match that of $r_2$ and the y-projection of $r_3$ must match that of $r_1$, it follows that $r_3$ must have the form $[w, w] \times [u, u] \times (-\infty, \infty)$. This means that the edges $\set{u,v}$, $\set{v,w}$, and $\set{u,w}$ must all exist in $G$, and thus form a triangle.
+    Because the z-projection of $r_2$ must match that of $r_1$, we assert that $r_2$ must have the form $[w, w] \times (-\infty, \infty) \times [v, v]$ for some $w > u$. Because the x-projection of $r_3$ must match that of $r_2$ and the y-projection of $r_3$ must match that of $r_1$, it follows that $r_3$ must have the form $[w, w] \times [u, u] \times (-\infty, \infty)$. This means that the edges $\set{u,v}$, $\set{v,w}$, and $\set{u,w}$ must all exist in $G$, and thus form a triangle.
 }
 
 Now, assume that there exists an algorithm $\A$ capable of solving the 3D 3-SJ problem in $O((n + \out) \cdot \polylog n)$ time. For $\out = 0$, this algorithm must perform at most $c \cdot n \polylog n$ steps when the input size is $n$. We run $\A$ on the 3D 3-SJ instance $R_1, R_2, R_3$ constructed earlier in a {\em cost-monitoring manner}:
