@@ -890,26 +890,36 @@ Finally, we generate, for each $h$, its set $\contained_R(h)$ (i.e., the set of 
 
 \section{Supplementary Proofs for Section~\ref{sec:hv:type1}} \label{app:hv:type1}
 
-This section supplies the proofs postponed from Section~\ref{sec:hv:type1}. The order of the proofs here will not strictly follow the sequence in which they are referenced in Section~\ref{sec:hv:type1}. In particular, we will prove Lemma~\ref{lmm:hv:type1:properties} before Lemma~\ref{lmm:hv:type1:recur-output}, because the claims of the former lemma can be used to construct a simple argument for the latter.
+This section supplies the proofs postponed from Section~\ref{sec:hv:type1}. We will start by presenting a set of geometric properties underneath the procedures designed in Section~\ref{sec:hv:type1}. These properties are interesting on their own and will enable us to construct simpler proofs later.
+
+\begin{proposition} \label{prop:app:hv:type1:help1}
+    Consider any rectangle $r$ taken from $R_1, R_2, ...,$ or $R_{k-2}$. Let $r'$ be the trimmed rectangle of $r$ defined in Section~\ref{sec:hv:type1}. 
+    \myitems{
+        \item If a horizontal segment $h \in H$ crosses $r$, then $h$ must also cross $r'$.
+        \item If a vertical segment $v \in V$ crosses $r$, then $v$ must also cross $r'$.
+    }
+\end{proposition}
+
+\begin{proof}
+    We will prove only the first bullet due to symmetry. Let us represent $h$ as $[x_1, x_2] \times y$. The fact of $h$ crossing $r$ indicates that $[x_1, x_2]$ contains the x-range of $r$. Since the x-range of $r$ contains that of $r'$, we know that $[x_1, x_2]$ must also contain the x-range of $r'$. To prove that $h$ crosses $r'$, we still need to show $y \in [\ybot(r'), \ytop(r')]$. Recall that $\ybot(r')$ is the y-coordinate of the lowest segment in $H$ crossing $r$. This implies $y \ge \ybot(r')$ because $h$ itself is a segment in $H$ crossing $r$. Analogously, it also holds that $y \le \ytop(r')$. We can now conclude that $h$ crosses $r'$.
+\end{proof}
+
+
+
+
+
+We now proceed to elaborate the proofs deferred from Section~\ref{sec:hv:type1}. The order of the subsequent proofs will not strictly follow the sequence in which they are referenced in Section~\ref{sec:hv:type1}. In particular, we will prove Lemma~\ref{lmm:hv:type1:properties} before Lemma~\ref{lmm:hv:type1:recur-output}, because the claims of the former lemma can be used to produce a succinct argument for the latter.
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:properties}.} We will prove each statement in turn.
 
 \extraspacing \underline{\em Proof of Statement (1).} Let $\bm{t}$, $h$, and $v$ be as defined in the statement. 
-As $h \in \dcross_H(\bm{t})$ and $v \in \dcross_V(\bm{t})$, the two segments both cross $B_\bm{t}$, as can be verified from the definitions of $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$. Thus, the intersection of $h$ and $v$ is a point $p$ in $B_\bm{t}$. As $r_i$ (for each $i \in [k-2]$) is the full rectangle of $\bm{t}[i]$, we know that $\bigcap_{i=1}^{k-2} r_i$ covers $B_\bm{t} = \bigcap_{i=1}^{k-2} \bm{t}[i]$. Hence, point $p$ falls in $\bigcap_{i=1}^{k-2} r_i$, indicating that $h\cap v \cap \bigcap_{i = 1}^{k-2}r_i \neq \emptyset$. It follows that $(r_1,...,r_{k-2},h,v)$ is a result tuple in $\J(R_1,...,R_{k-2},H,V)$.
+Recall that $h \in \dcross_H(\bm{t})$ and $v \in \dcross_V(\bm{t})$. Hence, the segments $h$ and $v$ both cross $B_\bm{t}$, as can be verified from the definitions of $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$. Thus, $h \cap v$ is a point $p$ in $B_\bm{t} = \bigcap_{i=1}^{k-2} \bm{t}[i]$. As $r_i$ ($i \in [k-2]$) is the full rectangle of $\bm{t}[i]$, we know that $\bigcap_{i=1}^{k-2} r_i$ covers $B_\bm{t} = \bigcap_{i=1}^{k-2} \bm{t}[i]$. Hence, point $p$ falls in $\bigcap_{i=1}^{k-2} r_i$, indicating that $h\cap v \cap \bigcap_{i = 1}^{k-2}r_i \neq \emptyset$. It follows that $(r_1,...,r_{k-2},h,v)$ is a result tuple in $\J(R_1,...,R_{k-2},H,V)$.
 
-\extraspacing \underline{\em Proof of Statement (2).} Fix any rectangle $r \in R_1 \cup ... \cup R_{k-2}$ and any horizontal segment $h = [x_1, x_2] \times y$ from $H$ that crosses $r$. We will show that $h$ must also cross the trimmed rectangle $r'$ of $r$. From the fact of $h$ crossing $r$, it is clear that $[x_1, x_2]$ contains the x-range of $r$. As the x-range of $r$ contains that of $r'$, we can assert that $[x_1, x_2]$ contains the x-range of $r'$. To prove that $h$ crosses $r'$, we still need to show $y \in [\ybot(r'), \ytop(r')]$. Recall that $\ybot(r')$ is the y-coordinate of the lowest segment in $H$ crossing $r$. This implies $y \ge \ybot(r')$ because $h$ itself is a segment in $H$ crossing $r$. Analogously, it also holds that $y \le \ytop(r')$. We can thus conclude that $h$ crosses $r'$.
-
-\vgap
-
-Fix any rectangle $r \in R_1 \cup ... \cup R_{k-2}$ and any vertical segment $v$ from $V$ that crosses $r$. An argument symmetric to the above shows that $v$ must also cross the trimmed rectangle $r'$.
-
-\vgap
-
-We now prove the first claim of statement (2), i.e., $\bm{t}\in \J(R_1',...,R_{k-2}')$. Consider the $k$-tuple $(r_1,...,r_{k-2},h,v)\in \J_1$ given in statement (2). By definition of $\J_1$, segments $h$ and $v$ both cross each of the rectangles $r_1,..., r_{k-2}$. As explained above, $h$ and $v$ must also cross each of the trimmed rectangles $r_1',..., r_{k-2}'$. Hence, $h \cap v$ is a point covered by each of $r_1',..., r_{k-2}'$. Therefore, $B_\bm{t} = \bigcap_{i = 1}^{k-2}r_i'$ cannot be empty, meaning that $\bm{t} = (r_1', ..., r_{k-2}') \in \J(R_1',...,R_{k-2}')$.
+\extraspacing \underline{\em Proof of Statement (2).} Consider the $k$-tuple $(r_1,...,r_{k-2},h,v) \in \J_1$ in statement (2). By definition of $\J_1$, segments $h$ and $v$ cross each of the rectangles $r_1,..., r_{k-2}$. By Proposition~\ref{prop:app:hv:type1:help1}, segments $h$ and $v$ must also cross each of the trimmed rectangles $r_1',..., r_{k-2}'$. Hence, $B_\bm{t} = \bigcap_{i = 1}^{k-2}r_i'$ is non-empty as it contains the point $h \cap v$, which proves the first claim $\bm{t} = (r_1', ..., r_{k-2}') \in \J(R_1',...,R_{k-2}')$.
 
 \vgap 
 
-Next, we prove the second claim, i.e., $h \in \dcross_H(\bm{t})$ and $v \in \dcross_V(\bm{t})$. It suffices to show only the former due to symmetry. To prove $h \in \dcross_H(\bm{t})$, we need to argue that $h$ crosses $\gbot(\bm{t})$ and $B_\bm{t}$. The first part, $h$ crossing $\gbot(\bm{t})$, is done because as mentioned $h$ crosses each of $r_1', ..., r_{k-2}'$, and $\gbot(\bm{t})$ is one of those rectangles. To prove that $h$ crosses $B_\bm{t}$, first note that $h \cap B_\bm{t} \ne \emptyset$ because as explained before $B_\bm{t}$ contains the point $h \cap v$. On the other hand, as $\gbot(\bm{t})$ covers $B_\bm{t}$, the fact of $h$ crossing $\gbot(\bm{t})$ indicates that the x-range of $h$ contains that of $B_\bm{t}$. Combining this with $h \cap B_\bm{t} \ne \emptyset$ shows that $h$ crosses $B_\bm{t}$.
+Next, we prove the second claim, i.e., $h \in \dcross_H(\bm{t})$ and $v \in \dcross_V(\bm{t})$. It suffices to show only the former due to symmetry. To prove $h \in \dcross_H(\bm{t})$, we need to argue that $h$ crosses $\gbot(\bm{t})$ and $B_\bm{t}$. The first part, $h$ crossing $\gbot(\bm{t})$, is done because as mentioned $h$ crosses each of $r_1', ..., r_{k-2}'$, and $\gbot(\bm{t})$ is merely one of those rectangles. To prove that $h$ crosses $B_\bm{t}$, first note that $h \cap B_\bm{t} \ne \emptyset$ because as explained before $B_\bm{t}$ contains $h \cap v$. On the other hand, as $\gbot(\bm{t})$ covers $B_\bm{t}$, the fact of $h$ crossing $\gbot(\bm{t})$ indicates that the x-range of $h$ contains that of $B_\bm{t}$. Combining this with $h \cap B_\bm{t} \ne \emptyset$ shows that $h$ crosses $B_\bm{t}$.
 
 \extraspacing \underline{\em Proof of Statement (3).} We start by proving that $\dcross_H(\bm{t}) \neq \emptyset$ for any $\bm{t} \in \J(R_1',...,R_{k-2}')$. Set $r' = \gbot(\bm{t})$, and let $r$ be the full rectangle of $r'$. Define $h$ as the lowest segment crossing $r$ (note that $h$ definitely exists because otherwise $r$ has no trimmed rectangle, contradicting the definition of $r'$). We will show that $h \in \dcross_H(\bm{t})$ and hence $\dcross_H(\bm{t}) \ne \emptyset$. For this purpose, we should explain why $h$ crosses both $B_{\bm{t}}$ and $r'$. However, $h$ crossing $r$ implies $h$ crossing $r'$, as we already know from the above proof of statement (2). It remains to show that $h$ crosses $B_\bm{t}$.
 
