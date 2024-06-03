@@ -189,24 +189,23 @@ This section will first introduce some definitions and notations to be frequentl
 
 \vgap
 
-%Similarly, given a vertical segment $v$, we call a rectangle $r$ a {\em bottom-end covering rectangle} of $v$, if $r$ contains the bottom endpoint of $v$. \yf{need this?}
 
-Given a horizontal segment $h = [x_1, x_2] \times y$, we call a rectangle $r$ a {\em left-end covering rectangle} of $h$, if $r$ contains the left endpoint of $h$ (i.e., $(x_1, y) \in r$). A horizontal/vertical segment $s$ {\em crosses} a rectangle $r$, if $s \cap r \ne \emptyset$ but $r$ covers neither of the two endpoints of $s$. A rectangle $r$ {\em contains} a horizontal/vertical segment $s$, if $r$ covers both endpoints of $s$.
+Given a horizontal segment $h = [x_1, x_2] \times y$, we say that a rectangle $r$ is a {\em left-end covering rectangle} of $h$, if $r$ contains the left endpoint of $h$ (i.e., $(x_1, y) \in r$). A horizontal/vertical segment $s$ {\em crosses} a rectangle $r$, if $s \cap r \ne \emptyset$ but $r$ covers neither of the two endpoints of $s$. A rectangle $r$ {\em contains} a horizontal/vertical segment $s$, if $r$ covers both endpoints of $s$.
 
 \vgap
 
 Let $S$ be a set of segments where either all segments are horizontal or all are vertical. Given a rectangle $r$, we define 
 \myeqn{
-    \cross_S(r) = \{s \in S \mid \text{$s$ crosses $r$} \}
+    \cross_S(r) = \{s \in S \mid \text{$s$ crosses $r$} \};
     \label{eqn:cross}
 }
-namely, the set of segments in $S$ crossing $r$.
+namely, $\cross_S(r)$ is the set of segments in $S$ crossing $r$.
 Let $R$ be a set of rectangles. Given a horizontal segment, we define 
 \myeqn{
-    \contained_R(h) = \{r \in R \mid \text{$h$ is contained in $r$} \}
+    \contained_R(h) = \{r \in R \mid \text{$h$ is contained in $r$} \};
     \label{eqn:contained}
 }
-namely, the set of rectangles in $R$ containing $h$.
+namely, $\contained_R(h)$ is the set of rectangles in $R$ containing $h$.
 
 
 \begin{figure}
@@ -220,9 +219,9 @@ namely, the set of rectangles in $R$ containing $h$.
 
 \vgap
 
-Given a rectangle $r = [x_1, x_2] \times [y_1, y_2]$, we define $\xleft(r) = x_1$, $\xright(r) = x_2$, $\ybot(r) = y_1$, and $\ytop(r) = y_2$. Consider a $k$-tuple $\bm{t} = (r_1, r_2, ..., r_k)$ where $k \ge 2$, and each $\bm{t}[i] = r_i$ ($i \le [k]$) is a rectangle. We define 
+Given a rectangle $r = [x_1, x_2] \times [y_1, y_2]$, we define $\xleft(r) = x_1$, $\xright(r) = x_2$, $\ybot(r) = y_1$, and $\ytop(r) = y_2$. Consider a $k$-tuple $\bm{t} = (r_1, r_2, ..., r_k)$ where $k \ge 2$ and each $\bm{t}[i] = r_i$ ($i \le [k]$) is a rectangle. We define
 \myeqn{
-    B_\bm{t} &=& \cap_{i=1}^t r_i \label{eqn:B_t}
+    B_\bm{t} &=& \bigcap_{i=1}^t r_i; \label{eqn:B_t}
 }
 namely, $B_\bm{t}$ is the intersection of the rectangles in $\bm{t}$ (note: $B_\bm{t}$ is a rectangle itself). Also, define:
 \myitems{
