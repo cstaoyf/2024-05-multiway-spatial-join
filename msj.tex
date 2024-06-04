@@ -1138,13 +1138,13 @@ Denote by $x$ the x-coordinate of $\bm{t}[k-1]$. Then, the point $h' \cap v$ can
 
 \vgap
 
-It remains to show that no two distinct segments $h_1^*, h_2^* \in H^*$ can be mapped to the same tuple in $\J(R_1,...,R_{k-3}, H',V)$. Assume, on the contrary, that $h_1^*$ and $h_2^*$ are both mapped to $\bm{t}\in \J(R_1,...,R_{k-3}, H',V)$. Suppose that $h_1^*$ (resp., $h_2^*$) is the minimal segment of $h_1'$ (resp., $h_2'$). Under our mapping, it must hold that  $h_1' = h_2' = \bm{t}[k-2]$. However, the distinctness of $h_1^*$ and $h_2^*$ requires $h_1' \ne h_2'$, which yields a contradiction.
+It remains to show that no two distinct $h_1^*, h_2^* \in H^*$ can be mapped to the same tuple in $\J(R_1,...,R_{k-3}, H',V)$. Assume, on the contrary, that $h_1^*$ and $h_2^*$ are both mapped to $\bm{t}\in \J(R_1,...,R_{k-3},$ $H',V)$. Suppose that $h_1^*$ (resp., $h_2^*$) is the minimal segment of $h_1'$ (resp., $h_2'$). Under our mapping, it must hold that  $h_1' = h_2' = \bm{t}[k-2]$. However, the distinctness of $h_1^*$ and $h_2^*$ requires $h_1' \ne h_2'$, which yields a contradiction.
 
-\extraspacing \underline{\em Proof of Statement (2).} Let $h', h^*$, and $\bm{t}$ be as defined in statement (2). Let us represent $h'$ as $[x_1,x_2] \times y$; accordingly, $h^*$ can be written as $[x_1, \minleft(h')] \times y$. Additionally, let $x$ be the x-coordinate of the vertical segment $\bm{t}[k-1]$. The effective horizontal segment of $\bm{t}$ can then be represented as $[x_1,x] \times y$.
+\extraspacing \underline{\em Proof of Statement (2).} Take any tuple $\bm{t} \in \J(R'_1, ..., R'_{k-3}, H', V)$. Set $h' = \bm{t}[k-2]$, and define $h^*$ as the minimal segment of $h'$. Let us write $h'$ as $[x_1,x_2] \times y$; accordingly, $h^*$ can be written as $[x_1, \minleft(h')] \times y$. Additionally, let $x$ be the x-coordinate of the vertical segment $\bm{t}[k-1]$. The effective horizontal segment of $\bm{t}$ can then be represented as $[x_1,x] \times y$.
 
 \vgap
 
-Firstly, we will prove $\contained_{R_{k-2}}(\bm{t})\subseteq \contained_{R_{k-2}}(h^*)$. For this purpose, we will show that any rectangle $r_{k-2} \in \contained_{R_{k-2}}(\bm{t})$ also covers $h^*$. It suffices to show that $h^*$ is contained in the effective horizontal segment of $\bm{t}$. Combining the definition of $\minleft(h')$ (see \eqref{eqn:minleft}), and the fact that $x$ is the x-coordinate of $\bm{t}[k-1]$, we have $\minleft(h') \le x$. This implies that $h^* = [x_1, \minleft(h')] \times y$ is contained in $[x_1, x] \times y$, i.e. the effective horizontal segment of $\bm{t}$.
+We will first prove $\contained_{R_{k-2}}(\bm{t})\subseteq \contained_{R_{k-2}}(h^*)$, or equivalently, every rectangle $r_{k-2} \in \contained_{R_{k-2}}(\bm{t})$ covers $h^*$. It suffices to show that $h^*$ is contained in the effective horizontal segment of $\bm{t}$, or equivalently, $\minleft(h') \le x$. By the definition in \eqref{eqn:minleft}, $\minleft(h')$ is the minimum x-coordinate of $\bm{t'}[k-1]$ among all $\bm{t'} \in  \J(R'_1, ..., R'_{k-3}, H', V)$ with $\bm{t'}[k-2] = h'$, Thus, $\minleft(h') \le x$ holds because $\bm{t}$ is merely one such $\bm{t'}$.
 
 \vgap
 
