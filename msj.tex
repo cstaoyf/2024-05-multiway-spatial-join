@@ -1053,7 +1053,11 @@ This section supplies the proofs postponed from Section~\ref{sec:hv:type2}. The 
 
 \vgap
 
-Consider any rectangle $r_{k-2} \in \contained_{R_{k-2}}(\bm{t})$. From the definition of $\contained_{R_{k-2}}(\bm{t})$, we know that $r_{k-2}$ covers the effective horizontal segment of $\bm{t}$ --- see Section~\ref{sec:hv:type2} for the definition of an effective horizontal segment --- whose right endpoint is $h' \cap v$. This means that $h \cap v$ falls in $r_{k-2}$. Therefore, $h \, \cap \, v \, \cap \, \bigcap_{i = 1}^{k-2} r_i$ equals $h' \cap v$ and hence is non-empty, meaning that $(r_1,...,r_{k-3}, r_{k-2}, h, v) \in \J(R_1,...,R_{k-2},H,V)$. To show $(r_1,...,r_{k-3}, r_{k-2}, h, v) \in \J_2$, we still need to explain why $r_{k-2}$ covers the left endpoint of $h$. This follows immediately from the fact that $r_{k-2}$ covers the effective horizontal segment of $h'$ (which shares the same left endpoint as $h$).
+Consider any rectangle $r_{k-2} \in \contained_{R_{k-2}}(\bm{t})$. From the definition of $\contained_{R_{k-2}}(\bm{t})$, we know that $r_{k-2}$ covers the effective horizontal segment of $\bm{t}$ --- see Section~\ref{sec:hv:type2} for the definition of an effective horizontal segment --- whose right endpoint is $h' \cap v$. This means that $h \cap v$ falls in $r_{k-2}$. We now have $h \, \cap \, v \, \cap \, \bigcap_{i = 1}^{k-2} r_i$ equals $h' \cap v$ and hence is non-empty, meaning that $(r_1,...,r_{k-3}, r_{k-2}, h, v) \in \J(R_1,...,R_{k-2},H,V)$.
+
+\vgap
+
+To show $(r_1,...,r_{k-3}, r_{k-2}, h, v) \in \J_2$, we still need to explain why $r_{k-2}$ covers the left endpoint of $h$. This follows immediately from the fact that $r_{k-2}$ covers the effective horizontal segment of $h'$ (which shares the same left endpoint as $h$).
 
 \extraspacing \underline{\em Proof of Statement (2).} Take any $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in \J_2$. Define $h'$ as the trimmed segment of $h$, and point $p = h \cap v$. We first argue that the $(k-1)$-tuple $\bm{t} = (r_1, ..., r_{k-3}, h', v)$ belongs to $\J(R_1,...,R_{k-3}, H', V)$, or equivalently, the point $h' \cap v$ falls in all of $r_1,...,r_{k-3}$. The subsequent discussion will show that $h' \cap v$ is in fact the same point as $p = h \cap v$. From $(r_1,...,r_{k-2},h,v) \in \J(R_1,...,R_{k-2},H,V)$, we already know that $p$ falls in all of $r_1,...,r_{k-2}$. It will then follow that $r_1,...,r_{k-3}$ all cover $h' \cap v$.
 
