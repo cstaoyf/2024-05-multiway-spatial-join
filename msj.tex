@@ -1050,16 +1050,11 @@ This section supplies the proofs postponed from Section~\ref{sec:hv:type2}. The 
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type2:properties}.} We will prove each statement in turn.
 
-\extraspacing \underline{\em Proof of Statement (1).} Consider any tuple $\bm{t} = (r_1,...,r_{k-3}, h', v) \in \J(R_1,...,R_{k-3},H',V)$. The point $h' \cap v$ is covered by all of $r_1,...,r_{k-3}$. Let $h$ be the full segment of $h'$. As $h$ contains $h'$, we must have $h \cap v = h' \cap v$.
+\extraspacing \underline{\em Proof of Statement (1).} Consider any tuple $\bm{t} = (r_1,...,r_{k-3}, h', v) \in \J(R_1,...,R_{k-3},H',V)$. The point $h' \cap v$ is covered by all of $r_1,...,r_{k-3}$. Let $h$ be the full segment of $h'$. As $h$ contains $h'$, we have $h \cap v = h' \cap v$.
 
 \vgap
 
-Let $r_{k-2}$ be an arbitrary rectangle in the set $\contained_{R_{k-2}}(\bm{t})$. The definition of $\contained_{R_{k-2}}(\bm{t})$ tells us that $r_{k-2}$ covers the effective horizontal segment of $\bm{t}$ (see Section~\ref{sec:hv:type2} for the definition of an effective horizontal segment), whose right endpoint is $h' \cap v$. This means that $h \cap v$ falls in $r_{k-2}$ as well.
-
-\vgap
-
-Now we know that $h \cap v \cap \bigcap_{i = 1}^{k-2} r_i$ is not empty because it equals $h' \cap v$. Hence,
-$(r_1,...,r_{k-3}, r_{k-2}, h, v) \in \J(R_1,...,R_{k-2},H,V)$. To show $(r_1,...,r_{k-3}, r_{k-2}, h, v) \in \J_2$, we still need to explain why $r_{k-2}$ covers the left endpoint of $h$. This follows immediately from the fact that $r_{k-2}$ covers the effective horizontal segment of $h'$ (which shares the same left endpoint as $h$).
+Consider any rectangle $r_{k-2} \in \contained_{R_{k-2}}(\bm{t})$. From the definition of $\contained_{R_{k-2}}(\bm{t})$, we know that $r_{k-2}$ covers the effective horizontal segment of $\bm{t}$ --- see Section~\ref{sec:hv:type2} for the definition of an effective horizontal segment --- whose right endpoint is $h' \cap v$. This means that $h \cap v$ falls in $r_{k-2}$. Therefore, $h \, \cap \, v \, \cap \, \bigcap_{i = 1}^{k-2} r_i$ equals $h' \cap v$ and hence is non-empty, meaning that $(r_1,...,r_{k-3}, r_{k-2}, h, v) \in \J(R_1,...,R_{k-2},H,V)$. To show $(r_1,...,r_{k-3}, r_{k-2}, h, v) \in \J_2$, we still need to explain why $r_{k-2}$ covers the left endpoint of $h$. This follows immediately from the fact that $r_{k-2}$ covers the effective horizontal segment of $h'$ (which shares the same left endpoint as $h$).
 
 \extraspacing \underline{\em Proof of Statement (2).} Let $(r_1,...,r_{k-2},h,v)$, $h'$, and $\bm{t}$ be as defined in statement (2). Firstly, we will argue that the $(k-1)$-tuple $\bm{t}$ belongs to $\J(R_1,...,R_{k-3}, H', V)$, which is equivalent to saying that that the point $h' \cap v$ falls in all of $r_1,...,r_{k-3}$. The subsequent discussion will prove that $h' \cap v$ is in fact the same point as $h \cap v$. From $(r_1,...,r_{k-2},h,v) \in \J(R_1,...,R_{k-2},H,V)$, we already know that $h \cap v$ falls in all of $r_1,...,r_{k-2}$. Therefore, obtaining $h' \cap v = h \cap v$ will allow us to assert that $r_1,...,r_{k-3}$ all cover $h' \cap v$.
 
