@@ -560,7 +560,7 @@ Let $p$ be the rightmost point on $h$ such that at least one left-end covering r
 
 Construct
 \myeqn{
-    H' &=& \{h' \mid h \in H \text{ and its trimmed segment $h'$ exists} \}. \nn
+    H' &=& \{h' \mid h \in H \text{ and its trimmed segment $h'$ exists} \}. \label{eqn:hv:type2:H'}
 }
 The construction is an instance of Problem $\mathscr{C}$ (with $H$ and $R_{k-2}$ as the input) and finishes in $O(n \log n)$ time based on the discussion in Section~\ref{sec:bricks}.
 
@@ -1048,12 +1048,21 @@ we will prove that $\dcross_H(\bm{t})$ includes a prefix of the sorted order. It
 We start by presenting two properties underneath the procedures designed in Section~\ref{sec:hv:type2}. These properties will enable us to construct simpler proofs later.
 
 \begin{proposition} \label{prop:app:hv:type2:help1}
-    Consider any $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in \J2$. Define $h'$ as the trimmed segment of $h$. It holds that $h \cap v = h' \cap v$.
+    Consider any $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in \J_2$. Define $h'$ as the trimmed segment of $h$. It holds that $h \cap v = h' \cap v$.
 \end{proposition}
 
 \begin{proof}
     Set $p = h \cap v$. As $h'$ is contained in $h$, for proving $p = h' \cap v$, it suffices to explain why $p$ is on $h'$. Let us represent $h$ as $[x_1,x_2] \times y$. Accordingly, the segment $h'$ can be written as $[x_1, x_2'] \times y$ for some $x_2' \in [x_1, x_2]$. By the definition of a trimmed segment, $(x_2',y)$ is the rightmost point on $h$ that falls in a left-end covering rectangle of $h$ in $R_{k-2}$. As $(r_1,...,r_{k-2},h,v) \in \J_2$, we know that $r_{k-2}$ is a left-end covering rectangle of $h$, and $r_{k-2}$ covers $p$ (which is a point on $h$). Therefore, the x-coordinate of $p$ cannot exceed $x_2'$, allowing us to assert that $p$ is on $h'$.
 \end{proof}
+
+\begin{proposition} \label{prop:app:hv:type2:help2}
+    For each tuple $\bm{t} \in \J(R_1,...,R_{k-3},H',V)$ (where $H'$ is defined in \eqref{eqn:hv:type2:H'}), the set $\contained_{R_{k-2}}(\bm{t})$ is non-empty.
+\end{proposition}
+
+\begin{proof}
+    Let $h$ be the full segment of $\bm{t}[k-2]$. By the definition of a trimmed segment, there exists a rectangle $r_{k-2} \in R_{k-2}$ covering both endpoints of $h$. Thus, the effective horizontal segment of $\bm{t}$ (defined in Section~\ref{sec:hv:type2}), which is contained in $h'$, must also be covered by $r_{k-2}$. Hence, $\contained_{R_{k-2}}(\bm{t})$ contains $r_{k-2}$ and thus cannot be empty.
+\end{proof}
+
 
 
 We now proceed to elaborate the proofs postponed from Section~\ref{sec:hv:type2}. The order of the proofs here will not strictly follow the sequence in which they are referenced in Section~\ref{sec:hv:type2}. In particular, we will prove Lemma~\ref{lmm:hv:type2:properties} before Lemma~\ref{lmm:hv:type2:recur-output}, because the claims of the former lemma can be used to construct a simple argument for the latter.
@@ -1064,7 +1073,7 @@ We now proceed to elaborate the proofs postponed from Section~\ref{sec:hv:type2}
 
 \vgap
 
-Consider any rectangle $r_{k-2} \in \contained_{R_{k-2}}(\bm{t})$. From the definition of $\contained_{R_{k-2}}(\bm{t})$, we know that $r_{k-2}$ covers the effective horizontal segment of $\bm{t}$ --- see Section~\ref{sec:hv:type2} for the definition of an effective horizontal segment --- whose right endpoint is $h' \cap v$. This means that $h \cap v$ falls in $r_{k-2}$. We now have $h \, \cap \, v \, \cap \, \bigcap_{i = 1}^{k-2} r_i$ equals $h' \cap v$ and hence is non-empty, meaning that $(r_1,...,r_{k-3}, r_{k-2}, h, v) \in \J(R_1,...,R_{k-2},H,V)$.
+Consider any rectangle $r_{k-2} \in \contained_{R_{k-2}}(\bm{t})$. From the definition of $\contained_{R_{k-2}}(\bm{t})$, we know that $r_{k-2}$ covers the effective horizontal segment of $\bm{t}$ whose right endpoint is $h' \cap v$. This means that $h \cap v$ falls in $r_{k-2}$. We now have $h \, \cap \, v \, \cap \, \bigcap_{i = 1}^{k-2} r_i$ equals $h' \cap v$ and hence is non-empty, meaning that $(r_1,...,r_{k-3}, r_{k-2}, h, v) \in \J(R_1,...,R_{k-2},H,V)$.
 
 \vgap
 
@@ -1088,13 +1097,9 @@ Next, we argue that $r_{k-2}\in \contained_{R_{k-2}}(\bm{t})$. Let $p'$ be the l
 tuples. By statement (2), the $\J_2$ produced must be a subset of $\J(R_1,...,R_{k-2},H,V)$, whose size is $\out$.
 Therefore, the above expression is at most $\out$, as claimed in statement (3).
 
-\extraspacing \noindent {\bf Proof of Lemma~\ref{lmm:hv:type2:recur-output}.} Before proving the lemma, let us prove a fact that will be useful later: the set $\contained_{R_{k-2}}(\bm{t})$ is non-empty for each tuple $\bm{t} \in \J(R_1,...,R_{k-3},H',V)$. Let $h$ be the full segment of $\bm{t}[k-2]$. By the definition of a trimmed segment, there exists a rectangle $r_{k-2} \in R_{k-2}$ that covers both endpoints of $h$. Thus, the effective horizontal segment of $\bm{t}$, which is contained in $h'$, must also covered by $r_{k-2}$. This implies that $\contained_{R_{k-2}}(\bm{t})$ cannot be empty (as it includes at least $r_{k-2}$). 
+\extraspacing \noindent {\bf Proof of Lemma~\ref{lmm:hv:type2:recur-output}.} Again, we resort to the algorithm generate-$\J_2$ . For each tuple $\bm{t} \in \J(R_1,...,$ $R_{k-3},$ $H',V)$, we know by Proposition~\ref{prop:app:hv:type2:help2} that $\contained_{R_{k-2}}(\bm{t}) \ne \emptyset$; thus, the algorithm adds at least one tuple to $\J_2$. Therefore, $|\J(R_1,...,R_{k-3},H',V)| \le |\J_2| \le \out$, where the derivation used the definition of $\J_2$; see \eqref{eqn:hv:type2:J2}.
 
-\vgap 
-
-With the above fact, next we prove Lemma~\ref{lmm:hv:type2:recur-output} by resorting to the algorithm generate-$\J_2$ (see Section~\ref{sec:hv:type2}). For each tuple $\bm{t} \in \J(R_1,...,R_{k-3},H',V)$, this algorithm adds $|\contained_{R_{k-2}}(\bm{t})|\geq 1$ tuples to $\J_2$. Therefore, $|\J(R_1,...,R_{k-3},H',V)| \le |\J_2| \le \out$, where the last inequality used the definition of $\J_2$; see \eqref{eqn:hv:type2:J2}.
-
-\extraspacing {\bf Computing $\bm{H^*}$.} We assume, w.l.o.g., that each segment in the input $H$ is given a distinct integer ID in $[|H|]$. This allows us to create an array of size $|H| < n$ and allocate an array cell to each $h \in H$, with the property that the cell can be accessed by the ID of $h$ in constant time.
+\extraspacing {\bf Computing $\bm{H^*}$.} We assume, w.l.o.g., that each segment in the input $H$ is given a distinct integer ID in $[|H|]$. This allows us to create an array of size $|H| < n$ and allocate an array cell to each $h \in H$. The cell can be accessed by the ID of $h$ in constant time.
 
 \vgap
 
