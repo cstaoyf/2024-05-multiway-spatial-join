@@ -560,7 +560,7 @@ Let $p$ be the rightmost point on $h$ such that at least one left-end covering r
 
 Construct
 \myeqn{
-    H' &=& \{h' \mid h \in H \text{ and its trimmed segment $h'$ exists} \}. \nn
+    H' &=& \{h' \mid h \in H \text{ and its trimmed segment $h'$ exists} \}. \label{eqn:hv:type2:H'}
 }
 The construction is an instance of Problem $\mathscr{C}$ (with $H$ and $R_{k-2}$ as the input) and finishes in $O(n \log n)$ time based on the discussion in Section~\ref{sec:bricks}.
 
@@ -922,10 +922,9 @@ We now proceed to elaborate the proofs postponed from Section~\ref{sec:hv:type1}
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:properties}.} We will prove each statement in turn.
 
-\extraspacing \underline{\em Proof of Statement (1).} Let $\bm{t}$, $h$, and $v$ be as defined in the statement. 
-Recall that $h \in \dcross_H(\bm{t})$ and $v \in \dcross_V(\bm{t})$. The segments $h$ and $v$ both cross $B_\bm{t}$, as can be verified from the definitions of $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$. Thus, $h \cap v$ is a point in $B_\bm{t} = \bigcap_{i=1}^{k-2} \bm{t}[i]$. As $r_i$ ($i \in [k-2]$) is the full rectangle of $\bm{t}[i]$, we know that $\bigcap_{i=1}^{k-2} r_i$ covers $B_\bm{t} = \bigcap_{i=1}^{k-2} \bm{t}[i]$. Hence, point $h \cap v$ falls in $\bigcap_{i=1}^{k-2} r_i$, indicating that $h\cap v \cap \bigcap_{i = 1}^{k-2}r_i \neq \emptyset$. It follows that $(r_1,...,r_{k-2},h,v)$ is a result tuple in $\J(R_1,...,R_{k-2},H,V)$.
+\extraspacing \underline{\em Proof of Statement (1).} Take any $(k-2)$-tuple $\bm{t} \in \J(R_1', R'_2, ..., R'_{k-2})$. Let $r_i$ ($i$ $\in$  $[k-2]$) be the full rectangle of $\bm{t}[i]$. Fix any $h \in \dcross_H(\bm{t})$ and any $v \in \dcross_V(\bm{t})$. The segments $h$ and $v$ both cross $B_\bm{t}$, as can be verified from the definitions of $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$. Thus, $h \cap v$ is a point in $B_\bm{t} = \bigcap_{i=1}^{k-2} \bm{t}[i]$. As $r_i$ ($i \in [k-2]$) is the full rectangle of $\bm{t}[i]$, we know that $\bigcap_{i=1}^{k-2} r_i$ covers $B_\bm{t} = \bigcap_{i=1}^{k-2} \bm{t}[i]$. Hence, point $h \cap v$ falls in $\bigcap_{i=1}^{k-2} r_i$, indicating that $h\cap v \cap \bigcap_{i = 1}^{k-2}r_i \neq \emptyset$. It follows that $(r_1,...,r_{k-2},h,v)$ is a result tuple in $\J(R_1,...,R_{k-2},H,V)$.
 
-\extraspacing \underline{\em Proof of Statement (2).} Consider the $k$-tuple $(r_1,...,r_{k-2},h,v) \in \J_1$ in statement (2). By definition of $\J_1$, segments $h$ and $v$ cross each of the rectangles $r_1,..., r_{k-2}$. By Proposition~\ref{prop:app:hv:type1:help1}, segments $h$ and $v$ must also cross each of the trimmed rectangles $r_1',..., r_{k-2}'$. Hence, $B_\bm{t} = \bigcap_{i = 1}^{k-2}r_i'$ is non-empty as it contains the point $h \cap v$, which proves the first claim $\bm{t} = (r_1', ..., r_{k-2}') \in \J(R_1',...,R_{k-2}')$.
+\extraspacing \underline{\em Proof of Statement (2).} Take any $k$-tuple $(r_1,...,r_{k-2},h,v) \in \J_1$. By definition of $\J_1$, segments $h$ and $v$ cross each of the rectangles $r_1,..., r_{k-2}$. By Proposition~\ref{prop:app:hv:type1:help1}, segments $h$ and $v$ must also cross each of the trimmed rectangles $r_1',..., r_{k-2}'$. Hence, $B_\bm{t} = \bigcap_{i = 1}^{k-2}r_i'$ is non-empty as it contains the point $h \cap v$, which proves the first claim $\bm{t} = (r_1', ..., r_{k-2}') \in \J(R_1',...,R_{k-2}')$.
 
 \vgap 
 
@@ -999,7 +998,7 @@ For this purpose, we need to show that $h$ crosses both $\gbot(\bm{t}) = r'$ and
 
 It remains to show that no two distinct rectangles $r_1^*, r_2^* \in \bigcup_{i = 1}^{k-2}R_i^*$ can be mapped to the same tuple in $\J(R_1',...,R_{k-2}')$. Assume, on the contrary, that $r_1^*$ and $r_2^*$ are mapped to the same tuple $\bm{t}\in \J(R_1',...,R_{k-2}')$. Suppose that $r_1^*$ (resp., $r_2^*$) is the top-sliced rectangle of $r_1'$ (resp., $r_2'$). Under our mapping, it must be true that  $r_1' = r_2' = \gbot(B_{\bm{t}})$. However, the distinctness of $r_1^*$ and $r_2^*$ requires $r_1' \ne r_2'$, thus giving a contradiction.
 
-\extraspacing \underline{\em Proof of Statement (2).} Let $r', r^*$, and $\bm{t}$ be as defined in statement (2). Let us represent $r'$ as $[x_1,x_2] \times [y_1, y_2]$. Accordingly, $r^*$ can be written as $[x_1, x_2] \times [y_1, \maxtop(r')]$.
+\extraspacing \underline{\em Proof of Statement (2).} Take any tuple $\bm{t} \in \J(R'_1, ..., R'_{k-2})$. Set $r' = \gbot(\bm{t})$, and let $r^*$ be the top-sliced rectangle of $r'$. If we represent $r'$ as $[x_1,x_2] \times [y_1, y_2]$, then $r^*$ can be written as $[x_1, x_2] \times [y_1, \maxtop(r')]$.
 
 \vgap
 
@@ -1046,44 +1045,50 @@ we will prove that $\dcross_H(\bm{t})$ includes a prefix of the sorted order. It
 
 \section{Supplementary Proofs for Section~\ref{sec:hv:type2}} \label{app:hv:type2}
 
-This section supplies the proofs postponed from Section~\ref{sec:hv:type2}. The order of the proofs here will not strictly follow the sequence in which they are referenced in Section~\ref{sec:hv:type2}. In particular, we will prove Lemma~\ref{lmm:hv:type2:properties} before Lemma~\ref{lmm:hv:type2:recur-output}, because the claims of the former lemma can be used to construct a simple argument for the latter.
+We start by presenting two properties underneath the procedures designed in Section~\ref{sec:hv:type2}. These properties will enable us to construct simpler proofs later.
+
+\begin{proposition} \label{prop:app:hv:type2:help1}
+    Consider any $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in \J_2$. Define $h'$ as the trimmed segment of $h$. It holds that $h \cap v = h' \cap v$.
+\end{proposition}
+
+\begin{proof}
+    Set $p = h \cap v$. As $h'$ is contained in $h$, for proving $p = h' \cap v$, it suffices to explain why $p$ is on $h'$. Let us represent $h$ as $[x_1,x_2] \times y$. Accordingly, the segment $h'$ can be written as $[x_1, x_2'] \times y$ for some $x_2' \in [x_1, x_2]$. By the definition of a trimmed segment, $(x_2',y)$ is the rightmost point on $h$ that falls in a left-end covering rectangle of $h$ in $R_{k-2}$. As $(r_1,...,r_{k-2},h,v) \in \J_2$, we know that $r_{k-2}$ is a left-end covering rectangle of $h$, and $r_{k-2}$ covers $p$ (which is a point on $h$). Therefore, the x-coordinate of $p$ cannot exceed $x_2'$, allowing us to assert that $p$ is on $h'$.
+\end{proof}
+
+\begin{proposition} \label{prop:app:hv:type2:help2}
+    For each tuple $\bm{t} \in \J(R_1,...,R_{k-3},H',V)$ (where $H'$ is defined in \eqref{eqn:hv:type2:H'}), the set $\contained_{R_{k-2}}(\bm{t})$ is non-empty.
+\end{proposition}
+
+\begin{proof}
+    Let $h$ be the full segment of $\bm{t}[k-2]$. By the definition of a trimmed segment, there exists a rectangle $r_{k-2} \in R_{k-2}$ covering both endpoints of $h$. Thus, the effective horizontal segment of $\bm{t}$ (defined in Section~\ref{sec:hv:type2}), which is contained in $h'$, must also be covered by $r_{k-2}$. Hence, $\contained_{R_{k-2}}(\bm{t})$ contains $r_{k-2}$ and thus cannot be empty.
+\end{proof}
+
+
+
+We now proceed to elaborate the proofs postponed from Section~\ref{sec:hv:type2}. The order of the proofs here will not strictly follow the sequence in which they are referenced in Section~\ref{sec:hv:type2}. In particular, we will prove Lemma~\ref{lmm:hv:type2:properties} before Lemma~\ref{lmm:hv:type2:recur-output}, because the claims of the former lemma can be used to construct a simple argument for the latter.
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type2:properties}.} We will prove each statement in turn.
 
-\extraspacing \underline{\em Proof of Statement (1).} Consider any tuple $\bm{t} = (r_1,...,r_{k-3}, h', v) \in \J(R_1,...,R_{k-3},H',V)$. The point $h' \cap v$ is covered by all of $r_1,...,r_{k-3}$. Let $h$ be the full segment of $h'$. As $h$ contains $h'$, we must have $h \cap v = h' \cap v$.
+\extraspacing \underline{\em Proof of Statement (1).} Take any tuple $\bm{t} = (r_1,...,r_{k-3}, h', v) \in \J(R_1,...,R_{k-3},H',V)$. The point $h' \cap v$ is covered by all of $r_1,...,r_{k-3}$. Let $h$ be the full segment of $h'$. As $h$ contains $h'$, we have $h \cap v = h' \cap v$.
 
 \vgap
 
-Let $r_{k-2}$ be an arbitrary rectangle in the set $\contained_{R_{k-2}}(\bm{t})$. The definition of $\contained_{R_{k-2}}(\bm{t})$ tells us that $r_{k-2}$ covers the effective horizontal segment of $\bm{t}$ (see Section~\ref{sec:hv:type2} for the definition of an effective horizontal segment), whose right endpoint is $h' \cap v$. This means that $h \cap v$ falls in $r_{k-2}$ as well.
+Consider any rectangle $r_{k-2} \in \contained_{R_{k-2}}(\bm{t})$. From the definition of $\contained_{R_{k-2}}(\bm{t})$, we know that $r_{k-2}$ covers the effective horizontal segment of $\bm{t}$ whose right endpoint is $h' \cap v$. This means that $h \cap v$ falls in $r_{k-2}$. We now have $h \, \cap \, v \, \cap \, \bigcap_{i = 1}^{k-2} r_i$ equals $h' \cap v$ and hence is non-empty, meaning that $(r_1,...,r_{k-3}, r_{k-2}, h, v) \in \J(R_1,...,R_{k-2},H,V)$.
 
 \vgap
 
-Now we know that $h \cap v \cap \bigcap_{i = 1}^{k-2} r_i$ is not empty because it equals $h' \cap v$. Hence,
-$(r_1,...,r_{k-3}, r_{k-2}, h, v) \in \J(R_1,...,R_{k-2},H,V)$. To show $(r_1,...,r_{k-3}, r_{k-2}, h, v) \in \J_2$, we still need to explain why $r_{k-2}$ covers the left endpoint of $h$. This follows immediately from the fact that $r_{k-2}$ covers the effective horizontal segment of $h'$ (which shares the same left endpoint as $h$).
+To show $(r_1,...,r_{k-3}, r_{k-2}, h, v) \in \J_2$, we still need to explain why $r_{k-2}$ covers the left endpoint of $h$. This follows immediately from the fact that $r_{k-2}$ covers the effective horizontal segment of $h'$ (which shares the same left endpoint as $h$).
 
-\extraspacing \underline{\em Proof of Statement (2).} Let $(r_1,...,r_{k-2},h,v)$, $h'$, and $\bm{t}$ be as defined in statement (2). Firstly, we will argue that the $(k-1)$-tuple $\bm{t}$ belongs to $\J(R_1,...,R_{k-3}, H', V)$, which is equivalent to saying that that the point $h' \cap v$ falls in all of $r_1,...,r_{k-3}$. The subsequent discussion will prove that $h' \cap v$ is in fact the same point as $h \cap v$. From $(r_1,...,r_{k-2},h,v) \in \J(R_1,...,R_{k-2},H,V)$, we already know that $h \cap v$ falls in all of $r_1,...,r_{k-2}$. Therefore, obtaining $h' \cap v = h \cap v$ will allow us to assert that $r_1,...,r_{k-3}$ all cover $h' \cap v$.
-
-\vgap
-
-Denote by $p$ the intersection point of $h$ and $v$. As $h'$ is contained in $h$, to prove $h' \cap v = p$, it suffices to explain why $p$ is on $h'$. Let us represent $h$ as $[x_1,x_2] \times y$ and $p$ as $(x, y)$ for some $x \in [x_1, x_2]$. Accordingly, we can represent $h'$ as $[x_1, x_2'] \times y$ for some $x_2' \in [x_1, x_2]$. By the definition of a trimmed segment, we know that $(x_2',y)$ is the rightmost point on $h$ that falls in a left-end covering rectangle of $h$ in $R_{k-2}$. From statement (2), we have $(r_1,...,r_{k-2},h,v) \in \J_2$, meaning that $r_{k-2}$ (i) is a left-end covering rectangle of $h$, and (ii) covers $p$ ($= h \cap v$). Therefore, the x-coordinate of $p$ cannot exceed $x_2'$ (i.e., $x \le x_2'$), allowing us to assert that $p$ is on $h'$.
+\extraspacing \underline{\em Proof of Statement (2).} Take any $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in \J_2$. Set $p = h \cap v$, and define $h'$ as the trimmed segment of $h$. We first argue that the $(k-1)$-tuple $\bm{t} = (r_1, ..., r_{k-3}, h', v)$ belongs to $\J(R_1,...,R_{k-3}, H', V)$, or equivalently, the point $h' \cap v$ falls in all of $r_1,...,r_{k-3}$. By Proposition~\ref{prop:app:hv:type2:help1}, $h' \cap v$ is the same point as $p$. From $(r_1,...,r_{k-2},h,v) \in \J(R_1,...,R_{k-2},H,V)$, we know that $p = h \cap v$ falls in all of $r_1,...,r_{k-2}$. It thus follows that $r_1,...,r_{k-3}$ all cover $h' \cap v$.
 
 \vgap
 
-%This tells us $B_\bm{t} = p$.
-
-Secondly, we will argue that $r_{k-2}\in \contained_{R_{k-2}}(\bm{t})$. The above discussion has shown that $h \cap v = h' \cap v = p$. If (as before) we write $h = [x_1,x_2] \times y$, $h' = [x_1,x_2'] \times y$, and $p = (x,y)$, then the effective horizontal segment of $\bm{t}$ can be written as $[x_1, x] \times y$ (due to the definition of an effective horizontal segment). To prove $r_{k-2} \in \contained_{R_{k-2}}(\bm{t})$, we need to explain why $r_{k-2}$ covers the entire segment $[x_1, x] \times y$. We do so in two steps:
-
-% $[x_1,x] \subseteq [\xleft(r_2), \xright(r_2)]$ and $y \in [\ybot(r_2), \ytop(r_2)]$.
+Next, we argue that $r_{k-2}\in \contained_{R_{k-2}}(\bm{t})$. Let $p'$ be the left endpoint of $h$. Because$h' \cap v = h \cap v = p$, the effective horizontal segment of $\bm{t}$ is the segment $p'p$. To prove $r_{k-2} \in \contained_{R_{k-2}}(\bm{t})$, we need to explain why $r_{k-2}$ covers this segment. This is true because:
 
 \begin{itemize}
-    \item As $r_{k-2}$ is a left-end covering rectangle of $h$, we must have $x_1 \in [\xleft(r_2), \xright(r_2)]$. On the other hand, the fact $r_{k-2}$ covering $p$ gives $x \in [\xleft(r_2), \xright(r_2)]$. It thus follows that $[x_1,x] \subseteq [\xleft(r_2), \xright(r_2)]$.
-
-    \vgap
-
-    \item The fact $h$ intersecting with $r_{k-2}$ gives $y \in [\ybot(r_2), \ytop(r_2)]$.
+    \item $r_{k-2}$ covers $p$, as we already know;
+    \item $r_{k-2}$ covers $p'$, as it is a left-end covering rectangle of $h$.
 \end{itemize}
-
-\noindent Combining the above tells us that  $r_{k-2}$ covers $[x_1, x] \times y$.
 
 \extraspacing \underline{\em Proof of Statement (3).} Our proof resorts to the algorithm generate-$\J_2$ (see Section~\ref{sec:hv:type2}). This algorithm adds to $\J_2$ exactly
 \myeqn{
@@ -1092,13 +1097,9 @@ Secondly, we will argue that $r_{k-2}\in \contained_{R_{k-2}}(\bm{t})$. The abov
 tuples. By statement (2), the $\J_2$ produced must be a subset of $\J(R_1,...,R_{k-2},H,V)$, whose size is $\out$.
 Therefore, the above expression is at most $\out$, as claimed in statement (3).
 
-\extraspacing \noindent {\bf Proof of Lemma~\ref{lmm:hv:type2:recur-output}.} Before proving the lemma, let us prove a fact that will be useful later: the set $\contained_{R_{k-2}}(\bm{t})$ is non-empty for each tuple $\bm{t} \in \J(R_1,...,R_{k-3},H',V)$. Let $h$ be the full segment of $\bm{t}[k-2]$. By the definition of a trimmed segment, there exists a rectangle $r_{k-2} \in R_{k-2}$ that covers both endpoints of $h$. Thus, the effective horizontal segment of $\bm{t}$, which is contained in $h'$, must also covered by $r_{k-2}$. This implies that $\contained_{R_{k-2}}(\bm{t})$ cannot be empty (as it includes at least $r_{k-2}$). 
+\extraspacing \noindent {\bf Proof of Lemma~\ref{lmm:hv:type2:recur-output}.} Again, we resort to the algorithm generate-$\J_2$ . For each tuple $\bm{t} \in \J(R_1,...,$ $R_{k-3},$ $H',V)$, we know by Proposition~\ref{prop:app:hv:type2:help2} that $\contained_{R_{k-2}}(\bm{t}) \ne \emptyset$; thus, the algorithm adds at least one tuple to $\J_2$. Therefore, $|\J(R_1,...,R_{k-3},H',V)| \le |\J_2| \le \out$, where the derivation used the definition of $\J_2$; see \eqref{eqn:hv:type2:J2}.
 
-\vgap 
-
-With the above fact, next we prove Lemma~\ref{lmm:hv:type2:recur-output} by resorting to the algorithm generate-$\J_2$ (see Section~\ref{sec:hv:type2}). For each tuple $\bm{t} \in \J(R_1,...,R_{k-3},H',V)$, this algorithm adds $|\contained_{R_{k-2}}(\bm{t})|\geq 1$ tuples to $\J_2$. Therefore, $|\J(R_1,...,R_{k-3},H',V)| \le |\J_2| \le \out$, where the last inequality used the definition of $\J_2$; see \eqref{eqn:hv:type2:J2}.
-
-\extraspacing {\bf Computing $\bm{H^*}$.} We assume, w.l.o.g., that each segment in the input $H$ is given a distinct integer ID in $[|H|]$. This allows us to create an array of size $|H| < n$ and allocate an array cell to each $h \in H$, with the property that the cell can be accessed by the ID of $h$ in constant time.
+\extraspacing {\bf Computing $\bm{H^*}$.} We assume, w.l.o.g., that each segment in the input $H$ is given a distinct integer ID in $[|H|]$. This allows us to create an array of size $|H| < n$ and allocate an array cell to each $h \in H$. The cell can be accessed by the ID of $h$ in constant time.
 
 \vgap
 
@@ -1106,52 +1107,58 @@ To compute $H^*$, we start by deriving $\minleft(h')$ for each segment $h'$ in $
 
 \vgap
 
-Finally, we construct $H^*$ by collecting the minimal segment (see definition in \eqref{eqn:hv:type2:H*}) of every segment $h' \in H'$ with $\minleft(h') \neq \infty$. This step takes $O(|H'|) = O(n)$ time.
+Finally, we construct $H^*$ by collecting the minimal segment (defined in \eqref{eqn:hv:type2:H*}) of every segment $h' \in H'$ with $\minleft(h') \neq \infty$. This step takes $O(|H'|) = O(n)$ time.
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type2:contained-h*}.} We will prove each statement in turn.
 
-\extraspacing \underline{\em Proof of Statement (1).} We will map each segment $h^* \in H^*$ to a unique tuple $\bm{t}\in \J(R_1,...,R_{k-3},H',V)$ satisfying $\contained_{R_{k-2}}(\bm{t}) = \contained_{R_{k-2}}(h^*)$. We can then derive 
+\extraspacing \underline{\em Proof of Statement (1).} We will map each segment $h^* \in H^*$ to a unique tuple $\bm{t}\in \J(R_1,...,R_{k-3},H',V)$ satisfying $\contained_{R_{k-2}}(h^*) = \contained_{R_{k-2}}(\bm{t})$. The mapping allows us to derive
 \myeqn{
     \sum_{h^* \in H^*} |\contained_{R_{k-2}}(h^*)|
     \le
     \sum_{\bm{t} \in \J(R_1,...,R_{k-3},H',V)} |\contained_{R_{k-2}}(\bm{t})|
     \leq \out \nn
-} where the last inequality is due to Statement (3) of Lemma~\ref{lmm:hv:type2:properties}.
+}
+where the last inequality used Statement (3) of Lemma~\ref{lmm:hv:type2:properties}.
 
 \vgap
 
-Now, we explain the mapping. Consider an arbitrary $h^* \in H^*$. Recall that $h^*$ is the minimal segment of some segment $h' \in H'$. Specifically, if $h' = [x_1,x_2]\times y$, then $h^* = [x_1,\minleft(h')]\times y$. By the definition of $\minleft(h')$ in \eqref{eqn:hv:type2:H*}, there exists a tuple $\bm{t}\in \J(R_1,...,R_{k-3}, H', V)$ satisfying $\bm{t}[k-2] = h'$ and $\minleft(h') = \text{$x$-coordinate of $\bm{t}[k-1]$}$ (recall that $\bm{t}[k-1]$ is a vertical segment). We map $h^*$ to $\bm{t}$.
+The mapping is as follows. Consider any $h^* \in H^*$. Recall that $h^*$ is the minimal segment of some segment $h' \in H'$. Specifically, if $h' = [x_1,x_2]\times y$, then $h^* = [x_1,\minleft(h')]\times y$. By the definition of $\minleft(h')$ in \eqref{eqn:hv:type2:H*}, there exists a tuple $\bm{t}\in \J(R_1,...,R_{k-3}, H', V)$ satisfying $\bm{t}[k-2] = h'$ and $\minleft(h') = \text{$x$-coordinate of the vertical segment $\bm{t}[k-1]$}$. We map $h^*$ to $\bm{t}$.
 
 \vgap
 
-Next, we will prove that a rectangle $r_{k-2} \in \contained_{R_{k-2}}(h^*)$ if and only if $r_{k-2} \in \contained_{R_{k-2}}(\bm{t})$. According to the definitions of $\contained_{R_{k-2}}(h^*)$ and $\contained_{R_{k-2}}(\bm{t})$ --- see \eqref{eqn:contained} and \eqref{eqn:type2:contained-t}, respectively --- it suffices to show that $h^*$ is the same as the effective horizontal segment of $\bm{t}$. Denote by $x$ the x-coordinate of the vertical segment $\bm{t}[k-1]$. Then, the point $h' \cap v$ (intersection between $h'$ and $v$) is $(x,y)$, where as mentioned $y$ is the y-coordinate of $h'$. The effective horizontal segment of $\bm{t}$ is therefore $[x_1,x]\times y$. Recall that $h^* = [x_1,\minleft(h')]\times y$, where $\minleft(h') = \text{$x$-coordinate of $\bm{t}[k-1]$} = x$. Therefore, $h^*$ is the same as the effective horizontal segment of $\bm{t}$.
+Next, we will prove
+\begin{center}
+    {\bf Claim 1:} a rectangle $r \in \contained_{R_{k-2}}(h^*)$ if and only if $r \in \contained_{R_{k-2}}(\bm{t})$.
+\end{center}
+According to the definitions of $\contained_{R_{k-2}}(h^*)$ and $\contained_{R_{k-2}}(\bm{t})$ --- see \eqref{eqn:contained} and \eqref{eqn:type2:contained-t}, respectively --- it suffices to show that $h^*$ is the same as the effective horizontal segment of $\bm{t}$.
 
 \vgap
 
-It remains to show that no two distinct segments $h_1^*, h_2^* \in H^*$ can be mapped to the same tuple in $\J(R_1,...,R_{k-3}, H',V)$. Assume, on the contrary, that $h_1^*$ and $h_2^*$ are mapped to the same tuple $\bm{t}\in \J(R_1,...,R_{k-3}, H',V)$. Suppose that $h_1^*$ (resp., $h_2^*$) is the minimal segment of $h_1'$ (resp., $h_2'$). Under our mapping, it must be true that  $h_1' = h_2' = \bm{t}[k-2]$. However, the distinctness of $h_1^*$ and $h_2^*$ requires $h_1' \ne h_2'$, which yields a contradiction.
-
-\extraspacing \underline{\em Proof of Statement (2).} Let $h', h^*$, and $\bm{t}$ be as defined in statement (2). Let us represent $h'$ as $[x_1,x_2] \times y$; accordingly, $h^*$ can be written as $[x_1, \minleft(h')] \times y$. Additionally, let $x$ be the x-coordinate of the vertical segment $\bm{t}[k-1]$. The effective horizontal segment of $\bm{t}$ can then be represented as $[x_1,x] \times y$.
-
-%Then, $B_\bm{t}$, which is the intersection of $h'$ and $v$, is $(x,y)$.
+Denote by $x$ the x-coordinate of $\bm{t}[k-1]$. Then, the point $h' \cap v$ can be written as $(x,y)$, where as mentioned $y$ is the y-coordinate of $h'$. The effective horizontal segment of $\bm{t}$ is therefore $[x_1,x]\times y$. Recall that $h^* = [x_1,\minleft(h')]\times y$, where (by definition of $\bm{t}$) $\minleft(h') = \text{$x$-coordinate of $\bm{t}[k-1]$} = x$. Therefore, $h^*$ is the same as the effective horizontal segment of $\bm{t}$, proving claim 1.
 
 \vgap
 
-Firstly, we will prove $\contained_{R_{k-2}}(\bm{t})\subseteq \contained_{R_{k-2}}(h^*)$. For this purpose, we will show that any rectangle $r_{k-2} \in \contained_{R_{k-2}}(\bm{t})$ also covers $h^*$. It suffices to show that $h^*$ is contained in the effective horizontal segment of $\bm{t}$. Combining the definition of $\minleft(h')$ (see \eqref{eqn:minleft}), and the fact that $x$ is the x-coordinate of $\bm{t}[k-1]$, we have $\minleft(h') \le x$. This implies that $h^* = [x_1, \minleft(h')] \times y$ is contained in $[x_1, x] \times y$, i.e. the effective horizontal segment of $\bm{t}$.
+It remains to show that no two distinct $h_1^*, h_2^* \in H^*$ can be mapped to the same tuple in $\J(R_1,...,R_{k-3}, H',V)$. Assume, on the contrary, that $h_1^*$ and $h_2^*$ are both mapped to $\bm{t}\in \J(R_1,...,R_{k-3},$ $H',V)$. Suppose that $h_1^*$ (resp., $h_2^*$) is the minimal segment of $h_1'$ (resp., $h_2'$). Under our mapping, it must hold that  $h_1' = h_2' = \bm{t}[k-2]$. However, the distinctness of $h_1^*$ and $h_2^*$ requires $h_1' \ne h_2'$, which yields a contradiction.
+
+\extraspacing \underline{\em Proof of Statement (2).} Take any tuple $\bm{t} \in \J(R'_1, ..., R'_{k-3}, H', V)$. Set $h' = \bm{t}[k-2]$, and define $h^*$ as the minimal segment of $h'$. Let us write $h'$ as $[x_1,x_2] \times y$; accordingly, $h^*$ can be written as $[x_1, \minleft(h')] \times y$. Additionally, let $x$ be the x-coordinate of the vertical segment $\bm{t}[k-1]$. The effective horizontal segment of $\bm{t}$ can then be represented as $[x_1,x] \times y$.
 
 \vgap
 
-Secondly, assuming that the rectangles $r$ in $\contained_{R_{k-2}}(h^*)$ have been sorted in descending order of $\xright(r)$, we will prove that $\contained_{R_{k-2}}(\bm{t})$ includes a prefix of the sorted order. It suffices to establish the following equivalent statement:
+We will first prove $\contained_{R_{k-2}}(\bm{t})\subseteq \contained_{R_{k-2}}(h^*)$, or equivalently, every rectangle $r_{k-2} \in \contained_{R_{k-2}}(\bm{t})$ covers $h^*$. It suffices to show that $h^*$ is contained in the effective horizontal segment of $\bm{t}$, or equivalently, $\minleft(h') \le x$. By the definition in \eqref{eqn:minleft}, $\minleft(h')$ is the minimum x-coordinate of $\bm{t'}[k-1]$ among all $\bm{t'} \in  \J(R'_1, ..., R'_{k-3}, H', V)$ with $\bm{t'}[k-2] = h'$, Thus, $\minleft(h') \le x$ holds because $\bm{t}$ is merely one such $\bm{t'}$.
+
+\vgap
+
+Next, assuming that the rectangles $r \in \contained_{R_{k-2}}(h^*)$ have been sorted in descending order of $\xright(r)$, we will prove that $\contained_{R_{k-2}}(\bm{t})$ includes a prefix of the sorted order. It suffices to establish the following equivalent claim:
 
 \vgap
 
 \minipg{0.8\linewidth} {
-    If a rectangle $r \in \contained_{R_{k-2}}(h^*)$ satisfies the condition that $\xright(r) \ge x$ (where as defined before $x$ is the x-coordinate of $\bm{t}[k-1]$), then $r$ must be in $\contained_{R_{k-2}}(\bm{t})$.
+    {\bf Claim 2:} If a rectangle $r \in \contained_{R_{k-2}}(h^*)$ satisfies the condition that $\xright(r) \ge x$ (where $x$ is the x-coordinate of $\bm{t}[k-1]$), then $r \in \contained_{R_{k-2}}(\bm{t})$.
 }
 
 \vgap
 
-\noindent To prove the above, we must explain why $r$ contains the effective horizontal segment of $\bm{t}$. Since $r \in \contained_{R_{k-2}}(h^*)$, we know that $r$ covers the segment $[x_1, \minleft(h')] \times y$. Therefore, $[x_1, \minleft(h')] \subseteq [\xleft(r), \xright(r)]$ and $y \in [\ybot(r), \ytop(r)]$.
-Using also the given condition $\xright(r) \ge x$, we can derive $[x_1, x] \subseteq [\xleft(r), \xright(r)]$. This means that $[x_1, x] \times y$, i.e. the effective horizontal segment of $\bm{t}$, is contained in $r$.
+\noindent To prove the above, we must explain why the rectangle $r$ in the claim contains the effective horizontal segment of $\bm{t}$. Since $r \in \contained_{R_{k-2}}(h^*)$, we know that $r$ covers the segment $[x_1, \minleft(h')] \times y$. Hence, $[x_1, \minleft(h')]$ $\subseteq [\xleft(r), \xright(r)]$ and $y \in [\ybot(r), \ytop(r)]$. Using also the condition $\xright(r) \ge x$ given in claim 2, we can derive $[x_1, x] \subseteq [\xleft(r), \xright(r)]$. Therefore, $[x_1, x] \times y$, i.e. the effective horizontal segment of $\bm{t}$, is contained in $r$, establishing claim 2.
 
 
 \section{Proof of Theorem~\ref{thm:main-alg}} \label{app:main-alg}
