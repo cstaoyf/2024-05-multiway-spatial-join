@@ -1045,11 +1045,22 @@ we will prove that $\dcross_H(\bm{t})$ includes a prefix of the sorted order. It
 
 \section{Supplementary Proofs for Section~\ref{sec:hv:type2}} \label{app:hv:type2}
 
-This section supplies the proofs postponed from Section~\ref{sec:hv:type2}. The order of the proofs here will not strictly follow the sequence in which they are referenced in Section~\ref{sec:hv:type2}. In particular, we will prove Lemma~\ref{lmm:hv:type2:properties} before Lemma~\ref{lmm:hv:type2:recur-output}, because the claims of the former lemma can be used to construct a simple argument for the latter.
+We start by presenting two properties underneath the procedures designed in Section~\ref{sec:hv:type2}. These properties will enable us to construct simpler proofs later.
+
+\begin{proposition} \label{prop:app:hv:type2:help1}
+    Consider any $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in \J2$. Define $h'$ as the trimmed segment of $h$. It holds that $h \cap v = h' \cap v$.
+\end{proposition}
+
+\begin{proof}
+    Set $p = h \cap v$. As $h'$ is contained in $h$, for proving $p = h' \cap v$, it suffices to explain why $p$ is on $h'$. Let us represent $h$ as $[x_1,x_2] \times y$. Accordingly, the segment $h'$ can be written as $[x_1, x_2'] \times y$ for some $x_2' \in [x_1, x_2]$. By the definition of a trimmed segment, $(x_2',y)$ is the rightmost point on $h$ that falls in a left-end covering rectangle of $h$ in $R_{k-2}$. As $(r_1,...,r_{k-2},h,v) \in \J_2$, we know that $r_{k-2}$ is a left-end covering rectangle of $h$, and $r_{k-2}$ covers $p$ (which is a point on $h$). Therefore, the x-coordinate of $p$ cannot exceed $x_2'$, allowing us to assert that $p$ is on $h'$.
+\end{proof}
+
+
+We now proceed to elaborate the proofs postponed from Section~\ref{sec:hv:type2}. The order of the proofs here will not strictly follow the sequence in which they are referenced in Section~\ref{sec:hv:type2}. In particular, we will prove Lemma~\ref{lmm:hv:type2:properties} before Lemma~\ref{lmm:hv:type2:recur-output}, because the claims of the former lemma can be used to construct a simple argument for the latter.
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type2:properties}.} We will prove each statement in turn.
 
-\extraspacing \underline{\em Proof of Statement (1).} Consider any tuple $\bm{t} = (r_1,...,r_{k-3}, h', v) \in \J(R_1,...,R_{k-3},H',V)$. The point $h' \cap v$ is covered by all of $r_1,...,r_{k-3}$. Let $h$ be the full segment of $h'$. As $h$ contains $h'$, we have $h \cap v = h' \cap v$.
+\extraspacing \underline{\em Proof of Statement (1).} Take any tuple $\bm{t} = (r_1,...,r_{k-3}, h', v) \in \J(R_1,...,R_{k-3},H',V)$. The point $h' \cap v$ is covered by all of $r_1,...,r_{k-3}$. Let $h$ be the full segment of $h'$. As $h$ contains $h'$, we have $h \cap v = h' \cap v$.
 
 \vgap
 
@@ -1059,15 +1070,11 @@ Consider any rectangle $r_{k-2} \in \contained_{R_{k-2}}(\bm{t})$. From the defi
 
 To show $(r_1,...,r_{k-3}, r_{k-2}, h, v) \in \J_2$, we still need to explain why $r_{k-2}$ covers the left endpoint of $h$. This follows immediately from the fact that $r_{k-2}$ covers the effective horizontal segment of $h'$ (which shares the same left endpoint as $h$).
 
-\extraspacing \underline{\em Proof of Statement (2).} Take any $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in \J_2$. Set $p = h \cap v$, and define $h'$ as the trimmed segment of $h$. We first argue that the $(k-1)$-tuple $\bm{t} = (r_1, ..., r_{k-3}, h', v)$ belongs to $\J(R_1,...,R_{k-3}, H', V)$, or equivalently, the point $h' \cap v$ falls in all of $r_1,...,r_{k-3}$. The subsequent discussion will show that $h' \cap v$ is in fact the same point as $p = h \cap v$. From $(r_1,...,r_{k-2},h,v) \in \J(R_1,...,R_{k-2},H,V)$, we already know that $p$ falls in all of $r_1,...,r_{k-2}$. It will then follow that $r_1,...,r_{k-3}$ all cover $h' \cap v$.
+\extraspacing \underline{\em Proof of Statement (2).} Take any $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in \J_2$. Set $p = h \cap v$, and define $h'$ as the trimmed segment of $h$. We first argue that the $(k-1)$-tuple $\bm{t} = (r_1, ..., r_{k-3}, h', v)$ belongs to $\J(R_1,...,R_{k-3}, H', V)$, or equivalently, the point $h' \cap v$ falls in all of $r_1,...,r_{k-3}$. By Proposition~\ref{prop:app:hv:type2:help1}, $h' \cap v$ is the same point as $p$. From $(r_1,...,r_{k-2},h,v) \in \J(R_1,...,R_{k-2},H,V)$, we know that $p = h \cap v$ falls in all of $r_1,...,r_{k-2}$. It thus follows that $r_1,...,r_{k-3}$ all cover $h' \cap v$.
 
 \vgap
 
-As $h'$ is contained in $h$, for proving $h' \cap v = p$, it suffices to explain why $p$ is on $h'$. Let us represent $h$ as $[x_1,x_2] \times y$. Accordingly, the segment $h'$ can be written as $[x_1, x_2'] \times y$ for some $x_2' \in [x_1, x_2]$. By the definition of a trimmed segment, $(x_2',y)$ is the rightmost point on $h$ that falls in a left-end covering rectangle of $h$ in $R_{k-2}$. As $(r_1,...,r_{k-2},h,v) \in \J_2$, we know that $r_{k-2}$ is a left-end covering rectangle of $h$, and $r_{k-2}$ covers $p$ (which is a point on $h$). Therefore, the x-coordinate of $p$ cannot exceed $x_2'$, allowing us to assert that $p$ is on $h'$.
-
-\vgap
-
-Next, we argue that $r_{k-2}\in \contained_{R_{k-2}}(\bm{t})$. Let $p'$ be the left endpoint of $h$. Because we already know $h' \cap v = h \cap v = p$, the effective horizontal segment of $\bm{t}$ is the segment $p'p$. To prove $r_{k-2} \in \contained_{R_{k-2}}(\bm{t})$, we need to explain why $r_{k-2}$ covers this segment. This is true because:
+Next, we argue that $r_{k-2}\in \contained_{R_{k-2}}(\bm{t})$. Let $p'$ be the left endpoint of $h$. Because$h' \cap v = h \cap v = p$, the effective horizontal segment of $\bm{t}$ is the segment $p'p$. To prove $r_{k-2} \in \contained_{R_{k-2}}(\bm{t})$, we need to explain why $r_{k-2}$ covers this segment. This is true because:
 
 \begin{itemize}
     \item $r_{k-2}$ covers $p$, as we already know;
