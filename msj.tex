@@ -1148,18 +1148,18 @@ We will first prove $\contained_{R_{k-2}}(\bm{t})\subseteq \contained_{R_{k-2}}(
 
 \vgap
 
-Secondly, assuming that the rectangles $r$ in $\contained_{R_{k-2}}(h^*)$ have been sorted in descending order of $\xright(r)$, we will prove that $\contained_{R_{k-2}}(\bm{t})$ includes a prefix of the sorted order. It suffices to establish the following equivalent statement:
+Next, assuming that the rectangles $r \in \contained_{R_{k-2}}(h^*)$ have been sorted in descending order of $\xright(r)$, we will prove that $\contained_{R_{k-2}}(\bm{t})$ includes a prefix of the sorted order. It suffices to establish the following equivalent claim:
 
 \vgap
 
 \minipg{0.8\linewidth} {
-    If a rectangle $r \in \contained_{R_{k-2}}(h^*)$ satisfies the condition that $\xright(r) \ge x$ (where as defined before $x$ is the x-coordinate of $\bm{t}[k-1]$), then $r$ must be in $\contained_{R_{k-2}}(\bm{t})$.
+    {\bf Claim 2:} If a rectangle $r \in \contained_{R_{k-2}}(h^*)$ satisfies the condition that $\xright(r) \ge x$ (where $x$ is the x-coordinate of $\bm{t}[k-1]$), then $r \in \contained_{R_{k-2}}(\bm{t})$.
 }
 
 \vgap
 
-\noindent To prove the above, we must explain why $r$ contains the effective horizontal segment of $\bm{t}$. Since $r \in \contained_{R_{k-2}}(h^*)$, we know that $r$ covers the segment $[x_1, \minleft(h')] \times y$. Therefore, $[x_1, \minleft(h')] \subseteq [\xleft(r), \xright(r)]$ and $y \in [\ybot(r), \ytop(r)]$.
-Using also the given condition $\xright(r) \ge x$, we can derive $[x_1, x] \subseteq [\xleft(r), \xright(r)]$. This means that $[x_1, x] \times y$, i.e. the effective horizontal segment of $\bm{t}$, is contained in $r$.
+\noindent To prove the above, we must explain why $r$ contains the effective horizontal segment of $\bm{t}$. Since $r \in \contained_{R_{k-2}}(h^*)$, we know that $r$ covers the segment $[x_1, \minleft(h')] \times y$. Hence, $[x_1, \minleft(h')]$ $\subseteq [\xleft(r), \xright(r)]$ and $y \in [\ybot(r), \ytop(r)]$.
+Using also the condition $\xright(r) \ge x$ given in claim 2, we can derive $[x_1, x] \subseteq [\xleft(r), \xright(r)]$. Therefore, $[x_1, x] \times y$, i.e. the effective horizontal segment of $\bm{t}$, is contained in $r$.
 
 
 \section{Proof of Theorem~\ref{thm:main-alg}} \label{app:main-alg}
