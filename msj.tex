@@ -788,7 +788,7 @@ Then, we compare $\side(r)$ to $\side'(r')$ (e.g., if $\side = \xright$ and $\si
     \item the middle child if $\side(r) = \side'(r')$;
     \item the right child if $\side(r) > \side'(r')$.
 }
-At a leaf, we look at its associated result and, for each $(\lambda_1, \lambda_2, ..., \lambda_k)$ in that result, output $(r_1, r_2, ..., r_k)$ where $r_i$ ($i \in [k]$) is the rectangle with ID $\lambda_i$ in $R_i$. The algorithm must produce the correct output on all $(n_1, n_2, ..., n_k)$-inputs. Its {\em worst-case cost} is the height of $\T$.
+At a leaf, we look at its associated result and, for each $(\lambda_1, \lambda_2, ..., \lambda_k)$ in that result, output $(r_1, r_2, ..., r_k)$ where $r_i$ ($i \in [k]$) is the rectangle with ID $\lambda_i$ in $R_i$. The algorithm is required to produce the correct output on all $(n_1, n_2, ..., n_k)$-inputs. Its {\em worst-case cost} is the height of $\T$.
 
 
 \vgap
@@ -840,7 +840,7 @@ Sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$
 
 \vgap
 
-When $\ell$ hits a horizontal segment $h = [z_1, z_2] \times y$ of $P$, perform a containment query on $\T$ to find all the intervals in $S_\ell$ that are contained by $[z_1, z_2]$; if $K_h$ is the number of such intervals, this retrieval takes $O(\log n + K_h)$ time. For each retrieved interval $[x_1, x_2]$, we also obtain its host rectangle $r$ (stored along with $[x_1, x_2]$ in $\T$). As can be verified shortly, $h$ is the lowest segment in $H$ that crosses $r$; we therefore output $(r, h)$. After that, $r$ is marked as inactive, and accordingly, its x-range $[x_1, x_2]$ is deleted from $T$ in $O(\log n)$ time. As $r$ will remain inactive in the rest of the execution, its x-range will not be retrieved again by another containment query in the future. This implies that $h$ is indeed the lowest segment in $H$ crossing $r$.
+When $\ell$ hits a horizontal segment $h = [z_1, z_2] \times y$ of $P$, perform a containment query on $\T$ to find all the intervals in $S_\ell$ that are contained by $[z_1, z_2]$; if $K_h$ is the number of such intervals, this retrieval takes $O(\log n + K_h)$ time. For each retrieved interval $[x_1, x_2]$, we also obtain its host rectangle $r$ (stored along with $[x_1, x_2]$ in $\T$). As can be verified shortly, $h$ is the lowest segment in $H$ that crosses $r$; we therefore output $(r, h)$. After that, $r$ is marked as inactive, and accordingly, its x-range $[x_1, x_2]$ is deleted from $\T$ in $O(\log n)$ time. As $r$ will remain inactive in the rest of the execution, its x-range will not be retrieved again by another containment query in the future. This implies that $h$ is indeed the lowest segment in $H$ crossing $r$.
 
 \vgap
 
