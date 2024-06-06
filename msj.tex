@@ -742,7 +742,7 @@ The computation of $\J^\catt_{i,j}$ is an instance of the H-V $k$-SJ problem. Sp
 
 \vgap 
 
-Performing the above for all $i, j \in [k]$ with $i \ne j$ leads to a total time complexity of $O(k^3) \cdot (F_{k-1}(n, \out) + n \log n + k \cdot \out)$. A category-2 result tuple $\bm{t}$ may be seen more than once (this can happen if, for example, more than one rectangle in $\bm{t}$ has the same top-edge or the same left-edge). Again, duplicate removal can be achieved at no extra cost asymptotically.
+Performing the above for all $i, j \in [k]$ with $i \ne j$ leads to a total time complexity of $O(k^3) \cdot (F_{k-1}(n, \out) + n \log n + k \cdot \out)$. A category-2 result tuple $\bm{t}$ may be seen more than once (this can happen if, for example, more than one rectangle in $\bm{t}$ has the same top-edge). Again, duplicate removal can be achieved at no extra cost asymptotically.
 
 \vgap 
 
@@ -922,7 +922,7 @@ We now proceed to elaborate the proofs postponed from Section~\ref{sec:hv:type1}
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:properties}.} We will prove each statement in turn.
 
-\extraspacing \underline{\em Proof of Statement (1).} Take any $(k-2)$-tuple $\bm{t} \in \J(R_1', R'_2, ..., R'_{k-2})$. Let $r_i$ ($i$ $\in$  $[k-2]$) be the full rectangle of $\bm{t}[i]$. Fix any $h \in \dcross_H(\bm{t})$ and any $v \in \dcross_V(\bm{t})$. The segments $h$ and $v$ both cross $B_\bm{t}$, as can be verified from the definitions of $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$. Thus, $h \cap v$ is a point in $B_\bm{t} = \bigcap_{i=1}^{k-2} \bm{t}[i]$. As $r_i$ ($i \in [k-2]$) is the full rectangle of $\bm{t}[i]$, we know that $\bigcap_{i=1}^{k-2} r_i$ covers $B_\bm{t} = \bigcap_{i=1}^{k-2} \bm{t}[i]$. Hence, point $h \cap v$ falls in $\bigcap_{i=1}^{k-2} r_i$, indicating that $h\cap v \cap \bigcap_{i = 1}^{k-2}r_i \neq \emptyset$. It follows that $(r_1,...,r_{k-2},h,v)$ is a result tuple in $\J(R_1,...,R_{k-2},H,V)$.
+\extraspacing \underline{\em Proof of Statement (1).} Take any $(k-2)$-tuple $\bm{t} \in \J(R_1', R'_2, ..., R'_{k-2})$. Let $r_i$ ($i$ $\in$  $[k-2]$) be the full rectangle of $\bm{t}[i]$. Fix any $h \in \dcross_H(\bm{t})$ and any $v \in \dcross_V(\bm{t})$. The segments $h$ and $v$ both cross $B_\bm{t}$, as can be seen directly from the definitions of $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$. Thus, $h \cap v$ is a point in $B_\bm{t} = \bigcap_{i=1}^{k-2} \bm{t}[i]$. As $r_i$ ($i \in [k-2]$) is the full rectangle of $\bm{t}[i]$, we know that $\bigcap_{i=1}^{k-2} r_i$ covers $B_\bm{t} = \bigcap_{i=1}^{k-2} \bm{t}[i]$. Hence, point $h \cap v$ falls in $\bigcap_{i=1}^{k-2} r_i$, indicating that $h\cap v \cap \bigcap_{i = 1}^{k-2}r_i \neq \emptyset$. It follows that $(r_1,...,r_{k-2},h,v)$ is a result tuple in $\J(R_1,...,R_{k-2},H,V)$.
 
 \extraspacing \underline{\em Proof of Statement (2).} Take any $k$-tuple $(r_1,...,r_{k-2},h,v) \in \J_1$. By definition of $\J_1$, segments $h$ and $v$ cross each of the rectangles $r_1,..., r_{k-2}$. By Proposition~\ref{prop:app:hv:type1:help1}, segments $h$ and $v$ must also cross each of the trimmed rectangles $r_1',..., r_{k-2}'$. Hence, $B_\bm{t} = \bigcap_{i = 1}^{k-2}r_i'$ is non-empty as it contains the point $h \cap v$, which proves the first claim $\bm{t} = (r_1', ..., r_{k-2}') \in \J(R_1',...,R_{k-2}')$.
 
@@ -936,7 +936,7 @@ Next, we prove the second claim, i.e., $h \in \dcross_H(\bm{t})$ and $v \in \dcr
 } 
 which implies statement (3) because, by Proposition~\ref{prop:app:hv:type1:help2}, $|\dcross_H(\bm{t})| \ge 1$ and $|\dcross_V(\bm{t})| \ge 1$  for any $\bm{t}$ in the summation. Our proof resorts to the algorithm generate-$\J^*$ given in Section~\ref{sec:hv:type1}. This algorithm adds to $\J^*$ as many tuples as calculated by the left hand side of \eqref{eqn:hv:type1:properties:proof-help1}. By statement (1) of Lemma~\ref{lmm:hv:type1:properties}, the $\J^*$ produced must be a subset of $\J(R_1,...,R_{k-2},H,V)$, whereas $\out = |\J(R_1,...,R_{k-2},H,V)|$. This establishes the inequality in \eqref{eqn:hv:type1:properties:proof-help1}.
 
-\extraspacing \noindent {\bf Proof of Lemma~\ref{lmm:hv:type1:recur-output}.} Our proof again resorts to the algorithm generate-$\J^*$ in Section~\ref{sec:hv:type1}. As argued in Statement (3) of Lemma~\ref{lmm:hv:type1:properties}, both $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$ are non-empty for any $\bm{t} \in \J(R_1',$ $...,R_{k-2}')$. Therefore, in processing this $\bm{t}$, the algorithm adds at least one new tuple to $\J^*$. Hence, $|\J(R_1',...,R_{k-2}')| \le |\J^*|\le |\J(R_1,...,R_{k-2},H,V)| = \out$, where the second inequality used Statement (1) of Lemma~\ref{lmm:hv:type1:properties}.
+\extraspacing \noindent {\bf Proof of Lemma~\ref{lmm:hv:type1:recur-output}.} Our proof again resorts to the algorithm generate-$\J^*$ in Section~\ref{sec:hv:type1}. By Proposition~\ref{prop:app:hv:type1:help2}, both $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$ are non-empty for any $\bm{t} \in \J(R_1',$ $...,R_{k-2}')$. Therefore, in processing this $\bm{t}$, the algorithm adds at least one new tuple to $\J^*$. Hence, $|\J(R_1',...,R_{k-2}')| \le |\J^*|\le |\J(R_1,...,R_{k-2},H,V)| = \out$, where the second inequality used Statement (1) of Lemma~\ref{lmm:hv:type1:properties}.
 
 \extraspacing {\bf Computing $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} We consider, w.l.o.g., that each rectangle in the input $R_1 \cup ... \cup R_{k-2}$ is given a distinct integer ID in $[n]$. This allows us to create an array of size $n$ and allocate an array cell to each $r \in R_1 \cup ... \cup R_{k-2}$. The cell can be accessed by the ID of $r$ in constant time.
 
@@ -974,7 +974,7 @@ For this purpose, we need to show that $h$ crosses both $\gbot(\bm{t}) = r'$ and
 
     \vgap
 
-    \item Then, we explain why $h$ crosses $B_{\bm{t}}$. Because $B_{\bm{t}}\subseteq r'$ and $h$ crosses $r'$ (just proved), no endpoint of $h$ can fall in $B_\bm{t}$. Let us take the y-coordinate $y_h$ of $h$. We will prove that the point $p = (\xleft(B_{\bm{t}}), y_h)$ is on the segment $h \cap B_{\bm{t}}$, suggesting $h\cap B_{\bm{t}} \neq \emptyset$. Once this is done, we can assert that $h$ crosses $B_{\bm{t}}$ (as no endpoint of $h$ falls in $B_\bm{t}$).
+    \item Then, we explain why $h$ crosses $B_{\bm{t}}$. Because $B_{\bm{t}}\subseteq r'$ and $h$ crosses $r'$ (just proved), no endpoint of $h$ can fall in $B_\bm{t}$. Let us take the y-coordinate $y_h$ of $h$. We will prove that the point $p = (\xleft(B_{\bm{t}}), y_h)$ is on the segment $h$ and is also in $B_{\bm{t}}$, suggesting $h\cap B_{\bm{t}} \neq \emptyset$. Once this is done, we can assert that $h$ crosses $B_{\bm{t}}$ (as no endpoint of $h$ falls in $B_\bm{t}$).
     
     \vgap
 
