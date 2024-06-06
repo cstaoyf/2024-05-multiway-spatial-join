@@ -236,7 +236,7 @@ in Appendix~\ref{app:bricks}.
 
 \vgap
 
-In the {\em reporting version} of Problem $\mathscr{A}$, the goal is to output, for each point $p \in P$, all the rectangles $r \in R$ containing $p$. In Figure~\ref{fig:guard}a, for instance, the output is $\set{(p_1, \emptyset), (p_2: r_1, r_2), (p_3: r_2)}$. As shown in Appendix~\ref{app:bricks}, The problem can be solved in $O(n \log n + \out)$ time, where $\out$ is the number of pairs $(p, r) \in P \times R$ such that $p \in r$.
+In the {\em reporting version} of Problem $\mathscr{A}$, the goal is to output, for each point $p \in P$, all the rectangles $r \in R$ containing $p$; if no such $r$ exists, report nothing for $p$. In Figure~\ref{fig:guard}a, for instance, the output is $\set{(p_2: r_1, r_2), (p_3: r_2)}$. As shown in Appendix~\ref{app:bricks}, The problem can be solved in $O(n \log n + \out)$ time, where $\out$ is the number of pairs $(p, r) \in P \times R$ such that $p \in r$.
 
 \extraspacing {\bf Problem $\bm{\mathscr{B}}$.} The input involves a set $H$ of horizontal segments and a set $V$ of vertical segments. The goal is to report, for each segment $h \in H$, the leftmost point $p$ on $h$ such that $p$ is on some vertical segment in $V$. If $h$ does not intersect with any segment in $V$, report nothing for $h$. Figure~\ref{fig:probs}b gives an example where $H = \set{h_1, h_2, h_3}$ and $V = \set{v_1, v_2}$; the output is $\set{(h_1, p_1), (h_2, p_2)}$. The problem can be solved in $O(n \log n)$ time where $n = |H| + |V|$, as shown in Appendix~\ref{app:bricks}.
 
