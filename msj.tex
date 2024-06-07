@@ -664,7 +664,7 @@ The proof can be found in Appendix~\ref{app:hv:type2}.
 \extraspacing {\underline{\em Example 5.6.}} It is clear from Figure~\ref{fig:hv:type2:ex}(d) that $\contain_{R_2}(h_3^*)$ has rectangles $\beta_3, \beta_2$, $\beta_1$, sorted in descending order of their right boundaries' x-coordinates. Consider $\bm{t}_2 = (\alpha, h_3', v_1)$ and $\bm{t}_3 = (\alpha, h_3', v_2)$. Segment $h_3^*$ is the minimal segment of $h_3'$. As stated in Lemma~\ref{lmm:hv:type2:contained-h*}, both $\contain_{R_2}(\bm{t}_2) = \set{\beta_1, \beta_2, \beta_3}$ and $\contain_{R_2}(\bm{t}_3) = \set{\beta_1}$ are prefixes of the sorted order of $\contain_{R_2}(h_3^*)$. Regarding $h_2^*$, it is the minimal segment of $h_2'$, and $\contain_{R_2}(h_2^*)$ contains only  $\beta_1$. For $\bm{t}_1 = (\alpha, h_2', v_1)$, $\contain_{R_2}(\bm{t}_1) = \set{\beta_1}$ is a (trivial) prefix of $\contain_{R_2}(h_2^*)$, as is also consistent with the lemma.
 \done
 
-Finding the $\contain_{R_{k-2}}(h^*)$ sets of all $h^* \in H^*$ is an instance of the find-all-sorted version of Problem $\mathscr{E}$ (with $H^*$ and $R_{k-2}$ as the input). The cost is $O(n \log n + \out)$ according statement (1) of Lemma~\ref{lmm:hv:type1:cross-r*} and the discussion in Section~\ref{sec:bricks}. Note that, for each $\contain_{R_{k-2}}(h^*)$ computed, the rectangles $r$ therein have been sorted in descending order of $\xright(r)$.
+Finding the $\contain_{R_{k-2}}(h^*)$ sets of all $h^* \in H^*$ is an instance of Problem $\mathscr{E}$ (with $H^*$ and $R_{k-2}$ as the input). The cost is $O(n \log n + \out)$ according statement (1) of Lemma~\ref{lmm:hv:type1:cross-r*} and the discussion in Section~\ref{sec:bricks}. Note that, for each $\contain_{R_{k-2}}(h^*)$ computed, the rectangles $r$ therein have been sorted in descending order of $\xright(r)$.
 
 
 \extraspacing {\bf Computing the ``$\bm{\contain_{R_{k-2}}(t)}$'' Sets.} Statement (2) of Lemma~\ref{lmm:hv:type2:contained-h*} allows us to produce $\contain_{R_{k-2}}(\bm{t})$ --- defined in \eqref{eqn:type2:contained-t} --- for each $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$ as follows. First, fetch the (already computed) minimal segment $h^*$ of $\bm{t}[k-2]$ in $O(1)$ time. Then, scan the rectangles $r$ of $\contain_{R_{k-2}}(h^*)$ in descending order of $\xright(r)$. For each $r$ scanned, check whether $r \in \contain_{R_{k-2}}(\bm{t})$, or equivalently, whether $r$ covers $B_\bm{t}$ (recall that $B_\bm{t}$ is a point); the cost of this inspection is $O(1)$. Abort the scan as soon as $r \notin
@@ -742,7 +742,7 @@ The computation of $\J^\catt_{i,j}$ is an instance of the H-V $k$-SJ problem. Sp
 
 \vgap 
 
-Performing the above for all $i, j \in [k]$ with $i \ne j$ leads to a total time complexity of $O(k^3) \cdot (F_{k-1}(n, \out) + n \log n + k \cdot \out)$. A category-2 result tuple $\bm{t}$ may be seen more than once (this can happen if, for example, more than one rectangle in $\bm{t}$ has the same top-edge or the same left-edge). Again, duplicate removal can be achieved at no extra cost asymptotically.
+Performing the above for all $i, j \in [k]$ with $i \ne j$ leads to a total time complexity of $O(k^3) \cdot (F_{k-1}(n, \out) + n \log n + k \cdot \out)$. A category-2 result tuple $\bm{t}$ may be seen more than once (this can happen if, for example, more than one rectangle in $\bm{t}$ has the same top-edge). Again, duplicate removal can be achieved at no extra cost asymptotically.
 
 \vgap 
 
@@ -788,7 +788,7 @@ Then, we compare $\side(r)$ to $\side'(r')$ (e.g., if $\side = \xright$ and $\si
     \item the middle child if $\side(r) = \side'(r')$;
     \item the right child if $\side(r) > \side'(r')$.
 }
-At a leaf, we look at its associated result and, for each $(\lambda_1, \lambda_2, ..., \lambda_k)$ in that result, output $(r_1, r_2, ..., r_k)$ where $r_i$ ($i \in [k]$) is the rectangle with ID $\lambda_i$ in $R_i$. The algorithm must produce the correct output on all $(n_1, n_2, ..., n_k)$-inputs. Its {\em worst-case cost} is the height of $\T$.
+At a leaf, we look at its associated result and, for each $(\lambda_1, \lambda_2, ..., \lambda_k)$ in that result, output $(r_1, r_2, ..., r_k)$ where $r_i$ ($i \in [k]$) is the rectangle with ID $\lambda_i$ in $R_i$. The algorithm is required to produce the correct output on all $(n_1, n_2, ..., n_k)$-inputs. Its {\em worst-case cost} is the height of $\T$.
 
 
 \vgap
@@ -840,7 +840,7 @@ Sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$
 
 \vgap
 
-When $\ell$ hits a horizontal segment $h = [z_1, z_2] \times y$ of $P$, perform a containment query on $\T$ to find all the intervals in $S_\ell$ that are contained by $[z_1, z_2]$; if $K_h$ is the number of such intervals, this retrieval takes $O(\log n + K_h)$ time. For each retrieved interval $[x_1, x_2]$, we also obtain its host rectangle $r$ (stored along with $[x_1, x_2]$ in $\T$). As can be verified shortly, $h$ is the lowest segment in $H$ that crosses $r$; we therefore output $(r, h)$. After that, $r$ is marked as inactive, and accordingly, its x-range $[x_1, x_2]$ is deleted from $T$ in $O(\log n)$ time. As $r$ will remain inactive in the rest of the execution, its x-range will not be retrieved again by another containment query in the future. This implies that $h$ is indeed the lowest segment in $H$ crossing $r$.
+When $\ell$ hits a horizontal segment $h = [z_1, z_2] \times y$ of $P$, perform a containment query on $\T$ to find all the intervals in $S_\ell$ that are contained by $[z_1, z_2]$; if $K_h$ is the number of such intervals, this retrieval takes $O(\log n + K_h)$ time. For each retrieved interval $[x_1, x_2]$, we also obtain its host rectangle $r$ (stored along with $[x_1, x_2]$ in $\T$). As can be verified shortly, $h$ is the lowest segment in $H$ that crosses $r$; we therefore output $(r, h)$. After that, $r$ is marked as inactive, and accordingly, its x-range $[x_1, x_2]$ is deleted from $\T$ in $O(\log n)$ time. As $r$ will remain inactive in the rest of the execution, its x-range will not be retrieved again by another containment query in the future. This implies that $h$ is indeed the lowest segment in $H$ crossing $r$.
 
 \vgap
 
@@ -922,7 +922,7 @@ We now proceed to elaborate the proofs postponed from Section~\ref{sec:hv:type1}
 
 \extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:properties}.} We will prove each statement in turn.
 
-\extraspacing \underline{\em Proof of Statement (1).} Take any $(k-2)$-tuple $\bm{t} \in \J(R_1', R'_2, ..., R'_{k-2})$. Let $r_i$ ($i$ $\in$  $[k-2]$) be the full rectangle of $\bm{t}[i]$. Fix any $h \in \dcross_H(\bm{t})$ and any $v \in \dcross_V(\bm{t})$. The segments $h$ and $v$ both cross $B_\bm{t}$, as can be verified from the definitions of $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$. Thus, $h \cap v$ is a point in $B_\bm{t} = \bigcap_{i=1}^{k-2} \bm{t}[i]$. As $r_i$ ($i \in [k-2]$) is the full rectangle of $\bm{t}[i]$, we know that $\bigcap_{i=1}^{k-2} r_i$ covers $B_\bm{t} = \bigcap_{i=1}^{k-2} \bm{t}[i]$. Hence, point $h \cap v$ falls in $\bigcap_{i=1}^{k-2} r_i$, indicating that $h\cap v \cap \bigcap_{i = 1}^{k-2}r_i \neq \emptyset$. It follows that $(r_1,...,r_{k-2},h,v)$ is a result tuple in $\J(R_1,...,R_{k-2},H,V)$.
+\extraspacing \underline{\em Proof of Statement (1).} Take any $(k-2)$-tuple $\bm{t} \in \J(R_1', R'_2, ..., R'_{k-2})$. Let $r_i$ ($i$ $\in$  $[k-2]$) be the full rectangle of $\bm{t}[i]$. Fix any $h \in \dcross_H(\bm{t})$ and any $v \in \dcross_V(\bm{t})$. The segments $h$ and $v$ both cross $B_\bm{t}$, as can be seen directly from the definitions of $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$. Thus, $h \cap v$ is a point in $B_\bm{t} = \bigcap_{i=1}^{k-2} \bm{t}[i]$. As $r_i$ ($i \in [k-2]$) is the full rectangle of $\bm{t}[i]$, we know that $\bigcap_{i=1}^{k-2} r_i$ covers $B_\bm{t} = \bigcap_{i=1}^{k-2} \bm{t}[i]$. Hence, point $h \cap v$ falls in $\bigcap_{i=1}^{k-2} r_i$, indicating that $h\cap v \cap \bigcap_{i = 1}^{k-2}r_i \neq \emptyset$. It follows that $(r_1,...,r_{k-2},h,v)$ is a result tuple in $\J(R_1,...,R_{k-2},H,V)$.
 
 \extraspacing \underline{\em Proof of Statement (2).} Take any $k$-tuple $(r_1,...,r_{k-2},h,v) \in \J_1$. By definition of $\J_1$, segments $h$ and $v$ cross each of the rectangles $r_1,..., r_{k-2}$. By Proposition~\ref{prop:app:hv:type1:help1}, segments $h$ and $v$ must also cross each of the trimmed rectangles $r_1',..., r_{k-2}'$. Hence, $B_\bm{t} = \bigcap_{i = 1}^{k-2}r_i'$ is non-empty as it contains the point $h \cap v$, which proves the first claim $\bm{t} = (r_1', ..., r_{k-2}') \in \J(R_1',...,R_{k-2}')$.
 
@@ -936,7 +936,7 @@ Next, we prove the second claim, i.e., $h \in \dcross_H(\bm{t})$ and $v \in \dcr
 } 
 which implies statement (3) because, by Proposition~\ref{prop:app:hv:type1:help2}, $|\dcross_H(\bm{t})| \ge 1$ and $|\dcross_V(\bm{t})| \ge 1$  for any $\bm{t}$ in the summation. Our proof resorts to the algorithm generate-$\J^*$ given in Section~\ref{sec:hv:type1}. This algorithm adds to $\J^*$ as many tuples as calculated by the left hand side of \eqref{eqn:hv:type1:properties:proof-help1}. By statement (1) of Lemma~\ref{lmm:hv:type1:properties}, the $\J^*$ produced must be a subset of $\J(R_1,...,R_{k-2},H,V)$, whereas $\out = |\J(R_1,...,R_{k-2},H,V)|$. This establishes the inequality in \eqref{eqn:hv:type1:properties:proof-help1}.
 
-\extraspacing \noindent {\bf Proof of Lemma~\ref{lmm:hv:type1:recur-output}.} Our proof again resorts to the algorithm generate-$\J^*$ in Section~\ref{sec:hv:type1}. As argued in Statement (3) of Lemma~\ref{lmm:hv:type1:properties}, both $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$ are non-empty for any $\bm{t} \in \J(R_1',$ $...,R_{k-2}')$. Therefore, in processing this $\bm{t}$, the algorithm adds at least one new tuple to $\J^*$. Hence, $|\J(R_1',...,R_{k-2}')| \le |\J^*|\le |\J(R_1,...,R_{k-2},H,V)| = \out$, where the second inequality used Statement (1) of Lemma~\ref{lmm:hv:type1:properties}.
+\extraspacing \noindent {\bf Proof of Lemma~\ref{lmm:hv:type1:recur-output}.} Our proof again resorts to the algorithm generate-$\J^*$ in Section~\ref{sec:hv:type1}. By Proposition~\ref{prop:app:hv:type1:help2}, both $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$ are non-empty for any $\bm{t} \in \J(R_1',$ $...,R_{k-2}')$. Therefore, in processing this $\bm{t}$, the algorithm adds at least one new tuple to $\J^*$. Hence, $|\J(R_1',...,R_{k-2}')| \le |\J^*|\le |\J(R_1,...,R_{k-2},H,V)| = \out$, where the second inequality used Statement (1) of Lemma~\ref{lmm:hv:type1:properties}.
 
 \extraspacing {\bf Computing $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} We consider, w.l.o.g., that each rectangle in the input $R_1 \cup ... \cup R_{k-2}$ is given a distinct integer ID in $[n]$. This allows us to create an array of size $n$ and allocate an array cell to each $r \in R_1 \cup ... \cup R_{k-2}$. The cell can be accessed by the ID of $r$ in constant time.
 
@@ -974,7 +974,7 @@ For this purpose, we need to show that $h$ crosses both $\gbot(\bm{t}) = r'$ and
 
     \vgap
 
-    \item Then, we explain why $h$ crosses $B_{\bm{t}}$. Because $B_{\bm{t}}\subseteq r'$ and $h$ crosses $r'$ (just proved), no endpoint of $h$ can fall in $B_\bm{t}$. Let us take the y-coordinate $y_h$ of $h$. We will prove that the point $p = (\xleft(B_{\bm{t}}), y_h)$ is on the segment $h \cap B_{\bm{t}}$, suggesting $h\cap B_{\bm{t}} \neq \emptyset$. Once this is done, we can assert that $h$ crosses $B_{\bm{t}}$ (as no endpoint of $h$ falls in $B_\bm{t}$).
+    \item Then, we explain why $h$ crosses $B_{\bm{t}}$. Because $B_{\bm{t}}\subseteq r'$ and $h$ crosses $r'$ (just proved), no endpoint of $h$ can fall in $B_\bm{t}$. Let us take the y-coordinate $y_h$ of $h$. We will prove that the point $p = (\xleft(B_{\bm{t}}), y_h)$ is on the segment $h$ and is also in $B_{\bm{t}}$, suggesting $h\cap B_{\bm{t}} \neq \emptyset$. Once this is done, we can assert that $h$ crosses $B_{\bm{t}}$ (as no endpoint of $h$ falls in $B_\bm{t}$).
     
     \vgap
 
@@ -1060,7 +1060,7 @@ We start by presenting two properties underneath the procedures designed in Sect
 \end{proposition}
 
 \begin{proof}
-    Let $h$ be the full segment of $\bm{t}[k-2]$. By the definition of a trimmed segment, there exists a rectangle $r_{k-2} \in R_{k-2}$ covering both endpoints of $h$. Thus, the effective horizontal segment of $\bm{t}$ (defined in Section~\ref{sec:hv:type2}), which is contained in $h'$, must also be covered by $r_{k-2}$. Hence, $\contain_{R_{k-2}}(\bm{t})$ contains $r_{k-2}$ and thus cannot be empty.
+    Set $h' = \bm{t}[k-2]$. By the definition of a trimmed segment, there exists a rectangle $r_{k-2} \in R_{k-2}$ covering both endpoints of $h'$. Thus, the effective horizontal segment of $\bm{t}$ (defined in Section~\ref{sec:hv:type2}) --- which must be contained in $h'$ --- must also be covered by $r_{k-2}$. Hence, $\contain_{R_{k-2}}(\bm{t})$ contains $r_{k-2}$ and thus cannot be empty.
 \end{proof}
 
 
@@ -1083,7 +1083,7 @@ To show $(r_1,...,r_{k-3}, r_{k-2}, h, v) \in \J_2$, we still need to explain wh
 
 \vgap
 
-Next, we argue that $r_{k-2}\in \contain_{R_{k-2}}(\bm{t})$. Let $p'$ be the left endpoint of $h$. Because$h' \cap v = h \cap v = p$, the effective horizontal segment of $\bm{t}$ is the segment $p'p$. To prove $r_{k-2} \in \contain_{R_{k-2}}(\bm{t})$, we need to explain why $r_{k-2}$ covers this segment. This is true because:
+Next, we argue that $r_{k-2}\in \contain_{R_{k-2}}(\bm{t})$. Let $p'$ be the left endpoint of $h$. Because$h' \cap v = h \cap v = p$, the effective horizontal segment of $\bm{t}$ is the segment $p'p$. To prove $r_{k-2} \in \contain_{R_{k-2}}(\bm{t})$, we need to explain why $r_{k-2}$ covers segment $p'p$. This is true because:
 
 \begin{itemize}
     \item $r_{k-2}$ covers $p$, as we already know;
