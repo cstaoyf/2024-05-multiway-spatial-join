@@ -223,7 +223,7 @@ Given a rectangle $r = [x_1, x_2] \times [y_1, y_2]$, we define $\xleft(r) = x_1
 \myeqn{
     B_\bm{t} &=& \bigcap_{i=1}^{\red{k}} r_i; \label{eqn:B_t}
 }
-namely, $B_\bm{t}$ is the intersection of the rectangles in $\bm{t}$ (note: $B_\bm{t}$ is a rectangle itself). Also, define:
+namely, $B_\bm{t}$ is the intersection of the rectangles in $\bm{t}$ (note: $B_\bm{t}$ is a rectangle itself). Also, if $B_\bm{t}$ is not empty, define:
 \myitems{
     \item $\gleft(\bm{t})$ as the rectangle $r_i$, $i \in [k]$, satisfying $\xleft(r_i)$ $= \xleft(B_\bm{t})$. In case multiple values in $[k]$ fulfill the condition, let $i$ be the smallest of such values.
 
@@ -284,7 +284,7 @@ Recall that the input of $k$-SJ comprises $k$ sets of rectangles: $R_1, R_2, ...
 
 \vgap
 
-Our objective is to prove that H-V $k$-SJ can be efficiently reduced to $(k-1)$-SJ --- note: it is $(k-1)$-SJ here, rather than H-V $(k-1)$-SJ. To ensure the soundness of our notation system, let us formulate the ``1-SJ'' as the trivial problem where the input is a set $R$ of $n$ rectangles, and the goal is simply to enumerate each rectangle of $R$; the problem can obviously be ``solved'' in $O(n)$ time. We assume the existence of an algorithm $\A$ that can settle $\kappa$-SJ for all $\kappa \in [1, k-1]$. Denote by $F_\kappa(n, \out)$ the worst-case runtime of $\A$ on any instance of $\kappa$-SJ that has input size $n$ and output size $\out$. We consider that $F_\kappa(n, \out) \le F_{\kappa + 1}(n, \out)$ for any $\kappa \ge 1$, that is, its overhead on $\kappa$-SJ should not be larger than that on $(\kappa+1)$-SJ.
+Our objective is to prove that H-V $k$-SJ can be efficiently reduced to $(k-1)$-SJ (note: it is $(k-1)$-SJ here, rather than H-V $(k-1)$-SJ). To ensure the soundness of our notation system, let us formulate the ``1-SJ'' as the trivial problem where the input is a set $R$ of $n$ rectangles, and the goal is simply to enumerate each rectangle of $R$; the problem can obviously be ``solved'' in $O(n)$ time. We assume the existence of an algorithm $\A$ that can settle $\kappa$-SJ for all $\kappa \in [1, k-1]$. Denote by $F_\kappa(n, \out)$ the worst-case runtime of $\A$ on any instance of $\kappa$-SJ that has input size $n$ and output size $\out$. We consider that $F_\kappa(n, \out) \le F_{\kappa + 1}(n, \out)$ for any $\kappa \ge 1$, that is, its overhead on $\kappa$-SJ should not be larger than that on $(\kappa+1)$-SJ.
 
 \vgap
 
@@ -455,7 +455,7 @@ By statements (1) and (2) of Lemma~\ref{lmm:hv:type1:properties}, the set $\J^*$
 
 \vgap 
 
-The rest of the section will focus on how to prepare the sets $\dcross_H(\bm{t})$ of all $\bm{t} \in \J(R_1', ..., R_{k-2}')$ in $O(n \log n + k \cdot \out)$ time. An analogous method can be used to compute the sets $\dcross_V(\bm{t})$ of all $\bm{t}$ within the same time complexity.
+The rest of the section will focus on how to prepare the sets $\dcross_H(\bm{t})$ of all $\bm{t} \in \J(R_1', ..., R_{k-2}')$ in $O(k n \log n + k \cdot \out)$ time. An analogous method can be used to compute the sets $\dcross_V(\bm{t})$ of all $\bm{t}$ within the same time complexity.
 
 \extraspacing {\underline{\em Example 4.4.} In our running example, the $\J^*$ computed includes 7 tuples: $(\alpha, \beta_1, h_2, v_3)$, and $\{\alpha\} \times \{\beta_2\} \times \set{h_2, h_4, h_5} \times \set{v_3, v_5}$. All these 7 tuples belong to $\J(R_1, R_2, H, V)$ and include the 4 tuples in $\J_1$ (see Example 4.1).
 \done
@@ -836,7 +836,7 @@ The algorithm for the reporting version of Problem $\mathscr{A}$ is similar. The
 
 \vgap
 
-Sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, we maintain the set $R_\ell$ of {\em active} rectangles in $R$ that intersect with $\ell$. Let $S_\ell$ be the set of x-ranges of the rectangles in $R_\ell$; we store $S_\ell$ in a PST $\T$. Specifically, when $\ell$ hits the bottom edge of a rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$, we insert $[x_1, x_2]$ into $\T$ and mark $r$ as active, which can be done in $O(\log n)$ time. The rectangle $r$ will be referred to as the {\em host} of $[x_1, x_2]$ and is stored together with $[x_1, x_2]$ in $\T$.
+Sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, we maintain the set $R_\ell$ of {\em active} rectangles in $R$ that intersect with $\ell$. Let $S_\ell$ be the set of x-ranges of the rectangles in $R_\ell$; we store $S_\ell$ in a PST $\T$. Specifically, when $\ell$ hits the top edge of a rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$, we insert $[x_1, x_2]$ into $\T$ and mark $r$ as active, which can be done in $O(\log n)$ time. The rectangle $r$ will be referred to as the {\em host} of $[x_1, x_2]$ and is stored together with $[x_1, x_2]$ in $\T$.
 
 \vgap
 
