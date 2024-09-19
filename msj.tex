@@ -912,7 +912,9 @@ Each rectangle of $R$ necessitates one insertion and one deletion in $\T$. All t
 
 \vgap
 
-Let $L$ be the list of $(h, \lambda)$ pairs produced (the size of $L$ is $\out$). We now proceed to sort $L$ in ascending order of the $\lambda$-field (which is a rectangle ID), breaking ties arbitrarily. Because the IDs are integers created by the algorithm, we are permitted to sort $L$ using {\em counting sort} without violating the comparison-based requirements (see Appendix~\ref{app:comp-class}). The counting sort finishes in $O(|R| + |L|) = O(n + \out)$ time, recalling that all the IDs are in $[|R|]$.
+Let $L$ be the list of $(h, \lambda)$ pairs produced (the size of $L$ is $\out$). We now proceed to sort $L$ in ascending order of the $\lambda$-field (which is a rectangle ID), breaking ties arbitrarily. Because the IDs are integers created by the algorithm, we are permitted to sort $L$ using {\em counting sort} without violating the comparison-based requirements.
+%(see Appendix~\ref{app:comp-class}).
+The counting sort finishes in $O(|R| + |L|) = O(n + \out)$ time, recalling that all the IDs are in $[|R|]$.
 
 \vgap
 
