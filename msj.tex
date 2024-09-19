@@ -101,6 +101,8 @@
     In a {\em spatial join}, we are given a constant number $k \geq 2$ of sets --- denoted as $R_1, R_2, ..., R_k$ --- containing axis-parallel rectangles in a 2D space. The objective is to report all $k$-tuples $(r_1, r_2, ..., r_k) \in R_1 \times R_2 \times ... \times R_k$ where the rectangles $r_1, r_2, ..., r_k$ have a non-empty intersection, i.e., $r_1 \cap r_2 \cap ... \cap r_k \neq \emptyset$. The problem holds significant importance in spatial databases and has been extensively studied in the database community. In this paper, we show how to settle the problem in $O(n \log n + \out)$ time --- regardless of the constant $k$ --- where $n = \sum_{i=1}^k |R_i|$ and $\out$ is the result size (i.e., the total number of $k$-tuples reported). The runtime  is asymptotically optimal in the class of comparison-based algorithms, to which our solution belongs. Previously, the state of the art was an algorithm with running time $O(n \log^{2k-1} n + \out)$.
 \end{abstract}
 
+\keywords{Multiway Spatial Joins; Computational Geometry; Theory}
+
 \maketitle 
 
 % \begin{acks}
@@ -142,7 +144,7 @@ In \cite{kcko22}, Khamis et al.\ investigated a type of joins that extends the c
 
 \vgap 
 
-It is worth noting that $\Omega(n \log n)$ is a lower bound on the runtime of any comparison-based $k$-SJ algorithms
+$\Omega(n \log n)$ is a lower bound on the runtime of any comparison-based $k$-SJ algorithms
 %(see Appendix~\ref{app:comp-class} for a formal definition of such algorithms),
 even for $k = 2$. This can be established via a reduction from the {\em element distinctness} problem; see \cite{dl79}.
 
