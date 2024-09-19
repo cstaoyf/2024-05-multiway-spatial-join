@@ -1,5 +1,6 @@
 %\documentclass[sigconf]{acmart}
-\documentclass[acmsmall,review,anonymous]{acmart}
+%\documentclass[acmsmall,review,anonymous]{acmart}
+\documentclass[acmsmall]{acmart}
 % \documentclass{...}
 %\input{./def/yf-formatting}
 \input{./def/yf-def}
@@ -11,8 +12,8 @@
 %\usepackage{times}
 \usepackage{microtype}
 
-\def\vgap{\vspace{1mm}}
-\def\extraspacing{\vspace{2mm} \noindent}
+\def\vgap{\vspace{0mm}}
+\def\extraspacing{\vspace{1mm} \noindent}
 \def\figcapup{\vspace{-2mm}}
 \def\figcapdown{\vspace{-4mm}}
 
@@ -57,30 +58,43 @@
 %=================================
 
 %====== from acm ======
-\acmDOI{}
-\acmISBN{}
+\setcopyright{acmlicensed}
+\acmJournal{PACMMOD}
+\acmYear{2024} \acmVolume{2} \acmNumber{5 (PODS)} \acmArticle{210} \acmMonth{11}\acmDOI{10.1145/3695828}
 
-\acmConference[]{...}{...}{...}
-\acmYear{...}
-\copyrightyear{}
-\acmArticle{}
-\acmPrice{}
+\received{May 2024}
+\received[accepted]{August 2024}
+
+\begin{CCSXML}
+<ccs2012>
+   <concept>
+       <concept_id>10003752.10003809</concept_id>
+       <concept_desc>Theory of computation~Design and analysis of algorithms</concept_desc>
+       <concept_significance>500</concept_significance>
+       </concept>
+ </ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Theory of computation~Design and analysis of algorithms}
 %======================
-
 
 
 \begin{document}
 %\begin{sloppy}
     
 \title{Optimal (Multiway) Spatial Joins}
+\titlenote{This work was supported in part by GRF projects 14207820, 14203421, and 14222822 from HKRGC.}
 
-% \author{}
-% \affiliation{
-% 	\institution{Chinese University of Hong Kong}
-% 	\city{Hong Kong}
-% 	\country{China}}	
-
-\author{}
+\author{Ru Wang}
+\email{rwang21@cse.cuhk.edu.hk}
+\author{Yufei Tao}
+\email{taoyf@cse.cuhk.edu.hk}
+\affiliation{%
+  \institution{The Chinese University of Hong Kong}
+  \city{Hong Kong}
+  \state{Shatin}
+  \country{China}
+}
 
 
 \begin{abstract}
@@ -88,6 +102,10 @@
 \end{abstract}
 
 \maketitle 
+
+% \begin{acks}
+%     This work was supported in part by GRF projects 14207820, 14203421, and 14222822 from HKRGC.
+% \end{acks}
 
 \section{Introduction} \label{sec:intro}
 
@@ -247,26 +265,45 @@ In the {\em reporting version} of Problem $\mathscr{A}$, the goal is to output, 
 
 
 
+% \begin{figure*}
+%     \begin{tabular}{cc}
+%         \includegraphics[height=30mm]{./artwork/prob-a} &
+%         \includegraphics[height=27mm]{./artwork/prob-b}  \\[2mm]
+%         (a) Problem $\mathscr{A}$ &
+%         \hspace{3mm}
+%         (b) Problem $\mathscr{B}$ \\[3mm]
+%     \end{tabular}
+%     %\vspace{3mm}
+%     \begin{tabular}{ccc}
+%         \includegraphics[height=30mm]{./artwork/prob-c} &
+%         \includegraphics[height=30mm]{./artwork/prob-d} &
+%         \includegraphics[height=30mm]{./artwork/prob-e} \\[2mm]
+%         (c) Problem $\mathscr{C}$ &
+%         (d) Problem $\mathscr{D}$ &
+%         (e) Problem $\mathscr{E}$
+%     \end{tabular}
+%
+%     \figcapup
+%     \caption{Four geometric building brick problems}
+%     \label{fig:probs}
+%     \figcapdown
+% \end{figure*}
+
 \begin{figure*}
-    \begin{tabular}{cc}
-        \includegraphics[height=30mm]{./artwork/prob-a} &
-        \includegraphics[height=27mm]{./artwork/prob-b}  \\[2mm]
+    \begin{tabular}{ccccc}
+        \includegraphics[height=23mm]{./artwork/prob-a} &
+        \includegraphics[height=23mm]{./artwork/prob-b} &
+        \includegraphics[height=23mm]{./artwork/prob-c} &
+        \includegraphics[height=23mm]{./artwork/prob-d} &
+        \includegraphics[height=25mm]{./artwork/prob-e} \\[2mm]
         (a) Problem $\mathscr{A}$ &
-        \hspace{3mm}
-        (b) Problem $\mathscr{B}$ \\[3mm]
-    \end{tabular}
-    %\vspace{3mm}
-    \begin{tabular}{ccc}
-        \includegraphics[height=30mm]{./artwork/prob-c} &
-        \includegraphics[height=30mm]{./artwork/prob-d} &
-        \includegraphics[height=30mm]{./artwork/prob-e} \\[2mm]
+        (b) Problem $\mathscr{B}$ &
         (c) Problem $\mathscr{C}$ &
         (d) Problem $\mathscr{D}$ &
         (e) Problem $\mathscr{E}$
     \end{tabular}
-
     \figcapup
-    \caption{Four geometric building brick problems}
+    \caption{Five geometric building brick problems}
     \label{fig:probs}
     \figcapdown
 \end{figure*}
@@ -748,12 +785,6 @@ Performing the above for all $i, j \in [k]$ with $i \ne j$ leads to a total time
 
 We now complete the proof of Theorem~\ref{thm:main-recur}.
 
-
-\bibliographystyle{plainurl}% the mandatory bibstyle
-\bibliography{ref}
-
-\balance
-
 \appendix 
 
 % \def\vgap{\vspace{0.5mm}}
@@ -1221,6 +1252,10 @@ Now, assume that there exists an algorithm $\A$ capable of solving the 3D 3-SJ p
     \item If $\A$ has performed $1 + c \cdot (3m) \polylog (3m)$ steps, we manually terminate the algorithm and declare that $\J(R_1, R_2, R_3) \ne \emptyset$, meaning that $G$ must have at least one triangle.
 }
 The above strategy thus settles the triangle detection problem in $O(m\polylog m)$ time.
+
+\bibliographystyle{plainurl}% the mandatory bibstyle
+\bibliography{ref}
+
 
 %\end{sloppy}
 \end{document}
