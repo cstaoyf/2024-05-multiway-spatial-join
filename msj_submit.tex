@@ -1,0 +1,1227 @@
+%\documentclass[sigconf]{acmart}
+\documentclass[acmsmall,review,anonymous]{acmart}
+% \documentclass{...}
+%\input{./def/yf-formatting}
+\input{./def/yf-def}
+
+%=================================
+%Yufei's stuff
+%\usepackage{amsmath}
+\usepackage{balance}
+%\usepackage{times}
+\usepackage{microtype}
+
+\def\vgap{\vspace{1mm}}
+\def\extraspacing{\vspace{2mm} \noindent}
+\def\figcapup{\vspace{-2mm}}
+\def\figcapdown{\vspace{-4mm}}
+
+\def\A{\mathcal{A}}
+%\def\B{\mathcal{B}}
+%\def\C{\mathcal{C}}
+%\def\E{\mathcal{E}}
+%\def\G{\mathcal{G}}
+\def\I{\mathcal{I}}
+\def\J{\mathcal{J}}
+%\def\II{\mathscr{I}}
+%\def\L{\mathcal{L}}
+%\def\P{\mathcal{P}}
+%\def\Q{\mathcal{Q}}
+%\def\R{\mathcal{R}}
+\def\T{\mathcal{T}}
+%\def\U{\mathcal{U}}
+%\def\V{\mathcal{V}}
+%\def\X{\mathcal{X}}
+%\def\XX{\mathscr{X}}
+%\def\Y{\mathcal{Y}}
+%\def\YY{\mathscr{Y}}
+%\def\Z{\mathcal{Z}}
+
+\def\xleft{\mathrm{left}}
+\def\xright{\mathrm{right}}
+\def\ybot{\mathrm{bot}}
+\def\ytop{\mathrm{top}}
+\def\maxtop{\mathrm{maxtop}}
+\def\minleft{\mathrm{minleft}}
+\def\gleft{\mathrm{left\text{-}guard}}
+\def\gbot{\mathrm{bot\text{-}guard}}
+\def\cross{\mathrm{cross}}
+\def\dcross{\mathrm{d\text{-}cross}}
+\def\contain{\mathrm{contain}}
+\def\cat{\mathrm{cat1}}
+\def\catt{\mathrm{cat2}}
+\def\out{\mathrm{OUT}}
+\def\side{\mathrm{side}}
+
+\allowdisplaybreaks
+%=================================
+
+%====== from acm ======
+\acmDOI{}
+\acmISBN{}
+
+\acmConference[]{...}{...}{...}
+\acmYear{...}
+\copyrightyear{}
+\acmArticle{}
+\acmPrice{}
+%======================
+
+
+
+\begin{document}
+%\begin{sloppy}
+    
+\title{Optimal (Multiway) Spatial Joins}
+
+% \author{}
+% \affiliation{
+% 	\institution{Chinese University of Hong Kong}
+% 	\city{Hong Kong}
+% 	\country{China}}	
+
+\author{}
+
+
+\begin{abstract}
+    In a {\em spatial join}, we are given a constant number $k \geq 2$ of sets --- denoted as $R_1, R_2, ..., R_k$ --- containing axis-parallel rectangles in a 2D space. The objective is to report all $k$-tuples $(r_1, r_2, ..., r_k) \in R_1 \times R_2 \times ... \times R_k$ where the rectangles $r_1, r_2, ..., r_k$ have a non-empty intersection, i.e., $r_1 \cap r_2 \cap ... \cap r_k \neq \emptyset$. The problem holds significant importance in spatial databases and has been extensively studied in the database community. In this paper, we show how to settle the problem in $O(n \log n + \out)$ time --- regardless of the constant $k$ --- where $n = \sum_{i=1}^k |R_i|$ and $\out$ is the result size (i.e., the total number of $k$-tuples reported). The runtime  is asymptotically optimal in the class of comparison-based algorithms, to which our solution belongs. Previously, the state of the art was an algorithm with running time $O(n \log^{2k} n + \out)$.
+\end{abstract}
+
+\maketitle 
+
+\section{Introduction} \label{sec:intro}
+
+This paper studies the {\em spatial join} (SJ) problem formulated as follows. Let $k \ge 2$ be a constant integer. In the {\em $k$-SJ} problem, the input comprises $k$ sets --- denoted as $R_1, R_2, ..., R_k$ --- of axis-parallel rectangles\footnote{A rectangle is {\em axis-parallel} if it has the form $r = [x_1, x_2] \times [y_1, y_2]$.} in $\real^2$. The goal is to find all $k$-tuples $(r_1, r_2, ..., r_k)$ where
+\myitems{
+    \item $r_i \in R_i$ for each $i \in [1, k]$; and
+    \item $r_1 \cap r_2 \cap ... \cap r_k \neq \emptyset$, namely, the $k$ rectangles $r_1, r_2, ..., r_k$ have a non-empty intersection.
+}
+We represent the set of $k$-tuples described above as $\J(R_1, R_2, ..., R_k)$, referred to as the {\em join result}. Set $n = \sum_{i=1}^k |R_i|$, i.e., the input size, and $\out = |\J(R_1, R_2, ..., R_k)|$, i.e., the output size.
+
+\vgap
+
+SJ is a fundamental operation in spatial databases (SDB), which manage geometric entities such as land parcels, service areas, habitat zones, commercial districts, administrative boundaries, etc. The operation plays a crucial role in implementing the {\em filter-refinement mechanism}, which is the dominant approach for computing overlay information in an SDB. To explain this mechanism, first note that a geometric entity is typically modeled as a polygon. Determining whether two entities overlap amounts to deciding if two polygons intersect, which can be exceedingly expensive when the polygons have complex boundaries. To mitigate the issue, an SDB stores, for each polygon $\gamma$, its {\em minimum bounding rectangle} (MBR) defined as the smallest axis-parallel rectangle enclosing $\gamma$; this way, each set $\Gamma$ of geometric entities spawns a set $R$ of MBRs. Consider $k$ sets of geometric entities $\Gamma_1, \Gamma_2, ..., \Gamma_k$, and the corresponding sets of MBRs $R_1, R_2, ..., R_k$. To compute overlays from $\Gamma_1, \Gamma_2, ..., \Gamma_k$, filter-refinement first executes (i) a ``filter step'', which performs an SJ to obtain $\J(R_1, R_2, ..., R_k)$, and (ii) a ``refinement step'', which, for each $(r_1, r_2, ..., r_k) \in \J(R_1, R_2, ..., R_k)$, examines if $\gamma_1, \gamma_2, ..., \gamma_k$ indeed have a non-empty intersection, where $\gamma_i$ ($i \in [1, k]$) is the entity in $\Gamma_i$ whose MBR is $r_i$.
+
+%Two polygons $P_1$ and $P_2$ can overlap with each other only if their MBRs $r_1$ and $r_2$ intersect.
+
+\extraspacing {\bf Math Conventions.} For any integer $x \ge 1$, we use $[x]$ to represent the set $\set{1, 2, ..., x}$. Given $k \ge 2$ sets $S_1, S_2, ..., S_k$ (of arbitrary elements), we often treat a $k$-tuple $(e_1, e_2, .., e_k)$ in the cartesian product $S_1 \times S_2 \times ... \times S_k$ as a $k$-dimensional vector $\bm{t}$ with $\bm{t}[i] = e_i$ for each $i \in [k]$. Unless otherwise stated, every mention of the word ``rectangle'' henceforth will refer to an axis-parallel rectangle in $\real^2$. All logarithms have base 2 by default.
+
+\subsection{Previous Results} \label{sec:intro:prev}
+
+SJs have been extensively studied in the database-system community, leading to the development of numerous methods that, although lacking strong theoretical guarantees, exhibit good empirical performance in real-world applications. We refer interested readers to \cite{apr+00,bks93,gcn+13,js07,ks97,lr94,lr96,mp98,mp01,mp03,pd96,pmt99} as entry points into the literature.
+
+\vgap
+
+From the perspective of theory, SJs are best understood when $k = 2$, i.e., the {\em pairwise} scenario, where it is folklore that the problem can be solved by a comparison-based algorithm in $O(n \log n + \out)$ time (e.g., by planesweep \cite{bcko08}). However, the problem becomes much more challenging for $k \ge 3$, known as the {\em multiway} scenario. All the solutions developed  before 2022 (see \cite{gcn+13,mp98,mp01,pmt99} and the references therein) suffer from a worst-case time complexity of $O(n^k)$, offering essentially no improvement over the naive method that enumerates the entire cartesian product $R_1 \times R_2 \times ... \times R_k$.
+
+\vgap
+
+Year 2022 witnessed two independent works \cite{ty22,kcko22} that, although not tackling $k$-SJ directly, imply provably fast $k$-SJ algorithms. Specifically, in \cite{ty22}, Tao and Yi studied several variants of ``interval intersection joins'' under updates. Most relevant to our context is the variant where the input includes, for each $i \in [k]$, a set $\I_i$ of 1D intervals in $\real$, and the join result comprises all $k$-tuples $(I_1,$ $I_2,$ $..., I_k) \in \I_1 \times \I_2 \times ... \times \I_k$ with $\bigcap_{i=1}^k I_i \neq \emptyset$. The objective is to design a data structure, which, given the insertion (resp., deletion) of an interval in one of the $k$ sets, can identify all the newly-appearing (resp., disappearing) $k$-tuples in the join result in $O((1+\Delta) \cdot \polylog n)$ time, where $n = \sum_{i=1}^k |\I_i|$ and $\Delta$ is the number of such $k$-tuples. Tao and Yi \cite{ty22} presented a structure of $O(n \polylog n)$ space achieving the purpose. Combining their structure with planesweep, one can obtain an algorithm for solving the $k$-SJ problem in $O((n + \out) \cdot \polylog n)$ time.
+
+\vgap
+
+In \cite{kcko22}, Khamis et al.\ investigated a type of joins that extends the conventional equi-join in two ways. First, each attribute value in a relation is an interval (rather than a real value); second, each equality predicate in an equi-join is replaced with a ``non-empty intersection'' predicate on the attributes involved. The $k$-SJ problem can be converted to a join under the framework of \cite{kcko22} as defined next. For each $i \in [k]$, define $R_i$ as a relation over two attributes $X$ and $Y$. For each tuple $\bm{t} \in R_i$, its values $\bm{t}(X)$ and $\bm{t}(Y)$ on the two attributes are both intervals (effectively defining a rectangle). The objective is to output all $k$-tuples $(\bm{t}_1, \bm{t}_2, ..., \bm{t}_k) \in R_1 \times R_2 \times ... \times R_k$ satisfying $\bigcap_{i=1}^k \bm{t}_i(X) \ne \emptyset$ and $\bigcap_{i=1}^k \bm{t}_i(Y) \ne \emptyset$. It is clear that there is one-one correspondence between the result of this join and that of k-SJ. Khamis et al.\ \cite{kcko22} developed an algorithm that can process the join  in $O(n \log^{2k} n + \out)$ time.
+
+\vgap 
+
+It is worth noting that $\Omega(n \log n)$ is a lower bound on the runtime of any comparison-based $k$-SJ algorithms (see Appendix~\ref{app:comp-class} for a formal definition of such algorithms), even for $k = 2$. This can be established via a reduction from the {\em element distinctness} problem; see \cite{dl79}.
+
+%where we are given $n$ real values $e_1, e_2, ..., e_n$ and need to decide whether there are distinct $i, j \in [n]$ satisfying $e_i = e_j$. The ED problem demands $\Omega(n \log n)$ comparisons to solve \cite{dl79}.
+
+\subsection{Our Results} \label{sec:intro:ours} 
+
+In this paper, we solve the $k$-SJ problem with a comparison-based algorithm that runs in $O(n \log n + \out)$ time regardless of the constant $k$. The time complexity is asymptotically optimal in the class of comparison-based algorithms.
+
+\vgap 
+
+Our primary technical contribution is the revelation of a new property on the problem's mathematical structure. Fix any $k \ge 3$ and an {\em arbitrary} algorithm $\A$ for the $(k-1)$-SJ problem. Define function $F_{k-1}(n, \out)$ to return the worst-case running time of $\A$ on any instance of the $(k-1)$-SJ problem having input size at most $n$ and output size at most $\out$. We will establish:
+
+\begin{theorem} \label{thm:main-recur}
+    Equipped with the algorithm $\A$ as described above, the $k$-SJ problem with $k \ge 3$ can be solved in time
+    \myeqn{
+        O(k^3) \cdot \big( F_{k-1}(n, \out) + n \log n + k \cdot \out \big)
+        %\nn
+        \label{eqn:main:reccurrence}
+    }
+    where $n$ (resp., $\out$) is the input (resp., output) size of the problem. Furthermore, if $\A$ is comparison-based, the obtained $k$-SJ algorithm is also comparison-based.
+\end{theorem}
+
+The theorem implies a recursive nature of $k$-SJ. Indeed, we will see that an $k$-SJ instance with input size $n$ and output size $\out$ can be converted to $O(k^3)$ instances of the $(k-1)$-SJ problem --- all having input size at most $n$ and output size at most $\out$ --- plus an additional cost of $O(k^3) \cdot (n \log n + k \cdot \out)$. For 2-SJ, we can set $\A$  to the ``folklore algorithm'' mentioned in Section~\ref{sec:intro:prev}, which ensures $F_2(n, \out) = O(n \log n + \out)$. Combining this with \eqref{eqn:main:reccurrence} gives a recurrence that relates the time complexity of $k$-SJ to that of $(k-1)$-SJ. Solving the recurrence yields:
+
+\begin{theorem} \label{thm:main-alg}
+    For $k \ge 3$, we can settle $k$-SJ with a comparison-based algorithm in
+    \myeqn{
+        O( c^k \cdot (k!)^3 \cdot (n \log n + k \cdot \out))
+        \nn
+    }
+    time, where $c > 1$ is a positive constant.
+    %and $O(k \cdot n + \out)$ space,
+\end{theorem}
+
+
+\begin{table}
+    \begin{tabular}{c|c|c|c}
+        $\bm{k}$ & {\bf method} & {\bf runtime} & {\bf remark} \\
+        \hline\hline
+        2 & folklore & $O(n \log n + \out)$ & optimal \\
+        \hline
+        $\ge 3$ & before 2022 & $O(n^k)$ &  \\
+        $\ge 3$ & \cite{ty22} & $O((n + \out) \cdot \polylog n)$ & \\
+        $\ge 3$ & \cite{kcko22} & $O(n \log^{2k} n + \out)$ & \\
+        \hline
+        $\ge 3$ & ours & $O(n \log n + \out)$ & optimal
+    \end{tabular}
+
+    \vspace{4mm}
+    \figcapup
+    \caption{Result comparison on $k$-SJ problem for a constant $k$}
+    \label{tab:results-com}
+    \figcapdown \vspace{-3mm}
+\end{table}
+
+When $k = O(1)$, the time complexity becomes $O(n \log n$ $+ \out)$, as promised; the space consumption of our algorithm is $O(n + \out)$. Now that Theorem~\ref{thm:main-alg} offers a satisfactory $k$-SJ result for $k = O(1)$ in 2D space, it is natural to wonder whether the constraint on dimensionality 2 is necessary. Interestingly, the answer is ``yes'' as far as $k \ge 3$ is concerned, subject to the absence of breakthroughs on a classical problem in graph theory. Specifically, if the 3D version of the 3-SJ problem (which we will formally define in Appendix~\ref{app:lb-cond}) could be solved in $O((n + \out) \cdot \polylog n)$ time, we would be able to detect the presence of a triangle (i.e., 3-clique) in a graph of $m$ edges in $O(m \polylog m)$ time, which would make a remarkable breakthrough because the state of the art needs $O(m^{1.41})$ time \cite{ayz97}. This reduction can be inferred from an argument in \cite{kcko22} used to prove a more generic result. We simplify the argument for 3D 3-SJ and present the full reduction in Appendix~\ref{app:lb-cond}.
+
+\section{Preliminaries in Geometry} \label{sec:bricks}
+
+This section will first introduce some definitions and notations to be frequently used in our presentation and then formulate several computational geometry problems, whose solutions will serve as building bricks for our $k$-SJ algorithm.
+
+\extraspacing {\bf Terminology.} A {\em horizontal} segment is a segment of the form $[x_1, x_2] \times y$, and a {\em vertical} segment is a segment of the form $x \times [y_1, y_2]$. We say that a horizontal segment $h_1$ is {\em lower} (resp., {\em higher}) than another horizontal segment $h_2$ if the y-coordinate of $h_1$ is smaller (resp., larger) than that of $h_2$. Similarly, a vertical segment $v_1$ is {\em to the left} (resp., {\em right}) {\em of} another vertical segment $v_2$ if the x-coordinate of $v_1$ is smaller (resp., larger) than that of $v_2$.
+
+\vgap
+
+
+Given a horizontal segment $h = [x_1, x_2] \times y$, we say that a rectangle $r$ is a {\em left-end covering rectangle} of $h$ if $r$ contains the left endpoint of $h$ (i.e., $(x_1, y) \in r$). A horizontal/vertical segment $s$ {\em crosses} a rectangle $r$ if $s \cap r \ne \emptyset$ but $r$ covers neither of the two endpoints of $s$. A rectangle $r$ {\em contains} a horizontal/vertical segment $s$ if $r$ covers both endpoints of $s$.
+
+\vgap
+
+Let $S$ be a set of segments where either all segments are horizontal or all are vertical. Given a rectangle $r$, we define 
+\myeqn{
+    \cross_S(r) = \{s \in S \mid \text{$s$ crosses $r$} \};
+    \label{eqn:cross}
+}
+namely, $\cross_S(r)$ is the set of segments in $S$ crossing $r$.
+Let $R$ be a set of rectangles. Given a horizontal segment $h$, we define 
+\myeqn{
+    \contain_R(h) = \{r \in R \mid \text{$r$ contains $h$} \};
+    \label{eqn:contained}
+}
+namely, $\contain_R(h)$ is the set of rectangles in $R$ containing $h$.
+
+
+\begin{figure}
+    \includegraphics[height=25mm]{./artwork/guard}
+
+    \figcapup
+    \caption{For 4-tuple $\bm{t} = \set{r_1, r_2, r_3, r_4}$, $B_\bm{t}$ is the rectangle in gray, $\gleft(\bm{t}) = r_3$ and $\gbot(\bm{t}) = r_2$.}
+    \label{fig:guard}
+    \figcapdown
+\end{figure}
+
+\vgap
+
+Given a rectangle $r = [x_1, x_2] \times [y_1, y_2]$, we define $\xleft(r) = x_1$, $\xright(r) = x_2$, $\ybot(r) = y_1$, and $\ytop(r) = y_2$. Consider a $k$-tuple $\bm{t} = (r_1, r_2, ..., r_k)$ where $k \ge 2$ and each $\bm{t}[i] = r_i$ ($i \le [k]$) is a rectangle. We define
+\myeqn{
+    B_\bm{t} &=& \bigcap_{i=1}^t r_i; \label{eqn:B_t}
+}
+namely, $B_\bm{t}$ is the intersection of the rectangles in $\bm{t}$ (note: $B_\bm{t}$ is a rectangle itself). Also, define:
+\myitems{
+    \item $\gleft(\bm{t})$ as the rectangle $r_i$, $i \in [k]$, satisfying $\xleft(r_i)$ $= \xleft(B_\bm{t})$. In case multiple values in $[k]$ fulfill the condition, let $i$ be the smallest of such values.
+
+    \item $\gbot(\bm{t})$ as the rectangle $r_i$, $i \in [k]$, satisfying $\ybot(r_i)$ $= \ybot(B_\bm{t})$. In case multiple values in $[k]$ fulfill the condition, let $i$ be the smallest of such values.
+}
+See Figure~\ref{fig:guard} for an illustration. It is worth mentioning that since a horizontal segment $h$ is a degenerated rectangle, notations such as $\xleft(h)$ and $\xright(h)$ are well-defined.
+
+\extraspacing {\bf Problem $\bm{\mathscr{A}}$.} The input involves a set $P$ of 2D points and set $R$ of rectangles. In the {\em detection version} of Problem $\mathscr{A}$, the goal is to output, for each point $p \in P$, whether it is covered by at least one rectangle in $R$. Figure~\ref{fig:probs}a gives an example where $P = \set{p_1, p_2, p_3}$ and $R = \set{r_1, r_2}$; the output is ``yes'' for $p_2$ and $p_3$ and ``no'' for $p_1$. The problem can be solved in $O(n \log n)$ time where $n = |P| + |R|$ as shown
+in Appendix~\ref{app:bricks}.
+
+\vgap
+
+In the {\em reporting version} of Problem $\mathscr{A}$, the goal is to output, for each point $p \in P$, all the rectangles $r \in R$ containing $p$; if no such $r$ exists, report nothing for $p$. In Figure~\ref{fig:guard}a, for instance, the output is $\set{(p_2: r_1, r_2), (p_3: r_2)}$. As shown in Appendix~\ref{app:bricks}, The problem can be solved in $O(n \log n + \out)$ time, where $\out$ is the number of pairs $(p, r) \in P \times R$ such that $p \in r$.
+
+\extraspacing {\bf Problem $\bm{\mathscr{B}}$.} The input involves a set $H$ of horizontal segments and a set $V$ of vertical segments. The goal is to report, for each segment $h \in H$, the leftmost point $p$ on $h$ such that $p$ is on some vertical segment in $V$. If $h$ does not intersect with any segment in $V$, report nothing for $h$. Figure~\ref{fig:probs}b gives an example where $H = \set{h_1, h_2, h_3}$ and $V = \set{v_1, v_2}$; the output is $\set{(h_1, p_1), (h_2, p_2)}$. The problem can be solved in $O(n \log n)$ time where $n = |H| + |V|$, as shown in Appendix~\ref{app:bricks}.
+
+
+\extraspacing {\bf Problem $\bm{\mathscr{C}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles. The goal is to report, for each segment $h \in H$, the rightmost point $p$ on $h$ such that $p$ is covered by at least one left-end covering rectangle of $h$ in $R$ --- formally, for $h = [x_1, x_2] \times y$, we aim to find the maximum $x \in [x_1, x_2]$ such that at least one rectangle $r \in R$ covers both the point $(x_1, y)$ and the point $(x, y)$. If the point $p$ exists (i.e., $h$ has at least one left-end covering rectangle in $R$), we should output a tuple $(h, p)$; otherwise, output nothing for $h$. Figure~\ref{fig:probs}c gives an example where $H = \set{h_1, h_2, h_3}$ and $R$ includes the three rectangles shown; the output is $\set{(h_1, p_1), (h_2, p_2)}$. The problem can be solved in in $O(n \log n)$ time where $n = |H| + |R|$, as shown in Appendix~\ref{app:bricks}.
+
+\extraspacing {\bf Problem $\bm{\mathscr{D}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles. In the {\em find-lowest} version of the problem, the goal is to report, for each rectangle $r \in R$, the lowest segment in $\cross_H(r)$; see \eqref{eqn:cross} for the definition of $\cross_H(r)$. If no segment in $H$ crosses $r$, output nothing for $r$.  Figure~\ref{fig:probs}d gives an example where $H = \set{h_1, h_2, h_3}$ and $R = \set{r_1, r_2}$; the output is $\set{(r_1, h_3), (r_2, h_2)}$. The problem can be solved in $O(n \log n)$ time where $n = |H| + |R|$, as shown in Appendix~\ref{app:bricks}.
+
+
+
+\begin{figure*}
+    \begin{tabular}{cc}
+        \includegraphics[height=30mm]{./artwork/prob-a} &
+        \includegraphics[height=27mm]{./artwork/prob-b}  \\[2mm]
+        (a) Problems $\mathscr{A}$ &
+        \hspace{3mm}
+        (b) Problem $\mathscr{B}$ \\[3mm]
+    \end{tabular}
+    %\vspace{3mm}
+    \begin{tabular}{ccc}
+        \includegraphics[height=30mm]{./artwork/prob-c} &
+        \includegraphics[height=30mm]{./artwork/prob-d} &
+        \includegraphics[height=30mm]{./artwork/prob-e} \\[2mm]
+        (c) Problem $\mathscr{C}$ &
+        (d) Problem $\mathscr{D}$ &
+        (e) Problem $\mathscr{E}$
+    \end{tabular}
+
+    \figcapup
+    \caption{Four geometric building brick problems}
+    \label{fig:probs}
+    \figcapdown
+\end{figure*}
+
+\vgap
+
+In the {\em find-all-sorted} version of the problem, the goal is to report, for each rectangle $r \in R$, the entire $\cross_H(r)$ sorted by y-coordinate. Formally, if $\cross_H(r) = \set{h_1, h_2, ..., h_z}$ for some $z \ge 1$, we output $(r: h_1, h_2, ..., h_z)$, provided that $y_i \ge y_{i-1}$ for each $i \in [2, z]$ where $y_i$ (resp., $y_{i-1}$) is the y-coordinate of $h_i$ (resp., $h_{i-1}$). In the example of Figure~\ref{fig:probs}d, the output is $\set{(r_1: h_3, h_2), (r_2: h_2, h_1)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n + \out)$ time where $\out$ is the number of pairs $(h, r) \in H \times R$ such that $h$ crosses $r$.
+
+
+\extraspacing {\bf Problem $\bm{\mathscr{E}}$.} The input involves a set $H$ of horizontal segments and a set $R$ of rectangles. The goal is to report, for each segment $h \in H$, the set $\contain_R(h)$ --- defined in \eqref{eqn:contained} --- where the rectangles are sorted by their right boundaries; if $\contain_R(h)$ is empty, output nothing for $h$. Formally, if $r_1, r_2, ..., r_z$ for some $z \ge 1$ are all the rectangles in $\contain_R(h)$, we output $(h: r_1, r_2, ..., r_z)$, provided that $\xright(r_i) \ge \xright(r_{i-1})$ for each $i \in [2, z]$. Figure~\ref{fig:probs}e gives an example where $H = \set{h_1, h_2, h_3}$ and $R = \set{r_1, r_2, r_3}$; the output is $\set{(h_1: r_2, r_1), (h_2: r_2, r_3)}$. In Appendix~\ref{app:bricks}, we explain how to solve the problem in $O(n \log n + \out)$ time where $n = |H| + |R|$ and $\out$ is the number of pairs $(h, r) \in H \times R$ such that $r$ contains $h$.
+
+\section{The Core: H-V Multiway Spatial Joins} \label{sec:hv}
+
+Recall that the input of $k$-SJ comprises $k$ sets of rectangles: $R_1, R_2, ...,$ $R_k$. We now formulate a special version of $k$-SJ, named the {\em H-V $k$-SJ problem}. The special nature is reflected in the introduction of three constraints: (i) $k \ge 3$, (ii) $R_{k-1}$ should be a set of horizontal segments, and (iii) $R_k$ should be a set of vertical segments. For better clarity, we will represent the input sets as $R_1, R_2, ..., R_{k-2}, H$ ($=R_{k-1}$), and $V$ ($=R_k$). The goal is to output the join result $\J(R_1, ..., R_{k-2},$ $H, V)$, including every $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in R_1 \times ... \times R_{k-2} \times H \times V$ such that $h \cap v \cap \bigcap_{i=1}^{k-2} r_i$ is not empty.
+
+\vgap
+
+Our objective is to prove that H-V $k$-SJ can be efficiently reduced to $(k-1)$-SJ --- note: it is $(k-1)$-SJ here, rather than H-V $(k-1)$-SJ. To ensure the soundness of our notation system, let us formulate the ``1-SJ'' as the trivial problem where the input is a set $R$ of $n$ rectangles, and the goal is simply to enumerate each rectangle of $R$; the problem can obviously be ``solved'' in $O(n)$ time. We assume the existence of an algorithm $\A$ that can settle $\kappa$-SJ for all $\kappa \in [1, k-1]$. Denote by $F_\kappa(n, \out)$ the worst-case runtime of $\A$ on any instance of $\kappa$-SJ that has input size $n$ and output size $\out$. We consider that $F_\kappa(n, \out) \le F_{\kappa + 1}(n, \out)$ for any $\kappa \ge 1$, that is, its overhead on $\kappa$-SJ should not be larger than that on $(\kappa+1)$-SJ.
+
+\vgap
+
+We will establish:
+
+\begin{lemma} \label{lmm:hv}
+    Equipped with the algorithm $\A$ described above, the H-V $k$-SJ problem can be solved in
+    \myeqn{
+        O(k) \cdot \big( F_{k-1}(n, \out) + n\log n + k \cdot \out \big) \nn
+    }
+    time where $n$ (resp., $\out$) is the input (resp., output) size of the problem. Furthermore, if $\A$ is comparison-based, the H-V $k$-SJ algorithm obtained is also comparison-based.
+\end{lemma}
+
+The part of the paper from this point till the end of Section~\ref{sec:hv:type2} will be devoted to proving the above lemma. This is the most challenging step in solving the general $k$-SJ problem optimally, as will be discussed in Section~\ref{sec:ksj}, where we will prove Theorems~\ref{thm:main-recur} and \ref{thm:main-alg} based on Lemma~\ref{lmm:hv}.
+
+\vgap
+
+%The condition is equivalent to saying that the intersection point of $h$ and $v$ falls in every $r_i$ of $i \in [k-2]$.
+
+
+Consider any $k$-tuple $(r_1, ..., r_{k-2}, h, v)$ in the join result $\J(R_1, ...,$ $R_{k-2}, H, V)$. We classify the tuple into one of the two types below:
+
+\myitems{
+    \item {{\bf Type 1:}} $h$ crosses all of $r_1, ..., r_{k-2}$ and, at the same time, $v$ crosses all of $r_1, ..., r_{k-2}$; 
+    
+    \item {{\bf Type 2:}} either $h$ or $v$ fails to cross at least one rectangle in $\set{r_1, r_2, ..., r_{k-2}}$. Equivalently,
+    at least a rectangle $r_i$ (for some $i \in [k-2]$) covers an endpoint of either $h$ or $v$ or both.
+}
+Figure~\ref{fig:hv:types} illustrates a result tuple of each type, assuming $k = 4$. In Section~\ref{sec:hv:type1} (resp., \ref{sec:hv:type2}), we will explain how to produce the result tuples of Type 1 (resp., 2) in the time complexity claimed in Lemma~\ref{lmm:hv}.
+
+\extraspacing {\bf Remark.} In \cite{rdr+11}, Rahul et al.\ studied the problem of storing a set $H$ of horizontal segments and a set $V$ of vertical segments in a data structure such that, given a query rectangle $r$, all the pairs $(h, v) \in H \times V$ satisfying $h \cap v \cap r \ne \emptyset$ can be reported efficiently. They gave a structure of $O(n \log n)$ space that can be built in $O(n \log n)$ time and can be used to answer a query in $O(\log n + K)$ time, where $n = |H| + |V|$ and $K$ is the number of pairs reported. Their structure can be utilized to solve H-V 3-SJ in $O(n \log n + \out)$ time. Oh and Ahn \cite{oa19} developed a structure for solving a problem more general than that of \cite{rdr+11}; however, in the specific scenario of \cite{rdr+11}, the structure of \cite{oa19} offers the same guarantees as \cite{rdr+11}. We are unaware of a way to extend these solutions to handle H-V $k$-SJ of $k > 3$. Our method for proving Lemma~\ref{lmm:hv} is based on drastically different ideas even for $k = 3$.
+
+
+\begin{figure}
+    \begin{tabular}{cc}
+        \includegraphics[height=27mm]{./artwork/type1} &
+        \hspace{5mm} \includegraphics[height=23mm]{./artwork/type2} \\
+        (a) Type 1 &
+        (b) Type 2
+    \end{tabular}
+
+    \figcapup
+    \caption{Classifying H-V $k$-SJ result tuples ($k$ = 4)}
+    \label{fig:hv:types}
+    \figcapdown
+\end{figure}
+
+\section{H-V $k$-SJ: Result Tuples of Type 1} \label{sec:hv:type1}
+
+As before, let $R_1, ..., R_{k-2}, H$, and $V$ be the input sets of the H-V $k$-SJ problem. Denote by $\J_1$ the set of type-1 result tuples defined in Section~\ref{sec:hv}. In this section, we aim to compute a set $\J^*$ satisfying
+\myeqn{
+    \J_1
+    \subseteq
+    \J^*
+    \subseteq
+    \J(R_1, ..., R_{k-2}, H, V) \label{eqn:hv:type1:J*}
+}
+where $\J(R_1, ..., R_{k-2}, H, V)$, let us recall, is the join result of the (whole) H-V $k$-SJ. Remember that the output size $\out$ is defined as $|\J(R_1, ..., R_{k-2}, H, V)|$. From $\J^*$, we will report only those $k$-tuples belonging to $\J_1$ and ignore the rest.
+
+\extraspacing {\underline{\em Example 4.1.}} To illustrate our algorithm, we will utilize the running example in Figure~\ref{fig:hv:type1:ex}a, where $k = 4$, and $R_1 = \set{\alpha}$ (the solid rectangle), $R_2 = \set{\beta_2, \beta_2}$ (the dashed rectangles), $H$ $=$ $\set{h_1,$ $h_2,$ $..., h_6}$, and $V = \set{v_1, v_2, ..., v_5}$. The set $\J_1$ contains the following tuples: $(\alpha, \beta_2, h_2, v_3)$, $(\alpha, \beta_2, h_2, v_5)$, $(\alpha, \beta_2, h_5, v_3)$, and $(\alpha,$ $\beta_2, h_5, v_5)$. \done
+
+\extraspacing {\bf Sets $\bm{R_1', R_2', ..., R'_{k-2}}$.} Fix any $i \in [k-2]$. For each rectangle $r \in R_i$, we compute four segments:
+\myitems{
+    \item $h_\bot$ (resp., $h_\top$): the lowest (resp., highest) segment in $H$ that crosses $r$;
+    
+    \item $v_\vdash$ (resp., $v_\dashv$): the leftmost (resp., rightmost) segment in $V$ that crosses $r$.
+}
+Define $r' = [x_\vdash, x_\dashv] \times [y_\bot, y_\top]$, where $x_\vdash$ (resp., $x_\dashv$) is the x-coordinate of $v_\vdash$ (resp., $v_\dashv$), and $y_\bot$ (resp., $y_\top$) is the y-coordinate of $h_\bot$ (resp., $h_\top$). We say that $r'$ is the {\em trimmed rectangle} of $r$, and conversely, $r$ is the {\em full rectangle} of $r'$. Note that $r'$ exists if and only if $r$ is crossed by at least one horizontal segment in $H$ and by at least one vertical segment in $V$. 
+
+%Moreover, it is possible for $h_1$ and $h_2$ to be the same segment; same for $v_1$ and $v_2$. 
+
+\vgap 
+
+Construct
+\myeqn{
+    R_i' &=& \set{r' \mid r \in R_i \text{ and its trimmed rectangle $r'$ exists}}. \label{eqn:hv:type1:R_i'}
+}
+Computing the ``segment $h_\bot$'' for each $r \in R_i$ is an instance of Problem $\mathscr{D}$ (the find-lowest version, with $H$ and $R_i$ as the input). By symmetry, so is computing the $h_\top, v_\vdash$, and $v_\dashv$ segments for each $r \in R_i$. It thus follows from Section~\ref{sec:bricks} that $R_1', R_2', ..., R_{k-2}'$ can be produced in $O(kn \log n)$ total time.
+
+\vgap
+
+We now solve a $(k-2)$-SJ problem on the input $\set{R_1', R_2', ..., R_{k-2}'}$ using the algorithm $\A$ supplied (see Lemma~\ref{lmm:hv}). This $(k-2)$-SJ clearly has an input size at most $n$, and let us represent its result as $\J(R'_1, R'_2, ..., R'_{k-2})$. We prove in Appendix~\ref{app:hv:type1}:
+
+\begin{lemma} \label{lmm:hv:type1:recur-output}
+    $|\J(R_1', R'_2, ..., R'_{k-2})| \le \out$.
+\end{lemma}
+
+As a corollary of Lemma~\ref{lmm:hv:type1:recur-output}, the $(k-2)$-SJ can be settled in $F_{k-2}(n, \out)$ time.
+
+\extraspacing {\underline{\em Example 4.2.}} Figure~\ref{fig:hv:type1:ex}b shows the rectangles in $R'_1 = \set{\alpha'}$ and $R'_2$ $=$ $\{\beta'_1,$ $\beta'_2\}$. For instance, $\alpha'$, which is trimmed from rectangle $\alpha$, is decided by $h_\bot$ $=$ $h_2$, $h_\top$ $=$ $h_6$, $v_\vdash = v_3$, and $v_\dashv = v_5$. The $(k-2)$-SJ on $R'_1$ and $R'_2$ returns $\J(R_1', R'_2) = \set{(\alpha', \beta_1'), (\alpha', \beta_2')}$.
+\done
+
+
+\begin{figure*}
+    \begin{tabular}{cc}
+        %\hspace{-5mm}
+        \includegraphics[height=48mm]{./artwork/alg-ex1-a} &
+        %\hspace{-4mm}
+        \includegraphics[height=48mm]{./artwork/alg-ex1-b} \\
+        %\hspace{-5mm}
+        (a) $R_1$, $R_2$, $H$, and $V$ &
+        %\hspace{-4mm}
+        (b) $R_1'$ and $R_2'$ \\[2mm]
+        %\hspace{-4mm}
+        \includegraphics[height=48mm]{./artwork/alg-ex1-c} &
+        %\hspace{-4mm}
+        \includegraphics[height=48mm]{./artwork/alg-ex1-d} \\
+        (c) $R_1'$, $R_2'$, $H$, and $V$ &
+        (d) $R_1^*$, $R_2^*$ ($= \emptyset$), and $H$
+    \end{tabular}
+    \figcapup
+    \caption{Finding H-V $k$-SJ result tuples of type 1 ($k = 4$)}
+    \label{fig:hv:type1:ex}
+    \figcapdown
+\end{figure*}
+
+\extraspacing {\bf Generating $\bm{\J^*}$.} Take any $(k-2)$-tuple $\bm{t} = (r'_1, r'_2, ...,$ $r'_{k-2}) \in \J(R_1', R'_2, ..., R'_{k-2})$. The reader should recall from Section~\ref{sec:bricks} that
+\myitems{
+    \item $B_\bm{t}$ is $\bigcap_{i=1}^{k-2} \bm{t}[i] = \bigcap_{i=1}^{k-2} r'_i$;
+    \item $\gleft(\bm{t})$ is the $r'_i$ ($1 \le i \le k-2$) with $\xleft(r'_i) = \xleft(B_\bm{t})$;
+    \item $\gbot(\bm{t})$ is the $r'_i$ ($1 \le i \le k-2$) with $\ybot(r'_i) = \ybot(B_\bm{t})$.
+}
+We now introduce:
+\myeqn{
+    \dcross_H(\bm{t}) = \set{h \in H \mid \text{$h$ crosses both $B_\bm{t}$ and $\gbot(\bm{t})$}} \label{eqn:dcross-H} \\
+    \dcross_V(\bm{t}) = \set{v \in V \mid \text{$v$ crosses both $B_\bm{t}$ and $\gleft(\bm{t})$}}. \nn
+    %\label{eqn:dcross-H} 
+}
+The prefix ``d-'' stands for ``double''. These sets have important properties as stated in the next lemma, whose proof can be found in Appendix~\ref{app:hv:type1}:
+
+\begin{lemma} \label{lmm:hv:type1:properties}
+    %Let $r_i$ be the full rectangle of $r_i'$ for each $i \in [k-2]$.
+    All the following statements are true:
+    \myenums{
+        \item Consider any $(k-2)$-tuple $\bm{t} \in \J(R_1', R'_2, ..., R'_{k-2})$. Let $r_i$ ($i$ $\in$  $[k-2]$) be the full rectangle of $\bm{t}[i]$. Then, for any $h \in \dcross_H(\bm{t})$ and any $v \in \dcross_V(\bm{t})$, the $k$-tuple $(r_1, r_2,$ $...,$ $r_{k-2}, h, v)$ must belong to $\J(R_1, ..., R_{k-2}, H, V)$.
+        
+        \item Consider any $k$-tuple $(r_1, r_2, ..., r_{k-2}, h, v) \in \J_1$. Let $r'_i$ ($i \in [k-2])$ be the trimmed rectangle of $r_i$, and set $\bm{t} = (r'_1, r'_2, ...,$ $r'_{k-2})$. Then, we must have
+        \myitems{
+            \item $\bm{t} \in \J(R_1', R'_2, ..., R'_{k-2})$;
+            \item $h \in \dcross_H(\bm{t})$ and $v \in \dcross_V(\bm{t})$.
+        }
+
+        \item $\sum_{\bm{t}} |\dcross_H(\bm{t})| \le \out$ and $\sum_{\bm{t}} |\dcross_V(\bm{t})| \le \out$, where the two summations are over all $\bm{t} \in \J(R_1', R'_2, ..., R'_{k-2})$.
+    }
+\end{lemma}
+
+\noindent {\underline{\em Example 4.3.} Let us examine, in turn, the two 2-tuples $\bm{t}_1 = (\alpha', \beta_1')$ and $\bm{t}_2 = (\alpha', \beta_2')$ in $\J(R_1', R_2')$. For $\bm{t}_1$, $B_{\bm{t}_1}$ is the rectangle \ttt{ABCD} in Figure~\ref{fig:hv:type1:ex}c, and $\gleft(\bm{t}_1) = \gbot(\bm{t}_1) = \alpha'$. Accordingly, $\dcross_H(\bm{t}_1) = \set{h_2}$ and $\dcross_V(\bm{t}_1) = \set{v_3}$. For $\bm{t}_2$, $B_{\bm{t}_2}$ is the rectangle \ttt{AEFG}, and $\gleft(\bm{t}_2) = \gbot(\bm{t}_2) = \alpha'$. Accordingly, $\dcross_H(\bm{t}_2) = \set{h_2, h_4, h_5}$ and $\dcross_V(\bm{t}_2) = \set{v_3, v_5}$.
+\done
+
+\vgap 
+
+Equipped with Lemma~\ref{lmm:hv:type1:properties}, we generate our target $\J^*$ as follows:
+
+\vgap
+
+\mytab{
+    \> {\bf algorithm generate-$\J^*$} \\
+    \> 1.\> $\J^* = \emptyset$ \\
+    \> 2.\> {\bf for} each $(k-2)$-tuple $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ {\bf do} \\
+    \> 3.\>\> $r_i \leftarrow$ the full rectangle of $\bm{t}[i]$, for each $i \in [k-2]$ \\
+    \> 4.\>\> {\bf for} each $(h, v) \in \dcross_H(\bm{t}) \times \dcross_V(\bm{t})$ {\bf do} \\
+    \> 5.\>\>\> add $(r_1, ..., r_{k-2}, h, v)$ to $\J^*$
+}
+
+\vgap
+
+By statements (1) and (2) of Lemma~\ref{lmm:hv:type1:properties}, the set $\J^*$ thus computed indeed satisfies \eqref{eqn:hv:type1:J*}. Furthermore, if we are given $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$ for each $\bm{t}$, the above algorithm runs in $O(1 + k \cdot |\J(R'_1, ..., R'_{k-2})| + k \cdot |\J^*|) = O(1 + k \cdot \out)$ time, where the derivation used \eqref{eqn:hv:type1:J*} and Lemma~\ref{lmm:hv:type1:recur-output}.
+
+\vgap 
+
+The rest of the section will focus on how to prepare the sets $\dcross_H(\bm{t})$ of all $\bm{t} \in \J(R_1', ..., R_{k-2}')$ in $O(n \log n + k \cdot \out)$ time. An analogous method can be used to compute the sets $\dcross_V(\bm{t})$ of all $\bm{t}$ within the same time complexity.
+
+\extraspacing {\underline{\em Example 4.4.} In our running example, the $\J^*$ computed includes 7 tuples: $(\alpha, \beta_1, h_2, v_3)$, and $\{\alpha\} \times \{\beta_2\} \times \set{h_2, h_4, h_5} \times \set{v_3, v_5}$. All these 7 tuples belong to $\J(R_1, R_2, H, V)$ and include the 4 tuples in $\J_1$ (see Example 4.1).
+\done
+
+\extraspacing {\bf Sets $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} Fix any $i \in [k-2]$. Define for each $r' \in R_i'$:
+\myeqn{
+    \maxtop(r') &=& \max_{\bm{t} \in \J(R'_1, ..., R'_{k-2}): \gbot(\bm{t}) = r'} \ytop(B_\bm{t}). 
+    \label{eqn:hv:type1:maxtop}
+}
+We set $\maxtop(r')$ to $-\infty$ if no $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ has $r'$ as the $\gbot(\bm{t})$. When $\maxtop(r') \ne -\infty$, assuming $r' = [x_1, x_2] \times [y_1, y_2]$, we introduce a rectangle
+\myeqn{
+    r^* &=& [x_1, x_2] \times [y_1, \maxtop(r')]. \label{eqn:hv:type1:topsliced}
+}
+and call it the {\em top-sliced rectangle} of $r'$.
+
+%\vgap
+
+\extraspacing {\underline{\em Example 4.5.} Recall from Example 4.3 that rectangle $\alpha'$ is both $\gbot(\bm{t}_1)$ and $\gbot(\bm{t}_2)$. Thus, $\maxtop(\alpha') = \max\{\ytop(B_{\bm{t}_1}),$ $\ytop(B_{\bm{t}_2})\} = \max\{6, 9.5\} = 9.5$. The top-sliced rectangle of $\alpha'$ is the rectangle $\alpha^*$ in Figure~\ref{fig:hv:type1:ex}d. Rectangles $\beta'_1$ and $\beta'_2$ do not have top-sliced rectangles.
+\done
+
+\vgap 
+
+Next, we construct from $R_i'$ a new set of rectangles: 
+\myeqn{
+    R^*_i = \set{r^* \mid r' \in R_i' \text{ and its top-sliced rectangle $r^*$ exists}}. \label{eqn:hv:type1:R*}
+}
+In Appendix~\ref{app:hv:type1}, we show how to compute $R^*_1, ..., R^*_{k-2}$ altogether in $O(n + k \cdot \out)$ total time.
+
+\vgap 
+
+Our interest lies specifically in the sets $\cross_H(r^*)$ of the rectangles $r^*$ in $R^*_i$, where $\cross_H(r^*)$ --- defined in \eqref{eqn:cross} --- is the set of segments in $H$ crossing $r^*$. The following lemma, proven in Appendix~\ref{app:hv:type1}, presents some useful properties of these sets.
+
+\begin{lemma} \label{lmm:hv:type1:cross-r*}
+    Both statements below are true: 
+    \myenums{
+        \item $\sum_{i=1}^{k-2} \sum_{r^* \in R^*_i} |\cross_H(r^*)| \le \out$.
+        
+        \item Consider any tuple $\bm{t} \in \J(R'_1, ..., R'_{k-2})$. Let $r' = \gbot(\bm{t})$ and $r^*$ be the top-sliced rectangle of $r'$. Then, we have $\dcross_H(\bm{t})$ $\subseteq \cross_H(r^*)$. Furthermore, if the (horizontal) segments of $\cross_H(r^*)$ are sorted in ascending order of their y-coordinates, then $\dcross_H(\bm{t})$ includes a prefix of the sorted order.
+    }
+\end{lemma}
+
+\extraspacing {\underline{\em Example 4.6.}} It is clear from Figure~\ref{fig:hv:type1:ex}d that $\cross_H(\alpha^*)$ contains $h_2, h_4$, and $h_5$, sorted in ascending order of their y-coordinates. Recall that $\gbot(\bm{t}_1) = \gbot(\bm{t}_2) = \alpha'$. Both $\dcross_H(\bm{t}_1) = \set{h_2}$ and $\dcross_H(\bm{t}_2) = \set{h_2, h_4, h_5}$ are indeed prefixes of the sorted $\cross_H(\alpha^*)$, as stated in Lemma~\ref{lmm:hv:type1:cross-r*}.
+\done
+
+Finding the $\cross_H(r^*)$ sets of all $r^* \in R^*_i$ is an instance of the find-all-sorted version of Problem $\mathscr{D}$ (with $H$ and $R^*_i$ as the input). Statement (1) of Lemma~\ref{lmm:hv:type1:cross-r*}, as well as the discussion in Section~\ref{sec:bricks}, assures us that the total time to do so for all $R^*_1, ..., R^*_{k-2}$ is bounded by $O(k n \log n + \out)$. Note that, for each $\cross_H(r^*)$ computed, the (horizontal) segments therein have been sorted in ascending order of y-coordinate.
+
+
+\extraspacing {\bf Computing the ``d-cross'' Sets.} We are ready to compute $\dcross_H(\bm{t})$, defined in \eqref{eqn:dcross-H}, for any $\bm{t} \in \J(R'_1, ..., R'_{k-2})$, thanks to Statement (2) of Lemma~\ref{lmm:hv:type1:cross-r*}. First, compute $B_\bm{t}$, obtain the rectangle $r' = \gbot(\bm{t})$, and fetch the (already computed) top-sliced rectangle $r^*$ of $r'$; these steps require $O(k)$ time. Then, scan the segments in $\cross_H(r^*)$ in ascending order of their y-coordinates. For each segment $h$ scanned, check whether $h$ belongs to $\dcross_H(\bm{t})$, namely, whether $h$ crosses $B_\bm{t}$ (the reader can verify that $h$ must cross $\gbot(\bm{t})$); this can be done in constant time. Abort the scan as soon as $h \notin \dcross_H(\bm{t})$. This way, we produce $\dcross_H(\bm{t})$ in $O(k + |\dcross_H(\bm{t})|)$ time. Doing so for all $\bm{t} \in \J(R'_1, ..., R'_{k-2})$ takes $O(k \cdot |\J| + \sum_\bm{t} |\dcross_H(t)|) = O(k \cdot \out)$ time, where the derivation used Lemma~\ref{lmm:hv:type1:recur-output} and statement (3) of Lemma~\ref{lmm:hv:type1:properties}.
+
+\vgap 
+
+We conclude that $\J_1$ --- the set of type-1 result tuples --- can be computed in $F_{k-2}(n, \out) + O(kn \log n +  k \cdot \out)$ time.
+
+
+\begin{figure*}
+    \begin{tabular}{cc}
+        %\hspace{-5mm}
+        \includegraphics[height=48mm]{./artwork/alg-ex2-a} &
+        %\hspace{-4mm}
+        \includegraphics[height=48mm]{./artwork/alg-ex2-b} \\
+        %\hspace{-5mm}
+        (a) $R_1$, $R_2$, $H$, and $V$ &
+        %\hspace{-4mm}
+        (b) $R_1$, $H'$, and $V$ \\ [2mm]
+        \includegraphics[height=48mm]{./artwork/alg-ex2-c} &
+        \includegraphics[height=48mm]{./artwork/alg-ex2-d} \\
+        %\hspace{-4mm}
+        (c) $R_2$, $H'$, and $V$ &
+        %\hspace{-4mm}
+        (d) $R_2$ and $H^*$
+    \end{tabular}
+    \figcapup
+    \caption{Finding H-V $k$-SJ result tuples of type 2 ($k = 4$)}
+    \label{fig:hv:type2:ex}
+    \figcapdown
+\end{figure*}
+
+
+\section{H-V $k$-SJ: Result Tuples of Type 2} \label{sec:hv:type2}
+
+Still, denote by $R_1, ..., R_{k-2}, H$, and $V$ the input sets of the H-V $k$-SJ problem. This section will explain how to find the result tuples of Type 2 as defined in Section~\ref{sec:hv}.
+
+\vgap
+
+As mentioned before, for a result tuple $(r_1, ..., r_{k-2}, h, v)$ of this type, a rectangle $r_i$, for some $i \in [k-2]$, covers an endpoint of $h$ or $v$ or both. As (i) there are $k-2$ choices for $i$ and (ii) $h$ and $v$ together have four endpoints, we can divide Type 2 further into $4(k-2)$ ``sub-types'': in subtype 1 (resp., 2), $r_1$ covers the left (resp., right) endpoint of $h$, in subtype 3 (resp., 4), $r_1$ covers the bottom (resp., top) endpoint of $v$, in subtype 5 (resp., 6), $r_2$ covers the left (resp., right) endpoint of $h$, etc. It is possible for the result tuple to belong to multiple sub-types simultaneously. Next, we will focus on producing the result tuples of a particular sub-type:
+\myeqn{
+    \J_2  &=& \{(r_1, ..., r_{k-2}, h, v) \in \J(R1, ..., R_{k-2}, H, V) \mid \text{$r_{k-2}$ covers the left endpoint of $h$}\}. \label{eqn:hv:type2:J2}
+}
+The other sub-types can be found analogously.
+
+\vgap
+
+A remark is in order about duplicate removal. By finding each sub-type separately, we may see the same result tuple multiple times (precisely, up to $4(k-2)$ times) in the whole algorithm. However, this does not mean that the tuple needs to be reported multiple times. Whenever a type-2 result tuple is found, we can immediately decide in $O(k)$ time all the sub-types it belongs to. To avoid outputting the tuple more than once, we can enforce a policy to designate a specific sub-type for outputting. One such policy is the following: among all sub-types that the tuple belongs to, identify the one with the smallest sub-type number $t$ (an integer from 1 to $4(k-2)$); report the tuple only when we are computing the particular sub-type $t$.
+
+\extraspacing {\underline{\em Example 5.1.}} To illustrate our algorithm, we will utilize the running example in Figure~\ref{fig:hv:type2:ex}a, where $k = 4$, and $R_1 = \set{\alpha}$, $R_2 = \set{\beta_1, \beta_2, \beta_3}$, $H$ $=$ $\set{h_1,$ $h_2,$ $h_3}$, and $V = \set{v_1, v_2}$. The set $\J_2$ contains the following tuples: $(\alpha, \beta_1, h_2, v_1)$, $(\alpha, \beta_1, h_3, v_1)$, $(\alpha, \beta_2, h_3, v_1)$, $(\alpha, \beta_3, h_3, v_1)$, and $(\alpha, \beta_3, h_3, v_2)$. \done
+
+
+\extraspacing {\bf Set $\bm{H'}$.} Take any horizontal segment $h = [x_1, x_2] \times y \in H$. Recall from Section~\ref{sec:bricks} that a left-end covering rectangle of $h$ is a rectangle covering the left endpoint of $h$. 
+Let $p$ be the rightmost point on $h$ such that at least one left-end covering rectangle of $h$ in $R_{k-2}$ covers $p$. This $p$ exists if and only if $h$ has at least one left-end covering rectangle in $R_{k-2}$. If $p$ exists and has coordinates $(x, y)$, we refer to the segment $h' = [x_1, x] \times y$ as the {\em trimmed segment} of $h$; conversely, we call $h$ the {\em full segment} of $h'$.
+
+\vgap 
+
+Construct
+\myeqn{
+    H' &=& \{h' \mid h \in H \text{ and its trimmed segment $h'$ exists} \}. \label{eqn:hv:type2:H'}
+}
+The construction is an instance of Problem $\mathscr{C}$ (with $H$ and $R_{k-2}$ as the input) and finishes in $O(n \log n)$ time based on the discussion in Section~\ref{sec:bricks}.
+
+\vgap 
+
+Now, solve a $(k-1)$-SJ problem on the input $\set{R_1, ..., R_{k-3}, H', V}$ using the algorithm $\A$ supplied (by Lemma~\ref{lmm:hv}). Let $\J(R_1, ...,$ $R_{k-3}, H', V)$ represent the result of this $(k-1)$-SJ, whose input size is at most $n$. Given the lemma below (which is proved in Appendix~\ref{app:hv:type2}), we assert that $\J(R_1, ..., R_{k-3}, H', V)$ can be computed in $F_{k-1}(n, \out)$ time.
+
+\begin{lemma} \label{lmm:hv:type2:recur-output}
+    $|\J(R_1, ..., R_{k-3}, H', V)| \le \out$.
+\end{lemma}
+
+\noindent {\underline{\em Example 5.2.}} Segment $h_1$ has no left-covering rectangle in $R_2$ (see Figure~\ref{fig:hv:type2:ex}a) and thus has no trimmed segment. Segment $h_2$ has one left-covering rectangle in $R_2$, which is $\beta_1$. As the entire $h_2$ is covered by $\beta_1$, it is equivalent to its trimmed segment $h_2'$; see Figure~\ref{fig:hv:type2:ex}b. Segment $h_3$ has two left-covering rectangles in $R_2$, which are $\beta_2$ and $\beta_3$. The right endpoint of its trimmed segment $h_3'$, as shown in Figure~\ref{fig:hv:type2:ex}b, is decided by the right edge of $\beta_3$. Therefore, $H' = \set{h_2', h_3'}$. It is clear from Figure~\ref{fig:hv:type2:ex}b that $\J(R_1, H', V)$ has 3 tuples: $\bm{t}_1 = (\alpha, h_2', v_1), \bm{t}_2 = (\alpha, h_3', v_1)$, and $\bm{t}_3 = (\alpha, h_3', v_2)$.
+\done
+
+\extraspacing {\bf Generating $\bm{\J_2}$.} Take any $(k-1)$-tuple $\bm{t} = (r_1, ..., r_{k-3}, h', v) \in \J(R_1, ..., R_{k-3}, H', V)$. Note that $B_\bm{t}$ --- defined in \eqref{eqn:B_t} --- is the point $h' \cap v$ (the intersection of $h'$ and $v$). Suppose that $h' = [x_1, x_2] \times y$ and $B_\bm{t} = (x, y)$; we define the {\em effective horizontal segment} of $\bm{t}$ as the horizontal segment $[x_1, x] \times y$. This allows us to define
+\myeqn{
+    \contain_{R_{k-2}}(\bm{t}) = \{r \in R_{k-2} \mid \text{$r$ contains the effective horizontal segment of $\bm{t}$}   \}
+    \label{eqn:type2:contained-t}
+}
+The above should not be confused with \eqref{eqn:contained}, where the ``$\contain$'' function takes a segment as the parameter, rather than a tuple.
+
+\extraspacing {\underline{\em Example 5.3.}} Consider the tuples $\bm{t}_1$, $\bm{t}_2$, and $\bm{t}_3$ of $ \J(R_1, H', V)$ given in Example 5.2. For $\bm{t}_1 = (\alpha, h_2', v_1)$, its effective horizontal segment is $\texttt{DC}$ (see Figure~\ref{fig:hv:type2:ex}b). For $\bm{t}_2 = (\alpha, h_3', v_1)$, its effective horizontal segment is \texttt{EB}. For $\bm{t}_3 = (\alpha, h_3', v_2) \in \J(R_1, H', V)$, its effective horizontal segment is \texttt{EA}. Accordingly, as can be seen from Figure~\ref{fig:hv:type2:ex}c,
+$\contain_{R_{k-2}}(\bm{t}_1) = \contain_{R_2}(\bm{t}_1) = \set{\beta_1}$, $\contain_{R_2}(\bm{t}_2) = \set{\beta_1, \beta_2, \beta_3}$, and $\contain_{R_2}(\bm{t}_3) = \set{\beta_3}$.
+\done
+
+\vgap 
+
+We prove the next lemma in Appendix~\ref{app:hv:type2} (the reader may want to be reminded that, for each $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$, $\bm{t}[k-2]$ is a horizontal segment and $\bm{t}[k-1]$ is a vertical segment).
+
+\begin{lemma} \label{lmm:hv:type2:properties}
+    All the following statements are true:
+    \myenums{
+        \item Consider any $(k-1)$-tuple $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$. Denote by $h$ the full segment of $\bm{t}[k-2]$. Then, for any $r \in \contain_{R_{k-2}}(\bm{t})$, the $k$-tuple $(\bm{t}[1], ..., \bm{t}[k-3], r, h, \bm{t}[k-1])$ belongs to $\J_2$.
+        
+        \item Consider any $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in \J_2$. Let $h'$ be the trimmed segment of $h$ and set $\bm{t} = (r_1, ..., r_{k-3}, h', v)$. Then, $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$ and $r_{k-2} \in \contain_{R_{k-2}}(\bm{t})$.
+        
+        \item $\sum_{\bm{t}} |\contain_{R_{k-2}}(\bm{t})| \le \out$, where the summation is over all $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$.
+    }
+\end{lemma}
+
+
+Equipped with Lemma~\ref{lmm:hv:type2:properties}, we generate our target $\J_2$ as follows:
+
+\vgap
+
+\mytab{
+    \> {\bf algorithm generate-$\J_2$} \\
+    \> 1.\> $\J_2 = \emptyset$ \\
+    \> 2.\> {\bf for} each $(k-2)$-tuple $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$ {\bf do} \\
+    \> 3.\>\> $h \leftarrow$ the full segment of $\bm{t}[k-2]$ \\
+    \> 4.\>\> {\bf for} each $r \in \contain_{R_{k-2}}(\bm{t})$ {\bf do} \\
+    \> 5.\>\>\> add $(\bm{t}[1], ..., \bm{t}[k-3], r, h, \bm{t}[k-1])$ to $\J_2$
+}
+
+\vgap
+
+The correctness of the algorithm follows from statements (1) and (2) of Lemma~\ref{lmm:hv:type2:properties}. Furthermore, if we are given $\contain_{R_{k-2}}(\bm{t})$ for each $\bm{t}$, statement (3) of Lemma~\ref{lmm:hv:type2:properties}
+assures us that the algorithm runs in $O(1 + k \cdot |\J(R_1, ..., R_{k-3}, H', V)| + k \sum_\bm{t} |\contain_{R_{k-2}}(\bm{t})|) = O(1 + k \cdot \out)$ time, where the derivation used Lemma~\ref{lmm:hv:type2:recur-output} and statement (3) of Lemma~\ref{lmm:hv:type2:properties}.
+
+\extraspacing {\underline{\em Example 5.4.}} For $\bm{t}_1 = (\alpha, h_2', v_1)$, the full segment of $h_2'$ is $h_2$. As $\beta_1$ is the only rectangle in $\contain_{R_2}(\bm{t}_1)$, Line 5 of the algorithm adds tuple $(\alpha, \beta_1, h_2, v_1)$ to $\J_2$. For $\bm{t}_2 = (\alpha, h_3', v_1)$, the full segment of $h_3'$ is $h_3$. As $\contain_{R_2}(\bm{t}_2) = \set{\beta_1, \beta_2, \beta_3}$, Line 5 adds $(\alpha, \beta_1, h_3, v_1)$, $(\alpha, \beta_2, h_3, v_1)$, and $(\alpha, \beta_3, h_3, v_1)$ to $\J_2$. Finally, the processing of $\bm{t}_3 = (\alpha, h_3', v_2)$ adds $(\alpha, \beta_3, h_3, v_2)$ to $\J_2$.
+\done
+
+\extraspacing {\bf Set $\bm{H^*}$.} 
+For each segment $h' \in H'$, define
+\myeqn{
+    \minleft(h') = \min_{\substack{\text{$\bm{t} \in \J(R_1, ..., R_{k-3}, H', V):$}\\ \text{$\bm{t}[k-2] = h'$}}} \text{$x$-coordinate of $\bm{t}[k-1]$}. 
+    \label{eqn:minleft}
+}
+We set $\minleft(h')$ to $\infty$ if no $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$ has $h'$ in its field $\bm{t}[k-2]$. When $\minleft(h') \ne \infty$, assuming $h' = [x_1, x_2] \times y$, we introduce a horizontal segment
+\myeqn{
+    h^* &=& [x_1, \minleft(h')] \times y. \nn
+}
+and call it the {\em minimal segment} of $h'$.
+
+\extraspacing {\underline{\em Example 5.5.}} As mentioned, $\J(R_1, H', V)$ has 3 tuples $\bm{t}_1$, $\bm{t}_2$, and $\bm{t}_3$. Both $\bm{t}_2 = (\alpha, h_3', v_1)$ and $\bm{t}_3 = (\alpha, h_3', v_2)$ have $h_3'$ as the horizontal segment. Therefore, $\minleft(h_3')$ equals 5, which is the smaller between the x-coordinate of $v_1$ and that of $v_2$. The minimal segment $h_3^*$ of $h_3'$ is shown in Figure~\ref{fig:hv:type2:ex}(c). On the other hand, it is easy to verify that $\minleft(h_2')$ is the x-coordinate of $v_1$. The minimal segment $h_2^*$ of $h_2'$ is also shown in Figure~\ref{fig:hv:type2:ex}(c).
+\done
+
+\vgap 
+
+Next, we construct a new set of horizontal segments: 
+\myeqn{
+    H^* = \set{h^* \mid h' \in H' \text{ and its minimal segment $h^*$ exists}}. \label{eqn:hv:type2:H*}
+}
+This can be done in $O(n + k \cdot \out)$ time, as shown in Appendix~\ref{app:hv:type2}.
+
+\vgap 
+
+We are interested in the sets $\contain_{R_{k-2}}(h^*)$ of the segments $h^*$ in $H^*$, where $\contain_{R_{k-2}}(h^*)$ --- defined in \eqref{eqn:contained} --- is the set of rectangles in $R_{k-2}$ containing $h^*$. These sets have some useful properties:
+
+\begin{lemma} \label{lmm:hv:type2:contained-h*}
+    Both statements below are true: 
+    \myenums{
+        \item $\sum_{h^* \in H^*} |\contain_{R_{k-2}}(h^*)| \le \out$.
+        
+        \item Consider any tuple $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$. Set $h' = \bm{t}[k-2]$ and let $h^*$ be the minimal segment of $h'$. Then, $$\contain_{R_{k-2}}(\bm{t}) \subseteq \contain_{R_{k-2}}(h^*).$$ Furthermore, if the rectangles $r$ in $\contain_{R_{k-2}}(h^*)$ are sorted in descending order of $\xright(r)$, then $\contain_{R_{k-2}}(\bm{t})$ includes a prefix of the sorted order.
+    }
+\end{lemma}
+
+The proof can be found in Appendix~\ref{app:hv:type2}.
+
+\extraspacing {\underline{\em Example 5.6.}} It is clear from Figure~\ref{fig:hv:type2:ex}(d) that $\contain_{R_2}(h_3^*)$ has rectangles $\beta_3, \beta_2$, $\beta_1$, sorted in descending order of their right boundaries' x-coordinates. Consider $\bm{t}_2 = (\alpha, h_3', v_1)$ and $\bm{t}_3 = (\alpha, h_3', v_2)$. Segment $h_3^*$ is the minimal segment of $h_3'$. As stated in Lemma~\ref{lmm:hv:type2:contained-h*}, both $\contain_{R_2}(\bm{t}_2) = \set{\beta_1, \beta_2, \beta_3}$ and $\contain_{R_2}(\bm{t}_3) = \set{\beta_1}$ are prefixes of the sorted order of $\contain_{R_2}(h_3^*)$. Regarding $h_2^*$, it is the minimal segment of $h_2'$, and $\contain_{R_2}(h_2^*)$ contains only  $\beta_1$. For $\bm{t}_1 = (\alpha, h_2', v_1)$, $\contain_{R_2}(\bm{t}_1) = \set{\beta_1}$ is a (trivial) prefix of $\contain_{R_2}(h_2^*)$, as is also consistent with the lemma.
+\done
+
+Finding the $\contain_{R_{k-2}}(h^*)$ sets of all $h^* \in H^*$ is an instance of Problem $\mathscr{E}$ (with $H^*$ and $R_{k-2}$ as the input). The cost is $O(n \log n + \out)$ according statement (1) of Lemma~\ref{lmm:hv:type1:cross-r*} and the discussion in Section~\ref{sec:bricks}. Note that, for each $\contain_{R_{k-2}}(h^*)$ computed, the rectangles $r$ therein have been sorted in descending order of $\xright(r)$.
+
+
+\extraspacing {\bf Computing the ``$\bm{\contain_{R_{k-2}}(t)}$'' Sets.} Statement (2) of Lemma~\ref{lmm:hv:type2:contained-h*} allows us to produce $\contain_{R_{k-2}}(\bm{t})$ --- defined in \eqref{eqn:type2:contained-t} --- for each $\bm{t} \in \J(R_1, ..., R_{k-3}, H', V)$ as follows. First, fetch the (already computed) minimal segment $h^*$ of $\bm{t}[k-2]$ in $O(1)$ time. Then, scan the rectangles $r$ of $\contain_{R_{k-2}}(h^*)$ in descending order of $\xright(r)$. For each $r$ scanned, check whether $r \in \contain_{R_{k-2}}(\bm{t})$, or equivalently, whether $r$ covers $B_\bm{t}$ (recall that $B_\bm{t}$ is a point); the cost of this inspection is $O(1)$. Abort the scan as soon as $r \notin
+\contain_{R_{k-2}}(\bm{t})$. This way, $\contain_{R_{k-2}}(t)$ can be decided in $O(k + |\contain_{R_{k-2}}(\bm{t})|)$ time. Doing so for all $\bm{t} \in \J(R_1, ..., R_{k-3},$ $H', V)$ takes $O(k \cdot |\J| + \sum_\bm{t} |\contain_{R_{k-2}}(\bm{t})|) = O(k \cdot \out)$ time, where the derivation used Lemma~\ref{lmm:hv:type2:recur-output} and statement (3) of Lemma~\ref{lmm:hv:type2:properties}.
+
+
+
+\vgap 
+
+We conclude that $\J_2$ --- see \eqref{eqn:hv:type2:J2} --- can be computed in $F_{k-1}(n, \out) + O(n \log n +  k \cdot \out)$ time. Remember that, to generate the entire type-2 result, we need to repeat the algorithm $4(k-2)$ times (one for each sub-type). The total running time is therefore $O(k) \cdot (F_{k-1}(n, \out) + n \log n +  k \cdot \out)$, as claimed in Lemma~\ref{lmm:hv}.
+
+
+\section{Settling $k$-SJ} \label{sec:ksj}
+
+This section will tackle the $k$-SJ problem in its general form, where the input comprises $k \ge 3$ sets of rectangles $R_1, R_2, ..., R_k$. The join result $\J(R_1, R_2, ..., R_k)$ is the set of $k$-tuples $\bm{t} = (r_1, r_2, ..., r_k) \in R_1 \times R_2 \times ... \times R_k$ satisfying the condition that $B_\bm{t}$ --- which is $\bigcap_{i=1}^k r_i \ne \emptyset$ (see \eqref{eqn:B_t}) --- is non-empty.
+
+\vgap 
+
+Consider any result tuple $\bm{t} = (r_1, r_2, ..., r_k) \in \J(R_1, R_2, ..., R_k)$, and let $p$ be the top-left corner of $B_\bm{t}$. Depending on how $p$ is determined, we classify $\bm{t}$ into one of the two categories below: 
+\myitems{
+    \item {{\bf Cat.\ 1:}} $p$ is the top-left corner of $r_i$ for some $i \in [k]$. 
+    
+    \item {{\bf Cat.\ 2:}} $p$ is not a corner of any of $r_1, ..., r_k$. This means $p$ must be the intersection point between the top edge of some rectangle $r_i$ and the left edge of another rectangle $r_j$, where $i, j \in [k]$ and $i \ne j$.
+}
+Figure~\ref{fig:ksj:cats} illustrates a tuple of each category, assuming $k=4$. 
+
+\vgap
+
+The rest of this section serves as a proof of Theorem~\ref{thm:main-recur}. Theorem~\ref{thm:main-alg} is a corollary of Theorem~\ref{thm:main-recur}, as proved in Appendix~\ref{app:main-alg}. As stated in Theorem~\ref{thm:main-recur}, we are given an algorithm $\A$ that can solve any $(k-1)$-SJ problem in $F_{k-1}(n, \out)$ time, where $n$ and $\out$ are the input and output sizes, respectively. Equipped with $\A$, we will show how to find the result tuples of each category within the time complexity of \eqref{eqn:main:reccurrence}.
+
+\extraspacing {\bf Category 1.} Given an $i \in [k]$, we denote by $\J^\cat_i$ the set of $k$-tuples $\bm{t} = (r_1, ..., r_k) \in \J(R_1, ..., R_k)$ such that the top-left corner of $B_\bm{t}$ is the top-left corner of $\bm{t}[i] = r_i$. We will show how to compute $\J^\cat_i$ for $i = k$; the set $\J^\cat_i$ of every other $i$ can be produced in the same manner.
+
+\vgap 
+
+For every $\bm{t} = (r_1, r_2, ..., r_k) \in \J^\cat_k$, the top-left corner of $r_k$ must be covered by all of $r_1, ..., r_{k-1}$. This observation motivates us to find $\J^\cat_k$ as follows. First, collect the set $P$ of top-left corners of all the rectangles in $R_k$. Remove from $P$ every point $p$ with the property that, there exists at least one $j \in [k-1]$ such that $p$ is covered by no rectangle in $R_j$. This requires solving $k-1$ instances of the detection version of Problem $\mathscr{A}$ (in each instance, the input includes $P$ together with a different $R_j$, $j \in [k-1]$); the cost is $O(k n \log n)$ by the discussion in Section~\ref{sec:bricks}.
+
+\vgap 
+
+Let $P'$ be the set of remaining points in $P$ after the aforementioned removal. Next, for each $j \in [k-1]$, solve the reporting version of Problem $\mathscr{A}$ by feeding $P'$ and $R_j$ as the input. This produces the set $\contain_{R_j}(p)$ for each point $p \in P'$, where $\contain_{R_j}(p)$ is defined in \eqref{eqn:contained} (treating $p$ as a degenerated ``horizontal segment'') and includes all rectangles of $R_j$ covering $p$. By the discussion in Section~\ref{sec:bricks}, the total cost of this step is bounded by
+\myeqn{
+    O\Big(kn \log n + \sum_{p \in P'} \sum_{j \in [k-1]} |\contain_{R_j}(p)| \Big). \label{eqn:ksj:cat1:help1}
+}
+
+We are ready to generate $\J^\cat_k$. Take any point $p \in P'$, and let $r \in R_k$ be the rectangle with $p$ as the top-left corner. For every $(k-1)$-tuple
+\myeqn{
+    (r_1, ..., r_{k-1}) \in \contain_{R_1}(p) \times ... \times \contain_{R_{k-1}}(p) \nn
+    %\label{eqn:ksj:cat1:help2}
+}
+we add $(r_1, ..., r_{k-1}, r)$ to $\J^\cat_k$. Performing the above for all $p \in P'$ generates the whole $\J^\cat_k$ in $O(1 + k \cdot|\J^\cat_k|)$ time. The way $P'$ is computed ensures that $\contain_{R_j}(p) \ne \emptyset$ for each $j \in [k-1]$. Hence, $\sum_{j \in [k-1]} |\contain_{R_j}(p)| \le \prod_{j \in [k-1]} |\contain_{R_j}(p)|$, which implies that \eqref{eqn:ksj:cat1:help1} is bounded by $O(kn \log n + k \cdot |\J^\cat_k|) = O(kn \log n + k \cdot \out)$ .
+
+\vgap 
+
+Therefore, the total time of computing all of $\J^\cat_1, ..., \J^\cat_k$ is $O(k) \cdot (kn \log n + k \cdot \out)$. A category-1 result tuple $\bm{t}$ may be seen more than once (this happens if the top-left corner of $B_\bm{t}$ is the top-left corner of more than one rectangle in $\bm{t}$). Duplicate removal can be implemented at no extra cost asymptotically, following the ideas explained in Section~\ref{sec:hv:type2}.
+
+
+\begin{figure}
+    \begin{tabular}{cc}
+        \includegraphics[height=27mm]{./artwork/cat1} &
+        \hspace{5mm} \includegraphics[height=27mm]{./artwork/cat2} \\
+        (a) Category 1 &
+        (b) Category 2
+    \end{tabular}
+
+    \figcapup
+    \caption{Classifying $k$-SJ result tuples ($k$ = 4)}
+    \label{fig:ksj:cats}
+    \figcapdown
+\end{figure}
+
+\extraspacing {\bf Category 2.} Given $i, j \in [k]$ with $i \ne j$, we denote by $\J^\catt_{i,j}$ the set of $k$-tuples $\bm{t} = (r_1, ..., r_k) \in \J(R_1, ..., R_k)$ such that the top-left corner of $B_\bm{t}$ is the intersection between the top edge of $r_i$ and the left edge of $r_j$. The Category 2 of result tuples is the union of the $\J^\catt_{i,j}$ of all possible $i, j$. 
+
+\vgap 
+
+The computation of $\J^\catt_{i,j}$ is an instance of the H-V $k$-SJ problem. Specifically, collect the top-edges of all rectangles of $R_i$ into a set $H$, and collect the left-edges of all the rectangles of $R_j$ into a set $V$. This yields an H-V $k$-SJ instance whose input comprises all the $R_z$ with $z \in [k] \setminus \set{i,j}$,  $H$, and $V$. Each result tuple consists of a rectangle $r_z \in R_z$, for $z \in [k] \setminus \set{i,j}$, a horizontal segment $h \in H$, and a vertical segment $v \in V$ such that $h \cap v \cap \bigcap_{z \in [k] \setminus \set{i,j}} r_z \ne \emptyset$. There is one-one correspondence between the output of the H-V $k$-SJ and $\J^\catt_{i,j}$. Thus, by Lemma~\ref{lmm:hv}, the H-V $k$-SJ can be solved in $O(k) \cdot (F_{k-1}(n, |\J^\catt_{i,j}|) + n \log n + k \cdot |\J^\catt_{i,j}|)$ time. Converting the output into $\J^\catt_{i,j}$ takes another $O(k \cdot |\J^\catt_{i,j}|)$ time. Applying $|\J^\catt_{i,j}| \le \out$, we know that $\J^\catt_{i,j}$ can be produced in $O(k) \cdot (F_{k-1}(n, \out) + n \log n + k \cdot \out)$ time
+
+\vgap 
+
+Performing the above for all $i, j \in [k]$ with $i \ne j$ leads to a total time complexity of $O(k^3) \cdot (F_{k-1}(n, \out) + n \log n + k \cdot \out)$. A category-2 result tuple $\bm{t}$ may be seen more than once (this can happen if, for example, more than one rectangle in $\bm{t}$ has the same top-edge). Again, duplicate removal can be achieved at no extra cost asymptotically.
+
+\vgap 
+
+We now complete the proof of Theorem~\ref{thm:main-recur}.
+
+
+\bibliographystyle{plainurl}% the mandatory bibstyle
+\bibliography{ref}
+
+\balance
+
+\appendix 
+
+% \def\vgap{\vspace{0.5mm}}
+% \def\extraspacing{\vspace{1.5mm} \noindent}
+
+\section*{Appendix}
+
+\section{Comparison-Based $k$-SJ Algorithms} \label{app:comp-class}
+
+Fix an integer $k \ge 3$ and $k$ integers $n_1, n_2, ..., n_k$ at least 1. Define $n = \sum_{i=1}^k n_i$. An {\em $(n_1, n_2, ..., n_k)$-input} to the $k$-SJ problem comprises $k$ sets of rectangles $R_1, R_2, ..., R_k$ in $\real^2$ such that $|R_i| = n_i$ for each $i \in [k]$. We assume that each rectangle in $R_i$ ($i \in [k]$) is given a distinct ID from $[n_i]$.
+
+\vgap
+
+A {\em comparison-based $k$-SJ} algorithm for solving $(n_1, n_2, ..., n_k)$-inputs is a tree $\T$ defined as follows. Each internal node $u$ of $\T$ has three child nodes, referred as the {\em left}, {\em middle}, and {\em right} child, respectively. Each node is associated with an {\em instruction} of the form $(i, \lambda, \side; i', \lambda', \side')$ where
+\myitems{
+    \item $i, i' \in [1, k]$;
+    \item $\lambda \in [n_i], \lambda' \in [n_{i'}]$;
+    \item $\side$ and $\side'$ are functions chosen from the set $\{\xleft, \xright, \ybot$, $\ytop\}$.
+}
+Each leaf is associated with an {\em result}, which is defined to be a subset of $[n_1] \times [n_2] \times ... \times [n_k]$.
+
+\vgap
+
+Given an $(n_1, n_2, ..., n_k)$-input $\set{R_1, R_2, ..., R_k}$, we execute the algorithm by traversing a root-to-leaf path in $\T$. In general, at an internal node with the instruction $(i, \lambda, \side; i', \lambda', \side')$, we first identify
+\myitems{
+    \item $r$ as the rectangle with ID $\lambda$ in $R_i$;
+    \item $r'$ as the rectangle with ID $\lambda'$ in $R_{i'}$.
+}
+Then, we compare $\side(r)$ to $\side'(r')$ (e.g., if $\side = \xright$ and $\side' = \ybot$, then the comparison is between $\xright(r)$ to $\ybot(r')$). We branch to
+\myitems{
+    \item the left child if $\side(r) < \side'(r')$;
+    \item the middle child if $\side(r) = \side'(r')$;
+    \item the right child if $\side(r) > \side'(r')$.
+}
+At a leaf, we look at its associated result and, for each $(\lambda_1, \lambda_2, ..., \lambda_k)$ in that result, output $(r_1, r_2, ..., r_k)$ where $r_i$ ($i \in [k]$) is the rectangle with ID $\lambda_i$ in $R_i$. The algorithm is required to produce the correct output on all $(n_1, n_2, ..., n_k)$-inputs. Its {\em worst-case cost} is the height of $\T$.
+
+
+\vgap
+
+Through a reduction from element distinctness \cite{dl79}, one can show that, for $k = 2$, any comparison-based algorithm correctly solving all $(n/2, n/2)$-inputs must have a worst-case cost of $\Omega(n \log n)$.
+
+
+
+
+\section{Building Brick Algorithms} \label{app:bricks}
+
+\extraspacing {\bf Terminology.} Each point $(x, y)$ is said to {\em define} a y-coordinate $y$, a horizontal segment $[x_1, x_2] \times y$ is said to {\em define} a y-coordinate $y$, and each rectangle $r = [x_1, x_2] \times [y_1, y_2]$ is said to {\em define} two y-coordinates $y_1$ and $y_2$. These definitions permit us to conveniently specify a set of y-coordinates using expressions like ``the set of four y-coordinates defined by point $p$, horizontal segment $h$, and rectangle $r$''.
+
+\extraspacing {\bf Fundamental Data Structures.} The {\em interval tree} \cite{bcko08} stores a set $S$ of intervals in $\real$ using $O(|S|)$ space such that, given any real value $q$, the intervals of $S$ containing $q$ can be found in $O(\log |S| + K)$ time, where $K$ is the number of intervals reported. It can also be used to detect whether $S$ has at least one interval containing $q$ in $O(\log |S|)$ time. The structure supports insertions and deletions on $S$ in $O(\log |S|)$ time.
+
+\vgap
+
+Now, let us assume that each interval of $S$ is associated with a real-valued {\em weight}. Given a real value $q$, a {\em stabbing max} query returns the maximum weight of all the intervals in $S$ covering $q$ (if no such intervals exist, the query returns $-\infty$). We can store $S$ in a structure of \cite{aak+12} using $O(|S|)$ space that can answer such a query in $O(\log |S|)$ time. The structure supports insertions and deletions on $S$ in $O(\log |S|)$ amortized time.
+
+\vgap
+
+The {\em priority search tree} (PST) \cite{m85} stores a set $P$ of points using $O(|P|)$ space such that, given a 3-sided rectangle $q = [x_1, x_2] \times [y, \infty)$, the points of $S$ covered by $q$ can be found in $O(\log |P| + K)$ time, where $K$ is the number of points reported. The structure supports insertions and deletions on $S$ in $O(\log |S|)$ time.
+
+\vgap
+
+The PST can be deployed to answer queries on intervals. Let $S$ be a set of intervals in $\real$. Given an interval $q = [z_1, z_2]$, a {\em containment query} reports all the intervals of $S$ that are contained by $q$. We can store $S$ in a PST of $O(|S|)$ space that solves such a query in $O(\log |S| + K)$ time, where $K$ is the number of intervals reported. To see why, observe that an interval $[x, y]$ is contained by another $[z_1, z_2]$ if and only if the point $(x, y)$ falls in the 3-sided rectangle $[z_1, \infty) \times (-\infty, z_2]$. Thus, we create from $S$ a point set $P = \set{(x, y) \mid [x, y] \in S}$ and store $P$ in a PST. Given an interval $q = [z_1, z_2]$, we can answer the containment query by using the PST to find all the points in $P$ covered by $[z_1, \infty) \times (-\infty, z_2]$ and, for each such point $(x, y)$, report $[x, y]$.
+
+\vgap
+
+Another closely related query is the {\em reverse-containment query}, which, given an interval $q = [z_1, z_2]$, finds all the intervals of $S$ that contain $q$ (rather than ``being contained by $q$''). Again, we can store $S$ in a PST of $O(|S|)$ space that answers such a query in $O(\log |S| + K)$ time, where $K$ is the number of intervals reported. In general, an interval $[x, y]$ contains another $[z_1, z_2]$ if and only if the point $(x, y)$ falls in the 3-sided rectangle $(-\infty, z_1] \times [z_2, \infty)$. Thus, we create from $S$ a point set $P = \set{(x, y) \mid [x, y] \in S}$ and store $P$ in a PST. Given an interval $q = [z_1, z_2]$, we use the PST to find all the points in $P$ covered by $(-\infty, z_1] \times [z_2, \infty)$ and, for each such point $(x, y)$, report $[x, y]$.
+
+\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{A}}$.} Consider first the detection version. Sort the set of y-coordinates defined by the points of $P$ and the rectangles of $R$. Next, sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, maintain the set $R_\ell$ of rectangles in $R$ that intersect with $\ell$. Let $S_\ell$ be the set of x-ranges of the rectangles in $R_\ell$; we store $S_\ell$ in an interval tree $\T$. Specifically, when $\ell$ hits the bottom (resp., top) edge of a rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$, we insert (resp., delete) $[x_1, x_2]$ into (resp., from) $\T$, which can be done in $O(\log n)$ time. When $\ell$ hits a point $p = (x, y)$ of $P$, search $\T$ to determine if any interval in $S_\ell$ contains the value $x$. If so, point $p$ is covered by at least one rectangle in $R$; otherwise, it is not. The overall running time is $O(n \log n)$.
+
+\vgap
+
+The algorithm for the reporting version of Problem $\mathscr{A}$ is similar. The only difference is that, when $\ell$ hits a point $p = (x, y)$ of $P$, we use $\T$ to report all the intervals in $S_\ell$ that contain $x$; the cost is $O(n \log n + K_p)$, where $K_p$ is the number of such intervals. Every interval corresponds to a rectangle in $R$ that contains $p$. The total running time is $O(n \log n + \sum_p K_p) = O(n \log n + \out)$.
+
+\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{B}}$.} Sort the set of y-coordinates defined by all the segments of $H$ and $V$. Next, sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, maintain the set $V_\ell$ of segments in $V$ that intersect with $\ell$. Let $S_\ell$ be the set of x-coordinates of the segments in $V_\ell$; we store $S_\ell$ in a binary search tree (BST) $\T$. Specifically, when $\ell$ hits the lower  (resp., upper) endpoint of a vertical segment $v = x \times [y_1, y_2]$ of $V$, we insert (resp., delete) the value $x$ into (resp., from) $\T$, which can be done in $O(\log n)$ amortized time. When $\ell$ hits a horizontal segment $h = [x_1, x_2] \times y$ of $H$, search $\T$ to determine the successor $x'$ of $x_1$ in $S_\ell$. If $x' \le x_2$, then we output a pair $(h, p)$, where $p$ is the point $(x', y)$; otherwise, output nothing for $h$. The overall running time is $O(n \log n)$.
+
+\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{C}}$.} Sort the set of y-coordinates defined by all the segments in $H$ and all the rectangles in $R$. Next, sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, maintain the set $R_\ell$ of rectangles in $R$ that intersect with $\ell$. Let $S_\ell$ be the set of x-ranges of the rectangles in $R_\ell$; we store $S_\ell$ in a stabbing-max structure $\T$ of \cite{aak+12}. Specifically, when $\ell$ hits the bottom (resp., top) edge of a rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$, we insert (resp., delete) $[x_1, x_2]$ with {\em weight} $x_2$ into (resp., from) $\T$, which can be done in $O(\log n)$ time. When $\ell$ hits a horizontal segment $h = [x_1, x_2] \times y$ of $P$, search $\T$ to determine the maximum weight $w$ of all the intervals in $S_\ell$ containing the value $x_1$. If $w \ne -\infty$, we output $(h, p)$ where the point $p$ is defined in a way depending on $w$: if $w \le x_2$, then $p = (w, y)$; otherwise $p = (x_2, y)$. The overall running time is $O(n \log n)$.
+
+\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{D}}$.} Consider first the find-lowest version. Sort the set of y-coordinates defined by all the horizontal segments and rectangles. In the outset, all rectangles of $R$ are marked as inactive. During our algorithm, the status of each rectangle will turn from inactive to active at some point, turn from active back to inactive at a later point, and then stay that way forever.
+
+%We assume, w.l.o.g., that each rectangle of $R$ is given a distinct ID in $[n]$. Initialize an array $A$ of size $|R|$, where cell $A[i]$, $i \in [|R|]$, is allocated to the rectangle $r$ with ID $i$ and will be used to store a constant amount of information for $r$.
+
+\vgap
+
+Sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, we maintain the set $R_\ell$ of {\em active} rectangles in $R$ that intersect with $\ell$. Let $S_\ell$ be the set of x-ranges of the rectangles in $R_\ell$; we store $S_\ell$ in a PST $\T$. Specifically, when $\ell$ hits the bottom edge of a rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$, we insert $[x_1, x_2]$ into $\T$ and mark $r$ as active, which can be done in $O(\log n)$ time. The rectangle $r$ will be referred to as the {\em host} of $[x_1, x_2]$ and is stored together with $[x_1, x_2]$ in $\T$.
+
+\vgap
+
+When $\ell$ hits a horizontal segment $h = [z_1, z_2] \times y$ of $P$, perform a containment query on $\T$ to find all the intervals in $S_\ell$ that are contained by $[z_1, z_2]$; if $K_h$ is the number of such intervals, this retrieval takes $O(\log n + K_h)$ time. For each retrieved interval $[x_1, x_2]$, we also obtain its host rectangle $r$ (stored along with $[x_1, x_2]$ in $\T$). As can be verified shortly, $h$ is the lowest segment in $H$ that crosses $r$; we therefore output $(r, h)$. After that, $r$ is marked as inactive, and accordingly, its x-range $[x_1, x_2]$ is deleted from $\T$ in $O(\log n)$ time. As $r$ will remain inactive in the rest of the execution, its x-range will not be retrieved again by another containment query in the future. This implies that $h$ is indeed the lowest segment in $H$ crossing $r$.
+
+\vgap
+
+When $\ell$ hits the bottom edge of a rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$, we check whether $r$ is active. If so, delete $[x_1, x_2]$ from $\T$ and mark $r$ as inactive; otherwise, do nothing.
+
+\vgap
+
+Overall, each rectangle of $R$ necessitates one insertion and one deletion in $\T$. All these insertions and deletions take $O(n \log n)$ time in total. Each segment $h$ of $H$ performs a containment query on $\T$, which has a cost of $O(\log n + K_h)$. All these queries demand a total cost of $O(n \log n + \sum_h K_h)$. Recall that the x-range of a rectangle in $R$ can be retrieved by at most one containment query. Hence, $\sum_h K_h \le |R| \le n$ and the runtime of our algorithm is $O(n \log n)$.
+
+\vgap
+
+Next, we consider the find-all-sorted version of Problem $\mathscr{D}$. For each $r \in R$, we keep a linked list, which at the end of our algorithm will store the horizontal segments of $\cross_H(r)$ in ascending order of their y-coordinates. In the outset, all linked lists are empty. Unlike the detection version, we will not need to keep the active status for the rectangles.
+
+\vgap
+
+Again, sweep a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, we maintain the set $R_\ell$ of rectangles in $R$ that intersect with $\ell$. Let $S_\ell$ be the set of x-ranges of the rectangles in $R_\ell$; we store $S_\ell$ in a PST $\T$. Specifically, when $\ell$ hits the bottom (resp., top) edge of a rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$, we insert (resp., delete) $[x_1, x_2]$ into (resp., from) $\T$, which can be done in $O(\log n)$ time. Again, the rectangle $r$ --- the host of $[x_1, x_2]$ --- is stored together with $[x_1, x_2]$ in $\T$.
+
+\vgap
+
+When $\ell$ hits a horizontal segment $h = [z_1, z_2] \times y$ of $P$, perform a containment query on $\T$ to find all the intervals in $S_\ell$ that are contained by $[z_1, z_2]$; the query cost is $O(\log n + K_h)$, where $K_h$ is the number of intervals reported. For each retrieved interval $[x_1, x_2]$, we also obtain its host rectangle $r$. It is clear that $h$ is a segment crossing $r$ and is thus appended to the linked list of $r$. Note that $h$ is higher than all the segments already in that linked list.
+
+\vgap
+
+Overall, each rectangle of $R$ necessitates one insertion and one deletion in $\T$. All these insertions and deletions take $O(n \log n)$ time in total. Each segment $h$ of $H$ performs a containment query on $\T$, which has a cost of $O(\log n + K_h)$. All these queries demand a total cost of $O(n \log n + \sum_h K_h)$. However, unlike the detection version, the sum $\sum_h K_h$ here is equal to the total size of $\cross_H(r)$ for all the $r \in R$. The total size is equivalent to $\out$.
+
+
+\extraspacing {\bf Algorithm for Problem $\bm{\mathscr{E}}$.} Sort all the rectangles $r \in R$ in ascending order of $\xright(r)$ (namely, the x-coordinate of the right edge of $r$). To each $r \in R$, we assign an ID $i \in [|R|]$ if $r$ is at the $i$-th position of the sorted list.
+
+%We create an array $A$ and assign the $i$-th ($i \in [R]$) cell of $A$ to the rectangle $r \in R$ with ID $i$.
+
+\vgap
+
+Next, we aim to produce, for each pair $(h, r) \in H \times r$ such that $h$ crosses $r$, a pair $(h, \lambda)$ where $\lambda$ is the ID of $r$. These pairs may be output in an arbitrary order. Sort the set of y-coordinates defined by all the horizontal segments and rectangles. Sweep (conceptually) a horizontal line $\ell$ from $y = -\infty$ to $y = \infty$. At all times, we maintain the set $R_\ell$ of rectangles in $R$ that intersect with $\ell$. Let $S_\ell$ be the set of x-ranges of the rectangles in $R_\ell$; we store $S_\ell$ in a PST $\T$. Specifically, when $\ell$ hits the bottom (resp., top) edge of a rectangle $r = [x_1, x_2] \times [y_1, y_2]$ of $R$, we insert (resp., delete) $[x_1, x_2]$ into (resp., from) $\T$, which can be done in $O(\log n)$ time. We call the rectangle $r$ the {\em host} of $[x_1, x_2]$ and store its ID together with $[x_1, x_2]$ in $\T$. When $\ell$ hits a horizontal segment $h = [z_1, z_2] \times y$ of $H$, perform a reverse-containment query on $\T$ to find all the intervals in $S_\ell$ that contain $[z_1, z_2]$; the query cost is $O(\log n + K_h)$, where $K_h$ is the number of intervals reported. For each retrieved interval $[x_1, x_2]$, we also obtain the ID $\lambda$ of its host rectangle $r$, and output the pair $(h, \lambda)$.
+
+\vgap
+
+Each rectangle of $R$ necessitates one insertion and one deletion in $\T$. All these insertions and deletions take $O(n \log n)$ time in total. Each segment $h$ of $H$ performs a reverse-containment query on $\T$, which has a cost of $O(\log n + K_h)$. All these queries demand a total cost of $O(n \log n + \sum_h K_h)$. The sum $\sum_h K_h$ here is equal to the total size of $\contain_R(h)$ for all the $h \in H$. The total size is equivalent to $\out$. The cost so far is therefore $O(n \log n + \out)$.
+
+\vgap
+
+Let $L$ be the list of $(h, \lambda)$ pairs produced (the size of $L$ is $\out$). We now proceed to sort $L$ in ascending order of the $\lambda$-field (which is a rectangle ID), breaking ties arbitrarily. Because the IDs are integers created by the algorithm, we are permitted to sort $L$ using {\em counting sort} without violating the comparison-based requirements (see Appendix~\ref{app:comp-class}). The counting sort finishes in $O(|R| + |L|) = O(n + \out)$ time, recalling that all the IDs are in $[|R|]$.
+
+\vgap
+
+Finally, we generate, for each $h$, its set $\contain_R(h)$ (i.e., the set of rectangles covering $h$), where the rectangles $r$ are sorted by $\xright(r)$. To start with, initialize an empty linked list for every $h \in H$. Inspect the pairs $(h, \lambda) \in L$ in ascending order of the ID-field $\lambda$. For each pair $(h, \lambda)$ examined, identify the rectangle $r$ whose ID is $\lambda$ and add $r$ to the linked list of $h$. By the way the rectangle IDs were generated, it is clear that $\xright(r)$ is larger than or equal to the x-coordinates of the right edges of the rectangles already in the linked list. The whole scan over $L$ finishes in $O(1 + \out)$ time, and produces the correct output for Problem $\mathscr{E}$.
+
+
+\section{Supplementary Proofs for Section~\ref{sec:hv:type1}} \label{app:hv:type1}
+
+%This section supplies the proofs postponed from Section~\ref{sec:hv:type1}. 
+
+We start by presenting two properties underneath the procedures designed in Section~\ref{sec:hv:type1}. These properties will enable us to construct simpler proofs later.
+
+\begin{proposition} \label{prop:app:hv:type1:help1}
+    Consider any rectangle $r$ taken from $R_1, R_2, ...,$ or $R_{k-2}$. Let $r'$ be the trimmed rectangle of $r$ defined in Section~\ref{sec:hv:type1}. 
+    \myitems{
+        \item If a horizontal segment $h \in H$ crosses $r$, then $h$ must also cross $r'$.
+        \item If a vertical segment $v \in V$ crosses $r$, then $v$ must also cross $r'$.
+    }
+\end{proposition}
+
+\begin{proof}
+    We will prove only the first bullet due to symmetry. Let us represent $h$ as $[x_1, x_2] \times y$. The fact of $h$ crossing $r$ indicates that $[x_1, x_2]$ contains the x-range of $r$. Since the x-range of $r$ contains that of $r'$, we know that $[x_1, x_2]$ must also contain the x-range of $r'$. To prove that $h$ crosses $r'$, we still need to show $y \in [\ybot(r'), \ytop(r')]$. Recall that $\ybot(r')$ is the y-coordinate of the lowest segment in $H$ crossing $r$. This implies $y \ge \ybot(r')$ because $h$ itself is a segment in $H$ crossing $r$. Analogously, it also holds that $y \le \ytop(r')$. We can now conclude that $h$ crosses $r'$.
+\end{proof}
+
+\begin{proposition} \label{prop:app:hv:type1:help2}
+    Consider the sets $R_1', R_2', ..., R'_{k-2}$ defined in \eqref{eqn:hv:type1:R_i'}. Let $\bm{t}$ be any $(k-2)$-tuple in $\J(R_1', R_2', ..., R'_{k-2})$. Then, neither $\dcross_H(\bm{t})$ nor $\dcross_V(\bm{t})$ can be empty. 
+\end{proposition}
+
+\begin{proof}
+    Due to symmetry, we will give the proof only for $\dcross_H(\bm{t}) \ne \emptyset$. Set $r' = \gbot(\bm{t})$, and let $r$ be the full rectangle of $r'$. Define $h$ as the lowest segment crossing $r$ (note that $h$ definitely exists because otherwise $r$ has no trimmed rectangle, contradicting the definition of $r'$). We will show that $h \in \dcross_H(\bm{t})$, which indicates $\dcross_H(\bm{t}) \ne \emptyset$. For this purpose, we should explain why $h$ crosses both $B_{\bm{t}}$ and $r'$. However, by Proposition~\ref{prop:app:hv:type1:help1}, $h$ crossing $r$ directly implies $h$ crossing $r'$. It remains to prove that $h$ crosses $B_\bm{t}$.
+
+    \vgap
+
+    By the definitions of $r'$ and $h$, the bottom edge of $r'$ must be contained in $h$ (note that $h$ is one of the segments used to trim $r$ into $r'$). Because $r' = \gbot(\bm{t})$, the bottom edge of $B_\bm{t}$ is contained in the bottom edge of $r'$ and thus also contained in $h$. This means that $h \cap B_{\bm{t}}\neq \emptyset$. On the other hand, the x-range of $h$ must cover that of $r'$ (because $h$ crosses $r'$), which in turn must cover that of $B_\bm{t}$ (because $r'$ covers $B_\bm{t}$). Thus, the x-range of $h$ covers that of $B_\bm{t}$. This together with $h \cap B_{\bm{t}}\neq \emptyset$ tells us that $h$ must cross $B_\bm{t}$.
+\end{proof}
+
+We now proceed to elaborate the proofs postponed from Section~\ref{sec:hv:type1}. The order of the subsequent proofs will not strictly follow the sequence in which they are referenced in Section~\ref{sec:hv:type1}. In particular, we will prove Lemma~\ref{lmm:hv:type1:properties} before Lemma~\ref{lmm:hv:type1:recur-output}, because the claims of the former lemma can be used to produce a succinct argument for the latter.
+
+\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:properties}.} We will prove each statement in turn.
+
+\extraspacing \underline{\em Proof of Statement (1).} Take any $(k-2)$-tuple $\bm{t} \in \J(R_1', R'_2, ..., R'_{k-2})$. Let $r_i$ ($i$ $\in$  $[k-2]$) be the full rectangle of $\bm{t}[i]$. Fix any $h \in \dcross_H(\bm{t})$ and any $v \in \dcross_V(\bm{t})$. The segments $h$ and $v$ both cross $B_\bm{t}$, as can be seen directly from the definitions of $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$. Thus, $h \cap v$ is a point in $B_\bm{t} = \bigcap_{i=1}^{k-2} \bm{t}[i]$. As $r_i$ ($i \in [k-2]$) is the full rectangle of $\bm{t}[i]$, we know that $\bigcap_{i=1}^{k-2} r_i$ covers $B_\bm{t} = \bigcap_{i=1}^{k-2} \bm{t}[i]$. Hence, point $h \cap v$ falls in $\bigcap_{i=1}^{k-2} r_i$, indicating that $h\cap v \cap \bigcap_{i = 1}^{k-2}r_i \neq \emptyset$. It follows that $(r_1,...,r_{k-2},h,v)$ is a result tuple in $\J(R_1,...,R_{k-2},H,V)$.
+
+\extraspacing \underline{\em Proof of Statement (2).} Take any $k$-tuple $(r_1,...,r_{k-2},h,v) \in \J_1$. By definition of $\J_1$, segments $h$ and $v$ cross each of the rectangles $r_1,..., r_{k-2}$. By Proposition~\ref{prop:app:hv:type1:help1}, segments $h$ and $v$ must also cross each of the trimmed rectangles $r_1',..., r_{k-2}'$. Hence, $B_\bm{t} = \bigcap_{i = 1}^{k-2}r_i'$ is non-empty as it contains the point $h \cap v$, which proves the first claim $\bm{t} = (r_1', ..., r_{k-2}') \in \J(R_1',...,R_{k-2}')$.
+
+\vgap 
+
+Next, we prove the second claim, i.e., $h \in \dcross_H(\bm{t})$ and $v \in \dcross_V(\bm{t})$. It suffices to show only the former due to symmetry. For that purpose, we need to argue that $h$ crosses $\gbot(\bm{t})$ and $B_\bm{t}$. The first part, $h$ crossing $\gbot(\bm{t})$, is done because as mentioned $h$ crosses each of $r_1', ..., r_{k-2}'$, and $\gbot(\bm{t})$ is merely one of those rectangles. To prove that $h$ crosses $B_\bm{t}$, first note that $h \cap B_\bm{t} \ne \emptyset$ because as explained before $B_\bm{t}$ contains $h \cap v$. On the other hand, as $\gbot(\bm{t})$ covers $B_\bm{t}$, the fact of $h$ crossing $\gbot(\bm{t})$ indicates that the x-range of $h$ contains that of $B_\bm{t}$. Combining this with $h \cap B_\bm{t} \ne \emptyset$ shows that $h$ crosses $B_\bm{t}$.
+
+\extraspacing \underline{\em Proof of Statement (3).} We will prove 
+\myeqn{
+    \sum_{\bm{t}\in \J(R_1',...,R_{k-2}')} |\dcross_H(\bm{t})| \cdot |\dcross_V(\bm{t})| \leq \out \label{eqn:hv:type1:properties:proof-help1}
+} 
+which implies statement (3) because, by Proposition~\ref{prop:app:hv:type1:help2}, $|\dcross_H(\bm{t})| \ge 1$ and $|\dcross_V(\bm{t})| \ge 1$  for any $\bm{t}$ in the summation. Our proof resorts to the algorithm generate-$\J^*$ given in Section~\ref{sec:hv:type1}. This algorithm adds to $\J^*$ as many tuples as calculated by the left hand side of \eqref{eqn:hv:type1:properties:proof-help1}. By statement (1) of Lemma~\ref{lmm:hv:type1:properties}, the $\J^*$ produced must be a subset of $\J(R_1,...,R_{k-2},H,V)$, whereas $\out = |\J(R_1,...,R_{k-2},H,V)|$. This establishes the inequality in \eqref{eqn:hv:type1:properties:proof-help1}.
+
+\extraspacing \noindent {\bf Proof of Lemma~\ref{lmm:hv:type1:recur-output}.} Our proof again resorts to the algorithm generate-$\J^*$ in Section~\ref{sec:hv:type1}. By Proposition~\ref{prop:app:hv:type1:help2}, both $\dcross_H(\bm{t})$ and $\dcross_V(\bm{t})$ are non-empty for any $\bm{t} \in \J(R_1',$ $...,R_{k-2}')$. Therefore, in processing this $\bm{t}$, the algorithm adds at least one new tuple to $\J^*$. Hence, $|\J(R_1',...,R_{k-2}')| \le |\J^*|\le |\J(R_1,...,R_{k-2},H,V)| = \out$, where the second inequality used Statement (1) of Lemma~\ref{lmm:hv:type1:properties}.
+
+\extraspacing {\bf Computing $\bm{R^*_1, R^*_2, ..., R^*_{k-2}}$.} We consider, w.l.o.g., that each rectangle in the input $R_1 \cup ... \cup R_{k-2}$ is given a distinct integer ID in $[n]$. This allows us to create an array of size $n$ and allocate an array cell to each $r \in R_1 \cup ... \cup R_{k-2}$. The cell can be accessed by the ID of $r$ in constant time.
+
+\vgap
+
+To compute $R^*_1, R^*_2, ..., R^*_{k-2}$, we start by deriving $\maxtop(r')$ for each rectangle $r'$ in $R'_1 \cup  ... \cup R'_{k-2}$. For this purpose, first initialize $\maxtop(r') = -\infty$ for each such $r'$. Recall that $r'$ is the trimmed rectangle of some rectangle $r$ in $R_1 \cup ... \cup R_{k-2}$. We store $\maxtop(r')$ in the array cell allocated to $r$. Then, we scan $\J(R_1',...,R_{k-2}')$. For each tuple $\bm{t}$ therein, use $O(k)$ time to identify the rectangle $r' = \gbot(\bm{t})$, and then update in constant time $\maxtop(r')$ to the maximum between its current value and $\ytop(r')$. The scan requires $O(n + k \cdot \out)$ time.
+
+\vgap
+
+Finally, for each $i \in [k-2]$, we construct $R_i^*$ by collecting the top-sliced rectangle (see definition in \eqref{eqn:hv:type1:topsliced}) of every rectangle $r' \in R_i'$ with $\maxtop(r') \neq -\infty$. This step takes $O(|R_i'|)$ time for each $i \in [k-2]$, or $O(n)$ total time for all $i$.
+
+\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type1:cross-r*}.} We will prove each statement in turn.
+
+\extraspacing \underline{\em Proof of Statement (1).} We will map each $r^*$ of $\bigcup_{i = 1}^{k-2} R_i^*$ to a unique tuple $\bm{t}$ in $\J(R_1',...,R_{k-2}')$ satisfying $\cross_H(r^*) \subseteq \dcross_H(\bm{t})$. The mapping allows us to derive
+\myeqn{
+    \sum_{i\in[k-2]}\sum_{r^*\in R_i^*} |\cross_H(r^*)| \leq \sum_{\bm{t}\in \J(R_1',...,R_{k-2}')}|\dcross_H(\bm{t})|\leq \out \nn
+}
+where the last step used  statement (3) of Lemma~\ref{lmm:hv:type1:properties}.
+
+\vgap
+
+The mapping is as follows. Consider an arbitrary $r^*\in \bigcup_{i = 1}^{k-2} R_i^*$. Recall that $r^*$ is the top-sliced of some rectangle $r'$. Specifically, if $r' = [x_1,x_2]\times [y_1,y_2]$, then $r^* = [x_1,x_2]\times [y_1,\maxtop(r')]$. By the definition of $\maxtop(r')$ in \eqref{eqn:hv:type1:topsliced}, there exists a tuple $\bm{t}\in \J(R_1',...,R_{k-2}')$ satisfying $\gbot(\bm{t}) = r'$ and $\maxtop(r') = \ytop(B_{\bm{t}})$. We map $r^*$ to $\bm{t}$.
+
+\vgap
+
+Next, we will prove 
+\begin{center}
+    {\bf Claim 1:} If a segment $h \in \cross_H(r^*)$, then $h \in \dcross_H(\bm{t})$.
+\end{center}
+For this purpose, we need to show that $h$ crosses both $\gbot(\bm{t}) = r'$ and $B_\bm{t}$.
+\myitems {
+    \item First, $h$ crosses $r'$ follows from the facts that (i) $h$ crosses $r^*$, (ii) $r^* \subseteq r'$, and (iii) $r^*$ and $r'$ share the same x-range. 
+    
+    %. Because $r^* \subseteq r'$, the fact of $h$ crossing $r^*$ tells us that $h \cap r' \ne \emptyset$. On the other hand, the fact of $h$ crossing $r^*$ also tells us that $\xleft(h) < x_1 \le x_2 < \xright(h)$ (recall that $[x_1, x_2]$ is the x-range of $r^*$). As $[x_1, x_2]$ is also the x-range of $r'$, the fact of $h \cap r' \ne \emptyset$ indicates that $h$ must cross $r'$.
+
+    \vgap
+
+    \item Then, we explain why $h$ crosses $B_{\bm{t}}$. Because $B_{\bm{t}}\subseteq r'$ and $h$ crosses $r'$ (just proved), no endpoint of $h$ can fall in $B_\bm{t}$. Let us take the y-coordinate $y_h$ of $h$. We will prove that the point $p = (\xleft(B_{\bm{t}}), y_h)$ is on the segment $h$ and is also in $B_{\bm{t}}$, suggesting $h\cap B_{\bm{t}} \neq \emptyset$. Once this is done, we can assert that $h$ crosses $B_{\bm{t}}$ (as no endpoint of $h$ falls in $B_\bm{t}$).
+    
+    \vgap
+
+    \myitems{
+        \item As $\gbot(\bm{t}) = r'$, the bottom edge of $B_{\bm{t}}$ is contained in $r'$. Thus, $\xleft(B_{\bm{t}})\in [x_1,x_2]$. The fact of $h$ crossing $r^*$ tells us that $\xleft(h) < x_1 \le x_2 < \xright(h)$, which leads to $\xleft(B_{\bm{t}}) \in [\xleft(h), \xright(h)]$, suggesting that $p \in h$.
+        
+        \vgap
+
+        \item As $\gbot(\bm{t}) = r'$ and $\maxtop(r') = \ytop(B_\bm{t})$, the y-range of $B_\bm{t}$ is $[y_1, \maxtop(r')]$. Because $h \cap r^* \ne \emptyset$ (as $h$ crosses $r^*$) and $[y_1, \maxtop(r')]$ is also the y-range of $r^*$, we know that $y_h \in [y_1, \maxtop(r')]$, suggesting that $p \in B_{\bm{t}}$.
+    }
+}
+
+% We now turn to the ``if direction'': assuming $h \in \dcross_H(\bm{t})$, we aim to show $h \in \cross_H(r^*)$. Recall that $r^* = [x_1,x_2] \times [y_1, \maxtop(r')]$. To prove that $h$ crosses $r^*$, we will argue that $\xleft(h) < x_1 \le x_2 < \xright(h)$ and $y_h \in [y_1, \maxtop(r')]$, where $y_h$ is the y-coordinate of $h$.
+% \myitems{
+%     \item The fact $h \in \dcross_H(\bm{t})$ tells us that $h$ crosses $r'$. As $[x_1, x_2]$ is the x-range of $r'$, we have $\xleft(h) < x_1 \le x_2 < \xright(h)$.
+% 
+%     \vgap
+% 
+%     \item The fact $h \in \dcross_H(\bm{t})$ also tells us that $h$ crosses $B_{\bm{t}}$. As $[y_1, \maxtop(r')]$ is the y-range of $B_\bm{t}$ (because $\gbot(\bm{t}) = r'$ and $\maxtop(r') = \ytop(B_\bm{t})$), we have $y_h \in [y_1, \maxtop(r')]$.
+% }
+
+It remains to show that no two distinct rectangles $r_1^*, r_2^* \in \bigcup_{i = 1}^{k-2}R_i^*$ can be mapped to the same tuple in $\J(R_1',...,R_{k-2}')$. Assume, on the contrary, that $r_1^*$ and $r_2^*$ are mapped to the same tuple $\bm{t}\in \J(R_1',...,R_{k-2}')$. Suppose that $r_1^*$ (resp., $r_2^*$) is the top-sliced rectangle of $r_1'$ (resp., $r_2'$). Under our mapping, it must be true that  $r_1' = r_2' = \gbot(B_{\bm{t}})$. However, the distinctness of $r_1^*$ and $r_2^*$ requires $r_1' \ne r_2'$, thus giving a contradiction.
+
+\extraspacing \underline{\em Proof of Statement (2).} Take any tuple $\bm{t} \in \J(R'_1, ..., R'_{k-2})$. Set $r' = \gbot(\bm{t})$, and let $r^*$ be the top-sliced rectangle of $r'$. If we represent $r'$ as $[x_1,x_2] \times [y_1, y_2]$, then $r^*$ can be written as $[x_1, x_2] \times [y_1, \maxtop(r')]$.
+
+\vgap
+
+We will first prove $\dcross_H(\bm{t})\subseteq \cross_H(r^*)$ or equivalently: if a segment $h \in \dcross_H(\bm{t})$, then $h$ crosses $r^*$. To do so, we need to explain why $\xleft(h) < x_1 \le x_2 < \xright(h)$ and $y_h \in [y_1,$ $\maxtop(r')]$.
+\begin{itemize}
+    \item The fact of $h \in \dcross_H(\bm{t})$ tells us that $h$ crosses $\gbot(\bm{t})$, which is $r'$. As the x-range of $r'$ is $[x_1,x_2]$, it must hold true that $\xleft(h) < x_1 \le x_2 < \xright(h)$.
+
+    \vgap
+
+    \item The fact of $h \in \dcross_H(\bm{t})$ also tells us that $h$ crosses $B_{\bm{t}}$. Hence, $y_h \in [\ybot(B_\bm{t}), \ytop(B_{\bm{t}})]$. From $r' = \gbot(\bm{t})$, we get $\ybot(B_\bm{t}) = \ybot(r') = y_1$. By the definition of $\maxtop(r')$ in \eqref{eqn:hv:type1:maxtop}, we know $\ytop(B_{\bm{t}}) \leq \maxtop(r')$. It thus follows that $y_h \in [y_1, \maxtop(r')]$.
+\end{itemize}
+
+Next, assuming that the segments of $\cross_H(r^*)$ are sorted in ascending order of their y-coordinates,
+we will prove that $\dcross_H(\bm{t})$ includes a prefix of the sorted order. It suffices to establish the following equivalent claim:
+
+\vgap
+
+\minipg{0.8\linewidth} {
+    {\bf Claim 2:} If a segment $h \in \cross_H(r^*)$ has y-coordinate $y_h \le \ytop(B_{\bm{t}})$, then $h$ must be in $\dcross_H(\bm{t})$.
+}
+
+\vgap
+
+\noindent To prove the above, we must explain why $h$ crosses both $r'$ and $B_{\bm{t}}$.
+
+\myitems{
+
+\item We first show that $h$ crosses $r'$, or equivalently: $\xleft(h)  < x_1 \leq x_2 < \xright(h)$ and $y_h \in [y_1, y_2]$. These conditions hold true because (i) $h$ crosses $r^* = [x_1,x_2]\times [y_1, \maxtop(r')]$, and (ii) the definition of a top-sliced rectangle in \eqref{eqn:hv:type1:topsliced} tells us $\maxtop(r')\leq y_2$.
+
+\vgap
+
+\item Next we show that $h$ crosses $B_{\bm{t}}$, or equivalently: $\xleft(h) < \xleft(B_{\bm{t}}) \le \xright(B_{\bm{t}}) < \xright(h)$ and $y_h \in [\ybot(B_\bm{t}), \ytop(B_{\bm{t}})] = [y_1, \ytop(B_{\bm{t}})]$.
+    
+    \vgap
+
+\begin{itemize}
+    \item The fact of $h$ crossing $r'$ tells us $\xleft(h) < x_1 \leq x_2 < \xright(h)$. As $r' = \gbot(B_{\bm{t}})$, the x-range of $B_{\bm{t}}$ must be contained in $[x_1,x_2]$. Thus, $\xleft(h) < \xleft(B_{\bm{t}}) \le \xright(B_{\bm{t}}) < \xright(h)$.
+
+    \vgap
+
+    \item The fact of $h$ crossing $r^*$ also tells us that $y_h \in [y_1, \maxtop(r')]$. Moreover, Claim 2 explicitly gives us the condition $y_h \leq \ytop(B_{\bm{t}})$. It thus follows that $y_h \in [y_1, \ytop(B_{\bm{t}})]$.
+\end{itemize}
+}
+
+\section{Supplementary Proofs for Section~\ref{sec:hv:type2}} \label{app:hv:type2}
+
+We start by presenting two properties underneath the procedures designed in Section~\ref{sec:hv:type2}. These properties will enable us to construct simpler proofs later.
+
+\begin{proposition} \label{prop:app:hv:type2:help1}
+    Consider any $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in \J_2$. Define $h'$ as the trimmed segment of $h$. It holds that $h \cap v = h' \cap v$.
+\end{proposition}
+
+\begin{proof}
+    Set $p = h \cap v$. As $h'$ is contained in $h$, for proving $p = h' \cap v$, it suffices to explain why $p$ is on $h'$. Let us represent $h$ as $[x_1,x_2] \times y$. Accordingly, the segment $h'$ can be written as $[x_1, x_2'] \times y$ for some $x_2' \in [x_1, x_2]$. By the definition of a trimmed segment, $(x_2',y)$ is the rightmost point on $h$ that falls in a left-end covering rectangle of $h$ in $R_{k-2}$. As $(r_1,...,r_{k-2},h,v) \in \J_2$, we know that $r_{k-2}$ is a left-end covering rectangle of $h$, and $r_{k-2}$ covers $p$ (which is a point on $h$). Therefore, the x-coordinate of $p$ cannot exceed $x_2'$, allowing us to assert that $p$ is on $h'$.
+\end{proof}
+
+\begin{proposition} \label{prop:app:hv:type2:help2}
+    For each tuple $\bm{t} \in \J(R_1,...,R_{k-3},H',V)$ (where $H'$ is defined in \eqref{eqn:hv:type2:H'}), the set $\contain_{R_{k-2}}(\bm{t})$ is non-empty.
+\end{proposition}
+
+\begin{proof}
+    Set $h' = \bm{t}[k-2]$. By the definition of a trimmed segment, there exists a rectangle $r_{k-2} \in R_{k-2}$ covering both endpoints of $h'$. Thus, the effective horizontal segment of $\bm{t}$ (defined in Section~\ref{sec:hv:type2}) --- which must be contained in $h'$ --- must also be covered by $r_{k-2}$. Hence, $\contain_{R_{k-2}}(\bm{t})$ contains $r_{k-2}$ and thus cannot be empty.
+\end{proof}
+
+
+
+We now proceed to elaborate the proofs postponed from Section~\ref{sec:hv:type2}. The order of the proofs here will not strictly follow the sequence in which they are referenced in Section~\ref{sec:hv:type2}. In particular, we will prove Lemma~\ref{lmm:hv:type2:properties} before Lemma~\ref{lmm:hv:type2:recur-output}, because the claims of the former lemma can be used to construct a simple argument for the latter.
+
+\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type2:properties}.} We will prove each statement in turn.
+
+\extraspacing \underline{\em Proof of Statement (1).} Take any tuple $\bm{t} = (r_1,...,r_{k-3}, h', v) \in \J(R_1,...,R_{k-3},H',V)$. The point $h' \cap v$ is covered by all of $r_1,...,r_{k-3}$. Let $h$ be the full segment of $h'$. As $h$ contains $h'$, we have $h \cap v = h' \cap v$.
+
+\vgap
+
+Consider any rectangle $r_{k-2} \in \contain_{R_{k-2}}(\bm{t})$. From the definition of $\contain_{R_{k-2}}(\bm{t})$, we know that $r_{k-2}$ covers the effective horizontal segment of $\bm{t}$ whose right endpoint is $h' \cap v$. This means that $h \cap v$ falls in $r_{k-2}$. We now have $h \, \cap \, v \, \cap \, \bigcap_{i = 1}^{k-2} r_i$ equals $h' \cap v$ and hence is non-empty, meaning that $(r_1,...,r_{k-3}, r_{k-2}, h, v) \in \J(R_1,...,R_{k-2},H,V)$.
+
+\vgap
+
+To show $(r_1,...,r_{k-3}, r_{k-2}, h, v) \in \J_2$, we still need to explain why $r_{k-2}$ covers the left endpoint of $h$. This follows immediately from the fact that $r_{k-2}$ covers the effective horizontal segment of $h'$ (which shares the same left endpoint as $h$).
+
+\extraspacing \underline{\em Proof of Statement (2).} Take any $k$-tuple $(r_1, ..., r_{k-2}, h, v) \in \J_2$. Set $p = h \cap v$, and define $h'$ as the trimmed segment of $h$. We first argue that the $(k-1)$-tuple $\bm{t} = (r_1, ..., r_{k-3}, h', v)$ belongs to $\J(R_1,...,R_{k-3}, H', V)$, or equivalently, the point $h' \cap v$ falls in all of $r_1,...,r_{k-3}$. By Proposition~\ref{prop:app:hv:type2:help1}, $h' \cap v$ is the same point as $p$. From $(r_1,...,r_{k-2},h,v) \in \J(R_1,...,R_{k-2},H,V)$, we know that $p = h \cap v$ falls in all of $r_1,...,r_{k-2}$. It thus follows that $r_1,...,r_{k-3}$ all cover $h' \cap v$.
+
+\vgap
+
+Next, we argue that $r_{k-2}\in \contain_{R_{k-2}}(\bm{t})$. Let $p'$ be the left endpoint of $h$. Because$h' \cap v = h \cap v = p$, the effective horizontal segment of $\bm{t}$ is the segment $p'p$. To prove $r_{k-2} \in \contain_{R_{k-2}}(\bm{t})$, we need to explain why $r_{k-2}$ covers segment $p'p$. This is true because:
+
+\begin{itemize}
+    \item $r_{k-2}$ covers $p$, as we already know;
+    \item $r_{k-2}$ covers $p'$, as it is a left-end covering rectangle of $h$.
+\end{itemize}
+
+\extraspacing \underline{\em Proof of Statement (3).} Our proof resorts to the algorithm generate-$\J_2$ (see Section~\ref{sec:hv:type2}). This algorithm adds to $\J_2$ exactly
+\myeqn{
+    \sum_{\bm{t} \in \J(R_1, ..., R_3, H', V)} |\contain_{R_{k-2}}(\bm{t})| \nn
+}
+tuples. By statement (2), the $\J_2$ produced must be a subset of $\J(R_1,...,R_{k-2},H,V)$, whose size is $\out$.
+Therefore, the above expression is at most $\out$, as claimed in statement (3).
+
+\extraspacing \noindent {\bf Proof of Lemma~\ref{lmm:hv:type2:recur-output}.} Again, we resort to the algorithm generate-$\J_2$ . For each tuple $\bm{t} \in \J(R_1,...,$ $R_{k-3},$ $H',V)$, we know by Proposition~\ref{prop:app:hv:type2:help2} that $\contain_{R_{k-2}}(\bm{t}) \ne \emptyset$; thus, the algorithm adds at least one tuple to $\J_2$. Therefore, $|\J(R_1,...,R_{k-3},H',V)| \le |\J_2| \le \out$, where the derivation used the definition of $\J_2$; see \eqref{eqn:hv:type2:J2}.
+
+\extraspacing {\bf Computing $\bm{H^*}$.} We assume, w.l.o.g., that each segment in the input $H$ is given a distinct integer ID in $[|H|]$. This allows us to create an array of size $|H| < n$ and allocate an array cell to each $h \in H$. The cell can be accessed by the ID of $h$ in constant time.
+
+\vgap
+
+To compute $H^*$, we start by deriving $\minleft(h')$ for each segment $h'$ in $H'$. For this purpose, first initialize $\minleft(h') = \infty$ for each such $h'$. Recall that $h'$ is the trimmed segment of some segment $h$ in $H$. We store $\minleft(h')$ in the array cell allocated to $h$. Then, we scan $\J(R_1,...,R_{k-3},H',V)$. For each tuple $\bm{t}$ therein, update in constant time $\minleft(h')$ to the minimum between its current value and the x-coordinate of $\bm{t}[k-1]$. The scan requires $O(n + k \cdot \out)$ time.
+
+\vgap
+
+Finally, we construct $H^*$ by collecting the minimal segment (defined in \eqref{eqn:hv:type2:H*}) of every segment $h' \in H'$ with $\minleft(h') \neq \infty$. This step takes $O(|H'|) = O(n)$ time.
+
+\extraspacing {\bf Proof of Lemma~\ref{lmm:hv:type2:contained-h*}.} We will prove each statement in turn.
+
+\extraspacing \underline{\em Proof of Statement (1).} We will map each segment $h^* \in H^*$ to a unique tuple $\bm{t}\in \J(R_1,...,R_{k-3},H',V)$ satisfying $\contain_{R_{k-2}}(h^*) = \contain_{R_{k-2}}(\bm{t})$. The mapping allows us to derive
+\myeqn{
+    \sum_{h^* \in H^*} |\contain_{R_{k-2}}(h^*)|
+    \le
+    \sum_{\bm{t} \in \J(R_1,...,R_{k-3},H',V)} |\contain_{R_{k-2}}(\bm{t})|
+    \leq \out \nn
+}
+where the last inequality used Statement (3) of Lemma~\ref{lmm:hv:type2:properties}.
+
+\vgap
+
+The mapping is as follows. Consider any $h^* \in H^*$. Recall that $h^*$ is the minimal segment of some segment $h' \in H'$. Specifically, if $h' = [x_1,x_2]\times y$, then $h^* = [x_1,\minleft(h')]\times y$. By the definition of $\minleft(h')$ in \eqref{eqn:hv:type2:H*}, there exists a tuple $\bm{t}\in \J(R_1,...,R_{k-3}, H', V)$ satisfying $\bm{t}[k-2] = h'$ and $\minleft(h') = \text{$x$-coordinate of the vertical segment $\bm{t}[k-1]$}$. We map $h^*$ to $\bm{t}$.
+
+\vgap
+
+Next, we will prove
+\begin{center}
+    {\bf Claim 1:} a rectangle $r \in \contain_{R_{k-2}}(h^*)$ if and only if $r \in \contain_{R_{k-2}}(\bm{t})$.
+\end{center}
+According to the definitions of $\contain_{R_{k-2}}(h^*)$ and $\contain_{R_{k-2}}(\bm{t})$ --- see \eqref{eqn:contained} and \eqref{eqn:type2:contained-t}, respectively --- it suffices to show that $h^*$ is the same as the effective horizontal segment of $\bm{t}$.
+
+\vgap
+
+Denote by $x$ the x-coordinate of $\bm{t}[k-1]$. Then, the point $h' \cap v$ can be written as $(x,y)$, where as mentioned $y$ is the y-coordinate of $h'$. The effective horizontal segment of $\bm{t}$ is therefore $[x_1,x]\times y$. Recall that $h^* = [x_1,\minleft(h')]\times y$, where (by definition of $\bm{t}$) $\minleft(h') = \text{$x$-coordinate of $\bm{t}[k-1]$} = x$. Therefore, $h^*$ is the same as the effective horizontal segment of $\bm{t}$, proving claim 1.
+
+\vgap
+
+It remains to show that no two distinct $h_1^*, h_2^* \in H^*$ can be mapped to the same tuple in $\J(R_1,...,R_{k-3}, H',V)$. Assume, on the contrary, that $h_1^*$ and $h_2^*$ are both mapped to $\bm{t}\in \J(R_1,...,R_{k-3},$ $H',V)$. Suppose that $h_1^*$ (resp., $h_2^*$) is the minimal segment of $h_1'$ (resp., $h_2'$). Under our mapping, it must hold that  $h_1' = h_2' = \bm{t}[k-2]$. However, the distinctness of $h_1^*$ and $h_2^*$ requires $h_1' \ne h_2'$, which yields a contradiction.
+
+\extraspacing \underline{\em Proof of Statement (2).} Take any tuple $\bm{t} \in \J(R'_1, ..., R'_{k-3}, H', V)$. Set $h' = \bm{t}[k-2]$, and define $h^*$ as the minimal segment of $h'$. Let us write $h'$ as $[x_1,x_2] \times y$; accordingly, $h^*$ can be written as $[x_1, \minleft(h')] \times y$. Additionally, let $x$ be the x-coordinate of the vertical segment $\bm{t}[k-1]$. The effective horizontal segment of $\bm{t}$ can then be represented as $[x_1,x] \times y$.
+
+\vgap
+
+We will first prove $\contain_{R_{k-2}}(\bm{t})\subseteq \contain_{R_{k-2}}(h^*)$, or equivalently, every rectangle $r_{k-2} \in \contain_{R_{k-2}}(\bm{t})$ covers $h^*$. It suffices to show that $h^*$ is contained in the effective horizontal segment of $\bm{t}$, or equivalently, $\minleft(h') \le x$. By the definition in \eqref{eqn:minleft}, $\minleft(h')$ is the minimum x-coordinate of $\bm{t'}[k-1]$ among all $\bm{t'} \in  \J(R'_1, ..., R'_{k-3}, H', V)$ with $\bm{t'}[k-2] = h'$, Thus, $\minleft(h') \le x$ holds because $\bm{t}$ is merely one such $\bm{t'}$.
+
+\vgap
+
+Next, assuming that the rectangles $r \in \contain_{R_{k-2}}(h^*)$ have been sorted in descending order of $\xright(r)$, we will prove that $\contain_{R_{k-2}}(\bm{t})$ includes a prefix of the sorted order. It suffices to establish the following equivalent claim:
+
+\vgap
+
+\minipg{0.8\linewidth} {
+    {\bf Claim 2:} If a rectangle $r \in \contain_{R_{k-2}}(h^*)$ satisfies the condition that $\xright(r) \ge x$ (where $x$ is the x-coordinate of $\bm{t}[k-1]$), then $r \in \contain_{R_{k-2}}(\bm{t})$.
+}
+
+\vgap
+
+\noindent To prove the above, we must explain why the rectangle $r$ in the claim contains the effective horizontal segment of $\bm{t}$. Since $r \in \contain_{R_{k-2}}(h^*)$, we know that $r$ covers the segment $[x_1, \minleft(h')] \times y$. Hence, $[x_1, \minleft(h')]$ $\subseteq [\xleft(r), \xright(r)]$ and $y \in [\ybot(r), \ytop(r)]$. Using also the condition $\xright(r) \ge x$ given in claim 2, we can derive $[x_1, x] \subseteq [\xleft(r), \xright(r)]$. Therefore, $[x_1, x] \times y$, i.e. the effective horizontal segment of $\bm{t}$, is contained in $r$, establishing claim 2.
+
+
+\section{Proof of Theorem~\ref{thm:main-alg}} \label{app:main-alg}
+
+As mentioned in Section~\ref{sec:intro:prev}, 2-SJ can be solved in $F_2(n, \out) = O(n \log n + \out)$ time using a comparison-based algorithm. By Theorem~\ref{thm:main-recur}, in general, a comparison-based $(k-1)$-SJ algorithm with runtime $F_{k-1}(n, \out)$ spawns a comparison-based $k$-SJ algorithm whose running time $F_k(n, \out)$ obeys \eqref{eqn:main:reccurrence}. Specifically, for $k \ge 3$, there is a constant $c \ge 2$ such that
+\myeqn{
+    && F_{k}(n, \out) \nn \\
+    &\le& c \cdot k^3 \cdot \big( F_{k-1}(n, \out) + n \log n + k \cdot \out \big) \nn \\
+    &=& c^2 \cdot k^3(k-1)^3 \cdot (F_{k-2}(n,\out) + n\log n + k\cdot \out) + c \cdot k^3 \cdot (n\log n + k\cdot \out ) \nn\\
+    &<& c^2 \cdot k^3(k-1)^3 \cdot F_{k-2}(n,\out) +  (c+c^2)\cdot k^3(k-1)^3 \cdot (n\log n + k \cdot\out) \nn \\
+    &\leq& c^3 \cdot k^3(k-1)^3(k-2)^3 \cdot F_{k-3}(n,\out) +
+    (c+c^2+c^3)\cdot k^3(k-1)^3(k-2)^3 \cdot (n\log n + k \cdot\out) \nn\\
+    &\leq& ... \nn \\
+    &\leq& c^{k-2} \cdot (k!)^3 \cdot F_{2}(n,\out) + \Big(\sum_{i =1}^{k-2}c^i \Big)\cdot (k!)^3 \cdot (n\log n + k \cdot\out) \nn \\
+    &\leq & 2c^{k-1} \cdot (k!)^3 \cdot O(n\log n + k \cdot\out) \nn
+}
+which completes the proof of Theorem~\ref{thm:main-alg}.
+
+\section{Hardness of 3-SJ in 3D Space} \label{app:lb-cond}
+
+An axis-parallel rectangle in 3D space has the form $r = [x_1, x_2] \times [y_1, y_2] \times [z_1, z_2]$. We will refer to $[x_1, x_2]$ as the {\em x-projection} of $r$, and define its {\em y-} and {\em z-projections} analogously.
+
+
+\vgap
+
+In the 3D 3-SJ problem, the input comprises three sets of axis-parallel rectangles in $\real^3$: $R_1, R_2$, and $R_3$. The goal is to report all 3-tuples $(r_1, r_2, r_3) \in R_1 \times R_2 \times R_3$ such that $r_1 \cap r_2 \cap r_3 \neq \emptyset$. Denote by $\J(R_1, R_2, R_3)$ the set of those 3-tuples. Define the input size as $n = |R_1| + |R_2| + |R_3|$ and the output size as $\out = |\J(R_1, R_2, R_3)|$.
+
+\vgap
+
+In the {\em triangle detection} problem, we are given an undirected graph $G = (V, E)$ and need to determine whether $G$ has a triangle (a.k.a.\, 3-clique). Set $m = |E|$. We consider that $G$ has no isolated vertices (namely, vertices with degree 0), and therefore $|V| \le 2m$.
+
+\vgap
+
+The subsequent discussion will show that if the 3D 3-SJ problem can be solved in $O((n + \out) \cdot \polylog n)$ time, then the triangle detection problem can be solved in $O(m \polylog m)$ time. This would be truly surprising because as mentioned in Section~\ref{sec:intro:ours} the state-of-the-art algorithm for triangle detection runs in $O(m^{1.41})$ time \cite{ayz97}. Thus, in the absence of such a breakthrough, no $O((n + \out) \cdot \polylog n)$ time algorithms can exist for the 3D 3-SJ problem.
+
+\vgap
+
+Given a graph $G = (V,E)$ for triangle detection, we will construct an instance of the 3D 3-SJ problem with input size $3m$. W.l.o.g., let us assume that each vertex of $V$ is represented as a unique integer in $[|V|]$. Initialize $R_1, R_2$, and $R_3$ as 3 empty sets of rectangles. For each edge $\set{u, v}\in E$ where $u < v$, we add
+\begin{itemize}
+    \item a rectangle $(-\infty, \infty) \times [u,u] \times [v,v]$ to $R_1$;
+    \item a rectangle $[v,v] \times(-\infty, \infty)\times [u,u]$ to $R_2$;
+    \item a rectangle $[v,v] \times [u,u] \times(-\infty, \infty) $ to $R_3$.
+\end{itemize}
+Note that every rectangle in $R_1$ (resp., $R_2$ and $R_3$) has $(-\infty, \infty)$ as the x- (resp., y- and z-) projection.
+
+\vgap
+
+The construction has the property that $G$ has a triangle if and only if $\J(R_1, R_2, R_3) \neq \emptyset$. We can prove this with the following argument.
+\myitems{
+    \item Suppose that $G$ has a triangle with vertices $u$, $v$, and $w$ such that $u < v  < w$. Then, by our construction, $r_1 = (-\infty, \infty) \times [u,u] \times [v,v] \in R_1$, $r_2 = [w, w] \times (-\infty, \infty) \times[v,v] \in R_2$, and $r_3 = [w,w] \times [u, u] \times (-\infty, \infty) \in r_3$. It is clear that $(r_1, r_2, r_3)$ is a result tuple in $\J(R_1, R_2, R_3)$.
+
+    \item Conversely, consider that $\J(R_1, R_2, R_3)$ is non-empty. Consider an arbitrary result tuple $(r_1, r_2, r_3) \in \J(R_1, R_2, R_3)$. Assume, w.l.o.g., that $r_1 = (-\infty, \infty) \times [u, u] \times [v, v]$, where $u < v$.
+    Because the z-projection of $r_2$ must match that of $r_1$, we assert that $r_2$ must have the form $[w, w] \times (-\infty, \infty) \times [v, v]$ for some $w > v$. Because the x-projection of $r_3$ must match that of $r_2$ and the y-projection of $r_3$ must match that of $r_1$, it follows that $r_3$ must have the form $[w, w] \times [u, u] \times (-\infty, \infty)$. This means that the edges $\set{u,v}$, $\set{v,w}$, and $\set{u,w}$ must all exist in $G$, and thus form a triangle.
+}
+
+Now, assume that there exists an algorithm $\A$ capable of solving the 3D 3-SJ problem in $O((n + \out) \cdot \polylog n)$ time. For $\out = 0$, this algorithm must perform at most $c \cdot n \polylog n$ steps when the input size is $n$. We run $\A$ on the 3D 3-SJ instance $R_1, R_2, R_3$ constructed earlier in a {\em cost-monitoring manner}:
+\myitems{
+    \item If $\A$ terminates within $c \cdot (3m) \polylog (3m)$ steps, we check whether it has output any result tuple in $\J(R_1, R_2, R_3)$. If so, a triangle has been found in $G$; otherwise, we declare that $G$ has no triangles.
+
+    \item If $\A$ has performed $1 + c \cdot (3m) \polylog (3m)$ steps, we manually terminate the algorithm and declare that $\J(R_1, R_2, R_3) \ne \emptyset$, meaning that $G$ must have at least one triangle.
+}
+The above strategy thus settles the triangle detection problem in $O(m\polylog m)$ time.
+
+%\end{sloppy}
+\end{document}
+
